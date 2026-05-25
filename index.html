@@ -57,6 +57,12 @@
         
         .request-card { transition: all 0.2s ease; }
         .request-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        
+        .status-pending-sup { background-color: #fef3c7; color: #d97706; }
+        .status-pending-mod { background-color: #dbeafe; color: #2563eb; }
+        .status-pending-hr { background-color: #e9d5ff; color: #7c3aed; }
+        .status-approved { background-color: #d1fae5; color: #059669; }
+        .status-rejected { background-color: #fee2e2; color: #dc2626; }
     </style>
 </head>
 <body class="bg-[#f3f6fb]">
@@ -90,11 +96,11 @@
         <div class="mt-6 p-4 bg-slate-50 rounded-xl">
             <p class="text-xs font-semibold text-slate-600 mb-2 flex items-center gap-2"><i data-feather="info" style="width: 0.8rem;"></i> Demo Credentials</p>
             <div class="space-y-1 text-xs text-slate-500">
-                <div class="flex items-center gap-2"><i data-feather="award" style="width: 0.8rem;"></i> <span>HR Admin: PIN 1000 / admin</span></div>
+                <div class="flex items-center gap-2"><i data-feather="award" style="width: 0.8rem;"></i> <span>HR: PIN 1000 / admin</span></div>
                 <div class="flex items-center gap-2"><i data-feather="users" style="width: 0.8rem;"></i> <span>Supervisor: PIN 2001 / 1234</span></div>
-                <div class="flex items-center gap-2"><i data-feather="user-check" style="width: 0.8rem;"></i> <span>Employee: PIN 1002 / 1234</span></div>
                 <div class="flex items-center gap-2"><i data-feather="shield" style="width: 0.8rem;"></i> <span>Moderator Rom: PIN 5001 / mod123</span></div>
                 <div class="flex items-center gap-2"><i data-feather="shield" style="width: 0.8rem;"></i> <span>Moderator Dex: PIN 5002 / mod123</span></div>
+                <div class="flex items-center gap-2"><i data-feather="user" style="width: 0.8rem;"></i> <span>Employee: PIN 1002 / 1234</span></div>
             </div>
         </div>
     </div>
@@ -371,18 +377,21 @@
             { id: 3, pin: "5001", password: "mod123", name: "Moderator Rom", role: "moderator", department: "HR", avatar: "MR", supervisorId: null, leaveBalance: 15 },
             { id: 4, pin: "5002", password: "mod123", name: "Moderator Dex", role: "moderator", department: "HR", avatar: "MD", supervisorId: null, leaveBalance: 15 },
             { id: 5, pin: "2001", password: "1234", name: "Michael Reyes", role: "supervisor", department: "Sales", avatar: "MR", supervisorId: 1, leaveBalance: 10 },
-            { id: 6, pin: "1002", password: "1234", name: "John Carter", role: "employee", department: "Service", avatar: "JC", supervisorId: 5, leaveBalance: 12 },
-            { id: 7, pin: "1003", password: "1234", name: "Samantha Lee", role: "employee", department: "Marketing", avatar: "SL", supervisorId: 5, leaveBalance: 10 },
-            { id: 8, pin: "1004", password: "1234", name: "Diana Chen", role: "employee", department: "Admin", avatar: "DC", supervisorId: 5, leaveBalance: 8 }
+            { id: 6, pin: "1002", password: "1234", name: "Romari Parado", role: "employee", department: "Service", avatar: "RP", supervisorId: 5, leaveBalance: 12 },
+            { id: 7, pin: "1003", password: "1234", name: "Rhedsyne Valdez", role: "employee", department: "Marketing", avatar: "RV", supervisorId: 5, leaveBalance: 10 },
+            { id: 8, pin: "1004", password: "1234", name: "Vincent Cristan Eligino", role: "employee", department: "Admin", avatar: "VE", supervisorId: 5, leaveBalance: 8 },
+            { id: 9, pin: "1005", password: "1234", name: "Cris Molina", role: "employee", department: "Service", avatar: "CM", supervisorId: 5, leaveBalance: 12 },
+            { id: 10, pin: "1006", password: "1234", name: "Kimberly Baldugo", role: "employee", department: "HR", avatar: "KB", supervisorId: 1, leaveBalance: 14 },
+            { id: 11, pin: "1007", password: "1234", name: "Polyjem Lim", role: "employee", department: "Admin", avatar: "PL", supervisorId: 5, leaveBalance: 11 }
         ];
         employees = users.map(u => ({ id: u.id, name: u.name, dept: u.department, role: u.role, supervisorId: u.supervisorId, pin: u.pin, status: "active" }));
         const today = new Date().toISOString().split('T')[0];
         attendanceLogs = [
-            { id: 1, userId: 6, userName: "John Carter", date: today, timeIn: "08:05 AM", status: "Present" },
-            { id: 2, userId: 7, userName: "Samantha Lee", date: today, timeIn: "08:12 AM", status: "Present" }
+            { id: 1, userId: 6, userName: "Romari Parado", date: today, timeIn: "08:05 AM", status: "Present" },
+            { id: 2, userId: 7, userName: "Rhedsyne Valdez", date: today, timeIn: "08:12 AM", status: "Present" }
         ];
         requests = [
-            { id: 1, userId: 6, userName: "John Carter", type: "Vacation Leave", startDate: "2026-06-10", endDate: "2026-06-12", reason: "Family trip", status: "pending_sup", supervisorId: 5, moderatorApproved: false, hrApproved: false, createdAt: new Date().toISOString() }
+            { id: 1, userId: 6, userName: "Romari Parado", type: "Vacation Leave", startDate: "2026-06-10", endDate: "2026-06-12", reason: "Family trip", status: "pending_sup", supervisorId: 5, createdAt: new Date().toISOString() }
         ];
         saveAllData();
     }
@@ -505,7 +514,7 @@
         const hours = document.getElementById('offsetsHours').value;
         const reason = document.getElementById('offsetsReason').value;
         if(!date || !hours) { alert("Please fill all fields"); return; }
-        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, moderatorApproved: false, hrApproved: false, createdAt: new Date().toISOString() });
+        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, createdAt: new Date().toISOString() });
         saveAllData(); closeOffsetsModal(); refreshDashboard(); alert("Offset request submitted!");
     }
     
@@ -515,14 +524,50 @@
         const endDate = document.getElementById('reqEndDate').value;
         const reason = document.getElementById('reqReason').value;
         if(!startDate || !endDate) { alert("Please select dates"); return; }
-        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: type, startDate: startDate, endDate: endDate, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, moderatorApproved: false, hrApproved: false, createdAt: new Date().toISOString() });
+        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: type, startDate: startDate, endDate: endDate, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, createdAt: new Date().toISOString() });
         saveAllData(); closeFilingModal(); refreshDashboard(); alert(`${type} request submitted!`);
     }
     
-    function approveAsSupervisor(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_sup") { req.status = "pending_mod"; saveAllData(); refreshDashboard(); alert("Request forwarded to Moderator."); } }
-    function approveAsModerator(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_mod") { req.status = "pending_hr"; req.moderatorApproved = true; saveAllData(); refreshDashboard(); alert("Request forwarded to HR."); } }
-    function approveAsHR(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_hr") { req.status = "approved"; req.hrApproved = true; saveAllData(); refreshDashboard(); alert("Request FULLY APPROVED!"); } }
-    function rejectRequest(id) { const req = requests.find(r => r.id === id); if(req && (req.status === "pending_sup" || req.status === "pending_mod" || req.status === "pending_hr")) { req.status = "rejected"; saveAllData(); refreshDashboard(); alert("Request rejected."); } }
+    // APPROVAL FUNCTIONS - FIXED FOR MODERATORS
+    function approveAsSupervisor(id) { 
+        const req = requests.find(r => r.id === id); 
+        if(req && req.status === "pending_sup") { 
+            req.status = "pending_mod"; 
+            saveAllData(); 
+            refreshDashboard(); 
+            alert("Request approved by Supervisor! Forwarded to Moderator."); 
+        } 
+    }
+    
+    function approveAsModerator(id) { 
+        const req = requests.find(r => r.id === id); 
+        if(req && req.status === "pending_mod") { 
+            req.status = "pending_hr"; 
+            saveAllData(); 
+            refreshDashboard(); 
+            alert("Request approved by Moderator! Forwarded to HR."); 
+        } 
+    }
+    
+    function approveAsHR(id) { 
+        const req = requests.find(r => r.id === id); 
+        if(req && req.status === "pending_hr") { 
+            req.status = "approved"; 
+            saveAllData(); 
+            refreshDashboard(); 
+            alert("Request FULLY APPROVED by HR!"); 
+        } 
+    }
+    
+    function rejectRequest(id) { 
+        const req = requests.find(r => r.id === id); 
+        if(req && (req.status === "pending_sup" || req.status === "pending_mod" || req.status === "pending_hr")) { 
+            req.status = "rejected"; 
+            saveAllData(); 
+            refreshDashboard(); 
+            alert("Request rejected."); 
+        } 
+    }
     
     function refreshDashboard() {
         const role = currentUser?.role;
@@ -536,7 +581,9 @@
         if(role === 'moderator') pendingCount = requests.filter(r => r.status === "pending_mod").length;
         if(role === 'hr') pendingCount = requests.filter(r => r.status === "pending_hr").length;
         document.getElementById('pendingApprovals').innerText = pendingCount;
+        document.getElementById('pendingApprovalsSub').innerHTML = pendingCount + ' pending';
         
+        // My Recent Requests Widget
         const myRequests = requests.filter(r => r.userId === currentUser.id).slice(0,5);
         document.getElementById('myRequestsList').innerHTML = myRequests.map(r => {
             let statusText = '', statusClass = '';
@@ -548,6 +595,7 @@
             return `<div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><div><p class="font-semibold">${r.type}</p><p class="text-xs">${r.startDate} to ${r.endDate}</p></div><span class="text-xs px-2 py-1 rounded-full ${statusClass}">${statusText}</span></div>`;
         }).join('') || '<div class="text-center text-slate-400 py-6">No requests yet.</div>';
         
+        // All My Requests Tab
         const allMyRequests = requests.filter(r => r.userId === currentUser.id);
         document.getElementById('allMyRequestsList').innerHTML = allMyRequests.map(r => {
             let statusText = '', statusClass = '';
@@ -559,18 +607,36 @@
             return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.type}</h4><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-xs text-slate-500">${r.reason}</p></div><span class="text-xs px-3 py-1 rounded-full ${statusClass}">${statusText}</span></div></div>`;
         }).join('') || '<div class="text-center py-8 text-slate-400">No requests yet.</div>';
         
+        // Pending Approvals Tab
         let pendingRequests = [];
         if(role === 'supervisor') pendingRequests = requests.filter(r => r.supervisorId === currentUser.id && r.status === "pending_sup");
         if(role === 'moderator') pendingRequests = requests.filter(r => r.status === "pending_mod");
         if(role === 'hr') pendingRequests = requests.filter(r => r.status === "pending_hr");
         
-        document.getElementById('pendingApprovalsList').innerHTML = pendingRequests.map(r => `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start flex-wrap gap-3"><div><h4 class="font-bold text-lg">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-sm">${r.reason}</p></div><div class="flex gap-2">${role === 'supervisor' ? `<button onclick="approveAsSupervisor(${r.id})" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-3 py-1 rounded-lg text-sm">Reject</button>` : ''}${role === 'moderator' ? `<button onclick="approveAsModerator(${r.id})" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-3 py-1 rounded-lg text-sm">Reject</button>` : ''}${role === 'hr' ? `<button onclick="approveAsHR(${r.id})" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-3 py-1 rounded-lg text-sm">Reject</button>` : ''}</div></div></div>`).join('') || '<div class="text-center py-8 text-slate-400">No pending approvals.</div>';
+        document.getElementById('pendingApprovalsList').innerHTML = pendingRequests.map(r => `
+            <div class="bg-white rounded-xl p-4 shadow-sm border">
+                <div class="flex justify-between items-start flex-wrap gap-3">
+                    <div>
+                        <h4 class="font-bold text-lg">${r.userName}</h4>
+                        <p class="text-sm text-slate-600 mt-1">${r.type}</p>
+                        <p class="text-sm text-slate-600">${r.startDate} - ${r.endDate}</p>
+                        <p class="text-sm text-slate-600">${r.reason}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        ${role === 'supervisor' ? `<button onclick="approveAsSupervisor(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700">Reject</button>` : ''}
+                        ${role === 'moderator' ? `<button onclick="approveAsModerator(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700">Reject</button>` : ''}
+                        ${role === 'hr' ? `<button onclick="approveAsHR(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700">Reject</button>` : ''}
+                    </div>
+                </div>
+            </div>
+        `).join('') || '<div class="text-center py-8 text-slate-400">No pending approvals.</div>';
         
+        // HR: Employee Directory and All Requests
         if(role === 'hr') {
             document.getElementById('hrEmployeesList').innerHTML = employees.map(emp => {
                 const supervisor = users.find(u => u.id === emp.supervisorId);
-                const roleIcon = emp.role === 'hr' ? '👑' : (emp.role === 'moderator' ? '🛡️' : (emp.role === 'supervisor' ? '👔' : '👤'));
-                return `<tr class="border-t"><td class="p-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">${emp.name.split(' ').map(n=>n[0]).join('')}</div>${roleIcon} ${emp.name}</div></td><td class="p-3">${emp.dept}</td><td class="p-3">${emp.role}</td><td class="p-3">${supervisor ? supervisor.name : '—'}</td><td class="p-3"><button onclick="deleteEmployee(${emp.id})" class="text-red-500">Delete</button></td></tr>`;
+                const initial = emp.name.split(' ').map(n => n[0]).join('');
+                return `<tr class="border-t"><td class="p-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">${initial}</div>${emp.name}</div></td><td class="p-3">${emp.dept}</td><td class="p-3">${emp.role}</td><td class="p-3">${supervisor ? supervisor.name : '—'}</td><td class="p-3"><button onclick="deleteEmployee(${emp.id})" class="text-red-500 hover:text-red-700">Delete</button></td></tr>`;
             }).join('');
             
             document.getElementById('allRequestsList').innerHTML = requests.map(r => {
@@ -580,10 +646,11 @@
                 else if(r.status === 'pending_hr') statusText = 'Pending HR';
                 else if(r.status === 'approved') statusText = 'Approved';
                 else statusText = 'Rejected';
-                return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-xs">${r.startDate} - ${r.endDate}</p></div><span class="text-xs px-2 py-1 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-700' : r.status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}">${statusText}</span></div></div>`;
+                return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-xs text-slate-500">${r.startDate} - ${r.endDate}</p><p class="text-xs mt-1">${r.reason}</p></div><span class="text-xs px-2 py-1 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-700' : r.status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}">${statusText}</span></div></div>`;
             }).join('');
         }
         
+        // Update supervisor dropdown
         const supervisorSelect = document.getElementById('newEmpSupervisor');
         if(supervisorSelect) {
             const supervisors = users.filter(u => u.role === 'supervisor' || u.role === 'moderator' || u.role === 'hr');
@@ -610,7 +677,7 @@
             document.getElementById('newEmpName').value = ''; document.getElementById('newEmpDept').value = ''; document.getElementById('newEmpPin').value = '';
         } else { alert("Please fill all fields"); }
     }
-    function deleteEmployee(id) { if(confirm('Delete employee?')){users=users.filter(u=>u.id!==id);employees=employees.filter(e=>e.id!==id);saveAllData();refreshDashboard();} }
+    function deleteEmployee(id) { if(confirm('Delete this employee?')){users=users.filter(u=>u.id!==id);employees=employees.filter(e=>e.id!==id);saveAllData();refreshDashboard();} }
     function saveSettings(){localStorage.setItem('device_ip',document.getElementById('deviceIp').value);alert('Settings saved!');}
     function openMobileSidebar() { document.getElementById('mobileSidebar').classList.add('open'); document.getElementById('overlay').classList.add('active'); document.body.classList.add('no-scroll'); }
     function closeMobileSidebar() { document.getElementById('mobileSidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); document.body.classList.remove('no-scroll'); }
