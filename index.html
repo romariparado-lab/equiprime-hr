@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Professional HRIS System</title>
+    <title>EQUIPRIME HR - Employee Portal</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,7 +18,6 @@
         .stat-card:hover { transform: translateY(-3px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
         .bg-brand-sidebar { background-color: #004aad; }
         
-        /* Mobile sidebar styles */
         .mobile-sidebar {
             position: fixed;
             top: 0;
@@ -30,9 +29,7 @@
             transform: translateX(-100%);
             transition: transform 0.3s ease;
         }
-        .mobile-sidebar.open {
-            transform: translateX(0);
-        }
+        .mobile-sidebar.open { transform: translateX(0); }
         .overlay {
             position: fixed;
             top: 0;
@@ -45,13 +42,8 @@
             visibility: hidden;
             transition: opacity 0.3s ease;
         }
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        body.no-scroll {
-            overflow: hidden;
-        }
+        .overlay.active { opacity: 1; visibility: visible; }
+        body.no-scroll { overflow: hidden; }
         
         .feather {
             stroke: currentColor;
@@ -100,19 +92,21 @@
             <div class="space-y-1 text-xs text-slate-500">
                 <div class="flex items-center gap-2"><i data-feather="award" style="width: 0.8rem;"></i> <span>HR Admin: PIN 1000 / admin</span></div>
                 <div class="flex items-center gap-2"><i data-feather="users" style="width: 0.8rem;"></i> <span>Supervisor: PIN 2001 / 1234</span></div>
-                <div class="flex items-center gap-2"><i data-feather="user" style="width: 0.8rem;"></i> <span>Employee: PIN 1001 / 1234</span></div>
+                <div class="flex items-center gap-2"><i data-feather="user-check" style="width: 0.8rem;"></i> <span>Employee: PIN 1002 / 1234</span></div>
+                <div class="flex items-center gap-2"><i data-feather="shield" style="width: 0.8rem;"></i> <span>Moderator Rom: PIN 5001 / mod123</span></div>
+                <div class="flex items-center gap-2"><i data-feather="shield" style="width: 0.8rem;"></i> <span>Moderator Dex: PIN 5002 / mod123</span></div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- MAIN APP CONTAINER - flex row for desktop -->
+<!-- MAIN APP CONTAINER -->
 <div id="mainApp" class="hidden">
     
     <!-- MOBILE OVERLAY -->
     <div id="overlay" class="overlay" onclick="closeMobileSidebar()"></div>
 
-    <!-- MOBILE SIDEBAR - ONLY visible on mobile -->
+    <!-- MOBILE SIDEBAR -->
     <div id="mobileSidebar" class="mobile-sidebar lg:hidden bg-brand-sidebar text-white flex flex-col p-5 shadow-2xl overflow-y-auto">
         <div class="flex justify-end mb-4">
             <button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10">
@@ -131,7 +125,7 @@
         </div>
     </div>
 
-    <!-- DESKTOP SIDEBAR - ONLY visible on desktop -->
+    <!-- DESKTOP SIDEBAR -->
     <aside class="hidden lg:flex lg:w-64 xl:w-72 bg-brand-sidebar text-white flex-col flex-shrink-0 p-6 shadow-2xl h-screen sticky top-0 overflow-y-auto">
         <div class="mb-8">
             <div class="flex items-center gap-2 mb-2">
@@ -159,16 +153,16 @@
         </div>
     </aside>
 
-    <!-- MAIN CONTENT - This scrolls -->
+    <!-- MAIN CONTENT -->
     <main class="flex-1 overflow-y-auto p-4 sm:p-5 md:p-6 lg:p-8 min-h-screen">
         
-        <!-- MOBILE HEADER - ONLY visible on mobile -->
+        <!-- MOBILE HEADER -->
         <div class="lg:hidden flex justify-between items-center mb-5">
             <button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm">
                 <i data-feather="menu" class="text-slate-700"></i>
             </button>
             <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-full bg-[#004aad] text-white flex items-center justify-center text-xs font-bold" id="mobileUserInitials">RP</div>
+                <div class="w-8 h-8 rounded-full bg-[#004aad] text-white flex items-center justify-center text-xs font-bold" id="mobileUserInitials">HR</div>
                 <span class="text-sm font-semibold text-slate-700" id="mobileUserName">User</span>
             </div>
         </div>
@@ -182,37 +176,36 @@
             <div class="flex items-center gap-2">
                 <div class="bg-yellow-50 text-yellow-700 px-3 py-1.5 rounded-full text-xs flex items-center gap-1 border border-yellow-200">
                     <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                    <span>Attendance realtime upload (soon)</span>
+                    <span>Biometrics ready (demo mode)</span>
                 </div>
             </div>
         </div>
 
         <!-- DASHBOARD TAB -->
         <div id="dashboard-tab" class="tab-content">
-            <!-- KPI Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <div class="stat-card bg-white rounded-2xl p-5 shadow-sm hover:shadow-md">
+                <div class="stat-card bg-white rounded-2xl p-5 shadow-sm">
                     <div class="flex justify-between items-start">
                         <div><p class="text-slate-500 text-sm">Total Employees</p><h3 class="text-3xl font-extrabold mt-2 text-slate-800" id="totalEmployees">0</h3></div>
                         <div class="w-12 h-12 rounded-2xl bg-blue-100 flex items-center justify-center text-blue-600"><i data-feather="users"></i></div>
                     </div>
-                    <p class="text-green-600 text-sm mt-4">↑ 12 new this month</p>
+                    <p class="text-green-600 text-sm mt-4">Active workforce</p>
                 </div>
-                <div class="stat-card bg-white rounded-2xl p-5 shadow-sm hover:shadow-md">
+                <div class="stat-card bg-white rounded-2xl p-5 shadow-sm">
                     <div class="flex justify-between items-start">
                         <div><p class="text-slate-500 text-sm">My Attendance</p><h3 class="text-3xl font-extrabold mt-2 text-slate-800" id="myAttendance">0</h3></div>
                         <div class="w-12 h-12 rounded-2xl bg-green-100 flex items-center justify-center text-green-600"><i data-feather="user-check"></i></div>
                     </div>
-                    <p class="text-green-600 text-sm mt-4" id="myAttendanceRate">0 check-ins</p>
+                    <p class="text-green-600 text-sm mt-4" id="myAttendanceRate">This month</p>
                 </div>
-                <div class="stat-card bg-white rounded-2xl p-5 shadow-sm hover:shadow-md">
+                <div class="stat-card bg-white rounded-2xl p-5 shadow-sm">
                     <div class="flex justify-between items-start">
                         <div><p class="text-slate-500 text-sm">Pending Approvals</p><h3 class="text-3xl font-extrabold mt-2 text-slate-800" id="pendingApprovals">0</h3></div>
                         <div class="w-12 h-12 rounded-2xl bg-orange-100 flex items-center justify-center text-orange-600"><i data-feather="clock"></i></div>
                     </div>
                     <p class="text-orange-600 text-sm mt-4" id="pendingApprovalsSub">awaiting action</p>
                 </div>
-                <div class="stat-card bg-white rounded-2xl p-5 shadow-sm hover:shadow-md">
+                <div class="stat-card bg-white rounded-2xl p-5 shadow-sm">
                     <div class="flex justify-between items-start">
                         <div><p class="text-slate-500 text-sm">Leave Balance</p><h3 class="text-2xl font-extrabold mt-2 text-slate-800" id="myLeaveBalance">15</h3></div>
                         <div class="w-12 h-12 rounded-2xl bg-purple-100 flex items-center justify-center text-purple-600"><i data-feather="calendar"></i></div>
@@ -221,51 +214,44 @@
                 </div>
             </div>
 
-            <!-- Filing Options Row -->
+            <!-- Filing Options -->
             <div class="bg-white rounded-2xl p-6 shadow-sm mb-6">
                 <h3 class="text-xl font-bold text-slate-800 mb-5 flex items-center gap-2"><i data-feather="file-text"></i> Quick Filing Options</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                    <button onclick="openFilingModal('Official Business')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-blue-50 transition border border-slate-100"><i data-feather="briefcase" class="text-blue-600 mb-2" style="width: 1.8rem; height: 1.8rem;"></i><span class="text-sm font-medium text-slate-700">Official Business</span></button>
-                    <button onclick="openFilingModal('Overtime')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-orange-50 transition border border-slate-100"><i data-feather="clock" class="text-orange-600 mb-2" style="width: 1.8rem; height: 1.8rem;"></i><span class="text-sm font-medium text-slate-700">Overtime</span></button>
-                    <button onclick="openFilingModal('Certificate of Attendance')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-green-50 transition border border-slate-100"><i data-feather="file" class="text-green-600 mb-2" style="width: 1.8rem; height: 1.8rem;"></i><span class="text-sm font-medium text-slate-700">Certificate of Attendance</span></button>
-                    <button onclick="openLeaveTypeModal()" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-purple-50 transition border border-slate-100"><i data-feather="calendar" class="text-purple-600 mb-2" style="width: 1.8rem; height: 1.8rem;"></i><span class="text-sm font-medium text-slate-700">Leave</span></button>
-                    <button onclick="openOffsetsModal()" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-teal-50 transition border border-slate-100"><i data-feather="clock" class="text-teal-600 mb-2" style="width: 1.8rem; height: 1.8rem;"></i><span class="text-sm font-medium text-slate-700">Offsets</span></button>
+                    <button onclick="openFilingModal('Official Business')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-blue-50 transition"><i data-feather="briefcase" class="text-blue-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Official Business</span></button>
+                    <button onclick="openFilingModal('Overtime')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-orange-50 transition"><i data-feather="clock" class="text-orange-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Overtime</span></button>
+                    <button onclick="openFilingModal('Certificate of Attendance')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-green-50 transition"><i data-feather="file" class="text-green-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Certificate</span></button>
+                    <button onclick="openLeaveTypeModal()" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-purple-50 transition"><i data-feather="calendar" class="text-purple-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Leave</span></button>
+                    <button onclick="openOffsetsModal()" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-teal-50 transition"><i data-feather="clock" class="text-teal-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Offsets</span></button>
                 </div>
             </div>
 
-            <!-- Two Column Layout -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2 space-y-6">
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-feather="activity"></i> Recent Biometric Activity</h3>
-                        <div id="recentActivityList" class="space-y-3 max-h-80 overflow-y-auto"></div>
-                        <button onclick="addMockPunch()" class="mt-4 w-full bg-[#004aad] text-white py-2.5 rounded-xl text-sm hover:bg-[#003a8a] transition flex items-center justify-center gap-2"><i data-feather="smartphone"></i> Simulate Fingerprint Scan</button>
-                    </div>
-                    <div class="bg-white rounded-2xl p-6 shadow-sm">
                         <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2"><i data-feather="file-text"></i> My Recent Requests</h3>
-                            <button onclick="openFilingModal('Official Business')" class="text-[#004aad] text-sm font-medium flex items-center gap-1 hover:underline"><i data-feather="plus-circle"></i> New Request</button>
+                            <h3 class="text-xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Recent Requests</h3>
+                            <button onclick="openNewRequestMenu()" class="text-[#004aad] text-sm font-medium flex items-center gap-1 hover:underline"><i data-feather="plus-circle"></i> New Request</button>
                         </div>
-                        <div id="myRequestsList" class="space-y-3 max-h-60 overflow-y-auto"></div>
-                        <button onclick="switchTab('my-requests')" class="mt-4 w-full bg-slate-100 text-slate-700 py-2.5 rounded-xl text-sm hover:bg-slate-200 transition flex items-center justify-center gap-2"><i data-feather="list"></i> View All My Requests</button>
+                        <div id="myRequestsList" class="space-y-3 max-h-80 overflow-y-auto"></div>
+                        <button onclick="switchTab('my-requests')" class="mt-4 w-full bg-slate-100 text-slate-700 py-2.5 rounded-xl text-sm">View All My Requests</button>
                     </div>
                 </div>
                 <div class="space-y-6">
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-feather="bell"></i> Announcements</h3>
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="bell"></i> Announcements</h3>
                         <div class="space-y-3">
-                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-xl"><h4 class="font-bold text-blue-900">Company Outing</h4><p class="text-sm text-blue-700 mt-1">Scheduled on June 12, 2026 at Batangas Resort.</p></div>
-                            <div class="bg-orange-50 border-l-4 border-orange-500 p-4 rounded-xl"><h4 class="font-bold text-orange-900">Payroll Reminder</h4><p class="text-sm text-orange-700 mt-1">Submit attendance reports before Friday.</p></div>
-                            <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-xl"><h4 class="font-bold text-green-900">Real-time Attendance</h4><p class="text-sm text-green-700 mt-1">Coming soon - Live sync with ZKTeco devices!</p></div>
+                            <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-xl"><h4 class="font-bold text-blue-900">System Live</h4><p class="text-sm text-blue-700">EQUIPRIME HR is now operational!</p></div>
+                            <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-xl"><h4 class="font-bold text-green-900">Biometrics Ready</h4><p class="text-sm text-green-700">ZKTeco integration available (demo mode)</p></div>
                         </div>
                     </div>
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
-                        <h3 class="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2"><i data-feather="git-branch"></i> Approval Flow</h3>
-                        <div class="space-y-3">
-                            <div class="flex items-center gap-3 text-sm text-slate-600"><div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center"><i data-feather="user" style="width: 1rem;"></i></div><span>Employee submits request</span></div>
-                            <div class="flex items-center gap-3 text-sm text-slate-600"><div class="w-8 h-8 rounded-full bg-yellow-100 flex items-center justify-center"><i data-feather="users" style="width: 1rem;"></i></div><span>Immediate Supervisor reviews</span></div>
-                            <div class="flex items-center gap-3 text-sm text-slate-600"><div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center"><i data-feather="award" style="width: 1rem;"></i></div><span>HR final approval</span></div>
-                            <div class="flex items-center gap-3 text-sm text-slate-600"><div class="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center"><i data-feather="check-circle" style="width: 1rem;"></i></div><span>Employee notified</span></div>
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="git-branch"></i> Approval Flow</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Employee submits request</div>
+                            <div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Supervisor reviews</div>
+                            <div class="flex items-center gap-2"><span class="w-2 h-2 bg-purple-500 rounded-full"></span> Moderator reviews</div>
+                            <div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> HR final approval</div>
                         </div>
                     </div>
                 </div>
@@ -274,58 +260,130 @@
 
         <!-- MY REQUESTS TAB -->
         <div id="my-requests-tab" class="tab-content hidden">
-            <div class="flex justify-between items-center mb-5 flex-wrap gap-3">
-                <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2"><i data-feather="file-text"></i> My Requests</h2>
-                <button onclick="openFilingModal('Official Business')" class="bg-[#004aad] text-white px-5 py-2.5 rounded-xl text-sm hover:bg-[#003a8a] transition flex items-center gap-2"><i data-feather="plus"></i> New Request</button>
+            <div class="flex justify-between items-center mb-5">
+                <h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Requests</h2>
+                <button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">+ New Request</button>
             </div>
             <div id="allMyRequestsList" class="space-y-3"></div>
         </div>
 
         <!-- PENDING APPROVALS TAB -->
         <div id="approvals-tab" class="tab-content hidden">
-            <h2 class="text-2xl font-bold text-slate-800 mb-5 flex items-center gap-2"><i data-feather="clock"></i> Pending Approvals</h2>
+            <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clock"></i> Pending Approvals</h2>
             <div id="pendingApprovalsList" class="space-y-4"></div>
         </div>
 
         <!-- HR TABS -->
         <div id="hr-employees-tab" class="tab-content hidden">
-            <div class="flex justify-between items-center mb-5 flex-wrap gap-3"><h2 class="text-2xl font-bold text-slate-800 flex items-center gap-2"><i data-feather="users"></i> Employee Directory</h2><button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-5 py-2.5 rounded-xl text-sm flex items-center gap-2"><i data-feather="user-plus"></i> Add Employee</button></div>
-            <div class="bg-white rounded-2xl shadow-sm overflow-x-auto"><table class="w-full min-w-[600px]"><thead class="bg-slate-50"><tr><th class="p-4 text-left text-sm font-semibold text-slate-600">Employee</th><th class="p-4 text-left text-sm font-semibold text-slate-600">Department</th><th class="p-4 text-left text-sm font-semibold text-slate-600">Role</th><th class="p-4 text-left text-sm font-semibold text-slate-600">Supervisor</th><th class="p-4 text-left text-sm font-semibold text-slate-600">Actions</th></tr></thead><tbody id="hrEmployeesList"></tbody>}</div>
+            <div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="users"></i> Employee Directory</h2><button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">+ Add Employee</button></div>
+            <div class="bg-white rounded-2xl shadow-sm overflow-x-auto"><table class="w-full min-w-[600px]"><thead class="bg-slate-50"><tr><th class="p-3 text-left">Employee</th><th class="p-3 text-left">Department</th><th class="p-3 text-left">Role</th><th class="p-3 text-left">Supervisor</th><th class="p-3 text-left">Actions</th></tr></thead><tbody id="hrEmployeesList"></tbody>}</div>
         </div>
 
-        <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold text-slate-800 mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
+        <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
 
-        <div id="hr-settings-tab" class="tab-content hidden"><h2 class="text-2xl font-bold text-slate-800 mb-5 flex items-center gap-2"><i data-feather="settings"></i> System Settings</h2><div class="bg-white rounded-2xl p-6 shadow-sm max-w-2xl"><div class="space-y-4"><div><label class="block font-semibold text-slate-700 mb-2">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none"></div><div><label class="block font-semibold text-slate-700 mb-2">Device Port</label><input type="text" id="devicePort" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none"></div><button onclick="saveSettings()" class="bg-[#004aad] text-white px-6 py-3 rounded-xl hover:bg-[#003a8a] transition flex items-center gap-2"><i data-feather="save"></i> Save Settings</button></div></div></div>
+        <div id="hr-settings-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="settings"></i> System Settings</h2><div class="bg-white rounded-2xl p-6"><div><label class="font-semibold text-sm">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl mt-1"></div><button onclick="saveSettings()" class="mt-4 bg-[#004aad] text-white px-5 py-2 rounded-xl">Save Settings</button></div></div>
     </main>
 </div>
 
-<!-- MODALS -->
-<div id="leaveTypeModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4"><div class="bg-white rounded-2xl p-6 w-full max-w-md"><div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold text-slate-800">Select Leave Type</h3><button onclick="closeLeaveTypeModal()" class="text-slate-400 hover:text-slate-600"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="openFilingModal('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left hover:bg-red-100 transition flex items-center gap-3"><i data-feather="thermometer" class="text-red-600"></i><span>Sick Leave</span></button><button onclick="openFilingModal('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left hover:bg-orange-100 transition flex items-center gap-3"><i data-feather="alert-triangle" class="text-orange-600"></i><span>Emergency Leave</span></button><button onclick="openFilingModal('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left hover:bg-blue-100 transition flex items-center gap-3"><i data-feather="sun" class="text-blue-600"></i><span>Vacation Leave</span></button></div></div></div>
+<!-- NEW REQUEST MENU MODAL -->
+<div id="newRequestMenuModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-sm">
+        <div class="flex justify-between items-center mb-5">
+            <h3 class="text-xl font-bold text-slate-800">Select Request Type</h3>
+            <button onclick="closeNewRequestMenu()" class="text-slate-400 hover:text-slate-600"><i data-feather="x"></i></button>
+        </div>
+        <div class="space-y-3">
+            <button onclick="openFilingModal('Official Business')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-blue-50 transition flex items-center gap-3"><i data-feather="briefcase" class="text-blue-600"></i><span>Official Business</span></button>
+            <button onclick="openFilingModal('Overtime')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-orange-50 transition flex items-center gap-3"><i data-feather="clock" class="text-orange-600"></i><span>Overtime</span></button>
+            <button onclick="openFilingModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-green-50 transition flex items-center gap-3"><i data-feather="file" class="text-green-600"></i><span>Certificate of Attendance</span></button>
+            <button onclick="closeNewRequestMenu(); openLeaveTypeModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-purple-50 transition flex items-center gap-3"><i data-feather="calendar" class="text-purple-600"></i><span>Leave</span></button>
+            <button onclick="closeNewRequestMenu(); openOffsetsModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-teal-50 transition flex items-center gap-3"><i data-feather="clock" class="text-teal-600"></i><span>Offsets</span></button>
+        </div>
+    </div>
+</div>
 
-<div id="offsetsModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4"><div class="bg-white rounded-2xl p-6 w-full max-w-md"><div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold text-slate-800">Request Offsets</h3><button onclick="closeOffsetsModal()" class="text-slate-400 hover:text-slate-600"><i data-feather="x"></i></button></div><div class="space-y-4"><div><label class="text-sm font-medium text-slate-700 block mb-2">Date</label><input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl"></div><div><label class="text-sm font-medium text-slate-700 block mb-2">Hours to Offset</label><input type="number" id="offsetsHours" step="0.5" placeholder="Enter number of hours" class="w-full p-3 border rounded-xl"></div><div><label class="text-sm font-medium text-slate-700 block mb-2">Reason</label><textarea id="offsetsReason" rows="2" class="w-full p-3 border rounded-xl" placeholder="Reason for offset request..."></textarea></div></div><div class="flex gap-3 mt-6"><button onclick="submitOffsetsRequest()" class="bg-green-600 text-white px-4 py-2.5 rounded-xl flex-1"><i data-feather="check"></i> Submit</button><button onclick="closeOffsetsModal()" class="bg-gray-200 text-slate-700 px-4 py-2.5 rounded-xl flex-1">Cancel</button></div></div></div>
+<!-- LEAVE TYPE MODAL -->
+<div id="leaveTypeModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeLeaveTypeModal()"><i data-feather="x"></i></button></div>
+        <div class="space-y-3">
+            <button onclick="openFilingModal('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left flex items-center gap-3"><i data-feather="thermometer" class="text-red-600"></i> Sick Leave</button>
+            <button onclick="openFilingModal('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left flex items-center gap-3"><i data-feather="alert-triangle" class="text-orange-600"></i> Emergency Leave</button>
+            <button onclick="openFilingModal('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left flex items-center gap-3"><i data-feather="sun" class="text-blue-600"></i> Vacation Leave</button>
+        </div>
+    </div>
+</div>
 
-<div id="filingModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4"><div class="bg-white rounded-2xl p-6 w-full max-w-md"><div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold text-slate-800" id="modalTitle">Submit Request</h3><button onclick="closeFilingModal()" class="text-slate-400"><i data-feather="x"></i></button></div><input type="hidden" id="requestType"><div class="space-y-4"><div><label class="text-sm font-medium text-slate-700 block mb-2">Start Date</label><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"></div><div><label class="text-sm font-medium text-slate-700 block mb-2">End Date</label><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"></div><div><label class="text-sm font-medium text-slate-700 block mb-2">Reason / Details</label><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Please provide details..."></textarea></div></div><div class="flex gap-3 mt-6"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2.5 rounded-xl flex-1"><i data-feather="check"></i> Submit</button><button onclick="closeFilingModal()" class="bg-gray-200 text-slate-700 px-4 py-2.5 rounded-xl flex-1">Cancel</button></div></div></div>
+<!-- OFFSETS MODAL -->
+<div id="offsetsModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeOffsetsModal()"><i data-feather="x"></i></button></div>
+        <div class="space-y-4">
+            <div><label class="text-sm font-medium">Date</label><input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl"></div>
+            <div><label class="text-sm font-medium">Hours to Offset</label><input type="number" id="offsetsHours" step="0.5" class="w-full p-3 border rounded-xl"></div>
+            <div><label class="text-sm font-medium">Reason</label><textarea id="offsetsReason" rows="2" class="w-full p-3 border rounded-xl"></textarea></div>
+        </div>
+        <div class="flex gap-3 mt-6"><button onclick="submitOffsetsRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeOffsetsModal()" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div>
+    </div>
+</div>
 
-<div id="employeeModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4"><div class="bg-white rounded-2xl p-6 w-full max-w-md"><div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold text-slate-800">Add Employee</h3><button onclick="closeModal()" class="text-slate-400"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="text" id="newEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl"><input type="text" id="newEmpDept" placeholder="Department" class="w-full p-3 border rounded-xl"><select id="newEmpRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="hr">HR Admin</option></select><select id="newEmpSupervisor" class="w-full p-3 border rounded-xl"><option value="">No Supervisor</option></select><input type="text" id="newEmpPin" placeholder="PIN (for login)" class="w-full p-3 border rounded-xl"><input type="password" id="newEmpPass" placeholder="Password" class="w-full p-3 border rounded-xl"></div><div class="flex gap-3 mt-6"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2.5 rounded-xl flex-1"><i data-feather="save"></i> Save</button><button onclick="closeModal()" class="bg-gray-200 text-slate-700 px-4 py-2.5 rounded-xl flex-1">Cancel</button></div></div></div>
+<!-- FILING MODAL -->
+<div id="filingModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-5">
+            <h3 class="text-xl font-bold text-slate-800" id="modalTitle">Submit Request</h3>
+            <button onclick="closeFilingModal()" class="text-slate-400"><i data-feather="x"></i></button>
+        </div>
+        <input type="hidden" id="requestType">
+        <div class="space-y-4">
+            <div><label class="text-sm font-medium">Start Date</label><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"></div>
+            <div><label class="text-sm font-medium">End Date</label><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"></div>
+            <div><label class="text-sm font-medium">Reason</label><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Please provide details..."></textarea></div>
+        </div>
+        <div class="flex gap-3 mt-6"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeFilingModal()" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div>
+    </div>
+</div>
+
+<!-- ADD EMPLOYEE MODAL -->
+<div id="employeeModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal()"><i data-feather="x"></i></button></div>
+        <div class="space-y-3">
+            <input type="text" id="newEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl">
+            <input type="text" id="newEmpDept" placeholder="Department" class="w-full p-3 border rounded-xl">
+            <select id="newEmpRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select>
+            <select id="newEmpSupervisor" class="w-full p-3 border rounded-xl"><option value="">No Supervisor</option></select>
+            <input type="text" id="newEmpPin" placeholder="PIN" class="w-full p-3 border rounded-xl">
+            <input type="password" id="newEmpPass" placeholder="Password" class="w-full p-3 border rounded-xl">
+        </div>
+        <div class="flex gap-3 mt-6"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal()" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div>
+    </div>
+</div>
 
 <script>
+    // ==================== DATA ====================
     let users = [], employees = [], attendanceLogs = [], requests = [], currentUser = null;
     
     function initData() {
         users = [
-            { id: 1, pin: "1000", password: "admin", name: "Romari Parado", role: "Developer", department: "Marketing", avatar: "RP", supervisorId: null, leaveBalance: 20 },
-            { id: 2, pin: "1001", password: "1234", name: "Polyjem Lim", role: "HR & Admin Supervisor", department: "HR", avatar: "PL", supervisorId: 4, leaveBalance: 15 },
-            { id: 3, pin: "1002", password: "1234", name: "Vincent Eligino", role: "HR Recruitment Specialist", department: "HR", avatar: "VE", supervisorId: 1, leaveBalance: 12 },
-            { id: 4, pin: "2001", password: "1234", name: "Kimberly Baldugo", role: "Procurement", department: "Parts & Logistics", avatar: "KB", supervisorId: 1, leaveBalance: 10 },
-            { id: 5, pin: "1004", password: "1234", name: "Rhedsyne Valdez", role: "IT/Asset Management", department: "IT & Asset Management", avatar: "RV", supervisorId: 4, leaveBalance: 18 }
+            { id: 1, pin: "1000", password: "admin", name: "HR-Poly", role: "hr", department: "HR", avatar: "HP", supervisorId: null, leaveBalance: 20 },
+            { id: 2, pin: "1001", password: "admin", name: "HR-Vince", role: "hr", department: "HR", avatar: "HV", supervisorId: null, leaveBalance: 20 },
+            { id: 3, pin: "5001", password: "mod123", name: "Moderator Rom", role: "moderator", department: "HR", avatar: "MR", supervisorId: null, leaveBalance: 15 },
+            { id: 4, pin: "5002", password: "mod123", name: "Moderator Dex", role: "moderator", department: "HR", avatar: "MD", supervisorId: null, leaveBalance: 15 },
+            { id: 5, pin: "2001", password: "1234", name: "Michael Reyes", role: "supervisor", department: "Sales", avatar: "MR", supervisorId: 1, leaveBalance: 10 },
+            { id: 6, pin: "1002", password: "1234", name: "John Carter", role: "employee", department: "Service", avatar: "JC", supervisorId: 5, leaveBalance: 12 },
+            { id: 7, pin: "1003", password: "1234", name: "Samantha Lee", role: "employee", department: "Marketing", avatar: "SL", supervisorId: 5, leaveBalance: 10 },
+            { id: 8, pin: "1004", password: "1234", name: "Diana Chen", role: "employee", department: "Admin", avatar: "DC", supervisorId: 5, leaveBalance: 8 }
         ];
         employees = users.map(u => ({ id: u.id, name: u.name, dept: u.department, role: u.role, supervisorId: u.supervisorId, pin: u.pin, status: "active" }));
         const today = new Date().toISOString().split('T')[0];
         attendanceLogs = [
-            { id: 1, userId: 2, userName: "Romari Parado", dept: "Marketing", date: today, timeIn: "08:05 AM", status: "Present" },
-            { id: 2, userId: 3, userName: "Vincent Eligino", dept: "HR", date: today, timeIn: "08:12 AM", status: "Present" }
+            { id: 1, userId: 6, userName: "John Carter", date: today, timeIn: "08:05 AM", status: "Present" },
+            { id: 2, userId: 7, userName: "Samantha Lee", date: today, timeIn: "08:12 AM", status: "Present" }
         ];
-        requests = [{ id: 1, userId: 2, userName: "Romari Parado", type: "Official Business", typeLabel: "Official Business", startDate: "2026-06-01", endDate: "2026-06-01", reason: "Client meeting", status: "pending_sup", supervisorId: 4, createdAt: new Date().toISOString() }];
+        requests = [
+            { id: 1, userId: 6, userName: "John Carter", type: "Vacation Leave", startDate: "2026-06-10", endDate: "2026-06-12", reason: "Family trip", status: "pending_sup", supervisorId: 5, moderatorApproved: false, hrApproved: false, createdAt: new Date().toISOString() }
+        ];
         saveAllData();
     }
     
@@ -346,9 +404,15 @@
             document.getElementById('userInitials').innerText = user.avatar;
             document.getElementById('mobileUserInitials').innerText = user.avatar;
             document.getElementById('mobileUserName').innerText = user.name.split(' ')[0];
-            let roleText = user.role === 'hr' ? "HR Administrator - Full Access" : (user.role === 'supervisor' ? "Supervisor - Approve requests" : "Employee - Submit requests");
+            
+            let roleText = "";
+            if(user.role === 'hr') roleText = "HR Administrator - Full Access";
+            else if(user.role === 'moderator') roleText = "Moderator - Review and Approve Requests";
+            else if(user.role === 'supervisor') roleText = "Supervisor - Approve team requests";
+            else roleText = "Employee - Submit and track requests";
             document.getElementById('welcomeSubtitle').innerText = roleText;
-            document.getElementById('userRoleDisplay').innerText = user.role === 'hr' ? 'HR Administrator' : (user.role === 'supervisor' ? 'Supervisor' : 'Employee');
+            document.getElementById('userRoleDisplay').innerText = user.role === 'hr' ? 'HR Admin' : (user.role === 'moderator' ? 'Moderator' : (user.role === 'supervisor' ? 'Supervisor' : 'Employee'));
+            
             renderNavigation();
             refreshDashboard();
             switchTab('dashboard');
@@ -361,14 +425,21 @@
     function logout() { currentUser = null; document.getElementById('loginOverlay').style.display = 'flex'; document.getElementById('mainApp').classList.add('hidden'); }
     
     function renderNavigation() {
-        const isHR = currentUser?.role === 'hr';
-        const isSupervisor = currentUser?.role === 'supervisor';
+        const role = currentUser?.role;
         const desktopNav = document.getElementById('desktopNavMenu');
         const mobileNav = document.getElementById('mobileNavMenu');
-        let navHtml = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl transition"><i data-feather="home"></i> Dashboard</button>`;
-        if(isHR || isSupervisor || currentUser?.role === 'employee') navHtml += `<button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl transition"><i data-feather="file-text"></i> My Requests</button>`;
-        if(isSupervisor || isHR) navHtml += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl transition"><i data-feather="clock"></i> Pending Approvals</button>`;
-        if(isHR) navHtml += `<button onclick="switchTab('hr-employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl transition"><i data-feather="users"></i> Employees</button><button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl transition"><i data-feather="clipboard"></i> All Requests</button><button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl transition"><i data-feather="settings"></i> Settings</button>`;
+        let navHtml = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="home"></i> Dashboard</button>`;
+        
+        navHtml += `<button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Requests</button>`;
+        
+        if(role === 'supervisor' || role === 'moderator' || role === 'hr') {
+            navHtml += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> Pending Approvals</button>`;
+        }
+        if(role === 'hr') {
+            navHtml += `<button onclick="switchTab('hr-employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="users"></i> Employees</button>
+                        <button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clipboard"></i> All Requests</button>
+                        <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="settings"></i> Settings</button>`;
+        }
         desktopNav.innerHTML = navHtml;
         mobileNav.innerHTML = navHtml;
         feather.replace();
@@ -382,20 +453,60 @@
         closeMobileSidebar();
     }
     
-    function openLeaveTypeModal() { document.getElementById('leaveTypeModal').classList.remove('hidden'); document.getElementById('leaveTypeModal').classList.add('flex'); }
-    function closeLeaveTypeModal() { document.getElementById('leaveTypeModal').classList.add('hidden'); document.getElementById('leaveTypeModal').classList.remove('flex'); }
-    function openOffsetsModal() { document.getElementById('offsetsModal').classList.remove('hidden'); document.getElementById('offsetsModal').classList.add('flex'); }
-    function closeOffsetsModal() { document.getElementById('offsetsModal').classList.add('hidden'); document.getElementById('offsetsModal').classList.remove('flex'); }
-    function openFilingModal(type) { closeLeaveTypeModal(); document.getElementById('modalTitle').innerHTML = `Submit ${type}`; document.getElementById('requestType').value = type; document.getElementById('reqStartDate').value = ''; document.getElementById('reqEndDate').value = ''; document.getElementById('reqReason').value = ''; document.getElementById('filingModal').classList.remove('hidden'); document.getElementById('filingModal').classList.add('flex'); }
-    function closeFilingModal() { document.getElementById('filingModal').classList.add('hidden'); document.getElementById('filingModal').classList.remove('flex'); }
+    // NEW REQUEST MENU FUNCTIONS
+    function openNewRequestMenu() { 
+        document.getElementById('newRequestMenuModal').classList.remove('hidden'); 
+        document.getElementById('newRequestMenuModal').classList.add('flex'); 
+    }
+    function closeNewRequestMenu() { 
+        document.getElementById('newRequestMenuModal').classList.add('hidden'); 
+        document.getElementById('newRequestMenuModal').classList.remove('flex'); 
+    }
+    
+    function openLeaveTypeModal() { 
+        closeNewRequestMenu();
+        document.getElementById('leaveTypeModal').classList.remove('hidden'); 
+        document.getElementById('leaveTypeModal').classList.add('flex'); 
+    }
+    function closeLeaveTypeModal() { 
+        document.getElementById('leaveTypeModal').classList.add('hidden'); 
+        document.getElementById('leaveTypeModal').classList.remove('flex'); 
+    }
+    
+    function openOffsetsModal() { 
+        closeNewRequestMenu();
+        document.getElementById('offsetsModal').classList.remove('hidden'); 
+        document.getElementById('offsetsModal').classList.add('flex'); 
+    }
+    function closeOffsetsModal() { 
+        document.getElementById('offsetsModal').classList.add('hidden'); 
+        document.getElementById('offsetsModal').classList.remove('flex'); 
+    }
+    
+    function openFilingModal(type) { 
+        closeNewRequestMenu();
+        closeLeaveTypeModal();
+        document.getElementById('modalTitle').innerHTML = `Submit ${type}`; 
+        document.getElementById('requestType').value = type; 
+        document.getElementById('reqStartDate').value = ''; 
+        document.getElementById('reqEndDate').value = ''; 
+        document.getElementById('reqReason').value = ''; 
+        document.getElementById('filingModal').classList.remove('hidden'); 
+        document.getElementById('filingModal').classList.add('flex'); 
+    }
+    
+    function closeFilingModal() { 
+        document.getElementById('filingModal').classList.add('hidden'); 
+        document.getElementById('filingModal').classList.remove('flex'); 
+    }
     
     function submitOffsetsRequest() {
         const date = document.getElementById('offsetsDate').value;
         const hours = document.getElementById('offsetsHours').value;
         const reason = document.getElementById('offsetsReason').value;
-        if(!date || !hours) { alert("Please select date and enter hours"); return; }
-        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: "Offsets", typeLabel: `Offsets (${hours} hours)`, startDate: date, endDate: date, reason: reason || `Offset request for ${hours} hour(s)`, status: "pending_sup", supervisorId: currentUser.supervisorId, supApproved: false, hrApproved: false, createdAt: new Date().toISOString(), offsetsHours: hours });
-        saveAllData(); closeOffsetsModal(); refreshDashboard(); alert(`Offset request for ${hours} hour(s) submitted!`);
+        if(!date || !hours) { alert("Please fill all fields"); return; }
+        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, moderatorApproved: false, hrApproved: false, createdAt: new Date().toISOString() });
+        saveAllData(); closeOffsetsModal(); refreshDashboard(); alert("Offset request submitted!");
     }
     
     function submitRequest() {
@@ -403,49 +514,104 @@
         const startDate = document.getElementById('reqStartDate').value;
         const endDate = document.getElementById('reqEndDate').value;
         const reason = document.getElementById('reqReason').value;
-        if(!startDate || !endDate) { alert("Please select both start and end dates"); return; }
-        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: type, typeLabel: type, startDate: startDate, endDate: endDate, reason: reason || "No reason provided", status: "pending_sup", supervisorId: currentUser.supervisorId, supApproved: false, hrApproved: false, createdAt: new Date().toISOString() });
+        if(!startDate || !endDate) { alert("Please select dates"); return; }
+        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: type, startDate: startDate, endDate: endDate, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, moderatorApproved: false, hrApproved: false, createdAt: new Date().toISOString() });
         saveAllData(); closeFilingModal(); refreshDashboard(); alert(`${type} request submitted!`);
     }
     
-    function approveAsSupervisor(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_sup") { req.status = "pending_hr"; req.supApproved = true; saveAllData(); refreshDashboard(); alert(`Request approved! Forwarded to HR.`); } }
-    function approveAsHR(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_hr") { req.status = "approved"; req.hrApproved = true; saveAllData(); refreshDashboard(); alert(`Request FULLY APPROVED!`); } }
-    function rejectRequest(id) { const req = requests.find(r => r.id === id); if(req && (req.status === "pending_sup" || req.status === "pending_hr")) { req.status = "rejected"; saveAllData(); refreshDashboard(); alert(`Request rejected.`); } }
+    function approveAsSupervisor(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_sup") { req.status = "pending_mod"; saveAllData(); refreshDashboard(); alert("Request forwarded to Moderator."); } }
+    function approveAsModerator(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_mod") { req.status = "pending_hr"; req.moderatorApproved = true; saveAllData(); refreshDashboard(); alert("Request forwarded to HR."); } }
+    function approveAsHR(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_hr") { req.status = "approved"; req.hrApproved = true; saveAllData(); refreshDashboard(); alert("Request FULLY APPROVED!"); } }
+    function rejectRequest(id) { const req = requests.find(r => r.id === id); if(req && (req.status === "pending_sup" || req.status === "pending_mod" || req.status === "pending_hr")) { req.status = "rejected"; saveAllData(); refreshDashboard(); alert("Request rejected."); } }
     
     function refreshDashboard() {
-        const isHR = currentUser?.role === 'hr';
-        const isSupervisor = currentUser?.role === 'supervisor';
+        const role = currentUser?.role;
         document.getElementById('totalEmployees').innerText = employees.length;
         const userAttendance = attendanceLogs.filter(l => l.userId === currentUser.id);
         document.getElementById('myAttendance').innerText = userAttendance.length;
-        document.getElementById('myAttendanceRate').innerHTML = `${userAttendance.length} check-ins this month`;
         document.getElementById('myLeaveBalance').innerText = currentUser.leaveBalance;
+        
         let pendingCount = 0;
-        if(isSupervisor) pendingCount = requests.filter(r => r.supervisorId === currentUser.id && r.status === "pending_sup").length;
-        if(isHR) pendingCount = requests.filter(r => r.status === "pending_hr").length;
+        if(role === 'supervisor') pendingCount = requests.filter(r => r.supervisorId === currentUser.id && r.status === "pending_sup").length;
+        if(role === 'moderator') pendingCount = requests.filter(r => r.status === "pending_mod").length;
+        if(role === 'hr') pendingCount = requests.filter(r => r.status === "pending_hr").length;
         document.getElementById('pendingApprovals').innerText = pendingCount;
-        document.getElementById('recentActivityList').innerHTML = attendanceLogs.slice(0,5).map(l => `<div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><div><p class="font-semibold text-slate-800">${l.userName}</p><p class="text-xs text-slate-500">${l.date} at ${l.timeIn}</p></div><span class="text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">Checked in</span></div>`).join('');
+        
         const myRequests = requests.filter(r => r.userId === currentUser.id).slice(0,5);
-        document.getElementById('myRequestsList').innerHTML = myRequests.map(r => { let statusText = '', statusClass = ''; if(r.status === 'pending_sup') { statusText = 'Waiting Supervisor'; statusClass = 'bg-yellow-100 text-yellow-700'; } else if(r.status === 'pending_hr') { statusText = 'Waiting HR'; statusClass = 'bg-blue-100 text-blue-700'; } else if(r.status === 'approved') { statusText = 'Approved'; statusClass = 'bg-green-100 text-green-700'; } else { statusText = 'Rejected'; statusClass = 'bg-red-100 text-red-700'; } return `<div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><div><p class="font-semibold text-slate-800">${r.typeLabel}</p><p class="text-xs text-slate-500">${r.startDate} to ${r.endDate}</p></div><span class="text-xs px-2 py-1 rounded-full ${statusClass}">${statusText}</span></div>`; }).join('') || '<div class="text-center text-slate-400 py-6">No requests yet.</div>';
+        document.getElementById('myRequestsList').innerHTML = myRequests.map(r => {
+            let statusText = '', statusClass = '';
+            if(r.status === 'pending_sup') { statusText = 'Waiting Supervisor'; statusClass = 'bg-yellow-100 text-yellow-700'; }
+            else if(r.status === 'pending_mod') { statusText = 'Waiting Moderator'; statusClass = 'bg-blue-100 text-blue-700'; }
+            else if(r.status === 'pending_hr') { statusText = 'Waiting HR'; statusClass = 'bg-purple-100 text-purple-700'; }
+            else if(r.status === 'approved') { statusText = 'Approved'; statusClass = 'bg-green-100 text-green-700'; }
+            else { statusText = 'Rejected'; statusClass = 'bg-red-100 text-red-700'; }
+            return `<div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><div><p class="font-semibold">${r.type}</p><p class="text-xs">${r.startDate} to ${r.endDate}</p></div><span class="text-xs px-2 py-1 rounded-full ${statusClass}">${statusText}</span></div>`;
+        }).join('') || '<div class="text-center text-slate-400 py-6">No requests yet.</div>';
+        
         const allMyRequests = requests.filter(r => r.userId === currentUser.id);
-        document.getElementById('allMyRequestsList').innerHTML = allMyRequests.map(r => { let statusText = '', statusClass = ''; if(r.status === 'pending_sup') { statusText = 'Waiting Supervisor'; statusClass = 'bg-yellow-100 text-yellow-700'; } else if(r.status === 'pending_hr') { statusText = 'Waiting HR'; statusClass = 'bg-blue-100 text-blue-700'; } else if(r.status === 'approved') { statusText = 'Approved'; statusClass = 'bg-green-100 text-green-700'; } else { statusText = 'Rejected'; statusClass = 'bg-red-100 text-red-700'; } return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start flex-wrap gap-2"><div><h4 class="font-bold text-slate-800">${r.typeLabel}</h4><p class="text-sm text-slate-600 mt-1">${r.startDate} - ${r.endDate}</p><p class="text-sm text-slate-600">${r.reason}</p><p class="text-xs text-slate-400 mt-2">Submitted: ${new Date(r.createdAt).toLocaleString()}</p></div><span class="text-xs px-3 py-1 rounded-full ${statusClass} font-medium">${statusText}</span></div></div>`; }).join('') || '<div class="text-center text-slate-400 py-8">No requests yet.</div>';
+        document.getElementById('allMyRequestsList').innerHTML = allMyRequests.map(r => {
+            let statusText = '', statusClass = '';
+            if(r.status === 'pending_sup') { statusText = 'Waiting Supervisor'; statusClass = 'bg-yellow-100 text-yellow-700'; }
+            else if(r.status === 'pending_mod') { statusText = 'Waiting Moderator'; statusClass = 'bg-blue-100 text-blue-700'; }
+            else if(r.status === 'pending_hr') { statusText = 'Waiting HR'; statusClass = 'bg-purple-100 text-purple-700'; }
+            else if(r.status === 'approved') { statusText = 'Approved'; statusClass = 'bg-green-100 text-green-700'; }
+            else { statusText = 'Rejected'; statusClass = 'bg-red-100 text-red-700'; }
+            return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.type}</h4><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-xs text-slate-500">${r.reason}</p></div><span class="text-xs px-3 py-1 rounded-full ${statusClass}">${statusText}</span></div></div>`;
+        }).join('') || '<div class="text-center py-8 text-slate-400">No requests yet.</div>';
+        
         let pendingRequests = [];
-        if(isSupervisor) pendingRequests = requests.filter(r => r.supervisorId === currentUser.id && r.status === "pending_sup");
-        if(isHR) pendingRequests = requests.filter(r => r.status === "pending_hr");
-        document.getElementById('pendingApprovalsList').innerHTML = pendingRequests.map(r => `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start flex-wrap gap-3"><div class="flex-1"><h4 class="font-bold text-slate-800 text-lg">${r.userName}</h4><p class="text-sm text-slate-600 mt-1">${r.typeLabel}</p><p class="text-sm text-slate-600">${r.startDate} - ${r.endDate}</p><p class="text-sm text-slate-600">${r.reason}</p></div><div class="flex gap-2">${isSupervisor ? `<button onclick="approveAsSupervisor(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm">Reject</button>` : ''}${isHR ? `<button onclick="approveAsHR(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm">Reject</button>` : ''}</div></div></div>`).join('') || '<div class="text-center text-slate-400 py-8">No pending approvals!</div>';
-        if(isHR) {
-            document.getElementById('hrEmployeesList').innerHTML = employees.map(emp => { const supervisor = users.find(u => u.id === emp.supervisorId); return `<tr class="border-t"><td class="p-4"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">${emp.name.split(' ').map(n=>n[0]).join('')}</div>${emp.name}</div></td><td class="p-4">${emp.dept}</td><td class="p-4">${emp.role}</td><td class="p-4">${supervisor ? supervisor.name : '—'}</td><td class="p-4"><button onclick="deleteEmployee(${emp.id})" class="text-red-500 hover:text-red-700">Delete</button></td></tr>`; }).join('');
-            document.getElementById('allRequestsList').innerHTML = requests.map(r => { let statusText = '', statusClass = ''; if(r.status === 'pending_sup') { statusText = 'Pending Supervisor'; statusClass = 'bg-yellow-100 text-yellow-700'; } else if(r.status === 'pending_hr') { statusText = 'Pending HR'; statusClass = 'bg-blue-100 text-blue-700'; } else if(r.status === 'approved') { statusText = 'Approved'; statusClass = 'bg-green-100 text-green-700'; } else { statusText = 'Rejected'; statusClass = 'bg-red-100 text-red-700'; } return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start flex-wrap gap-2"><div><h4 class="font-bold">${r.userName}</h4><p class="text-sm">${r.typeLabel}</p><p class="text-xs text-slate-500">${r.startDate} - ${r.endDate}</p><p class="text-xs mt-1">${r.reason}</p></div><span class="text-xs px-3 py-1 rounded-full ${statusClass}">${statusText}</span></div></div>`; }).join('');
+        if(role === 'supervisor') pendingRequests = requests.filter(r => r.supervisorId === currentUser.id && r.status === "pending_sup");
+        if(role === 'moderator') pendingRequests = requests.filter(r => r.status === "pending_mod");
+        if(role === 'hr') pendingRequests = requests.filter(r => r.status === "pending_hr");
+        
+        document.getElementById('pendingApprovalsList').innerHTML = pendingRequests.map(r => `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start flex-wrap gap-3"><div><h4 class="font-bold text-lg">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-sm">${r.reason}</p></div><div class="flex gap-2">${role === 'supervisor' ? `<button onclick="approveAsSupervisor(${r.id})" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-3 py-1 rounded-lg text-sm">Reject</button>` : ''}${role === 'moderator' ? `<button onclick="approveAsModerator(${r.id})" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-3 py-1 rounded-lg text-sm">Reject</button>` : ''}${role === 'hr' ? `<button onclick="approveAsHR(${r.id})" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-3 py-1 rounded-lg text-sm">Reject</button>` : ''}</div></div></div>`).join('') || '<div class="text-center py-8 text-slate-400">No pending approvals.</div>';
+        
+        if(role === 'hr') {
+            document.getElementById('hrEmployeesList').innerHTML = employees.map(emp => {
+                const supervisor = users.find(u => u.id === emp.supervisorId);
+                const roleIcon = emp.role === 'hr' ? '👑' : (emp.role === 'moderator' ? '🛡️' : (emp.role === 'supervisor' ? '👔' : '👤'));
+                return `<tr class="border-t"><td class="p-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">${emp.name.split(' ').map(n=>n[0]).join('')}</div>${roleIcon} ${emp.name}</div></td><td class="p-3">${emp.dept}</td><td class="p-3">${emp.role}</td><td class="p-3">${supervisor ? supervisor.name : '—'}</td><td class="p-3"><button onclick="deleteEmployee(${emp.id})" class="text-red-500">Delete</button></td></tr>`;
+            }).join('');
+            
+            document.getElementById('allRequestsList').innerHTML = requests.map(r => {
+                let statusText = '';
+                if(r.status === 'pending_sup') statusText = 'Pending Supervisor';
+                else if(r.status === 'pending_mod') statusText = 'Pending Moderator';
+                else if(r.status === 'pending_hr') statusText = 'Pending HR';
+                else if(r.status === 'approved') statusText = 'Approved';
+                else statusText = 'Rejected';
+                return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-xs">${r.startDate} - ${r.endDate}</p></div><span class="text-xs px-2 py-1 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-700' : r.status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}">${statusText}</span></div></div>`;
+            }).join('');
+        }
+        
+        const supervisorSelect = document.getElementById('newEmpSupervisor');
+        if(supervisorSelect) {
+            const supervisors = users.filter(u => u.role === 'supervisor' || u.role === 'moderator' || u.role === 'hr');
+            supervisorSelect.innerHTML = '<option value="">No Supervisor</option>' + supervisors.map(s => `<option value="${s.id}">${s.name} (${s.role})</option>`).join('');
         }
         feather.replace();
     }
     
-    function addMockPunch() { const now=new Date(); attendanceLogs.push({id:Date.now(),userId:currentUser.id,userName:currentUser.name,dept:currentUser.department,date:now.toISOString().split('T')[0],timeIn:now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}),status:'Present'}); saveAllData(); refreshDashboard(); alert(`${currentUser.name} checked in at ${now.toLocaleTimeString()}`); }
-    function saveSettings(){localStorage.setItem('device_ip',document.getElementById('deviceIp').value);localStorage.setItem('device_port',document.getElementById('devicePort').value);alert('Settings saved!');}
     function showAddEmployeeModal() { document.getElementById('employeeModal').classList.remove('hidden'); document.getElementById('employeeModal').classList.add('flex'); }
     function closeModal() { document.getElementById('employeeModal').classList.add('hidden'); document.getElementById('employeeModal').classList.remove('flex'); }
-    function addEmployee() { const name=document.getElementById('newEmpName').value,dept=document.getElementById('newEmpDept').value,role=document.getElementById('newEmpRole').value,supervisorId=document.getElementById('newEmpSupervisor').value?parseInt(document.getElementById('newEmpSupervisor').value):null,pin=document.getElementById('newEmpPin').value,pass=document.getElementById('newEmpPass').value||'1234'; if(name&&dept&&pin){const newId=Math.max(...users.map(u=>u.id),0)+1,avatar=name.split(' ').map(n=>n[0]).join(''); users.push({id:newId,pin,password:pass,name,role,department:dept,avatar,supervisorId,leaveBalance:15}); employees.push({id:newId,name,dept,role,supervisorId,pin,status:'active'}); saveAllData(); closeModal(); refreshDashboard(); alert(`Employee ${name} added!`); } else { alert("Please fill all fields"); } }
-    function deleteEmployee(id) { if(confirm('Delete this employee?')){users=users.filter(u=>u.id!==id);employees=employees.filter(e=>e.id!==id);saveAllData();refreshDashboard();} }
+    function addEmployee() {
+        const name = document.getElementById('newEmpName').value;
+        const dept = document.getElementById('newEmpDept').value;
+        const role = document.getElementById('newEmpRole').value;
+        const supervisorId = document.getElementById('newEmpSupervisor').value ? parseInt(document.getElementById('newEmpSupervisor').value) : null;
+        const pin = document.getElementById('newEmpPin').value;
+        const pass = document.getElementById('newEmpPass').value || '1234';
+        if(name && dept && pin) {
+            const newId = Math.max(...users.map(u=>u.id),0)+1;
+            const avatar = name.split(' ').map(n=>n[0]).join('');
+            users.push({ id: newId, pin, password: pass, name, role, department: dept, avatar, supervisorId, leaveBalance: 15 });
+            employees.push({ id: newId, name, dept, role, supervisorId, pin, status: 'active' });
+            saveAllData(); closeModal(); refreshDashboard(); alert(`Employee ${name} added!`);
+            document.getElementById('newEmpName').value = ''; document.getElementById('newEmpDept').value = ''; document.getElementById('newEmpPin').value = '';
+        } else { alert("Please fill all fields"); }
+    }
+    function deleteEmployee(id) { if(confirm('Delete employee?')){users=users.filter(u=>u.id!==id);employees=employees.filter(e=>e.id!==id);saveAllData();refreshDashboard();} }
+    function saveSettings(){localStorage.setItem('device_ip',document.getElementById('deviceIp').value);alert('Settings saved!');}
     function openMobileSidebar() { document.getElementById('mobileSidebar').classList.add('open'); document.getElementById('overlay').classList.add('active'); document.body.classList.add('no-scroll'); }
     function closeMobileSidebar() { document.getElementById('mobileSidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); document.body.classList.remove('no-scroll'); }
     
