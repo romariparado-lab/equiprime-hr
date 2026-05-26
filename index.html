@@ -31,6 +31,11 @@
             flex-shrink: 0;
         }
         
+        /* Custom scrollbar for sidebar */
+        .desktop-sidebar::-webkit-scrollbar { width: 4px; }
+        .desktop-sidebar::-webkit-scrollbar-track { background: #1e3a8a; border-radius: 10px; }
+        .desktop-sidebar::-webkit-scrollbar-thumb { background: #60a5fa; border-radius: 10px; }
+        
         .mobile-sidebar {
             position: fixed;
             top: 0;
@@ -106,9 +111,25 @@
         .stat-card { transition: all 0.25s ease; cursor: pointer; }
         .stat-card:hover { transform: translateY(-3px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
         
-        /* Status colors */
         .status-logged-in { background-color: #d1fae5; color: #059669; }
         .status-missed { background-color: #fee2e2; color: #dc2626; }
+        
+        /* Filter select styles */
+        .filter-select {
+            background-color: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            width: 100%;
+            cursor: pointer;
+        }
+        .filter-select option { background-color: #004aad; color: white; }
+        .filter-select:focus { outline: none; border-color: #f4df17; }
+        
+        .filter-section { border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.75rem; margin-bottom: 0.75rem; }
+        .filter-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem; display: block; }
     </style>
 </head>
 <body>
@@ -156,6 +177,61 @@
             <p class="text-slate-300 text-xs">smart choices · smarter results</p>
         </div>
         <nav id="mobileNavMenu" class="space-y-2 flex-1"></nav>
+        
+        <!-- NEW FILTERS SECTION FOR MOBILE SIDEBAR -->
+        <div class="mt-6 pt-4 border-t border-white/20">
+            <div class="flex items-center gap-2 mb-3"><i data-feather="filter" class="text-white/70" style="width: 1rem;"></i><span class="text-xs font-semibold text-white/70 uppercase tracking-wider">Filters</span></div>
+            
+            <!-- Department Filter -->
+            <div class="filter-section">
+                <label class="filter-label">DEPARTMENT</label>
+                <select id="filterDepartment" class="filter-select" onchange="applyFilters()">
+                    <option value="all">All Departments</option>
+                    <option value="Service">Service & After-sales</option>
+                    <option value="Sales">Sales Department</option>
+                    <option value="Accounting">Accounting Department</option>
+                    <option value="Marketing">Marketing Department</option>
+                    <option value="HR">HR Department</option>
+                    <option value="Parts & Logistics">Parts & Logistics Department</option>
+                    <option value="Warehouse">Warehouse Department</option>
+                </select>
+            </div>
+            
+            <!-- Status Filter -->
+            <div class="filter-section">
+                <label class="filter-label">STATUS</label>
+                <select id="filterStatus" class="filter-select" onchange="applyFilters()">
+                    <option value="all">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="on-leave">On Leave</option>
+                </select>
+            </div>
+            
+            <!-- Leave Type Filter -->
+            <div class="filter-section">
+                <label class="filter-label">LEAVE TYPE</label>
+                <select id="filterLeaveType" class="filter-select" onchange="applyFilters()">
+                    <option value="all">All Leave Types</option>
+                    <option value="Official Business">Official Business</option>
+                    <option value="Vacation Leave">Vacation Leave</option>
+                    <option value="Sick Leave">Sick Leave</option>
+                    <option value="Birthday Leave">Birthday Leave</option>
+                    <option value="Emergency Leave">Emergency Leave</option>
+                    <option value="Offset">Offset</option>
+                </select>
+            </div>
+            
+            <!-- Calendar / Last Updated -->
+            <div class="pt-2">
+                <label class="filter-label">LAST UPDATED</label>
+                <div class="text-white/80 text-xs flex items-center gap-2">
+                    <i data-feather="calendar" style="width: 0.8rem;"></i>
+                    <span id="lastUpdatedTime">Loading...</span>
+                </div>
+            </div>
+        </div>
+        
         <div class="pt-4 border-t border-white/20 mt-4">
             <button onclick="logout()" class="w-full flex items-center gap-3 text-white/70 p-3 rounded-xl">
                 <i data-feather="log-out"></i> Logout
@@ -170,6 +246,61 @@
             <p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p>
         </div>
         <nav id="desktopNavMenu" class="space-y-2 flex-1"></nav>
+        
+        <!-- NEW FILTERS SECTION FOR DESKTOP SIDEBAR -->
+        <div class="mt-6 pt-4 border-t border-white/20">
+            <div class="flex items-center gap-2 mb-3"><i data-feather="filter" class="text-white/70" style="width: 1rem;"></i><span class="text-xs font-semibold text-white/70 uppercase tracking-wider">Filters</span></div>
+            
+            <!-- Department Filter -->
+            <div class="filter-section">
+                <label class="filter-label">DEPARTMENT</label>
+                <select id="desktopFilterDepartment" class="filter-select" onchange="applyFilters()">
+                    <option value="all">All Departments</option>
+                    <option value="Service">Service & After-sales</option>
+                    <option value="Sales">Sales Department</option>
+                    <option value="Accounting">Accounting Department</option>
+                    <option value="Marketing">Marketing Department</option>
+                    <option value="HR">HR Department</option>
+                    <option value="Parts & Logistics">Parts & Logistics Department</option>
+                    <option value="Warehouse">Warehouse Department</option>
+                </select>
+            </div>
+            
+            <!-- Status Filter -->
+            <div class="filter-section">
+                <label class="filter-label">STATUS</label>
+                <select id="desktopFilterStatus" class="filter-select" onchange="applyFilters()">
+                    <option value="all">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="on-leave">On Leave</option>
+                </select>
+            </div>
+            
+            <!-- Leave Type Filter -->
+            <div class="filter-section">
+                <label class="filter-label">LEAVE TYPE</label>
+                <select id="desktopFilterLeaveType" class="filter-select" onchange="applyFilters()">
+                    <option value="all">All Leave Types</option>
+                    <option value="Official Business">Official Business</option>
+                    <option value="Vacation Leave">Vacation Leave</option>
+                    <option value="Sick Leave">Sick Leave</option>
+                    <option value="Birthday Leave">Birthday Leave</option>
+                    <option value="Emergency Leave">Emergency Leave</option>
+                    <option value="Offset">Offset</option>
+                </select>
+            </div>
+            
+            <!-- Calendar / Last Updated -->
+            <div class="pt-2">
+                <label class="filter-label">LAST UPDATED</label>
+                <div class="text-white/80 text-xs flex items-center gap-2">
+                    <i data-feather="calendar" style="width: 0.8rem;"></i>
+                    <span id="desktopLastUpdatedTime">Loading...</span>
+                </div>
+            </div>
+        </div>
+        
         <div class="mt-auto pt-8">
             <div class="bg-white/10 rounded-2xl p-4">
                 <div class="flex items-center gap-3">
@@ -186,7 +317,7 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT -->
+    <!-- MAIN CONTENT (unchanged - keeping all existing features) -->
     <div class="main-content">
         
         <!-- MOBILE HEADER -->
@@ -290,13 +421,12 @@
                     </div>
                 </div>
 
-                <!-- RIGHT COLUMN - NEW EMPLOYEE LOGIN STATUS SECTION -->
+                <!-- RIGHT COLUMN -->
                 <div class="space-y-6">
-                    <!-- Employee Login Status - NEW FEATURE -->
+                    <!-- Employee Login Status -->
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
                         <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="users"></i> Employee Login Status</h3>
                         <div class="space-y-4">
-                            <!-- Logged In Today Section -->
                             <div>
                                 <div class="flex items-center gap-2 mb-3">
                                     <div class="w-3 h-3 bg-green-500 rounded-full"></div>
@@ -305,8 +435,6 @@
                                 </div>
                                 <div id="loggedInList" class="space-y-2 max-h-48 overflow-y-auto"></div>
                             </div>
-                            
-                            <!-- Missed Log In Section -->
                             <div>
                                 <div class="flex items-center gap-2 mb-3">
                                     <div class="w-3 h-3 bg-red-500 rounded-full"></div>
@@ -333,7 +461,7 @@
                 </div>
             </div>
 
-            <!-- Approval Flow Section (Full width below) -->
+            <!-- Approval Flow Section -->
             <div class="mt-6">
                 <div class="bg-white rounded-2xl p-6 shadow-sm">
                     <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="git-branch"></i> Approval Flow</h3>
@@ -347,7 +475,7 @@
             </div>
         </div>
 
-        <!-- MY REQUESTS TAB -->
+        <!-- OTHER TABS (unchanged) -->
         <div id="my-requests-tab" class="tab-content hidden">
             <div class="flex justify-between items-center mb-5 flex-wrap gap-2">
                 <h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Requests</h2>
@@ -356,13 +484,11 @@
             <div id="allMyRequestsList" class="space-y-3"></div>
         </div>
 
-        <!-- PENDING APPROVALS TAB -->
         <div id="approvals-tab" class="tab-content hidden">
             <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clock"></i> Pending Approvals</h2>
             <div id="pendingApprovalsList" class="space-y-4"></div>
         </div>
 
-        <!-- PAYSLIP TAB -->
         <div id="hr-payslip-tab" class="tab-content hidden">
             <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="file-text"></i> Payslip Management</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -385,7 +511,6 @@
             </div>
         </div>
 
-        <!-- EMPLOYEES TAB -->
         <div id="hr-employees-tab" class="tab-content hidden">
             <div class="flex justify-between items-center mb-5 flex-wrap gap-2">
                 <h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="users"></i> Employee Directory</h2>
@@ -394,13 +519,11 @@
             <div id="hrEmployeesList" class="bg-white rounded-2xl shadow-sm overflow-hidden"></div>
         </div>
 
-        <!-- ALL REQUESTS TAB -->
         <div id="hr-requests-tab" class="tab-content hidden">
             <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2>
             <div id="allRequestsList" class="space-y-4"></div>
         </div>
 
-        <!-- SETTINGS TAB -->
         <div id="hr-settings-tab" class="tab-content hidden">
             <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="settings"></i> System Settings</h2>
             <div class="bg-white rounded-2xl p-6">
@@ -412,7 +535,7 @@
     </div>
 </div>
 
-<!-- MODALS (same as before) -->
+<!-- MODALS (unchanged) -->
 <div id="requestModalOverlay" class="modal-overlay">
     <div class="modal-container">
         <div class="flex justify-between items-center mb-4">
@@ -499,6 +622,45 @@
     // ==================== DATA ====================
     let users = [], employees = [], attendanceLogs = [], requests = [], payslips = [], currentUser = null;
     
+    // Function to update last updated time
+    function updateLastUpdatedTime() {
+        const now = new Date();
+        const formattedDate = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        const lastUpdated = `${formattedDate} at ${formattedTime}`;
+        
+        const desktopElement = document.getElementById('desktopLastUpdatedTime');
+        const mobileElement = document.getElementById('lastUpdatedTime');
+        
+        if (desktopElement) desktopElement.innerText = lastUpdated;
+        if (mobileElement) mobileElement.innerText = lastUpdated;
+    }
+    
+    // Apply filters function (for future use - can be expanded)
+    function applyFilters() {
+        // Get values from both desktop and mobile filters
+        const desktopDept = document.getElementById('desktopFilterDepartment')?.value || 'all';
+        const mobileDept = document.getElementById('filterDepartment')?.value || 'all';
+        const desktopStatus = document.getElementById('desktopFilterStatus')?.value || 'all';
+        const mobileStatus = document.getElementById('filterStatus')?.value || 'all';
+        const desktopLeave = document.getElementById('desktopFilterLeaveType')?.value || 'all';
+        const mobileLeave = document.getElementById('filterLeaveType')?.value || 'all';
+        
+        // Sync both sides
+        if (document.getElementById('desktopFilterDepartment')) document.getElementById('desktopFilterDepartment').value = mobileDept;
+        if (document.getElementById('filterDepartment')) document.getElementById('filterDepartment').value = desktopDept;
+        if (document.getElementById('desktopFilterStatus')) document.getElementById('desktopFilterStatus').value = mobileStatus;
+        if (document.getElementById('filterStatus')) document.getElementById('filterStatus').value = desktopStatus;
+        if (document.getElementById('desktopFilterLeaveType')) document.getElementById('desktopFilterLeaveType').value = mobileLeave;
+        if (document.getElementById('filterLeaveType')) document.getElementById('filterLeaveType').value = desktopLeave;
+        
+        // For now, just show a console log - filter logic can be expanded later
+        console.log('Filters applied - Department:', desktopDept, 'Status:', desktopStatus, 'Leave Type:', desktopLeave);
+        
+        // Update last updated time
+        updateLastUpdatedTime();
+    }
+    
     function initData() {
         users = [
             { id: 1, pin: "1000", password: "admin", name: "Polyjem Lim", role: "hr", department: "HR & Admin", avatar: "PL", supervisorId: null, leaveBalance: 20, dailyRate: 1200 },
@@ -538,7 +700,6 @@
         if(users.length === 0) initData(); 
     }
     
-    // Helper function to refresh Employee Login Status section
     function refreshEmployeeLoginStatus() {
         const today = new Date().toISOString().split('T')[0];
         const loggedInUsers = attendanceLogs.filter(log => log.date === today).map(log => log.userId);
@@ -638,6 +799,9 @@
             renderNavigation();
             refreshDashboard();
             switchTab('dashboard');
+            
+            // Update last updated time on login
+            updateLastUpdatedTime();
         } else {
             document.getElementById('loginError').innerText = 'Invalid PIN or Password';
             document.getElementById('loginError').classList.remove('hidden');
@@ -714,47 +878,25 @@
     function approveAsHR(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_hr") { req.status = "approved"; saveAllData(); refreshDashboard(); alert("Request fully approved"); } }
     function rejectRequest(id) { const req = requests.find(r => r.id === id); if(req && (req.status === "pending_sup" || req.status === "pending_mod" || req.status === "pending_hr")) { req.status = "rejected"; saveAllData(); refreshDashboard(); alert("Request rejected"); } }
     
-    function addMockPunch() {
-        const now = new Date();
-        const today = now.toISOString().split('T')[0];
-        const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        
-        // Check if employee already logged in today
-        const alreadyLoggedIn = attendanceLogs.some(log => log.userId === currentUser.id && log.date === today);
-        if(alreadyLoggedIn) {
-            alert("You have already checked in today!");
-            return;
-        }
-        
-        attendanceLogs.push({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, date: today, timeIn: time, status: "Present" });
-        saveAllData();
-        refreshDashboard();
-        alert(`${currentUser.name} checked in at ${time}`);
-    }
-    
     function refreshDashboard() {
         const role = currentUser?.role;
         
         document.getElementById('totalEmployees').innerText = employees.length;
         
-        // Refresh Employee Login Status section (for all users, but especially HR)
         refreshEmployeeLoginStatus();
         
-        // For HR/Admin - show all employee attendance
         if(role === 'hr') {
             const totalAttendance = attendanceLogs.filter(l => l.date === new Date().toISOString().split('T')[0]).length;
             document.getElementById('myAttendance').innerText = totalAttendance;
             document.getElementById('myAttendanceRate').innerHTML = `${totalAttendance} total check-ins today`;
             document.getElementById('myLeaveBalance').innerText = "N/A";
         } else {
-            // For regular employees - show their own attendance
             const userAttendance = attendanceLogs.filter(l => l.userId === currentUser.id);
             document.getElementById('myAttendance').innerText = userAttendance.length;
             document.getElementById('myAttendanceRate').innerHTML = `${userAttendance.length} check-ins this month`;
             document.getElementById('myLeaveBalance').innerText = currentUser.leaveBalance;
         }
         
-        // Pending Approvals count based on role
         let pendingCount = 0;
         if(role === 'supervisor') pendingCount = requests.filter(r => r.supervisorId === currentUser.id && r.status === "pending_sup").length;
         if(role === 'moderator') pendingCount = requests.filter(r => r.status === "pending_mod").length;
@@ -762,7 +904,6 @@
         document.getElementById('pendingApprovals').innerText = pendingCount;
         document.getElementById('pendingApprovalsSub').innerHTML = pendingCount + ' pending';
         
-        // My Recent Requests - for current user
         const myRequests = requests.filter(r => r.userId === currentUser.id).slice(0,5);
         document.getElementById('myRequestsList').innerHTML = myRequests.map(r => {
             let statusText = '', statusClass = '';
@@ -774,7 +915,6 @@
             return `<div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><div><p class="font-semibold">${r.type}</p><p class="text-xs">${r.startDate} to ${r.endDate}</p></div><span class="text-xs px-2 py-1 rounded-full ${statusClass}">${statusText}</span></div>`;
         }).join('') || '<div class="text-center text-slate-400 py-6">No requests yet</div>';
         
-        // All My Requests - full list for current user
         const allMyRequests = requests.filter(r => r.userId === currentUser.id);
         document.getElementById('allMyRequestsList').innerHTML = allMyRequests.map(r => {
             let statusText = '', statusClass = '';
@@ -786,7 +926,6 @@
             return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.type}</h4><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-xs text-slate-500">${r.reason}</p></div><span class="text-xs px-3 py-1 rounded-full ${statusClass}">${statusText}</span></div></div>`;
         }).join('') || '<div class="text-center py-8 text-slate-400">No requests yet</div>';
         
-        // Pending Approvals List based on role
         let pendingRequests = [];
         if(role === 'supervisor') pendingRequests = requests.filter(r => r.supervisorId === currentUser.id && r.status === "pending_sup");
         if(role === 'moderator') pendingRequests = requests.filter(r => r.status === "pending_mod");
@@ -805,7 +944,6 @@
             </div>
         `).join('') || '<div class="text-center py-8 text-slate-400">No pending approvals</div>';
         
-        // HR Only: Employee Directory and All Requests
         if(role === 'hr') {
             document.getElementById('hrEmployeesList').innerHTML = employees.map(emp => {
                 const supervisor = users.find(u => u.id === emp.supervisorId);
@@ -830,6 +968,9 @@
             supervisorSelect.innerHTML = '<option value="">No Supervisor</option>' + supervisors.map(s => `<option value="${s.id}">${s.name} (${s.role})</option>`).join('');
         }
         feather.replace();
+        
+        // Update last updated time whenever dashboard refreshes
+        updateLastUpdatedTime();
     }
     
     function addEmployee() {
