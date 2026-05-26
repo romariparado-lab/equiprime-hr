@@ -105,6 +105,10 @@
         .feather { width: 1.25rem; height: 1.25rem; stroke: currentColor; stroke-width: 2; fill: none; }
         .stat-card { transition: all 0.25s ease; cursor: pointer; }
         .stat-card:hover { transform: translateY(-3px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
+        
+        /* Status colors */
+        .status-logged-in { background-color: #d1fae5; color: #059669; }
+        .status-missed { background-color: #fee2e2; color: #dc2626; }
     </style>
 </head>
 <body>
@@ -268,8 +272,10 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- LEFT COLUMN -->
+                <div class="space-y-6">
+                    <!-- My Recent Requests -->
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
                         <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                             <h3 class="text-xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Recent Requests</h3>
@@ -283,7 +289,36 @@
                         </button>
                     </div>
                 </div>
+
+                <!-- RIGHT COLUMN - NEW EMPLOYEE LOGIN STATUS SECTION -->
                 <div class="space-y-6">
+                    <!-- Employee Login Status - NEW FEATURE -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm">
+                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="users"></i> Employee Login Status</h3>
+                        <div class="space-y-4">
+                            <!-- Logged In Today Section -->
+                            <div>
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                                    <h4 class="font-semibold text-slate-700">Logged In Today</h4>
+                                    <span class="text-xs text-slate-400" id="loggedInCount"></span>
+                                </div>
+                                <div id="loggedInList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                            </div>
+                            
+                            <!-- Missed Log In Section -->
+                            <div>
+                                <div class="flex items-center gap-2 mb-3">
+                                    <div class="w-3 h-3 bg-red-500 rounded-full"></div>
+                                    <h4 class="font-semibold text-slate-700">Missed Log In</h4>
+                                    <span class="text-xs text-slate-400" id="missedCount"></span>
+                                </div>
+                                <div id="missedList" class="space-y-2 max-h-48 overflow-y-auto"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Announcements -->
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
                         <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="bell"></i> Announcements</h3>
                         <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-xl">
@@ -295,14 +330,18 @@
                             <p class="text-sm text-green-700">ZKTeco integration available</p>
                         </div>
                     </div>
-                    <div class="bg-white rounded-2xl p-6 shadow-sm">
-                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="git-branch"></i> Approval Flow</h3>
-                        <div class="space-y-2 text-sm">
-                            <div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Employee submits request</div>
-                            <div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Supervisor reviews</div>
-                            <div class="flex items-center gap-2"><span class="w-2 h-2 bg-purple-500 rounded-full"></span> Moderator reviews</div>
-                            <div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> HR final approval</div>
-                        </div>
+                </div>
+            </div>
+
+            <!-- Approval Flow Section (Full width below) -->
+            <div class="mt-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="git-branch"></i> Approval Flow</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-sm">
+                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Employee submits request</div>
+                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Supervisor reviews</div>
+                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-purple-500 rounded-full"></span> Moderator reviews</div>
+                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> HR final approval</div>
                     </div>
                 </div>
             </div>
@@ -373,7 +412,7 @@
     </div>
 </div>
 
-<!-- MODALS -->
+<!-- MODALS (same as before) -->
 <div id="requestModalOverlay" class="modal-overlay">
     <div class="modal-container">
         <div class="flex justify-between items-center mb-4">
@@ -497,6 +536,38 @@
         requests = JSON.parse(localStorage.getItem('equiprime_requests')) || [];
         payslips = JSON.parse(localStorage.getItem('equiprime_payslips')) || [];
         if(users.length === 0) initData(); 
+    }
+    
+    // Helper function to refresh Employee Login Status section
+    function refreshEmployeeLoginStatus() {
+        const today = new Date().toISOString().split('T')[0];
+        const loggedInUsers = attendanceLogs.filter(log => log.date === today).map(log => log.userId);
+        
+        const loggedIn = employees.filter(emp => loggedInUsers.includes(emp.id));
+        const missed = employees.filter(emp => !loggedInUsers.includes(emp.id));
+        
+        document.getElementById('loggedInCount').innerHTML = `(${loggedIn.length})`;
+        document.getElementById('missedCount').innerHTML = `(${missed.length})`;
+        
+        document.getElementById('loggedInList').innerHTML = loggedIn.map(emp => `
+            <div class="flex items-center justify-between p-2 bg-green-50 rounded-lg">
+                <div class="flex items-center gap-2">
+                    <div class="w-6 h-6 rounded-full bg-green-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div>
+                    <span class="text-sm text-slate-700">${emp.name}</span>
+                </div>
+                <span class="text-xs text-green-600">Checked in</span>
+            </div>
+        `).join('') || '<div class="text-center text-slate-400 py-4 text-sm">No employees logged in today</div>';
+        
+        document.getElementById('missedList').innerHTML = missed.map(emp => `
+            <div class="flex items-center justify-between p-2 bg-red-50 rounded-lg">
+                <div class="flex items-center gap-2">
+                    <div class="w-6 h-6 rounded-full bg-red-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div>
+                    <span class="text-sm text-slate-700">${emp.name}</span>
+                </div>
+                <span class="text-xs text-red-600">Not checked in</span>
+            </div>
+        `).join('') || '<div class="text-center text-slate-400 py-4 text-sm">All employees have checked in!</div>';
     }
     
     // MODAL FUNCTIONS
@@ -643,11 +714,31 @@
     function approveAsHR(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_hr") { req.status = "approved"; saveAllData(); refreshDashboard(); alert("Request fully approved"); } }
     function rejectRequest(id) { const req = requests.find(r => r.id === id); if(req && (req.status === "pending_sup" || req.status === "pending_mod" || req.status === "pending_hr")) { req.status = "rejected"; saveAllData(); refreshDashboard(); alert("Request rejected"); } }
     
+    function addMockPunch() {
+        const now = new Date();
+        const today = now.toISOString().split('T')[0];
+        const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        // Check if employee already logged in today
+        const alreadyLoggedIn = attendanceLogs.some(log => log.userId === currentUser.id && log.date === today);
+        if(alreadyLoggedIn) {
+            alert("You have already checked in today!");
+            return;
+        }
+        
+        attendanceLogs.push({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, date: today, timeIn: time, status: "Present" });
+        saveAllData();
+        refreshDashboard();
+        alert(`${currentUser.name} checked in at ${time}`);
+    }
+    
     function refreshDashboard() {
         const role = currentUser?.role;
         
-        // Total Employees - show for everyone
         document.getElementById('totalEmployees').innerText = employees.length;
+        
+        // Refresh Employee Login Status section (for all users, but especially HR)
+        refreshEmployeeLoginStatus();
         
         // For HR/Admin - show all employee attendance
         if(role === 'hr') {
