@@ -55,8 +55,33 @@
             height: 1.25rem;
         }
         
-        .request-card { transition: all 0.2s ease; }
-        .request-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.show {
+            display: flex;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            max-width: 28rem;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .cursor-pointer {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="bg-[#f3f6fb]">
@@ -213,15 +238,15 @@
                 </div>
             </div>
 
-            <!-- Filing Options - ALL BUTTONS FIXED -->
+            <!-- Filing Options - ALL BUTTONS WORKING -->
             <div class="bg-white rounded-2xl p-6 shadow-sm mb-6">
                 <h3 class="text-xl font-bold text-slate-800 mb-5 flex items-center gap-2"><i data-feather="file-text"></i> Quick Filing Options</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                    <button onclick="openFilingModal('Official Business')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-blue-50 transition cursor-pointer"><i data-feather="briefcase" class="text-blue-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Official Business</span></button>
-                    <button onclick="openFilingModal('Overtime')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-orange-50 transition cursor-pointer"><i data-feather="clock" class="text-orange-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Overtime</span></button>
-                    <button onclick="openFilingModal('Certificate of Attendance')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-green-50 transition cursor-pointer"><i data-feather="file" class="text-green-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Certificate</span></button>
-                    <button onclick="openLeaveTypeModal()" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-purple-50 transition cursor-pointer"><i data-feather="calendar" class="text-purple-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Leave</span></button>
-                    <button onclick="openOffsetsModal()" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-teal-50 transition cursor-pointer"><i data-feather="clock" class="text-teal-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Offsets</span></button>
+                    <button onclick="showRequestModal('Official Business')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-blue-50 transition cursor-pointer"><i data-feather="briefcase" class="text-blue-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Official Business</span></button>
+                    <button onclick="showRequestModal('Overtime')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-orange-50 transition cursor-pointer"><i data-feather="clock" class="text-orange-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Overtime</span></button>
+                    <button onclick="showRequestModal('Certificate of Attendance')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-green-50 transition cursor-pointer"><i data-feather="file" class="text-green-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Certificate</span></button>
+                    <button onclick="showLeaveModal()" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-purple-50 transition cursor-pointer"><i data-feather="calendar" class="text-purple-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Leave</span></button>
+                    <button onclick="showOffsetsModal()" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-teal-50 transition cursor-pointer"><i data-feather="clock" class="text-teal-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Offsets</span></button>
                 </div>
             </div>
 
@@ -230,7 +255,7 @@
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Recent Requests</h3>
-                            <button onclick="openNewRequestMenu()" class="text-[#004aad] text-sm font-medium flex items-center gap-1 hover:underline cursor-pointer"><i data-feather="plus-circle"></i> New Request</button>
+                            <button onclick="showNewRequestMenu()" class="text-[#004aad] text-sm font-medium flex items-center gap-1 hover:underline cursor-pointer"><i data-feather="plus-circle"></i> New Request</button>
                         </div>
                         <div id="myRequestsList" class="space-y-3 max-h-80 overflow-y-auto"></div>
                         <button onclick="switchTab('my-requests')" class="mt-4 w-full bg-slate-100 text-slate-700 py-2.5 rounded-xl text-sm cursor-pointer">View All My Requests</button>
@@ -261,7 +286,7 @@
         <div id="my-requests-tab" class="tab-content hidden">
             <div class="flex justify-between items-center mb-5">
                 <h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Requests</h2>
-                <button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm cursor-pointer">+ New Request</button>
+                <button onclick="showNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm cursor-pointer">+ New Request</button>
             </div>
             <div id="allMyRequestsList" class="space-y-3"></div>
         </div>
@@ -282,10 +307,10 @@
                         <div><label class="text-sm font-medium">Select Employee</label><select id="payslipEmployee" class="w-full p-3 border rounded-xl mt-1"></select></div>
                         <div><label class="text-sm font-medium">Month</label><input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl mt-1"></div>
                         <div><label class="text-sm font-medium">Daily Rate</label><input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl mt-1"></div>
-                        <div><label class="text-sm font-medium">Days Present</label><input type="number" id="daysPresent" class="w-full p-3 border rounded-xl mt-1" placeholder="Auto-calculated from attendance"></div>
+                        <div><label class="text-sm font-medium">Days Present</label><input type="number" id="daysPresent" class="w-full p-3 border rounded-xl mt-1" placeholder="Enter days present"></div>
                         <div><label class="text-sm font-medium">Allowances</label><input type="number" id="allowances" value="0" class="w-full p-3 border rounded-xl mt-1"></div>
                         <div><label class="text-sm font-medium">Deductions</label><input type="number" id="deductions" value="0" class="w-full p-3 border rounded-xl mt-1"></div>
-                        <button onclick="generatePayslip()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Generate Payslip</button>
+                        <button onclick="generatePayslip()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition cursor-pointer">Generate Payslip</button>
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl p-6 shadow-sm">
@@ -307,69 +332,69 @@
     </main>
 </div>
 
-<!-- NEW REQUEST MENU MODAL -->
-<div id="newRequestMenuModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-sm">
+<!-- REQUEST MODAL -->
+<div id="requestModal" class="modal">
+    <div class="modal-content">
         <div class="flex justify-between items-center mb-5">
-            <h3 class="text-xl font-bold text-slate-800">Select Request Type</h3>
-            <button onclick="closeNewRequestMenu()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i data-feather="x"></i></button>
+            <h3 class="text-xl font-bold text-slate-800" id="requestModalTitle">Submit Request</h3>
+            <button onclick="closeModal('requestModal')" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i data-feather="x"></i></button>
         </div>
-        <div class="space-y-3">
-            <button onclick="openFilingModal('Official Business')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-blue-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="briefcase" class="text-blue-600"></i><span>Official Business</span></button>
-            <button onclick="openFilingModal('Overtime')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-orange-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="clock" class="text-orange-600"></i><span>Overtime</span></button>
-            <button onclick="openFilingModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-green-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="file" class="text-green-600"></i><span>Certificate of Attendance</span></button>
-            <button onclick="closeNewRequestMenu(); openLeaveTypeModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-purple-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="calendar" class="text-purple-600"></i><span>Leave</span></button>
-            <button onclick="closeNewRequestMenu(); openOffsetsModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-teal-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="clock" class="text-teal-600"></i><span>Offsets</span></button>
-        </div>
-    </div>
-</div>
-
-<!-- LEAVE TYPE MODAL -->
-<div id="leaveTypeModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
-        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeLeaveTypeModal()" class="cursor-pointer"><i data-feather="x"></i></button></div>
-        <div class="space-y-3">
-            <button onclick="openFilingModal('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left flex items-center gap-3 cursor-pointer"><i data-feather="thermometer" class="text-red-600"></i> Sick Leave</button>
-            <button onclick="openFilingModal('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left flex items-center gap-3 cursor-pointer"><i data-feather="alert-triangle" class="text-orange-600"></i> Emergency Leave</button>
-            <button onclick="openFilingModal('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left flex items-center gap-3 cursor-pointer"><i data-feather="sun" class="text-blue-600"></i> Vacation Leave</button>
-        </div>
-    </div>
-</div>
-
-<!-- OFFSETS MODAL -->
-<div id="offsetsModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
-        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeOffsetsModal()" class="cursor-pointer"><i data-feather="x"></i></button></div>
-        <div class="space-y-4">
-            <div><label class="text-sm font-medium">Date</label><input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl"></div>
-            <div><label class="text-sm font-medium">Hours to Offset</label><input type="number" id="offsetsHours" step="0.5" class="w-full p-3 border rounded-xl"></div>
-            <div><label class="text-sm font-medium">Reason</label><textarea id="offsetsReason" rows="2" class="w-full p-3 border rounded-xl"></textarea></div>
-        </div>
-        <div class="flex gap-3 mt-6"><button onclick="submitOffsetsRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Submit</button><button onclick="closeOffsetsModal()" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div>
-    </div>
-</div>
-
-<!-- FILING MODAL -->
-<div id="filingModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
-        <div class="flex justify-between items-center mb-5">
-            <h3 class="text-xl font-bold text-slate-800" id="modalTitle">Submit Request</h3>
-            <button onclick="closeFilingModal()" class="text-slate-400 cursor-pointer"><i data-feather="x"></i></button>
-        </div>
-        <input type="hidden" id="requestType">
+        <input type="hidden" id="requestTypeValue">
         <div class="space-y-4">
             <div><label class="text-sm font-medium">Start Date</label><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"></div>
             <div><label class="text-sm font-medium">End Date</label><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"></div>
             <div><label class="text-sm font-medium">Reason</label><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Please provide details..."></textarea></div>
         </div>
-        <div class="flex gap-3 mt-6"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Submit</button><button onclick="closeFilingModal()" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div>
+        <div class="flex gap-3 mt-6"><button onclick="submitRequestFromModal()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Submit</button><button onclick="closeModal('requestModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div>
+    </div>
+</div>
+
+<!-- LEAVE MODAL -->
+<div id="leaveModal" class="modal">
+    <div class="modal-content">
+        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModal')" class="cursor-pointer"><i data-feather="x"></i></button></div>
+        <div class="space-y-3">
+            <button onclick="openRequestWithType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left hover:bg-red-100 transition flex items-center gap-3 cursor-pointer"><i data-feather="thermometer" class="text-red-600"></i> Sick Leave</button>
+            <button onclick="openRequestWithType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left hover:bg-orange-100 transition flex items-center gap-3 cursor-pointer"><i data-feather="alert-triangle" class="text-orange-600"></i> Emergency Leave</button>
+            <button onclick="openRequestWithType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left hover:bg-blue-100 transition flex items-center gap-3 cursor-pointer"><i data-feather="sun" class="text-blue-600"></i> Vacation Leave</button>
+        </div>
+    </div>
+</div>
+
+<!-- OFFSETS MODAL -->
+<div id="offsetsModal" class="modal">
+    <div class="modal-content">
+        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeModal('offsetsModal')" class="cursor-pointer"><i data-feather="x"></i></button></div>
+        <div class="space-y-4">
+            <div><label class="text-sm font-medium">Date</label><input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl"></div>
+            <div><label class="text-sm font-medium">Hours to Offset</label><input type="number" id="offsetsHours" step="0.5" class="w-full p-3 border rounded-xl"></div>
+            <div><label class="text-sm font-medium">Reason</label><textarea id="offsetsReason" rows="2" class="w-full p-3 border rounded-xl"></textarea></div>
+        </div>
+        <div class="flex gap-3 mt-6"><button onclick="submitOffsetsRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Submit</button><button onclick="closeModal('offsetsModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div>
+    </div>
+</div>
+
+<!-- NEW REQUEST MENU MODAL -->
+<div id="newRequestMenuModal" class="modal">
+    <div class="modal-content">
+        <div class="flex justify-between items-center mb-5">
+            <h3 class="text-xl font-bold text-slate-800">Select Request Type</h3>
+            <button onclick="closeModal('newRequestMenuModal')" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i data-feather="x"></i></button>
+        </div>
+        <div class="space-y-3">
+            <button onclick="showRequestModal('Official Business')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-blue-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="briefcase" class="text-blue-600"></i><span>Official Business</span></button>
+            <button onclick="showRequestModal('Overtime')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-orange-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="clock" class="text-orange-600"></i><span>Overtime</span></button>
+            <button onclick="showRequestModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-green-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="file" class="text-green-600"></i><span>Certificate of Attendance</span></button>
+            <button onclick="closeModal('newRequestMenuModal'); showLeaveModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-purple-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="calendar" class="text-purple-600"></i><span>Leave</span></button>
+            <button onclick="closeModal('newRequestMenuModal'); showOffsetsModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-teal-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="clock" class="text-teal-600"></i><span>Offsets</span></button>
+        </div>
     </div>
 </div>
 
 <!-- ADD EMPLOYEE MODAL -->
-<div id="employeeModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
-    <div class="bg-white rounded-2xl p-6 w-full max-w-md">
-        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal()" class="cursor-pointer"><i data-feather="x"></i></button></div>
+<div id="employeeModal" class="modal">
+    <div class="modal-content">
+        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('employeeModal')" class="cursor-pointer"><i data-feather="x"></i></button></div>
         <div class="space-y-3">
             <input type="text" id="newEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl">
             <input type="text" id="newEmpDept" placeholder="Department" class="w-full p-3 border rounded-xl">
@@ -378,7 +403,7 @@
             <input type="text" id="newEmpPin" placeholder="PIN" class="w-full p-3 border rounded-xl">
             <input type="password" id="newEmpPass" placeholder="Password" class="w-full p-3 border rounded-xl">
         </div>
-        <div class="flex gap-3 mt-6"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Save</button><button onclick="closeModal()" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div>
+        <div class="flex gap-3 mt-6"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Save</button><button onclick="closeModal('employeeModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div>
     </div>
 </div>
 
@@ -401,8 +426,7 @@
         const today = new Date().toISOString().split('T')[0];
         attendanceLogs = [
             { id: 1, userId: 6, userName: "Romari Parado", date: today, timeIn: "08:05 AM", status: "Present" },
-            { id: 2, userId: 7, userName: "Rhedsyne Valdez", date: today, timeIn: "08:12 AM", status: "Present" },
-            { id: 3, userId: 8, userName: "Kimberly Baldugo", date: today, timeIn: "08:00 AM", status: "Present" }
+            { id: 2, userId: 7, userName: "Rhedsyne Valdez", date: today, timeIn: "08:12 AM", status: "Present" }
         ];
         requests = [];
         payslips = JSON.parse(localStorage.getItem('equiprime_payslips')) || [];
@@ -424,6 +448,48 @@
         requests = JSON.parse(localStorage.getItem('equiprime_requests')) || [];
         payslips = JSON.parse(localStorage.getItem('equiprime_payslips')) || [];
         if(users.length === 0) initData(); 
+    }
+    
+    // MODAL FUNCTIONS
+    function showModal(modalId) { document.getElementById(modalId).classList.add('show'); }
+    function closeModal(modalId) { document.getElementById(modalId).classList.remove('show'); }
+    
+    function showNewRequestMenu() { showModal('newRequestMenuModal'); }
+    function showLeaveModal() { showModal('leaveModal'); }
+    function showOffsetsModal() { showModal('offsetsModal'); }
+    
+    function showRequestModal(type) {
+        closeModal('newRequestMenuModal');
+        document.getElementById('requestModalTitle').innerHTML = `Submit ${type}`;
+        document.getElementById('requestTypeValue').value = type;
+        document.getElementById('reqStartDate').value = '';
+        document.getElementById('reqEndDate').value = '';
+        document.getElementById('reqReason').value = '';
+        showModal('requestModal');
+    }
+    
+    function openRequestWithType(type) {
+        closeModal('leaveModal');
+        showRequestModal(type);
+    }
+    
+    function submitRequestFromModal() {
+        const type = document.getElementById('requestTypeValue').value;
+        const startDate = document.getElementById('reqStartDate').value;
+        const endDate = document.getElementById('reqEndDate').value;
+        const reason = document.getElementById('reqReason').value;
+        if(!startDate || !endDate) { alert("Please select dates"); return; }
+        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: type, startDate: startDate, endDate: endDate, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, createdAt: new Date().toISOString() });
+        saveAllData(); closeModal('requestModal'); refreshDashboard(); alert(`${type} request submitted!`);
+    }
+    
+    function submitOffsetsRequest() {
+        const date = document.getElementById('offsetsDate').value;
+        const hours = document.getElementById('offsetsHours').value;
+        const reason = document.getElementById('offsetsReason').value;
+        if(!date || !hours) { alert("Please fill all fields"); return; }
+        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, createdAt: new Date().toISOString() });
+        saveAllData(); closeModal('offsetsModal'); refreshDashboard(); alert("Offset request submitted!");
     }
     
     function login() {
@@ -465,9 +531,7 @@
         const desktopNav = document.getElementById('desktopNavMenu');
         const mobileNav = document.getElementById('mobileNavMenu');
         let navHtml = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="home"></i> Dashboard</button>`;
-        
         navHtml += `<button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> My Requests</button>`;
-        
         if(role === 'supervisor' || role === 'moderator' || role === 'hr') {
             navHtml += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clock"></i> Pending Approvals</button>`;
         }
@@ -516,66 +580,18 @@
         const daysPresent = parseInt(document.getElementById('daysPresent').value);
         const allowances = parseFloat(document.getElementById('allowances').value);
         const deductions = parseFloat(document.getElementById('deductions').value);
-        
-        if(!employeeId || !month) { alert("Please select employee and month"); return; }
-        
+        if(!employeeId || !month || !daysPresent) { alert("Please select employee, month and enter days present"); return; }
         const employee = employees.find(e => e.id == employeeId);
         const totalSalary = (daysPresent * dailyRate) + allowances - deductions;
-        
-        payslips.push({
-            id: Date.now(),
-            employeeId: employeeId,
-            employeeName: employee.name,
-            month: month,
-            daysPresent: daysPresent,
-            dailyRate: dailyRate,
-            allowances: allowances,
-            deductions: deductions,
-            totalSalary: totalSalary,
-            date: new Date().toLocaleDateString()
-        });
-        saveAllData();
-        refreshPayslipTab();
+        payslips.push({ id: Date.now(), employeeId: employeeId, employeeName: employee.name, month: month, daysPresent: daysPresent, dailyRate: dailyRate, allowances: allowances, deductions: deductions, totalSalary: totalSalary, date: new Date().toLocaleDateString() });
+        saveAllData(); refreshPayslipTab();
         alert(`Payslip generated for ${employee.name}\nTotal Salary: ₱${totalSalary.toLocaleString()}`);
-        
-        document.getElementById('dailyRate').value = dailyRate;
         document.getElementById('daysPresent').value = '';
-        document.getElementById('allowances').value = '0';
-        document.getElementById('deductions').value = '0';
     }
     
-    // MODAL FUNCTIONS
-    function openNewRequestMenu() { document.getElementById('newRequestMenuModal').classList.remove('hidden'); document.getElementById('newRequestMenuModal').classList.add('flex'); }
-    function closeNewRequestMenu() { document.getElementById('newRequestMenuModal').classList.add('hidden'); document.getElementById('newRequestMenuModal').classList.remove('flex'); }
-    function openLeaveTypeModal() { closeNewRequestMenu(); document.getElementById('leaveTypeModal').classList.remove('hidden'); document.getElementById('leaveTypeModal').classList.add('flex'); }
-    function closeLeaveTypeModal() { document.getElementById('leaveTypeModal').classList.add('hidden'); document.getElementById('leaveTypeModal').classList.remove('flex'); }
-    function openOffsetsModal() { closeNewRequestMenu(); document.getElementById('offsetsModal').classList.remove('hidden'); document.getElementById('offsetsModal').classList.add('flex'); }
-    function closeOffsetsModal() { document.getElementById('offsetsModal').classList.add('hidden'); document.getElementById('offsetsModal').classList.remove('flex'); }
-    function openFilingModal(type) { closeNewRequestMenu(); closeLeaveTypeModal(); document.getElementById('modalTitle').innerHTML = `Submit ${type}`; document.getElementById('requestType').value = type; document.getElementById('reqStartDate').value = ''; document.getElementById('reqEndDate').value = ''; document.getElementById('reqReason').value = ''; document.getElementById('filingModal').classList.remove('hidden'); document.getElementById('filingModal').classList.add('flex'); }
-    function closeFilingModal() { document.getElementById('filingModal').classList.add('hidden'); document.getElementById('filingModal').classList.remove('flex'); }
-    
-    function submitOffsetsRequest() {
-        const date = document.getElementById('offsetsDate').value;
-        const hours = document.getElementById('offsetsHours').value;
-        const reason = document.getElementById('offsetsReason').value;
-        if(!date || !hours) { alert("Please fill all fields"); return; }
-        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, createdAt: new Date().toISOString() });
-        saveAllData(); closeOffsetsModal(); refreshDashboard(); alert("Offset request submitted!");
-    }
-    
-    function submitRequest() {
-        const type = document.getElementById('requestType').value;
-        const startDate = document.getElementById('reqStartDate').value;
-        const endDate = document.getElementById('reqEndDate').value;
-        const reason = document.getElementById('reqReason').value;
-        if(!startDate || !endDate) { alert("Please select dates"); return; }
-        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: type, startDate: startDate, endDate: endDate, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, createdAt: new Date().toISOString() });
-        saveAllData(); closeFilingModal(); refreshDashboard(); alert(`${type} request submitted!`);
-    }
-    
-    function approveAsSupervisor(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_sup") { req.status = "pending_mod"; saveAllData(); refreshDashboard(); alert("Request approved by Supervisor! Forwarded to Moderator."); } }
-    function approveAsModerator(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_mod") { req.status = "pending_hr"; saveAllData(); refreshDashboard(); alert("Request approved by Moderator! Forwarded to HR."); } }
-    function approveAsHR(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_hr") { req.status = "approved"; saveAllData(); refreshDashboard(); alert("Request FULLY APPROVED by HR!"); } }
+    function approveAsSupervisor(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_sup") { req.status = "pending_mod"; saveAllData(); refreshDashboard(); alert("Request forwarded to Moderator."); } }
+    function approveAsModerator(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_mod") { req.status = "pending_hr"; saveAllData(); refreshDashboard(); alert("Request forwarded to HR."); } }
+    function approveAsHR(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_hr") { req.status = "approved"; saveAllData(); refreshDashboard(); alert("Request FULLY APPROVED!"); } }
     function rejectRequest(id) { const req = requests.find(r => r.id === id); if(req && (req.status === "pending_sup" || req.status === "pending_mod" || req.status === "pending_hr")) { req.status = "rejected"; saveAllData(); refreshDashboard(); alert("Request rejected."); } }
     
     function refreshDashboard() {
@@ -590,6 +606,7 @@
         if(role === 'moderator') pendingCount = requests.filter(r => r.status === "pending_mod").length;
         if(role === 'hr') pendingCount = requests.filter(r => r.status === "pending_hr").length;
         document.getElementById('pendingApprovals').innerText = pendingCount;
+        document.getElementById('pendingApprovalsSub').innerHTML = pendingCount + ' pending';
         
         const myRequests = requests.filter(r => r.userId === currentUser.id).slice(0,5);
         document.getElementById('myRequestsList').innerHTML = myRequests.map(r => {
@@ -657,8 +674,7 @@
         feather.replace();
     }
     
-    function showAddEmployeeModal() { document.getElementById('employeeModal').classList.remove('hidden'); document.getElementById('employeeModal').classList.add('flex'); }
-    function closeModal() { document.getElementById('employeeModal').classList.add('hidden'); document.getElementById('employeeModal').classList.remove('flex'); }
+    function showAddEmployeeModal() { showModal('employeeModal'); }
     function addEmployee() {
         const name = document.getElementById('newEmpName').value;
         const dept = document.getElementById('newEmpDept').value;
@@ -671,7 +687,7 @@
             const avatar = name.split(' ').map(n=>n[0]).join('');
             users.push({ id: newId, pin, password: pass, name, role, department: dept, avatar, supervisorId, leaveBalance: 15, dailyRate: 800 });
             employees.push({ id: newId, name, dept, role, supervisorId, pin, status: 'active', dailyRate: 800 });
-            saveAllData(); closeModal(); refreshDashboard(); alert(`Employee ${name} added!`);
+            saveAllData(); closeModal('employeeModal'); refreshDashboard(); alert(`Employee ${name} added!`);
             document.getElementById('newEmpName').value = ''; document.getElementById('newEmpDept').value = ''; document.getElementById('newEmpPin').value = '';
         } else { alert("Please fill all fields"); }
     }
