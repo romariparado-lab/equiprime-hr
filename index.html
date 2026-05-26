@@ -3,21 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Complete System</title>
+    <title>EQUIPRIME HR - Professional HRIS</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     
     <style>
-        * { font-family: 'Inter', sans-serif; }
+        * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #f3f6fb; overflow-x: hidden; }
+        
+        /* Tab Styles */
         .tab-active { background-color: #004aad; color: white; }
         .tab-inactive { background-color: transparent; color: #64748b; }
         .tab-inactive:hover { background-color: #f1f5f9; color: #1e293b; }
-        .bg-brand-sidebar { background-color: #004aad; }
         
-        /* Mobile Sidebar - slides in from left */
+        /* Desktop Sidebar - Visible on large screens */
+        .desktop-sidebar {
+            width: 280px;
+            background-color: #004aad;
+            color: white;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+        
+        /* Mobile Sidebar - Hidden by default, slides in */
         .mobile-sidebar {
             position: fixed;
             top: 0;
@@ -38,6 +54,8 @@
         .mobile-sidebar.open {
             transform: translateX(0);
         }
+        
+        /* Overlay for mobile sidebar */
         .overlay {
             position: fixed;
             top: 0;
@@ -54,19 +72,46 @@
             opacity: 1;
             visibility: visible;
         }
-        body.no-scroll {
-            overflow: hidden;
-        }
         
-        /* Desktop Sidebar - always visible on large screens */
-        .desktop-sidebar {
+        /* Mobile header - only visible on small screens */
+        .mobile-header {
             display: none;
         }
-        @media (min-width: 1024px) {
+        
+        /* Desktop layout - flex row */
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Main content area */
+        .main-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        
+        /* Responsive breakpoints */
+        @media (max-width: 1023px) {
             .desktop-sidebar {
-                display: flex;
+                display: none;
             }
-            .mobile-only-header {
+            .mobile-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1.25rem;
+            }
+            .main-content {
+                padding: 1rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-header {
+                display: none;
+            }
+            .mobile-sidebar, .mobile-overlay {
                 display: none;
             }
         }
@@ -96,12 +141,22 @@
             max-height: 90vh;
             overflow-y: auto;
         }
+        
         .feather {
             width: 1.25rem;
             height: 1.25rem;
             stroke: currentColor;
             stroke-width: 2;
             fill: none;
+        }
+        
+        .stat-card {
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1);
         }
     </style>
 </head>
@@ -115,32 +170,31 @@
                 <i data-feather="briefcase" class="text-white" style="width: 2rem;"></i>
             </div>
             <h1 class="text-3xl font-extrabold text-[#004aad]">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
-            <p class="text-slate-500 text-sm">smart choices · smarter results</p>
+            <p class="text-slate-500 text-sm mt-1">smart choices · smarter results</p>
         </div>
         <div id="loginError" class="bg-red-50 text-red-600 p-3 rounded-xl text-sm mb-4 hidden"></div>
         <div class="space-y-4">
-            <input type="text" id="loginPin" placeholder="Employee ID / PIN" class="w-full p-3 border rounded-xl">
-            <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl">
-            <button onclick="login()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Login</button>
+            <input type="text" id="loginPin" placeholder="Employee ID / PIN" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
+            <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
+            <button onclick="login()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Login</button>
         </div>
         <div class="mt-6 p-4 bg-slate-50 rounded-xl text-xs text-slate-500">
             <p class="font-semibold mb-1">Demo Credentials:</p>
-            <p>👑 HR: PIN 1000 / admin</p>
-            <p>🛡️ Moderator Rom: PIN 5001 / mod123</p>
-            <p>🛡️ Moderator Dex: PIN 5002 / mod123</p>
-            <p>👔 Supervisor: PIN 2001 / 1234</p>
-            <p>👤 Employee: PIN 1002 / 1234</p>
+            <p>HR Admin: PIN 1000 / admin</p>
+            <p>Moderator: PIN 5001 / mod123</p>
+            <p>Supervisor: PIN 2001 / 1234</p>
+            <p>Employee: PIN 1002 / 1234</p>
         </div>
     </div>
 </div>
 
-<!-- MAIN APP CONTAINER (flex row for desktop layout) -->
-<div id="mainApp" class="hidden">
+<!-- MAIN APP CONTAINER -->
+<div id="mainApp" class="hidden app-container">
     
-    <!-- Mobile Overlay (click to close sidebar) -->
+    <!-- Mobile Overlay -->
     <div id="overlay" class="overlay" onclick="closeMobileSidebar()"></div>
 
-    <!-- MOBILE SIDEBAR (visible only on mobile, hidden on desktop via CSS) -->
+    <!-- MOBILE SIDEBAR (only visible on mobile when opened) -->
     <div id="mobileSidebar" class="mobile-sidebar">
         <div class="flex justify-end mb-4">
             <button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10">
@@ -159,8 +213,8 @@
         </div>
     </div>
 
-    <!-- DESKTOP SIDEBAR (visible only on desktop, hidden on mobile) -->
-    <div class="desktop-sidebar w-64 xl:w-72 bg-brand-sidebar text-white flex-col flex-shrink-0 p-6 shadow-2xl h-screen sticky top-0 overflow-y-auto">
+    <!-- DESKTOP SIDEBAR (always visible on large screens) -->
+    <div class="desktop-sidebar">
         <div class="mb-8">
             <h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
             <p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p>
@@ -172,10 +226,10 @@
                     <div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div>
                     <div>
                         <p class="font-semibold text-sm" id="userName">HR Admin</p>
-                        <p class="text-xs text-slate-300" id="userRoleDisplay">Admin</p>
+                        <p class="text-xs text-slate-300" id="userRoleDisplay">Administrator</p>
                     </div>
                 </div>
-                <button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 text-sm">
+                <button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm">
                     <i data-feather="log-out"></i> Logout
                 </button>
             </div>
@@ -183,12 +237,12 @@
     </div>
 
     <!-- MAIN CONTENT AREA -->
-    <main class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+    <div class="main-content">
         
-        <!-- MOBILE HEADER (visible only on mobile) -->
-        <div class="mobile-only-header flex justify-between items-center mb-5 lg:hidden">
+        <!-- MOBILE HEADER (only visible on small screens) -->
+        <div class="mobile-header">
             <button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm">
-                <i data-feather="menu"></i>
+                <i data-feather="menu" class="text-slate-700"></i>
             </button>
             <div class="flex items-center gap-2">
                 <div class="w-8 h-8 rounded-full bg-[#004aad] text-white flex items-center justify-center text-xs font-bold" id="mobileUserInitials">HR</div>
@@ -210,30 +264,30 @@
 
         <!-- DASHBOARD TAB -->
         <div id="dashboard-tab" class="tab-content">
-            <!-- KPI Cards - Responsive grid -->
+            <!-- KPI Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition">
+                <div class="stat-card bg-white rounded-2xl p-5 shadow-sm">
                     <div class="flex justify-between items-start">
                         <div><p class="text-slate-500 text-sm">Total Employees</p><h3 class="text-3xl font-bold mt-2" id="totalEmployees">0</h3></div>
                         <div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center"><i data-feather="users" class="text-blue-600"></i></div>
                     </div>
                     <p class="text-green-600 text-sm mt-4">Active workforce</p>
                 </div>
-                <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition">
+                <div class="stat-card bg-white rounded-2xl p-5 shadow-sm">
                     <div class="flex justify-between items-start">
                         <div><p class="text-slate-500 text-sm">My Attendance</p><h3 class="text-3xl font-bold mt-2" id="myAttendance">0</h3></div>
                         <div class="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center"><i data-feather="user-check" class="text-green-600"></i></div>
                     </div>
                     <p class="text-green-600 text-sm mt-4" id="myAttendanceRate">This month</p>
                 </div>
-                <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition">
+                <div class="stat-card bg-white rounded-2xl p-5 shadow-sm">
                     <div class="flex justify-between items-start">
                         <div><p class="text-slate-500 text-sm">Pending Approvals</p><h3 class="text-3xl font-bold mt-2" id="pendingApprovals">0</h3></div>
                         <div class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center"><i data-feather="clock" class="text-orange-600"></i></div>
                     </div>
                     <p class="text-orange-600 text-sm mt-4" id="pendingApprovalsSub">awaiting action</p>
                 </div>
-                <div class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition">
+                <div class="stat-card bg-white rounded-2xl p-5 shadow-sm">
                     <div class="flex justify-between items-start">
                         <div><p class="text-slate-500 text-sm">Leave Balance</p><h3 class="text-2xl font-bold mt-2" id="myLeaveBalance">15</h3></div>
                         <div class="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center"><i data-feather="calendar" class="text-purple-600"></i></div>
@@ -242,7 +296,7 @@
                 </div>
             </div>
 
-            <!-- QUICK FILING OPTIONS - ALL WORKING -->
+            <!-- Quick Filing Options -->
             <div class="bg-white rounded-2xl p-6 shadow-sm mb-6">
                 <h3 class="text-xl font-bold mb-5 flex items-center gap-2"><i data-feather="file-text"></i> Quick Filing Options</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -269,7 +323,6 @@
                 </div>
             </div>
 
-            <!-- Two Column Layout - Responsive -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <div class="lg:col-span-2">
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
@@ -290,11 +343,11 @@
                         <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="bell"></i> Announcements</h3>
                         <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-xl">
                             <h4 class="font-bold text-blue-900">System Live</h4>
-                            <p class="text-sm text-blue-700">EQUIPRIME HR is now operational!</p>
+                            <p class="text-sm text-blue-700">EQUIPRIME HR is now operational</p>
                         </div>
                         <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-xl mt-3">
                             <h4 class="font-bold text-green-900">Biometrics Ready</h4>
-                            <p class="text-sm text-green-700">ZKTeco integration available (demo mode)</p>
+                            <p class="text-sm text-green-700">ZKTeco integration available</p>
                         </div>
                     </div>
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
@@ -314,7 +367,7 @@
         <div id="my-requests-tab" class="tab-content hidden">
             <div class="flex justify-between items-center mb-5 flex-wrap gap-2">
                 <h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Requests</h2>
-                <button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm cursor-pointer">+ New Request</button>
+                <button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm cursor-pointer">New Request</button>
             </div>
             <div id="allMyRequestsList" class="space-y-3"></div>
         </div>
@@ -325,7 +378,7 @@
             <div id="pendingApprovalsList" class="space-y-4"></div>
         </div>
 
-        <!-- PAYSLIP TAB (HR Only) -->
+        <!-- PAYSLIP TAB -->
         <div id="hr-payslip-tab" class="tab-content hidden">
             <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="file-text"></i> Payslip Management</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -333,7 +386,7 @@
                     <h3 class="text-xl font-bold mb-4">Generate Payslip</h3>
                     <div class="space-y-4">
                         <select id="payslipEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Employee</option></select>
-                        <input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl" placeholder="Month">
+                        <input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl">
                         <input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl" placeholder="Daily Rate">
                         <input type="number" id="daysPresent" class="w-full p-3 border rounded-xl" placeholder="Days Present">
                         <input type="number" id="allowances" value="0" class="w-full p-3 border rounded-xl" placeholder="Allowances">
@@ -348,20 +401,22 @@
             </div>
         </div>
 
-        <!-- HR TABS -->
+        <!-- EMPLOYEES TAB -->
         <div id="hr-employees-tab" class="tab-content hidden">
             <div class="flex justify-between items-center mb-5 flex-wrap gap-2">
                 <h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="users"></i> Employee Directory</h2>
-                <button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm cursor-pointer">+ Add Employee</button>
+                <button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm cursor-pointer">Add Employee</button>
             </div>
             <div id="hrEmployeesList" class="bg-white rounded-2xl shadow-sm overflow-hidden"></div>
         </div>
 
+        <!-- ALL REQUESTS TAB -->
         <div id="hr-requests-tab" class="tab-content hidden">
             <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2>
             <div id="allRequestsList" class="space-y-4"></div>
         </div>
 
+        <!-- SETTINGS TAB -->
         <div id="hr-settings-tab" class="tab-content hidden">
             <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="settings"></i> System Settings</h2>
             <div class="bg-white rounded-2xl p-6">
@@ -370,7 +425,7 @@
                 <button onclick="saveSettings()" class="mt-4 bg-[#004aad] text-white px-5 py-2 rounded-xl cursor-pointer">Save Settings</button>
             </div>
         </div>
-    </main>
+    </div>
 </div>
 
 <!-- MODALS -->
@@ -400,9 +455,9 @@
             <button onclick="closeModal('leaveModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button>
         </div>
         <div class="space-y-3">
-            <button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left cursor-pointer flex items-center gap-2"><i data-feather="thermometer"></i> Sick Leave</button>
-            <button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left cursor-pointer flex items-center gap-2"><i data-feather="alert-triangle"></i> Emergency Leave</button>
-            <button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left cursor-pointer flex items-center gap-2"><i data-feather="sun"></i> Vacation Leave</button>
+            <button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left cursor-pointer">Sick Leave</button>
+            <button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left cursor-pointer">Emergency Leave</button>
+            <button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left cursor-pointer">Vacation Leave</button>
         </div>
     </div>
 </div>
@@ -432,18 +487,18 @@
             <button onclick="closeModal('newRequestMenuOverlay')" class="cursor-pointer"><i data-feather="x"></i></button>
         </div>
         <div class="space-y-3">
-            <button onclick="openRequestModal('Official Business')" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">💼 Official Business</button>
-            <button onclick="openRequestModal('Overtime')" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">⏰ Overtime</button>
-            <button onclick="openRequestModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">📜 Certificate of Attendance</button>
-            <button onclick="closeModal('newRequestMenuOverlay'); openLeaveModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">🌴 Leave</button>
-            <button onclick="closeModal('newRequestMenuOverlay'); openOffsetsModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">⏱️ Offsets</button>
+            <button onclick="openRequestModal('Official Business')" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">Official Business</button>
+            <button onclick="openRequestModal('Overtime')" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">Overtime</button>
+            <button onclick="openRequestModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">Certificate of Attendance</button>
+            <button onclick="closeModal('newRequestMenuOverlay'); openLeaveModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">Leave</button>
+            <button onclick="closeModal('newRequestMenuOverlay'); openOffsetsModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">Offsets</button>
         </div>
     </div>
 </div>
 
 <div id="addEmployeeModal" class="modal-overlay">
     <div class="modal-container">
-        <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')"><i data-feather="x"></i></button></div>
+        <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" class="cursor-pointer"><i data-feather="x"></i></button></div>
         <div class="space-y-3">
             <input type="text" id="newEmpName" class="w-full p-3 border rounded-xl" placeholder="Full Name">
             <input type="text" id="newEmpDept" class="w-full p-3 border rounded-xl" placeholder="Department">
@@ -465,7 +520,7 @@
             { id: 1, pin: "1000", password: "admin", name: "Polyjem Lim", role: "hr", department: "HR & Admin", avatar: "PL", supervisorId: null, leaveBalance: 20, dailyRate: 1200 },
             { id: 2, pin: "1001", password: "admin", name: "Vincent Cristan Eligino", role: "hr", department: "HR", avatar: "VE", supervisorId: null, leaveBalance: 20, dailyRate: 1100 },
             { id: 3, pin: "5001", password: "mod123", name: "Moderator Rom", role: "moderator", department: "Marketing", avatar: "MR", supervisorId: null, leaveBalance: 15, dailyRate: 950 },
-            { id: 4, pin: "5002", password: "mod123", name: "Moderator Dex", role: "moderator", department: "IT/Asset Management", avatar: "MD", supervisorId: null, leaveBalance: 15, dailyRate: 950 },
+            { id: 4, pin: "5002", password: "mod123", name: "Moderator Dex", role: "moderator", department: "IT Asset Management", avatar: "MD", supervisorId: null, leaveBalance: 15, dailyRate: 950 },
             { id: 5, pin: "2001", password: "1234", name: "Cris Molina", role: "supervisor", department: "Parts & Logistics", avatar: "CM", supervisorId: 1, leaveBalance: 10, dailyRate: 1000 },
             { id: 6, pin: "1002", password: "1234", name: "Romari Parado", role: "employee", department: "Service", avatar: "RP", supervisorId: 5, leaveBalance: 12, dailyRate: 800 },
             { id: 7, pin: "1003", password: "1234", name: "Rhedsyne Valdez", role: "employee", department: "Marketing", avatar: "RV", supervisorId: 5, leaveBalance: 10, dailyRate: 800 },
@@ -530,7 +585,7 @@
         const reason = document.getElementById('reqReason').value;
         if(!startDate || !endDate) { alert("Please select dates"); return; }
         requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: type, startDate: startDate, endDate: endDate, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, createdAt: new Date().toISOString() });
-        saveAllData(); closeModal('requestModalOverlay'); refreshDashboard(); alert(`${type} request submitted!`);
+        saveAllData(); closeModal('requestModalOverlay'); refreshDashboard(); alert(`${type} request submitted`);
     }
     
     function submitOffsets() {
@@ -539,7 +594,7 @@
         const reason = document.getElementById('offsetsReasonText').value;
         if(!date || !hours) { alert("Please fill all fields"); return; }
         requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, createdAt: new Date().toISOString() });
-        saveAllData(); closeModal('offsetsModalOverlay'); refreshDashboard(); alert("Offset request submitted!");
+        saveAllData(); closeModal('offsetsModalOverlay'); refreshDashboard(); alert("Offset request submitted");
     }
     
     function login() {
@@ -614,11 +669,11 @@
             historyDiv.innerHTML = payslips.slice().reverse().map(p => `
                 <div class="bg-slate-50 rounded-xl p-4 border">
                     <div class="flex justify-between items-start">
-                        <div><p class="font-bold">${p.employeeName}</p><p class="text-sm text-slate-600">${p.month}</p><p class="text-sm">Days: ${p.daysPresent} | Rate: ₱${p.dailyRate}</p></div>
-                        <div class="text-right"><p class="font-bold text-green-600">Total: ₱${p.totalSalary.toLocaleString()}</p></div>
+                        <div><p class="font-bold">${p.employeeName}</p><p class="text-sm text-slate-600">${p.month}</p><p class="text-sm">Days: ${p.daysPresent} | Rate: ${p.dailyRate}</p></div>
+                        <div class="text-right"><p class="font-bold text-green-600">Total: ${p.totalSalary.toLocaleString()}</p></div>
                     </div>
                 </div>
-            `).join('') || '<div class="text-center text-slate-400 py-8">No payslips generated yet.</div>';
+            `).join('') || '<div class="text-center text-slate-400 py-8">No payslips generated yet</div>';
         }
     }
     
@@ -634,14 +689,14 @@
         const totalSalary = (daysPresent * dailyRate) + allowances - deductions;
         payslips.push({ id: Date.now(), employeeId: employeeId, employeeName: employee.name, month: month, daysPresent: daysPresent, dailyRate: dailyRate, allowances: allowances, deductions: deductions, totalSalary: totalSalary, date: new Date().toLocaleDateString() });
         saveAllData(); refreshPayslipTab();
-        alert(`Payslip generated for ${employee.name}\nTotal Salary: ₱${totalSalary.toLocaleString()}`);
+        alert(`Payslip generated for ${employee.name}\nTotal Salary: ${totalSalary.toLocaleString()}`);
         document.getElementById('daysPresent').value = '';
     }
     
-    function approveAsSupervisor(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_sup") { req.status = "pending_mod"; saveAllData(); refreshDashboard(); alert("Request forwarded to Moderator."); } }
-    function approveAsModerator(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_mod") { req.status = "pending_hr"; saveAllData(); refreshDashboard(); alert("Request forwarded to HR."); } }
-    function approveAsHR(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_hr") { req.status = "approved"; saveAllData(); refreshDashboard(); alert("Request FULLY APPROVED!"); } }
-    function rejectRequest(id) { const req = requests.find(r => r.id === id); if(req && (req.status === "pending_sup" || req.status === "pending_mod" || req.status === "pending_hr")) { req.status = "rejected"; saveAllData(); refreshDashboard(); alert("Request rejected."); } }
+    function approveAsSupervisor(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_sup") { req.status = "pending_mod"; saveAllData(); refreshDashboard(); alert("Request forwarded to Moderator"); } }
+    function approveAsModerator(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_mod") { req.status = "pending_hr"; saveAllData(); refreshDashboard(); alert("Request forwarded to HR"); } }
+    function approveAsHR(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_hr") { req.status = "approved"; saveAllData(); refreshDashboard(); alert("Request fully approved"); } }
+    function rejectRequest(id) { const req = requests.find(r => r.id === id); if(req && (req.status === "pending_sup" || req.status === "pending_mod" || req.status === "pending_hr")) { req.status = "rejected"; saveAllData(); refreshDashboard(); alert("Request rejected"); } }
     
     function refreshDashboard() {
         const role = currentUser?.role;
@@ -667,7 +722,7 @@
             else if(r.status === 'approved') { statusText = 'Approved'; statusClass = 'bg-green-100 text-green-700'; }
             else { statusText = 'Rejected'; statusClass = 'bg-red-100 text-red-700'; }
             return `<div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><div><p class="font-semibold">${r.type}</p><p class="text-xs">${r.startDate} to ${r.endDate}</p></div><span class="text-xs px-2 py-1 rounded-full ${statusClass}">${statusText}</span></div>`;
-        }).join('') || '<div class="text-center text-slate-400 py-6">No requests yet.</div>';
+        }).join('') || '<div class="text-center text-slate-400 py-6">No requests yet</div>';
         
         const allMyRequests = requests.filter(r => r.userId === currentUser.id);
         document.getElementById('allMyRequestsList').innerHTML = allMyRequests.map(r => {
@@ -678,7 +733,7 @@
             else if(r.status === 'approved') { statusText = 'Approved'; statusClass = 'bg-green-100 text-green-700'; }
             else { statusText = 'Rejected'; statusClass = 'bg-red-100 text-red-700'; }
             return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.type}</h4><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-xs text-slate-500">${r.reason}</p></div><span class="text-xs px-3 py-1 rounded-full ${statusClass}">${statusText}</span></div></div>`;
-        }).join('') || '<div class="text-center py-8 text-slate-400">No requests yet.</div>';
+        }).join('') || '<div class="text-center py-8 text-slate-400">No requests yet</div>';
         
         let pendingRequests = [];
         if(role === 'supervisor') pendingRequests = requests.filter(r => r.supervisorId === currentUser.id && r.status === "pending_sup");
@@ -696,7 +751,7 @@
                     </div>
                 </div>
             </div>
-        `).join('') || '<div class="text-center py-8 text-slate-400">No pending approvals.</div>';
+        `).join('') || '<div class="text-center py-8 text-slate-400">No pending approvals</div>';
         
         if(role === 'hr') {
             document.getElementById('hrEmployeesList').innerHTML = employees.map(emp => {
@@ -736,13 +791,13 @@
             const avatar = name.split(' ').map(n=>n[0]).join('');
             users.push({ id: newId, pin, password: pass, name, role, department: dept, avatar, supervisorId, leaveBalance: 15, dailyRate: 800 });
             employees.push({ id: newId, name, dept, role, supervisorId, pin, status: 'active', dailyRate: 800 });
-            saveAllData(); closeModal('addEmployeeModal'); refreshDashboard(); alert(`Employee ${name} added!`);
+            saveAllData(); closeModal('addEmployeeModal'); refreshDashboard(); alert(`Employee ${name} added`);
             document.getElementById('newEmpName').value = ''; document.getElementById('newEmpDept').value = ''; document.getElementById('newEmpPin').value = '';
         } else { alert("Please fill all fields"); }
     }
     
     function deleteEmployee(id) { if(confirm('Delete this employee?')){ users = users.filter(u => u.id !== id); employees = employees.filter(e => e.id !== id); saveAllData(); refreshDashboard(); } }
-    function saveSettings(){ localStorage.setItem('device_ip', document.getElementById('deviceIp').value); alert('Settings saved!'); }
+    function saveSettings(){ localStorage.setItem('device_ip', document.getElementById('deviceIp').value); alert('Settings saved'); }
     
     function openMobileSidebar() { document.getElementById('mobileSidebar').classList.add('open'); document.getElementById('overlay').classList.add('active'); document.body.classList.add('no-scroll'); }
     function closeMobileSidebar() { document.getElementById('mobileSidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); document.body.classList.remove('no-scroll'); }
