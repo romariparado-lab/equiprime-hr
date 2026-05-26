@@ -92,7 +92,6 @@
             <div class="space-y-1 text-xs text-slate-500">
                 <div class="flex items-center gap-2"><i data-feather="award" style="width: 0.8rem;"></i> <span>HR: PIN 1000 / admin</span></div>
                 <div class="flex items-center gap-2"><i data-feather="shield" style="width: 0.8rem;"></i> <span>Moderator: PIN 5001 / mod123</span></div>
-                <div class="flex items-center gap-2"><i data-feather="shield" style="width: 0.8rem;"></i> <span>Moderator: PIN 5002 / mod123</span></div>
                 <div class="flex items-center gap-2"><i data-feather="users" style="width: 0.8rem;"></i> <span>Supervisor: PIN 2001 / 1234</span></div>
                 <div class="flex items-center gap-2"><i data-feather="user" style="width: 0.8rem;"></i> <span>Employee: PIN 1002 / 1234</span></div>
             </div>
@@ -214,15 +213,15 @@
                 </div>
             </div>
 
-            <!-- Filing Options -->
+            <!-- Filing Options - ALL BUTTONS FIXED -->
             <div class="bg-white rounded-2xl p-6 shadow-sm mb-6">
                 <h3 class="text-xl font-bold text-slate-800 mb-5 flex items-center gap-2"><i data-feather="file-text"></i> Quick Filing Options</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                    <button onclick="openFilingModal('Official Business')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-blue-50 transition"><i data-feather="briefcase" class="text-blue-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Official Business</span></button>
-                    <button onclick="openFilingModal('Overtime')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-orange-50 transition"><i data-feather="clock" class="text-orange-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Overtime</span></button>
-                    <button onclick="openFilingModal('Certificate of Attendance')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-green-50 transition"><i data-feather="file" class="text-green-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Certificate</span></button>
-                    <button onclick="openLeaveTypeModal()" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-purple-50 transition"><i data-feather="calendar" class="text-purple-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Leave</span></button>
-                    <button onclick="openOffsetsModal()" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-teal-50 transition"><i data-feather="clock" class="text-teal-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Offsets</span></button>
+                    <button onclick="openFilingModal('Official Business')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-blue-50 transition cursor-pointer"><i data-feather="briefcase" class="text-blue-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Official Business</span></button>
+                    <button onclick="openFilingModal('Overtime')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-orange-50 transition cursor-pointer"><i data-feather="clock" class="text-orange-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Overtime</span></button>
+                    <button onclick="openFilingModal('Certificate of Attendance')" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-green-50 transition cursor-pointer"><i data-feather="file" class="text-green-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Certificate</span></button>
+                    <button onclick="openLeaveTypeModal()" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-purple-50 transition cursor-pointer"><i data-feather="calendar" class="text-purple-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Leave</span></button>
+                    <button onclick="openOffsetsModal()" class="flex flex-col items-center p-4 bg-slate-50 rounded-xl hover:bg-teal-50 transition cursor-pointer"><i data-feather="clock" class="text-teal-600 mb-2" style="width: 1.8rem;"></i><span class="text-sm font-medium">Offsets</span></button>
                 </div>
             </div>
 
@@ -231,10 +230,10 @@
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Recent Requests</h3>
-                            <button onclick="openNewRequestMenu()" class="text-[#004aad] text-sm font-medium flex items-center gap-1 hover:underline"><i data-feather="plus-circle"></i> New Request</button>
+                            <button onclick="openNewRequestMenu()" class="text-[#004aad] text-sm font-medium flex items-center gap-1 hover:underline cursor-pointer"><i data-feather="plus-circle"></i> New Request</button>
                         </div>
                         <div id="myRequestsList" class="space-y-3 max-h-80 overflow-y-auto"></div>
-                        <button onclick="switchTab('my-requests')" class="mt-4 w-full bg-slate-100 text-slate-700 py-2.5 rounded-xl text-sm">View All My Requests</button>
+                        <button onclick="switchTab('my-requests')" class="mt-4 w-full bg-slate-100 text-slate-700 py-2.5 rounded-xl text-sm cursor-pointer">View All My Requests</button>
                     </div>
                 </div>
                 <div class="space-y-6">
@@ -262,7 +261,7 @@
         <div id="my-requests-tab" class="tab-content hidden">
             <div class="flex justify-between items-center mb-5">
                 <h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Requests</h2>
-                <button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">+ New Request</button>
+                <button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm cursor-pointer">+ New Request</button>
             </div>
             <div id="allMyRequestsList" class="space-y-3"></div>
         </div>
@@ -273,15 +272,38 @@
             <div id="pendingApprovalsList" class="space-y-4"></div>
         </div>
 
+        <!-- PAYSLIP TAB (HR Only) -->
+        <div id="hr-payslip-tab" class="tab-content hidden">
+            <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="file-text"></i> Payslip Management</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">Generate Payslip</h3>
+                    <div class="space-y-4">
+                        <div><label class="text-sm font-medium">Select Employee</label><select id="payslipEmployee" class="w-full p-3 border rounded-xl mt-1"></select></div>
+                        <div><label class="text-sm font-medium">Month</label><input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl mt-1"></div>
+                        <div><label class="text-sm font-medium">Daily Rate</label><input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl mt-1"></div>
+                        <div><label class="text-sm font-medium">Days Present</label><input type="number" id="daysPresent" class="w-full p-3 border rounded-xl mt-1" placeholder="Auto-calculated from attendance"></div>
+                        <div><label class="text-sm font-medium">Allowances</label><input type="number" id="allowances" value="0" class="w-full p-3 border rounded-xl mt-1"></div>
+                        <div><label class="text-sm font-medium">Deductions</label><input type="number" id="deductions" value="0" class="w-full p-3 border rounded-xl mt-1"></div>
+                        <button onclick="generatePayslip()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Generate Payslip</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">Payslip History</h3>
+                    <div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div>
+                </div>
+            </div>
+        </div>
+
         <!-- HR TABS -->
         <div id="hr-employees-tab" class="tab-content hidden">
-            <div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="users"></i> Employee Directory</h2><button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">+ Add Employee</button></div>
+            <div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="users"></i> Employee Directory</h2><button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm cursor-pointer">+ Add Employee</button></div>
             <div class="bg-white rounded-2xl shadow-sm overflow-x-auto"><table class="w-full min-w-[600px]"><thead class="bg-slate-50"><tr><th class="p-3 text-left">Employee</th><th class="p-3 text-left">Department</th><th class="p-3 text-left">Role</th><th class="p-3 text-left">Supervisor</th><th class="p-3 text-left">Actions</th></tr></thead><tbody id="hrEmployeesList"></tbody>}</div>
         </div>
 
         <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
 
-        <div id="hr-settings-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="settings"></i> System Settings</h2><div class="bg-white rounded-2xl p-6"><div><label class="font-semibold text-sm">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl mt-1"></div><button onclick="saveSettings()" class="mt-4 bg-[#004aad] text-white px-5 py-2 rounded-xl">Save Settings</button></div></div>
+        <div id="hr-settings-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="settings"></i> System Settings</h2><div class="bg-white rounded-2xl p-6"><div><label class="font-semibold text-sm">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl mt-1"></div><button onclick="saveSettings()" class="mt-4 bg-[#004aad] text-white px-5 py-2 rounded-xl cursor-pointer">Save Settings</button></div></div>
     </main>
 </div>
 
@@ -290,14 +312,14 @@
     <div class="bg-white rounded-2xl p-6 w-full max-w-sm">
         <div class="flex justify-between items-center mb-5">
             <h3 class="text-xl font-bold text-slate-800">Select Request Type</h3>
-            <button onclick="closeNewRequestMenu()" class="text-slate-400 hover:text-slate-600"><i data-feather="x"></i></button>
+            <button onclick="closeNewRequestMenu()" class="text-slate-400 hover:text-slate-600 cursor-pointer"><i data-feather="x"></i></button>
         </div>
         <div class="space-y-3">
-            <button onclick="openFilingModal('Official Business')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-blue-50 transition flex items-center gap-3"><i data-feather="briefcase" class="text-blue-600"></i><span>Official Business</span></button>
-            <button onclick="openFilingModal('Overtime')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-orange-50 transition flex items-center gap-3"><i data-feather="clock" class="text-orange-600"></i><span>Overtime</span></button>
-            <button onclick="openFilingModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-green-50 transition flex items-center gap-3"><i data-feather="file" class="text-green-600"></i><span>Certificate of Attendance</span></button>
-            <button onclick="closeNewRequestMenu(); openLeaveTypeModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-purple-50 transition flex items-center gap-3"><i data-feather="calendar" class="text-purple-600"></i><span>Leave</span></button>
-            <button onclick="closeNewRequestMenu(); openOffsetsModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-teal-50 transition flex items-center gap-3"><i data-feather="clock" class="text-teal-600"></i><span>Offsets</span></button>
+            <button onclick="openFilingModal('Official Business')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-blue-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="briefcase" class="text-blue-600"></i><span>Official Business</span></button>
+            <button onclick="openFilingModal('Overtime')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-orange-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="clock" class="text-orange-600"></i><span>Overtime</span></button>
+            <button onclick="openFilingModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-green-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="file" class="text-green-600"></i><span>Certificate of Attendance</span></button>
+            <button onclick="closeNewRequestMenu(); openLeaveTypeModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-purple-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="calendar" class="text-purple-600"></i><span>Leave</span></button>
+            <button onclick="closeNewRequestMenu(); openOffsetsModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left hover:bg-teal-50 transition flex items-center gap-3 cursor-pointer"><i data-feather="clock" class="text-teal-600"></i><span>Offsets</span></button>
         </div>
     </div>
 </div>
@@ -305,11 +327,11 @@
 <!-- LEAVE TYPE MODAL -->
 <div id="leaveTypeModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
     <div class="bg-white rounded-2xl p-6 w-full max-w-md">
-        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeLeaveTypeModal()"><i data-feather="x"></i></button></div>
+        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeLeaveTypeModal()" class="cursor-pointer"><i data-feather="x"></i></button></div>
         <div class="space-y-3">
-            <button onclick="openFilingModal('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left flex items-center gap-3"><i data-feather="thermometer" class="text-red-600"></i> Sick Leave</button>
-            <button onclick="openFilingModal('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left flex items-center gap-3"><i data-feather="alert-triangle" class="text-orange-600"></i> Emergency Leave</button>
-            <button onclick="openFilingModal('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left flex items-center gap-3"><i data-feather="sun" class="text-blue-600"></i> Vacation Leave</button>
+            <button onclick="openFilingModal('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left flex items-center gap-3 cursor-pointer"><i data-feather="thermometer" class="text-red-600"></i> Sick Leave</button>
+            <button onclick="openFilingModal('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left flex items-center gap-3 cursor-pointer"><i data-feather="alert-triangle" class="text-orange-600"></i> Emergency Leave</button>
+            <button onclick="openFilingModal('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left flex items-center gap-3 cursor-pointer"><i data-feather="sun" class="text-blue-600"></i> Vacation Leave</button>
         </div>
     </div>
 </div>
@@ -317,13 +339,13 @@
 <!-- OFFSETS MODAL -->
 <div id="offsetsModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
     <div class="bg-white rounded-2xl p-6 w-full max-w-md">
-        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeOffsetsModal()"><i data-feather="x"></i></button></div>
+        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeOffsetsModal()" class="cursor-pointer"><i data-feather="x"></i></button></div>
         <div class="space-y-4">
             <div><label class="text-sm font-medium">Date</label><input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl"></div>
             <div><label class="text-sm font-medium">Hours to Offset</label><input type="number" id="offsetsHours" step="0.5" class="w-full p-3 border rounded-xl"></div>
             <div><label class="text-sm font-medium">Reason</label><textarea id="offsetsReason" rows="2" class="w-full p-3 border rounded-xl"></textarea></div>
         </div>
-        <div class="flex gap-3 mt-6"><button onclick="submitOffsetsRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeOffsetsModal()" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div>
+        <div class="flex gap-3 mt-6"><button onclick="submitOffsetsRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Submit</button><button onclick="closeOffsetsModal()" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div>
     </div>
 </div>
 
@@ -332,7 +354,7 @@
     <div class="bg-white rounded-2xl p-6 w-full max-w-md">
         <div class="flex justify-between items-center mb-5">
             <h3 class="text-xl font-bold text-slate-800" id="modalTitle">Submit Request</h3>
-            <button onclick="closeFilingModal()" class="text-slate-400"><i data-feather="x"></i></button>
+            <button onclick="closeFilingModal()" class="text-slate-400 cursor-pointer"><i data-feather="x"></i></button>
         </div>
         <input type="hidden" id="requestType">
         <div class="space-y-4">
@@ -340,14 +362,14 @@
             <div><label class="text-sm font-medium">End Date</label><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"></div>
             <div><label class="text-sm font-medium">Reason</label><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Please provide details..."></textarea></div>
         </div>
-        <div class="flex gap-3 mt-6"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeFilingModal()" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div>
+        <div class="flex gap-3 mt-6"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Submit</button><button onclick="closeFilingModal()" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div>
     </div>
 </div>
 
 <!-- ADD EMPLOYEE MODAL -->
 <div id="employeeModal" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
     <div class="bg-white rounded-2xl p-6 w-full max-w-md">
-        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal()"><i data-feather="x"></i></button></div>
+        <div class="flex justify-between items-center mb-5"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal()" class="cursor-pointer"><i data-feather="x"></i></button></div>
         <div class="space-y-3">
             <input type="text" id="newEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl">
             <input type="text" id="newEmpDept" placeholder="Department" class="w-full p-3 border rounded-xl">
@@ -356,40 +378,53 @@
             <input type="text" id="newEmpPin" placeholder="PIN" class="w-full p-3 border rounded-xl">
             <input type="password" id="newEmpPass" placeholder="Password" class="w-full p-3 border rounded-xl">
         </div>
-        <div class="flex gap-3 mt-6"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal()" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div>
+        <div class="flex gap-3 mt-6"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Save</button><button onclick="closeModal()" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div>
     </div>
 </div>
 
 <script>
     // ==================== DATA ====================
-    let users = [], employees = [], attendanceLogs = [], requests = [], currentUser = null;
+    let users = [], employees = [], attendanceLogs = [], requests = [], payslips = [], currentUser = null;
     
     function initData() {
         users = [
-            // HR Admins (Full Access)
-            { id: 1, pin: "1000", password: "admin", name: "Polyjem Lim", role: "hr", department: "HR & Admin", avatar: "PL", supervisorId: null, leaveBalance: 20 },
-            { id: 2, pin: "1001", password: "admin", name: "Vincent Cristan Eligino", role: "hr", department: "HR", avatar: "VE", supervisorId: null, leaveBalance: 20 },
-            // Moderators
-            { id: 3, pin: "5001", password: "mod123", name: "Moderator Rom", role: "moderator", department: "Marketing", avatar: "MR", supervisorId: null, leaveBalance: 15 },
-            { id: 4, pin: "5002", password: "mod123", name: "Moderator Dex", role: "moderator", department: "IT/Asset Management", avatar: "MD", supervisorId: null, leaveBalance: 15 },
-            // Supervisor
-            { id: 5, pin: "2001", password: "1234", name: "Cris Molina", role: "supervisor", department: "Parts & Logistics", avatar: "CM", supervisorId: 1, leaveBalance: 10 },
-            // Employees
-            { id: 6, pin: "1002", password: "1234", name: "Romari Parado", role: "employee", department: "Service", avatar: "RP", supervisorId: 5, leaveBalance: 12 },
-            { id: 7, pin: "1003", password: "1234", name: "Rhedsyne Valdez", role: "employee", department: "Marketing", avatar: "RV", supervisorId: 5, leaveBalance: 10 },
-            { id: 8, pin: "1004", password: "1234", name: "Kimberly Baldugo", role: "employee", department: "HR", avatar: "KB", supervisorId: 1, leaveBalance: 14 }
+            { id: 1, pin: "1000", password: "admin", name: "Polyjem Lim", role: "hr", department: "HR & Admin", avatar: "PL", supervisorId: null, leaveBalance: 20, dailyRate: 1200 },
+            { id: 2, pin: "1001", password: "admin", name: "Vincent Cristan Eligino", role: "hr", department: "HR", avatar: "VE", supervisorId: null, leaveBalance: 20, dailyRate: 1100 },
+            { id: 3, pin: "5001", password: "mod123", name: "Moderator Rom", role: "moderator", department: "Marketing", avatar: "MR", supervisorId: null, leaveBalance: 15, dailyRate: 950 },
+            { id: 4, pin: "5002", password: "mod123", name: "Moderator Dex", role: "moderator", department: "IT/Asset Management", avatar: "MD", supervisorId: null, leaveBalance: 15, dailyRate: 950 },
+            { id: 5, pin: "2001", password: "1234", name: "Cris Molina", role: "supervisor", department: "Parts & Logistics", avatar: "CM", supervisorId: 1, leaveBalance: 10, dailyRate: 1000 },
+            { id: 6, pin: "1002", password: "1234", name: "Romari Parado", role: "employee", department: "Service", avatar: "RP", supervisorId: 5, leaveBalance: 12, dailyRate: 800 },
+            { id: 7, pin: "1003", password: "1234", name: "Rhedsyne Valdez", role: "employee", department: "Marketing", avatar: "RV", supervisorId: 5, leaveBalance: 10, dailyRate: 800 },
+            { id: 8, pin: "1004", password: "1234", name: "Kimberly Baldugo", role: "employee", department: "HR", avatar: "KB", supervisorId: 1, leaveBalance: 14, dailyRate: 850 }
         ];
-        employees = users.map(u => ({ id: u.id, name: u.name, dept: u.department, role: u.role, supervisorId: u.supervisorId, pin: u.pin, status: "active" }));
+        employees = users.map(u => ({ id: u.id, name: u.name, dept: u.department, role: u.role, supervisorId: u.supervisorId, pin: u.pin, status: "active", dailyRate: u.dailyRate }));
         const today = new Date().toISOString().split('T')[0];
         attendanceLogs = [
-            { id: 1, userId: 6, userName: "Romari Parado", date: today, timeIn: "08:05 AM", status: "Present" }
+            { id: 1, userId: 6, userName: "Romari Parado", date: today, timeIn: "08:05 AM", status: "Present" },
+            { id: 2, userId: 7, userName: "Rhedsyne Valdez", date: today, timeIn: "08:12 AM", status: "Present" },
+            { id: 3, userId: 8, userName: "Kimberly Baldugo", date: today, timeIn: "08:00 AM", status: "Present" }
         ];
         requests = [];
+        payslips = JSON.parse(localStorage.getItem('equiprime_payslips')) || [];
         saveAllData();
     }
     
-    function saveAllData() { localStorage.setItem('equiprime_users', JSON.stringify(users)); localStorage.setItem('equiprime_employees', JSON.stringify(employees)); localStorage.setItem('equiprime_attendance', JSON.stringify(attendanceLogs)); localStorage.setItem('equiprime_requests', JSON.stringify(requests)); }
-    function loadAllData() { users = JSON.parse(localStorage.getItem('equiprime_users')) || []; employees = JSON.parse(localStorage.getItem('equiprime_employees')) || []; attendanceLogs = JSON.parse(localStorage.getItem('equiprime_attendance')) || []; requests = JSON.parse(localStorage.getItem('equiprime_requests')) || []; if(users.length === 0) initData(); }
+    function saveAllData() { 
+        localStorage.setItem('equiprime_users', JSON.stringify(users)); 
+        localStorage.setItem('equiprime_employees', JSON.stringify(employees)); 
+        localStorage.setItem('equiprime_attendance', JSON.stringify(attendanceLogs)); 
+        localStorage.setItem('equiprime_requests', JSON.stringify(requests));
+        localStorage.setItem('equiprime_payslips', JSON.stringify(payslips));
+    }
+    
+    function loadAllData() { 
+        users = JSON.parse(localStorage.getItem('equiprime_users')) || []; 
+        employees = JSON.parse(localStorage.getItem('equiprime_employees')) || []; 
+        attendanceLogs = JSON.parse(localStorage.getItem('equiprime_attendance')) || []; 
+        requests = JSON.parse(localStorage.getItem('equiprime_requests')) || [];
+        payslips = JSON.parse(localStorage.getItem('equiprime_payslips')) || [];
+        if(users.length === 0) initData(); 
+    }
     
     function login() {
         const pin = document.getElementById('loginPin').value;
@@ -429,17 +464,18 @@
         const role = currentUser?.role;
         const desktopNav = document.getElementById('desktopNavMenu');
         const mobileNav = document.getElementById('mobileNavMenu');
-        let navHtml = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="home"></i> Dashboard</button>`;
+        let navHtml = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="home"></i> Dashboard</button>`;
         
-        navHtml += `<button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Requests</button>`;
+        navHtml += `<button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> My Requests</button>`;
         
         if(role === 'supervisor' || role === 'moderator' || role === 'hr') {
-            navHtml += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> Pending Approvals</button>`;
+            navHtml += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clock"></i> Pending Approvals</button>`;
         }
         if(role === 'hr') {
-            navHtml += `<button onclick="switchTab('hr-employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="users"></i> Employees</button>
-                        <button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clipboard"></i> All Requests</button>
-                        <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="settings"></i> Settings</button>`;
+            navHtml += `<button onclick="switchTab('hr-employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="users"></i> Employees</button>
+                        <button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clipboard"></i> All Requests</button>
+                        <button onclick="switchTab('hr-payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> Payslip</button>
+                        <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="settings"></i> Settings</button>`;
         }
         desktopNav.innerHTML = navHtml;
         mobileNav.innerHTML = navHtml;
@@ -447,58 +483,76 @@
     }
     
     function switchTab(tabName) {
-        const tabs = ['dashboard', 'my-requests', 'approvals', 'hr-employees', 'hr-requests', 'hr-settings'];
+        const tabs = ['dashboard', 'my-requests', 'approvals', 'hr-employees', 'hr-requests', 'hr-payslip', 'hr-settings'];
         tabs.forEach(t => { const el = document.getElementById(`${t}-tab`); if(el) el.classList.add('hidden'); });
         document.getElementById(`${tabName}-tab`).classList.remove('hidden');
+        if(tabName === 'hr-payslip') refreshPayslipTab();
         refreshDashboard();
         closeMobileSidebar();
     }
     
-    function openNewRequestMenu() { 
-        document.getElementById('newRequestMenuModal').classList.remove('hidden'); 
-        document.getElementById('newRequestMenuModal').classList.add('flex'); 
-    }
-    function closeNewRequestMenu() { 
-        document.getElementById('newRequestMenuModal').classList.add('hidden'); 
-        document.getElementById('newRequestMenuModal').classList.remove('flex'); 
-    }
-    
-    function openLeaveTypeModal() { 
-        closeNewRequestMenu();
-        document.getElementById('leaveTypeModal').classList.remove('hidden'); 
-        document.getElementById('leaveTypeModal').classList.add('flex'); 
-    }
-    function closeLeaveTypeModal() { 
-        document.getElementById('leaveTypeModal').classList.add('hidden'); 
-        document.getElementById('leaveTypeModal').classList.remove('flex'); 
-    }
-    
-    function openOffsetsModal() { 
-        closeNewRequestMenu();
-        document.getElementById('offsetsModal').classList.remove('hidden'); 
-        document.getElementById('offsetsModal').classList.add('flex'); 
-    }
-    function closeOffsetsModal() { 
-        document.getElementById('offsetsModal').classList.add('hidden'); 
-        document.getElementById('offsetsModal').classList.remove('flex'); 
+    function refreshPayslipTab() {
+        const employeeSelect = document.getElementById('payslipEmployee');
+        if(employeeSelect) {
+            employeeSelect.innerHTML = '<option value="">Select Employee</option>' + employees.map(emp => `<option value="${emp.id}">${emp.name} - ${emp.dept}</option>`).join('');
+        }
+        const historyDiv = document.getElementById('payslipHistory');
+        if(historyDiv && payslips) {
+            historyDiv.innerHTML = payslips.slice().reverse().map(p => `
+                <div class="bg-slate-50 rounded-xl p-4 border">
+                    <div class="flex justify-between items-start">
+                        <div><p class="font-bold">${p.employeeName}</p><p class="text-sm text-slate-600">${p.month}</p><p class="text-sm">Days: ${p.daysPresent} | Rate: ₱${p.dailyRate}</p><p class="text-sm">Allowances: ₱${p.allowances} | Deductions: ₱${p.deductions}</p></div>
+                        <div class="text-right"><p class="font-bold text-green-600">Total: ₱${p.totalSalary.toLocaleString()}</p><p class="text-xs text-slate-400">Generated: ${p.date}</p></div>
+                    </div>
+                </div>
+            `).join('') || '<div class="text-center text-slate-400 py-8">No payslips generated yet.</div>';
+        }
     }
     
-    function openFilingModal(type) { 
-        closeNewRequestMenu();
-        closeLeaveTypeModal();
-        document.getElementById('modalTitle').innerHTML = `Submit ${type}`; 
-        document.getElementById('requestType').value = type; 
-        document.getElementById('reqStartDate').value = ''; 
-        document.getElementById('reqEndDate').value = ''; 
-        document.getElementById('reqReason').value = ''; 
-        document.getElementById('filingModal').classList.remove('hidden'); 
-        document.getElementById('filingModal').classList.add('flex'); 
+    function generatePayslip() {
+        const employeeId = document.getElementById('payslipEmployee').value;
+        const month = document.getElementById('payslipMonth').value;
+        const dailyRate = parseFloat(document.getElementById('dailyRate').value);
+        const daysPresent = parseInt(document.getElementById('daysPresent').value);
+        const allowances = parseFloat(document.getElementById('allowances').value);
+        const deductions = parseFloat(document.getElementById('deductions').value);
+        
+        if(!employeeId || !month) { alert("Please select employee and month"); return; }
+        
+        const employee = employees.find(e => e.id == employeeId);
+        const totalSalary = (daysPresent * dailyRate) + allowances - deductions;
+        
+        payslips.push({
+            id: Date.now(),
+            employeeId: employeeId,
+            employeeName: employee.name,
+            month: month,
+            daysPresent: daysPresent,
+            dailyRate: dailyRate,
+            allowances: allowances,
+            deductions: deductions,
+            totalSalary: totalSalary,
+            date: new Date().toLocaleDateString()
+        });
+        saveAllData();
+        refreshPayslipTab();
+        alert(`Payslip generated for ${employee.name}\nTotal Salary: ₱${totalSalary.toLocaleString()}`);
+        
+        document.getElementById('dailyRate').value = dailyRate;
+        document.getElementById('daysPresent').value = '';
+        document.getElementById('allowances').value = '0';
+        document.getElementById('deductions').value = '0';
     }
     
-    function closeFilingModal() { 
-        document.getElementById('filingModal').classList.add('hidden'); 
-        document.getElementById('filingModal').classList.remove('flex'); 
-    }
+    // MODAL FUNCTIONS
+    function openNewRequestMenu() { document.getElementById('newRequestMenuModal').classList.remove('hidden'); document.getElementById('newRequestMenuModal').classList.add('flex'); }
+    function closeNewRequestMenu() { document.getElementById('newRequestMenuModal').classList.add('hidden'); document.getElementById('newRequestMenuModal').classList.remove('flex'); }
+    function openLeaveTypeModal() { closeNewRequestMenu(); document.getElementById('leaveTypeModal').classList.remove('hidden'); document.getElementById('leaveTypeModal').classList.add('flex'); }
+    function closeLeaveTypeModal() { document.getElementById('leaveTypeModal').classList.add('hidden'); document.getElementById('leaveTypeModal').classList.remove('flex'); }
+    function openOffsetsModal() { closeNewRequestMenu(); document.getElementById('offsetsModal').classList.remove('hidden'); document.getElementById('offsetsModal').classList.add('flex'); }
+    function closeOffsetsModal() { document.getElementById('offsetsModal').classList.add('hidden'); document.getElementById('offsetsModal').classList.remove('flex'); }
+    function openFilingModal(type) { closeNewRequestMenu(); closeLeaveTypeModal(); document.getElementById('modalTitle').innerHTML = `Submit ${type}`; document.getElementById('requestType').value = type; document.getElementById('reqStartDate').value = ''; document.getElementById('reqEndDate').value = ''; document.getElementById('reqReason').value = ''; document.getElementById('filingModal').classList.remove('hidden'); document.getElementById('filingModal').classList.add('flex'); }
+    function closeFilingModal() { document.getElementById('filingModal').classList.add('hidden'); document.getElementById('filingModal').classList.remove('flex'); }
     
     function submitOffsetsRequest() {
         const date = document.getElementById('offsetsDate').value;
@@ -519,45 +573,10 @@
         saveAllData(); closeFilingModal(); refreshDashboard(); alert(`${type} request submitted!`);
     }
     
-    function approveAsSupervisor(id) { 
-        const req = requests.find(r => r.id === id); 
-        if(req && req.status === "pending_sup") { 
-            req.status = "pending_mod"; 
-            saveAllData(); 
-            refreshDashboard(); 
-            alert("Request approved by Supervisor! Forwarded to Moderator."); 
-        } 
-    }
-    
-    function approveAsModerator(id) { 
-        const req = requests.find(r => r.id === id); 
-        if(req && req.status === "pending_mod") { 
-            req.status = "pending_hr"; 
-            saveAllData(); 
-            refreshDashboard(); 
-            alert("Request approved by Moderator! Forwarded to HR."); 
-        } 
-    }
-    
-    function approveAsHR(id) { 
-        const req = requests.find(r => r.id === id); 
-        if(req && req.status === "pending_hr") { 
-            req.status = "approved"; 
-            saveAllData(); 
-            refreshDashboard(); 
-            alert("Request FULLY APPROVED by HR!"); 
-        } 
-    }
-    
-    function rejectRequest(id) { 
-        const req = requests.find(r => r.id === id); 
-        if(req && (req.status === "pending_sup" || req.status === "pending_mod" || req.status === "pending_hr")) { 
-            req.status = "rejected"; 
-            saveAllData(); 
-            refreshDashboard(); 
-            alert("Request rejected."); 
-        } 
-    }
+    function approveAsSupervisor(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_sup") { req.status = "pending_mod"; saveAllData(); refreshDashboard(); alert("Request approved by Supervisor! Forwarded to Moderator."); } }
+    function approveAsModerator(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_mod") { req.status = "pending_hr"; saveAllData(); refreshDashboard(); alert("Request approved by Moderator! Forwarded to HR."); } }
+    function approveAsHR(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_hr") { req.status = "approved"; saveAllData(); refreshDashboard(); alert("Request FULLY APPROVED by HR!"); } }
+    function rejectRequest(id) { const req = requests.find(r => r.id === id); if(req && (req.status === "pending_sup" || req.status === "pending_mod" || req.status === "pending_hr")) { req.status = "rejected"; saveAllData(); refreshDashboard(); alert("Request rejected."); } }
     
     function refreshDashboard() {
         const role = currentUser?.role;
@@ -571,7 +590,6 @@
         if(role === 'moderator') pendingCount = requests.filter(r => r.status === "pending_mod").length;
         if(role === 'hr') pendingCount = requests.filter(r => r.status === "pending_hr").length;
         document.getElementById('pendingApprovals').innerText = pendingCount;
-        document.getElementById('pendingApprovalsSub').innerHTML = pendingCount + ' pending';
         
         const myRequests = requests.filter(r => r.userId === currentUser.id).slice(0,5);
         document.getElementById('myRequestsList').innerHTML = myRequests.map(r => {
@@ -603,16 +621,11 @@
         document.getElementById('pendingApprovalsList').innerHTML = pendingRequests.map(r => `
             <div class="bg-white rounded-xl p-4 shadow-sm border">
                 <div class="flex justify-between items-start flex-wrap gap-3">
-                    <div>
-                        <h4 class="font-bold text-lg">${r.userName}</h4>
-                        <p class="text-sm text-slate-600 mt-1">${r.type}</p>
-                        <p class="text-sm text-slate-600">${r.startDate} - ${r.endDate}</p>
-                        <p class="text-sm text-slate-600">${r.reason}</p>
-                    </div>
+                    <div><h4 class="font-bold text-lg">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-sm">${r.reason}</p></div>
                     <div class="flex gap-2">
-                        ${role === 'supervisor' ? `<button onclick="approveAsSupervisor(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700">Reject</button>` : ''}
-                        ${role === 'moderator' ? `<button onclick="approveAsModerator(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700">Reject</button>` : ''}
-                        ${role === 'hr' ? `<button onclick="approveAsHR(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700">Reject</button>` : ''}
+                        ${role === 'supervisor' ? `<button onclick="approveAsSupervisor(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Reject</button>` : ''}
+                        ${role === 'moderator' ? `<button onclick="approveAsModerator(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Reject</button>` : ''}
+                        ${role === 'hr' ? `<button onclick="approveAsHR(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Reject</button>` : ''}
                     </div>
                 </div>
             </div>
@@ -622,7 +635,7 @@
             document.getElementById('hrEmployeesList').innerHTML = employees.map(emp => {
                 const supervisor = users.find(u => u.id === emp.supervisorId);
                 const initial = emp.name.split(' ').map(n => n[0]).join('');
-                return `<tr class="border-t"><td class="p-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">${initial}</div>${emp.name}</div></td><td class="p-3">${emp.dept}</td><td class="p-3">${emp.role}</td><td class="p-3">${supervisor ? supervisor.name : '—'}</td><td class="p-3"><button onclick="deleteEmployee(${emp.id})" class="text-red-500 hover:text-red-700">Delete</button></td></tr>`;
+                return `<tr class="border-t"><td class="p-3"><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">${initial}</div>${emp.name}</div></td><td class="p-3">${emp.dept}</td><td class="p-3">${emp.role}</td><td class="p-3">${supervisor ? supervisor.name : '—'}</td><td class="p-3"><button onclick="deleteEmployee(${emp.id})" class="text-red-500 hover:text-red-700 cursor-pointer">Delete</button></td></tr>`;
             }).join('');
             
             document.getElementById('allRequestsList').innerHTML = requests.map(r => {
@@ -632,7 +645,7 @@
                 else if(r.status === 'pending_hr') statusText = 'Pending HR';
                 else if(r.status === 'approved') statusText = 'Approved';
                 else statusText = 'Rejected';
-                return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-xs text-slate-500">${r.startDate} - ${r.endDate}</p><p class="text-xs mt-1">${r.reason}</p></div><span class="text-xs px-2 py-1 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-700' : r.status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}">${statusText}</span></div></div>`;
+                return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-xs">${r.startDate} - ${r.endDate}</p><p class="text-xs mt-1">${r.reason}</p></div><span class="text-xs px-2 py-1 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-700' : r.status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}">${statusText}</span></div></div>`;
             }).join('');
         }
         
@@ -656,8 +669,8 @@
         if(name && dept && pin) {
             const newId = Math.max(...users.map(u=>u.id),0)+1;
             const avatar = name.split(' ').map(n=>n[0]).join('');
-            users.push({ id: newId, pin, password: pass, name, role, department: dept, avatar, supervisorId, leaveBalance: 15 });
-            employees.push({ id: newId, name, dept, role, supervisorId, pin, status: 'active' });
+            users.push({ id: newId, pin, password: pass, name, role, department: dept, avatar, supervisorId, leaveBalance: 15, dailyRate: 800 });
+            employees.push({ id: newId, name, dept, role, supervisorId, pin, status: 'active', dailyRate: 800 });
             saveAllData(); closeModal(); refreshDashboard(); alert(`Employee ${name} added!`);
             document.getElementById('newEmpName').value = ''; document.getElementById('newEmpDept').value = ''; document.getElementById('newEmpPin').value = '';
         } else { alert("Please fill all fields"); }
