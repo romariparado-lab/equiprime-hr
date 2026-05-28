@@ -218,17 +218,9 @@
 
     <!-- MOBILE SIDEBAR -->
     <div id="mobileSidebar" class="mobile-sidebar">
-        <div class="flex justify-end mb-4">
-            <button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10">
-                <i data-feather="x"></i>
-            </button>
-        </div>
-        <div class="mb-8">
-            <h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
-            <p class="text-slate-300 text-xs">smart choices · smarter results</p>
-        </div>
+        <div class="flex justify-end mb-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x"></i></button></div>
+        <div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div>
         <nav id="mobileNavMenu" class="space-y-2 flex-1"></nav>
-        
         <div class="mt-6 pt-4 border-t border-white/20">
             <div class="flex items-center gap-2 mb-3"><i data-feather="filter" class="text-white/70" style="width: 1rem;"></i><span class="text-xs font-semibold text-white/70 uppercase tracking-wider">Filters</span></div>
             <div class="filter-section"><label class="filter-label">DEPARTMENT</label><select id="filterDepartment" class="filter-select" onchange="applyFilters()"><option value="all">All Departments</option><option value="Service and After-sales">Service and After-sales</option><option value="Sales">Sales Department</option><option value="Accounting and Finance">Accounting and Finance</option><option value="Marketing">Marketing Department</option><option value="HR">HR Department</option><option value="Warehouse">Warehouse Department</option><option value="Supply Chain Logistics & Purchasing">Supply Chain Logistics & Purchasing</option><option value="Admin Management">Admin Management</option><option value="Guard">Security Guard</option></select></div>
@@ -236,22 +228,13 @@
             <div class="filter-section"><label class="filter-label">LEAVE TYPE</label><select id="filterLeaveType" class="filter-select" onchange="applyFilters()"><option value="all">All Leave Types</option><option value="Official Business">Official Business</option><option value="Vacation Leave">Vacation Leave</option><option value="Sick Leave">Sick Leave</option><option value="Birthday Leave">Birthday Leave</option><option value="Emergency Leave">Emergency Leave</option><option value="Offset">Offset</option></select></div>
             <div class="pt-2"><label class="filter-label">LAST UPDATED</label><div class="text-white/80 text-xs flex items-center gap-2"><i data-feather="calendar" style="width: 0.8rem;"></i><span id="lastUpdatedTime">Loading...</span></div></div>
         </div>
-        
-        <div class="pt-4 border-t border-white/20 mt-4">
-            <button onclick="logout()" class="w-full flex items-center gap-3 text-white/70 p-3 rounded-xl">
-                <i data-feather="log-out"></i> Logout
-            </button>
-        </div>
+        <div class="pt-4 border-t border-white/20 mt-4"><button onclick="logout()" class="w-full flex items-center gap-3 text-white/70 p-3 rounded-xl"><i data-feather="log-out"></i> Logout</button></div>
     </div>
 
     <!-- DESKTOP SIDEBAR -->
     <div class="desktop-sidebar">
-        <div class="mb-8">
-            <h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
-            <p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p>
-        </div>
+        <div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p></div>
         <nav id="desktopNavMenu" class="space-y-2 flex-1"></nav>
-        
         <div class="mt-6 pt-4 border-t border-white/20">
             <div class="flex items-center gap-2 mb-3"><i data-feather="filter" class="text-white/70" style="width: 1rem;"></i><span class="text-xs font-semibold text-white/70 uppercase tracking-wider">Filters</span></div>
             <div class="filter-section"><label class="filter-label">DEPARTMENT</label><select id="desktopFilterDepartment" class="filter-select" onchange="applyFilters()"><option value="all">All Departments</option><option value="Service and After-sales">Service and After-sales</option><option value="Sales">Sales Department</option><option value="Accounting and Finance">Accounting and Finance</option><option value="Marketing">Marketing Department</option><option value="HR">HR Department</option><option value="Warehouse">Warehouse Department</option><option value="Supply Chain Logistics & Purchasing">Supply Chain Logistics & Purchasing</option><option value="Admin Management">Admin Management</option><option value="Guard">Security Guard</option></select></div>
@@ -259,45 +242,24 @@
             <div class="filter-section"><label class="filter-label">LEAVE TYPE</label><select id="desktopFilterLeaveType" class="filter-select" onchange="applyFilters()"><option value="all">All Leave Types</option><option value="Official Business">Official Business</option><option value="Vacation Leave">Vacation Leave</option><option value="Sick Leave">Sick Leave</option><option value="Birthday Leave">Birthday Leave</option><option value="Emergency Leave">Emergency Leave</option><option value="Offset">Offset</option></select></div>
             <div class="pt-2"><label class="filter-label">LAST UPDATED</label><div class="text-white/80 text-xs flex items-center gap-2"><i data-feather="calendar" style="width: 0.8rem;"></i><span id="desktopLastUpdatedTime">Loading...</span></div></div>
         </div>
-        
         <div class="mt-auto pt-8">
             <div class="bg-white/10 rounded-2xl p-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div>
-                    <div>
-                        <p class="font-semibold text-sm" id="userName">User</p>
-                        <p class="text-xs text-slate-300" id="userRoleDisplay"></p>
-                    </div>
-                </div>
-                <button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm">
-                    <i data-feather="log-out"></i> Logout
-                </button>
+                <div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div>
+                <button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="log-out"></i> Logout</button>
             </div>
         </div>
     </div>
 
     <!-- MAIN CONTENT -->
     <div class="main-content">
-        
         <div class="mobile-header">
-            <button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm">
-                <i data-feather="menu" class="text-slate-700"></i>
-            </button>
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-full bg-[#004aad] text-white flex items-center justify-center text-xs font-bold" id="mobileUserInitials">HR</div>
-                <span id="mobileUserName" class="text-sm font-semibold text-slate-700">User</span>
-            </div>
+            <button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button>
+            <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-[#004aad] text-white flex items-center justify-center text-xs font-bold" id="mobileUserInitials">HR</div><span id="mobileUserName" class="text-sm font-semibold text-slate-700">User</span></div>
         </div>
 
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-            <div>
-                <h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Welcome Back, <span id="welcomeName">User</span></h2>
-                <p class="text-slate-500 text-sm mt-1" id="welcomeSubtitle"></p>
-            </div>
-            <div class="bg-yellow-50 text-yellow-700 px-3 py-1.5 rounded-full text-xs flex items-center gap-1">
-                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                Biometrics ready (demo mode)
-            </div>
+            <div><h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Welcome Back, <span id="welcomeName">User</span></h2><p class="text-slate-500 text-sm mt-1" id="welcomeSubtitle"></p></div>
+            <div class="bg-yellow-50 text-yellow-700 px-3 py-1.5 rounded-full text-xs flex items-center gap-1"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>Biometrics ready (demo mode)</div>
         </div>
 
         <!-- DASHBOARD TAB -->
@@ -323,10 +285,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="space-y-6">
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
-                        <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
-                            <h3 class="text-xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Recent Requests</h3>
-                            <button onclick="openNewRequestMenu()" class="text-[#004aad] text-sm font-medium flex items-center gap-1 hover:underline cursor-pointer"><i data-feather="plus-circle"></i> New Request</button>
-                        </div>
+                        <div class="flex justify-between items-center mb-4 flex-wrap gap-2"><h3 class="text-xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Recent Requests</h3><button onclick="openNewRequestMenu()" class="text-[#004aad] text-sm font-medium flex items-center gap-1 hover:underline cursor-pointer"><i data-feather="plus-circle"></i> New Request</button></div>
                         <div id="myRequestsList" class="space-y-3 max-h-80 overflow-y-auto"></div>
                         <button onclick="switchTab('my-requests')" class="mt-4 w-full bg-slate-100 text-slate-700 py-2.5 rounded-xl text-sm cursor-pointer">View All My Requests</button>
                     </div>
@@ -344,122 +303,52 @@
                     </div>
                     
                     <div class="bg-white rounded-2xl p-6 shadow-sm" id="announcementsSection">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-xl font-bold flex items-center gap-2"><i data-feather="bell"></i> Announcements</h3>
-                            <div id="announcementEditControls" style="display: none;"><button onclick="addNewAnnouncement()" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-1"><i data-feather="plus"></i> Add</button><button onclick="toggleAnnouncementEditMode()" class="bg-gray-500 text-white px-3 py-1 rounded-lg text-sm ml-2">Done</button></div>
-                        </div>
+                        <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold flex items-center gap-2"><i data-feather="bell"></i> Announcements</h3><div id="announcementEditControls" style="display: none;"><button onclick="addNewAnnouncement()" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-1"><i data-feather="plus"></i> Add</button><button onclick="toggleAnnouncementEditMode()" class="bg-gray-500 text-white px-3 py-1 rounded-lg text-sm ml-2">Done</button></div></div>
                         <div id="announcementsList" class="space-y-3"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-6">
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="git-branch"></i> Approval Flow</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-sm">
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Employee submits</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Department Approver</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-purple-500 rounded-full"></span> Moderator</div>
-                        <div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> HR Admin</div>
-                    </div>
-                </div>
-            </div>
+            <div class="mt-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="git-branch"></i> Approval Flow</h3><div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-sm"><div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Employee submits</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Department Approver</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-purple-500 rounded-full"></span> Moderator</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> HR Admin</div></div></div></div>
         </div>
 
         <!-- MY ATTENDANCE TAB -->
         <div id="my-attendance-tab" class="tab-content hidden">
-            <div class="flex justify-between items-center mb-5 flex-wrap gap-4">
-                <h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="clock"></i> My Attendance</h2>
-                <div class="flex gap-3">
-                    <button onclick="clockIn()" id="clockInBtn" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-700 transition clock-btn flex items-center gap-2"><i data-feather="log-in"></i> Clock In</button>
-                    <button onclick="clockOut()" id="clockOutBtn" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-red-700 transition clock-btn flex items-center gap-2"><i data-feather="log-out"></i> Clock Out</button>
-                </div>
-            </div>
-            
-            <div class="bg-white rounded-2xl p-6 shadow-sm mb-6">
-                <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="calendar"></i> Today's Attendance</h3>
-                <div id="todayAttendanceCard" class="text-center py-4">
-                    <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100">
-                        <span class="text-lg" id="todayStatusIcon">⏰</span>
-                        <span class="font-semibold" id="todayStatusText">Not clocked in yet</span>
-                    </div>
-                    <div class="mt-3 text-sm text-slate-500" id="todayTimeInfo"></div>
-                </div>
-            </div>
-            
-            <div class="bg-white rounded-2xl p-6 shadow-sm">
-                <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="list"></i> Attendance History</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead class="bg-slate-50">
-                            <tr><th class="p-3 text-left text-sm font-semibold">Date</th><th class="p-3 text-left text-sm font-semibold">Clock In</th><th class="p-3 text-left text-sm font-semibold">Clock Out</th><th class="p-3 text-left text-sm font-semibold">Hours Worked</th><th class="p-3 text-left text-sm font-semibold">Status</th></tr>
-                        </thead>
-                        <tbody id="attendanceHistoryList"></tbody>
-                    </table>
-                </div>
-            </div>
+            <div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button onclick="clockIn()" id="clockInBtn" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-700 transition clock-btn flex items-center gap-2"><i data-feather="log-in"></i> Clock In</button><button onclick="clockOut()" id="clockOutBtn" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-red-700 transition clock-btn flex items-center gap-2"><i data-feather="log-out"></i> Clock Out</button></div></div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="calendar"></i> Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500" id="todayTimeInfo"></div></div></div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="list"></i> Attendance History</h3><div class="overflow-x-auto"><table class="w-full"><thead class="bg-slate-50"><tr><th class="p-3 text-left text-sm font-semibold">Date</th><th class="p-3 text-left text-sm font-semibold">Clock In</th><th class="p-3 text-left text-sm font-semibold">Clock Out</th><th class="p-3 text-left text-sm font-semibold">Hours Worked</th><th class="p-3 text-left text-sm font-semibold">Status</th></tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div>
         </div>
 
-        <!-- GUARD SCHEDULE MANAGEMENT TAB (HR Only) - Weekly Rotational -->
+        <!-- GUARD WEEKLY SCHEDULE TAB (HR only) -->
         <div id="hr-guard-schedule-tab" class="tab-content hidden">
             <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="calendar"></i> Guard Weekly Schedule Management</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <h3 class="text-xl font-bold mb-4">Assign Weekly Rotational Schedule</h3>
-                    <div class="space-y-4">
-                        <select id="guardEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Guard</option></select>
-                        <div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 bg-slate-50">
-                            <p class="text-sm font-semibold text-slate-700 mb-2">Select days and shift for this guard:</p>
-                            <div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
-                            <div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
-                            <div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
-                            <div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
-                            <div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
-                            <div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
-                            <div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
-                        </div>
-                        <button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold cursor-pointer">Assign Weekly Schedule</button>
-                    </div>
-                </div>
-                <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <h3 class="text-xl font-bold mb-4">Assigned Guard Schedules</h3>
-                    <div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div>
-                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 bg-slate-50"><p class="text-sm font-semibold text-slate-700 mb-2">Select days and shift for this guard:</p><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold cursor-pointer">Assign Weekly Schedule</button></div></div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div>
             </div>
         </div>
 
-        <!-- MY REQUESTS TAB -->
+        <!-- OTHER TABS (simplified but fully functional) -->
         <div id="my-requests-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Requests</h2><button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">New Request</button></div><div id="allMyRequestsList" class="space-y-3"></div></div>
-        
         <div id="payslip-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="file-text"></i> My Payslips</h2><div id="employeePayslipList" class="space-y-4"></div></div>
-        
         <div id="approvals-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clock"></i> Pending Approvals</h2><div id="pendingApprovalsList" class="space-y-4"></div></div>
-        
-        <div id="hr-payslip-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="file-text"></i> Payslip Management</h2><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl"><input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl" placeholder="Daily Rate"><input type="number" id="daysPresent" class="w-full p-3 border rounded-xl" placeholder="Days Present"><input type="number" id="allowances" value="0" class="w-full p-3 border rounded-xl" placeholder="Allowances"><input type="number" id="deductions" value="0" class="w-full p-3 border rounded-xl" placeholder="Deductions"><button onclick="generatePayslip()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold cursor-pointer">Generate Payslip</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
-        
+        <div id="hr-payslip-tab" class="tab-content hidden"><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl"><input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl" placeholder="Daily Rate"><input type="number" id="daysPresent" class="w-full p-3 border rounded-xl" placeholder="Days Present"><input type="number" id="allowances" value="0" class="w-full p-3 border rounded-xl" placeholder="Allowances"><input type="number" id="deductions" value="0" class="w-full p-3 border rounded-xl" placeholder="Deductions"><button onclick="generatePayslip()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold cursor-pointer">Generate Payslip</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
         <div id="hr-employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="users"></i> Employee Directory</h2><button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Add Employee</button></div><div id="hrEmployeesList" class="bg-white rounded-2xl shadow-sm overflow-hidden"></div></div>
-        
         <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
-        
-        <div id="hr-settings-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="settings"></i> System Settings</h2><div class="bg-white rounded-2xl p-6"><label class="font-semibold text-sm">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl mt-1"><button onclick="saveSettings()" class="mt-4 bg-[#004aad] text-white px-5 py-2 rounded-xl cursor-pointer">Save Settings</button></div></div>
+        <div id="hr-settings-tab" class="tab-content hidden"><div class="bg-white rounded-2xl p-6"><label class="font-semibold text-sm">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl mt-1"><button onclick="saveSettings()" class="mt-4 bg-[#004aad] text-white px-5 py-2 rounded-xl cursor-pointer">Save Settings</button></div></div>
     </div>
 </div>
 
-<!-- MODALS (abbreviated for length - kept same structure) -->
+<!-- MODALS -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><div><label class="text-sm font-medium">Title</label><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl" placeholder="Announcement Title"></div><div><label class="text-sm font-medium">Content</label><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl" placeholder="Announcement details..."></textarea></div></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div></div></div>
-
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div></div></div>
-
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left cursor-pointer">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left cursor-pointer">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left cursor-pointer">Vacation Leave</button></div></div></div>
-
 <div id="offsetsModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeModal('offsetsModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl"><input type="number" id="offsetsHours" step="0.5" class="w-full p-3 border rounded-xl" placeholder="Hours to Offset"><textarea id="offsetsReasonText" rows="2" class="w-full p-3 border rounded-xl" placeholder="Reason"></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitOffsets()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Submit</button><button onclick="closeModal('offsetsModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div></div></div>
-
 <div id="newRequestMenuOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Request Type</h3><button onclick="closeModal('newRequestMenuOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="openRequestModal('Official Business')" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">Official Business</button><button onclick="openRequestModal('Overtime')" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">Overtime</button><button onclick="openRequestModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">Certificate of Attendance</button><button onclick="closeModal('newRequestMenuOverlay'); openLeaveModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">Leave</button><button onclick="closeModal('newRequestMenuOverlay'); openOffsetsModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left cursor-pointer">Offsets</button></div></div></div>
-
 <div id="addEmployeeModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="text" id="newEmpName" class="w-full p-3 border rounded-xl" placeholder="Full Name"><input type="text" id="newEmpDept" class="w-full p-3 border rounded-xl" placeholder="Department"><select id="newEmpRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option><option value="approver">Department Approver</option></select><select id="newEmpSupervisor" class="w-full p-3 border rounded-xl"><option value="">No Supervisor</option></select><input type="text" id="newEmpPin" class="w-full p-3 border rounded-xl" placeholder="PIN"><input type="password" id="newEmpPass" class="w-full p-3 border rounded-xl" placeholder="Password"></div><div class="flex gap-3 mt-5"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('addEmployeeModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 
 <script>
-    // ==================== FIREBASE CONFIGURATION ====================
+    // Firebase config
     const firebaseConfig = {
         apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
         authDomain: "equiprime-hr.firebaseapp.com",
@@ -468,12 +357,11 @@
         messagingSenderId: "613422898397",
         appId: "1:613422898397:web:e825bbf5d78905bcf20f34"
     };
-    
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
     
-    // ==================== GLOBAL VARIABLES ====================
+    // GLOBALS
     let currentUser = null;
     let currentUserRole = null;
     let currentUserData = null;
@@ -485,7 +373,7 @@
     let guardWeeklySchedules = [];
     let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
     
-    // Department working hours configuration
+    // Department working hours
     const departmentWorkingHours = {
         "Service and After-sales": { startHour: 8, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5,6] },
         "Warehouse": { startHour: 8, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5,6] },
@@ -495,20 +383,17 @@
         "HR": { startHour: 9, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] },
         "Supply Chain Logistics & Purchasing": { startHour: 9, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] },
         "Admin Management": { startHour: 9, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] },
-        "Guard": { startHour: 0, startMinute: 0, endHour: 23, endMinute: 59, workDays: [1,2,3,4,5,6,7] } // Guards use weekly schedules
+        "Guard": { startHour: 0, startMinute: 0, endHour: 23, endMinute: 59, workDays: [1,2,3,4,5,6,7] }
     };
     
-    // Day mapping
     const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-    const dayIndices = { "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6 };
-    
     const defaultAnnouncements = [
         { id: "default1", title: "System Live", content: "EQUIPRIME HR is now operational", color: "blue", expiresAt: new Date(Date.now() + 24*60*60*1000).toISOString() },
         { id: "default2", title: "Biometrics Ready", content: "ZKTeco integration available", color: "green", expiresAt: new Date(Date.now() + 24*60*60*1000).toISOString() }
     ];
     
     function getDepartmentApprover(employeeDept) {
-        const deptApproverMap = {
+        const map = {
             "Service and After-sales": ["john.oblena@equiprime.ph", "divino.elpus@equiprime.ph"],
             "Accounting and Finance": ["ana.liwanagan@equiprime.ph"],
             "Supply Chain Logistics & Purchasing": ["cris.molina@equiprime.ph"],
@@ -518,180 +403,159 @@
             "Marketing": ["carlo.fruto@equiprime.ph"],
             "Warehouse": ["cris.molina@equiprime.ph"]
         };
-        return deptApproverMap[employeeDept] || ["hrpoly@equiprime.ph", "hrvince@equiprime.ph"];
+        return map[employeeDept] || ["hrpoly@equiprime.ph", "hrvince@equiprime.ph"];
     }
     
     function getEmployeeWorkSchedule(emp) {
         if (emp.dept === "Guard") {
-            // Get guard's schedule for today
             const today = new Date();
             const todayName = dayNames[today.getDay()];
             const guardSchedule = guardWeeklySchedules.find(s => s.guardId === emp.id && s.active);
             if (guardSchedule && guardSchedule.schedule[todayName]) {
-                const schedule = guardSchedule.schedule[todayName];
-                if (schedule === "Rest Day") return null;
-                const [shiftName, hours] = schedule.split(" - ");
-                if (shiftName === "Morning Shift") return { startHour: 6, startMinute: 0, endHour: 14, endMinute: 0 };
-                if (shiftName === "Afternoon Shift") return { startHour: 14, startMinute: 0, endHour: 22, endMinute: 0 };
-                if (shiftName === "Night Shift") return { startHour: 22, startMinute: 0, endHour: 6, endMinute: 0 };
+                const shift = guardSchedule.schedule[todayName];
+                if (shift === "Rest Day") return null;
+                if (shift.includes("Morning")) return { startHour: 6, startMinute: 0, endHour: 14, endMinute: 0 };
+                if (shift.includes("Afternoon")) return { startHour: 14, startMinute: 0, endHour: 22, endMinute: 0 };
+                if (shift.includes("Night")) return { startHour: 22, startMinute: 0, endHour: 6, endMinute: 0 };
             }
             return null;
         }
         return departmentWorkingHours[emp.dept] || { startHour: 8, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] };
     }
     
+    // FIXED: any lateness (>0 minutes) is considered "late"
     function checkAttendanceStatus(attendance, employee) {
-    if (!attendance || !attendance.timeIn) return "missed";
+        if (!attendance || !attendance.timeIn) return "missed";
+        const schedule = getEmployeeWorkSchedule(employee);
+        if (!schedule) return "on-leave";
+        const [inHour, inMinute] = attendance.timeIn.split(':').map(Number);
+        const scheduledHour = schedule.startHour;
+        const scheduledMinute = schedule.startMinute;
+        const inTotal = inHour * 60 + inMinute;
+        const scheduledTotal = scheduledHour * 60 + scheduledMinute;
+        const lateMinutes = inTotal - scheduledTotal;
+        if (lateMinutes > 0) return "late";
+        if (attendance.timeOut) return "logged-in";
+        return "logged-in";
+    }
     
-    const schedule = getEmployeeWorkSchedule(employee);
-    if (!schedule) return "on-leave";
-    
-    const [inHour, inMinute] = attendance.timeIn.split(':').map(Number);
-    const scheduledHour = schedule.startHour;
-    const scheduledMinute = schedule.startMinute;
-    
-    const inTotalMinutes = inHour * 60 + inMinute;
-    const scheduledTotalMinutes = scheduledHour * 60 + scheduledMinute;
-    const lateMinutes = inTotalMinutes - scheduledTotalMinutes;
-    
-    // Any lateness (even 1 minute) is considered "late"
-    if (lateMinutes > 0) return "late";
-    
-    if (attendance.timeOut) return "logged-in";
-    return "logged-in";
-}
-    
-    // ==================== ATTENDANCE FUNCTIONS ====================
+    // Attendance functions
     async function clockIn() {
         const today = new Date().toISOString().split('T')[0];
         const now = new Date();
         const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const existingRecord = allAttendance.find(a => a.userId === currentUser.uid && a.date === today);
-        if (existingRecord && existingRecord.timeIn) { alert("You have already clocked in today!"); return; }
-        const newAttendance = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: currentUserData.department, date: today, timeIn: time, timeOut: null, status: "Present", createdAt: new Date().toISOString() };
-        const docRef = await db.collection('attendance').add(newAttendance);
-        allAttendance.push({ id: docRef.id, ...newAttendance });
+        const existing = allAttendance.find(a => a.userId === currentUser.uid && a.date === today);
+        if (existing && existing.timeIn) { alert("Already clocked in today!"); return; }
+        const newAtt = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: currentUserData.department, date: today, timeIn: time, timeOut: null, status: "Present", createdAt: new Date().toISOString() };
+        const docRef = await db.collection('attendance').add(newAtt);
+        allAttendance.push({ id: docRef.id, ...newAtt });
         alert(`Clocked in at ${time}`);
         refreshMyAttendanceTab();
         refreshDashboard();
     }
-    
     async function clockOut() {
         const today = new Date().toISOString().split('T')[0];
         const now = new Date();
         const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        const attendanceRecord = allAttendance.find(a => a.userId === currentUser.uid && a.date === today);
-        if (!attendanceRecord || !attendanceRecord.timeIn) { alert("You need to clock in first!"); return; }
-        if (attendanceRecord.timeOut) { alert("You have already clocked out today!"); return; }
-        const timeIn = new Date(`${today}T${attendanceRecord.timeIn}:00`);
-        const timeOut = new Date(`${today}T${time}:00`);
-        const hoursDiff = (timeOut - timeIn) / (1000 * 60 * 60);
-        const hoursWorked = hoursDiff.toFixed(2);
-        await db.collection('attendance').doc(attendanceRecord.id).update({ timeOut: time, hoursWorked: hoursWorked });
-        attendanceRecord.timeOut = time;
-        attendanceRecord.hoursWorked = hoursWorked;
-        alert(`Clocked out at ${time} | Hours worked: ${hoursWorked}`);
+        const record = allAttendance.find(a => a.userId === currentUser.uid && a.date === today);
+        if (!record || !record.timeIn) { alert("Clock in first!"); return; }
+        if (record.timeOut) { alert("Already clocked out!"); return; }
+        const timeInDate = new Date(`${today}T${record.timeIn}:00`);
+        const timeOutDate = new Date(`${today}T${time}:00`);
+        const hours = ((timeOutDate - timeInDate) / (1000 * 60 * 60)).toFixed(2);
+        await db.collection('attendance').doc(record.id).update({ timeOut: time, hoursWorked: hours });
+        record.timeOut = time;
+        record.hoursWorked = hours;
+        alert(`Clocked out at ${time} | Hours: ${hours}`);
         refreshMyAttendanceTab();
         refreshDashboard();
     }
-    
     async function refreshMyAttendanceTab() {
         const today = new Date().toISOString().split('T')[0];
-        const userAttendance = allAttendance.filter(a => a.userId === currentUser.uid).sort((a, b) => b.date.localeCompare(a.date));
-        const todayRecord = userAttendance.find(a => a.date === today);
-        const todayStatusIcon = document.getElementById('todayStatusIcon');
-        const todayStatusText = document.getElementById('todayStatusText');
-        const todayTimeInfo = document.getElementById('todayTimeInfo');
-        if (todayRecord && todayRecord.timeIn) {
-            todayStatusIcon.innerHTML = '✅';
-            todayStatusText.innerHTML = 'Clocked In';
-            if (todayRecord.timeOut) { todayStatusText.innerHTML = 'Completed'; todayTimeInfo.innerHTML = `Clocked in at ${todayRecord.timeIn} | Clocked out at ${todayRecord.timeOut} | Hours: ${todayRecord.hoursWorked || 'Calculating...'}`; }
-            else { todayTimeInfo.innerHTML = `Clocked in at ${todayRecord.timeIn} | Not yet clocked out`; }
-        } else { todayStatusIcon.innerHTML = '⏰'; todayStatusText.innerHTML = 'Not clocked in yet'; todayTimeInfo.innerHTML = 'Click "Clock In" to start your day'; }
+        const userAtt = allAttendance.filter(a => a.userId === currentUser.uid).sort((a,b)=>b.date.localeCompare(a.date));
+        const todayRec = userAtt.find(a=>a.date===today);
+        const statusIcon = document.getElementById('todayStatusIcon');
+        const statusText = document.getElementById('todayStatusText');
+        const timeInfo = document.getElementById('todayTimeInfo');
+        if (todayRec && todayRec.timeIn) {
+            statusIcon.innerHTML = '✅';
+            statusText.innerHTML = todayRec.timeOut ? 'Completed' : 'Clocked In';
+            timeInfo.innerHTML = todayRec.timeOut ? `Clocked in at ${todayRec.timeIn} | Clocked out at ${todayRec.timeOut} | Hours: ${todayRec.hoursWorked||'...'}` : `Clocked in at ${todayRec.timeIn} | Not yet clocked out`;
+        } else {
+            statusIcon.innerHTML = '⏰';
+            statusText.innerHTML = 'Not clocked in yet';
+            timeInfo.innerHTML = 'Click "Clock In" to start your day';
+        }
         const historyBody = document.getElementById('attendanceHistoryList');
         if (historyBody) {
-            historyBody.innerHTML = userAttendance.map(att => {
-                let statusClass = '', statusText = '';
-                if (att.timeIn && att.timeOut) { statusClass = 'bg-green-100 text-green-700'; statusText = 'Complete'; }
-                else if (att.timeIn && !att.timeOut) { statusClass = 'bg-yellow-100 text-yellow-700'; statusText = 'In Progress'; }
-                else { statusClass = 'bg-red-100 text-red-700'; statusText = 'Absent'; }
-                return `<tr class="border-t"><td class="p-3 text-sm">${att.date}</td><td class="p-3 text-sm">${att.timeIn || '--'}</td><td class="p-3 text-sm">${att.timeOut || '--'}</td><td class="p-3 text-sm">${att.hoursWorked || '--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${statusClass}">${statusText}</span></td></tr>`;
-            }).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">No attendance records found</td></tr>';
+            historyBody.innerHTML = userAtt.map(a => {
+                let cls='', txt='';
+                if (a.timeIn && a.timeOut) { cls='bg-green-100 text-green-700'; txt='Complete'; }
+                else if (a.timeIn && !a.timeOut) { cls='bg-yellow-100 text-yellow-700'; txt='In Progress'; }
+                else { cls='bg-red-100 text-red-700'; txt='Absent'; }
+                return `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${cls}">${txt}</span></td></tr>`;
+            }).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">No records</td></tr>';
         }
     }
     
-    // ==================== GUARD WEEKLY SCHEDULE FUNCTIONS ====================
+    // Guard weekly schedule functions
     async function loadGuardWeeklySchedules() {
-        const schedulesSnapshot = await db.collection('guardWeeklySchedules').get();
+        const snap = await db.collection('guardWeeklySchedules').get();
         guardWeeklySchedules = [];
-        schedulesSnapshot.forEach(doc => { guardWeeklySchedules.push({ id: doc.id, ...doc.data() }); });
+        snap.forEach(doc => guardWeeklySchedules.push({ id: doc.id, ...doc.data() }));
         if (currentUserRole === 'hr') renderGuardSchedules();
     }
-    
     function renderGuardSchedules() {
         const container = document.getElementById('guardSchedulesList');
         if (!container) return;
         container.innerHTML = guardWeeklySchedules.map(s => {
-            const scheduleText = Object.entries(s.schedule).filter(([day, shift]) => shift).map(([day, shift]) => `${day}: ${shift}`).join(' | ');
-            return `<div class="bg-slate-50 rounded-xl p-3 border">
-                <div class="flex justify-between items-start">
-                    <div><p class="font-semibold">${s.guardName}</p><p class="text-xs text-slate-500">${scheduleText}</p><p class="text-xs text-slate-400 mt-1">Assigned: ${new Date(s.createdAt).toLocaleDateString()}</p></div>
-                    <button onclick="deleteGuardSchedule('${s.id}')" class="text-red-500 text-sm">Delete</button>
-                </div>
-            </div>`;
-        }).join('') || '<div class="text-center text-slate-400 py-4">No guard schedules assigned</div>';
+            const scheduleText = Object.entries(s.schedule).map(([day, shift]) => `${day}: ${shift}`).join(' | ');
+            return `<div class="bg-slate-50 rounded-xl p-3 border"><div class="flex justify-between items-start"><div><p class="font-semibold">${s.guardName}</p><p class="text-xs text-slate-500">${scheduleText}</p><p class="text-xs text-slate-400">Assigned: ${new Date(s.createdAt).toLocaleDateString()}</p></div><button onclick="deleteGuardSchedule('${s.id}')" class="text-red-500 text-sm">Delete</button></div></div>`;
+        }).join('') || '<div class="text-center text-slate-400 py-4">No guard schedules</div>';
     }
-    
     async function assignGuardWeeklySchedule() {
         const guardId = document.getElementById('guardEmployee').value;
-        if (!guardId) { alert("Please select a guard"); return; }
-        
-        const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        if (!guardId) { alert("Select a guard"); return; }
+        const days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
         const schedule = {};
-        let hasSchedule = false;
-        
-        for (const day of days) {
-            const checkbox = document.getElementById(`day${day}`);
-            const shiftSelect = document.getElementById(`shift${day}`);
-            if (checkbox && checkbox.checked && shiftSelect && shiftSelect.value) {
-                schedule[day] = shiftSelect.value;
-                hasSchedule = true;
+        let has = false;
+        for (const d of days) {
+            const chk = document.getElementById(`day${d}`);
+            const sel = document.getElementById(`shift${d}`);
+            if (chk && chk.checked && sel && sel.value) {
+                schedule[d] = sel.value;
+                has = true;
             }
         }
-        
-        if (!hasSchedule) { alert("Please select at least one day with a shift"); return; }
-        
+        if (!has) { alert("Select at least one day with shift"); return; }
         const guard = allEmployees.find(e => e.id === guardId);
-        const newSchedule = { guardId: guardId, guardName: guard.name, schedule: schedule, active: true, createdAt: new Date().toISOString(), assignedBy: currentUser.uid };
-        const docRef = await db.collection('guardWeeklySchedules').add(newSchedule);
-        guardWeeklySchedules.push({ id: docRef.id, ...newSchedule });
+        const newSched = { guardId, guardName: guard.name, schedule, active: true, createdAt: new Date().toISOString(), assignedBy: currentUser.uid };
+        const docRef = await db.collection('guardWeeklySchedules').add(newSched);
+        guardWeeklySchedules.push({ id: docRef.id, ...newSched });
         renderGuardSchedules();
         alert(`Weekly schedule assigned to ${guard.name}`);
-        
-        // Reset form
-        for (const day of days) {
-            const checkbox = document.getElementById(`day${day}`);
-            const shiftSelect = document.getElementById(`shift${day}`);
-            if (checkbox) checkbox.checked = false;
-            if (shiftSelect) shiftSelect.value = "";
+        for (const d of days) { 
+            const chk = document.getElementById(`day${d}`);
+            const sel = document.getElementById(`shift${d}`);
+            if (chk) chk.checked = false;
+            if (sel) sel.value = "";
         }
         document.getElementById('guardEmployee').value = '';
     }
-    
     async function deleteGuardSchedule(id) {
-        if (confirm('Delete this schedule?')) {
+        if (confirm("Delete this schedule?")) {
             await db.collection('guardWeeklySchedules').doc(id).delete();
             guardWeeklySchedules = guardWeeklySchedules.filter(s => s.id !== id);
             renderGuardSchedules();
         }
     }
     
-    // ==================== ANNOUNCEMENT FUNCTIONS ====================
+    // Announcements (expire in 1 day)
     async function loadAnnouncements() {
-        const announcementsSnapshot = await db.collection('announcements').get();
+        const snap = await db.collection('announcements').get();
         allAnnouncements = [];
         const now = new Date();
-        announcementsSnapshot.forEach(doc => {
+        snap.forEach(doc => {
             const data = doc.data();
             if (data.expiresAt && new Date(data.expiresAt) < now) {
                 db.collection('announcements').doc(doc.id).delete();
@@ -701,462 +565,466 @@
         });
         if (allAnnouncements.length === 0) {
             for (const ann of defaultAnnouncements) {
-                const docRef = await db.collection('announcements').add(ann);
-                allAnnouncements.push({ id: docRef.id, ...ann });
+                const ref = await db.collection('announcements').add(ann);
+                allAnnouncements.push({ id: ref.id, ...ann });
             }
         }
         renderAnnouncements();
     }
-    
     function renderAnnouncements() {
         const container = document.getElementById('announcementsList');
         if (!container) return;
         const canEdit = (currentUserRole === 'hr' || currentUserRole === 'moderator');
-        container.innerHTML = allAnnouncements.map(ann => {
-            const expiresDate = new Date(ann.expiresAt).toLocaleDateString();
-            return `<div class="announcement-item group relative p-4 rounded-xl ${ann.color === 'blue' ? 'bg-blue-50 border-l-4 border-blue-500' : 'bg-green-50 border-l-4 border-green-500'}">
-                <div class="flex justify-between items-start"><div class="flex-1"><h4 class="font-bold ${ann.color === 'blue' ? 'text-blue-900' : 'text-green-900'}">${escapeHtml(ann.title)}</h4><p class="text-sm ${ann.color === 'blue' ? 'text-blue-700' : 'text-green-700'} mt-1">${escapeHtml(ann.content)}</p><p class="text-xs text-slate-400 mt-1">Expires: ${expiresDate}</p></div>${canEdit ? `<div class="announcement-edit-btn flex gap-1"><button onclick="editAnnouncement('${ann.id}', '${escapeHtml(ann.title)}', '${escapeHtml(ann.content)}')" class="text-gray-500 hover:text-blue-600 p-1 rounded"><i data-feather="edit-2" style="width: 1rem;"></i></button></div>` : ''}</div>
-            </div>`;
+        container.innerHTML = allAnnouncements.map(a => {
+            const expires = new Date(a.expiresAt).toLocaleDateString();
+            return `<div class="announcement-item group relative p-4 rounded-xl ${a.color==='blue'?'bg-blue-50 border-l-4 border-blue-500':'bg-green-50 border-l-4 border-green-500'}"><div class="flex justify-between items-start"><div class="flex-1"><h4 class="font-bold ${a.color==='blue'?'text-blue-900':'text-green-900'}">${escapeHtml(a.title)}</h4><p class="text-sm ${a.color==='blue'?'text-blue-700':'text-green-700'} mt-1">${escapeHtml(a.content)}</p><p class="text-xs text-slate-400 mt-1">Expires: ${expires}</p></div>${canEdit ? `<div class="announcement-edit-btn flex gap-1"><button onclick="editAnnouncement('${a.id}','${escapeHtml(a.title)}','${escapeHtml(a.content)}')" class="text-gray-500 hover:text-blue-600 p-1 rounded"><i data-feather="edit-2" style="width:1rem;"></i></button></div>` : ''}</div></div>`;
         }).join('');
-        const editControls = document.getElementById('announcementEditControls');
-        if (editControls) editControls.style.display = canEdit ? 'flex' : 'none';
+        const ctrl = document.getElementById('announcementEditControls');
+        if (ctrl) ctrl.style.display = canEdit ? 'flex' : 'none';
         feather.replace();
     }
-    
-    function escapeHtml(text) { const div = document.createElement('div'); div.textContent = text; return div.innerHTML; }
-    function editAnnouncement(id, title, content) {
-        document.getElementById('announcementId').value = id;
-        document.getElementById('announcementTitle').value = title;
-        document.getElementById('announcementContent').value = content;
-        document.getElementById('announcementModalTitle').innerText = 'Edit Announcement';
-        document.getElementById('deleteAnnouncementBtn').style.display = 'block';
+    function escapeHtml(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
+    function editAnnouncement(id,title,content) {
+        document.getElementById('announcementId').value=id;
+        document.getElementById('announcementTitle').value=title;
+        document.getElementById('announcementContent').value=content;
+        document.getElementById('announcementModalTitle').innerText='Edit Announcement';
+        document.getElementById('deleteAnnouncementBtn').style.display='block';
         openModal('announcementModal');
     }
     function addNewAnnouncement() {
-        document.getElementById('announcementId').value = '';
-        document.getElementById('announcementTitle').value = '';
-        document.getElementById('announcementContent').value = '';
-        document.getElementById('announcementModalTitle').innerText = 'Add Announcement';
-        document.getElementById('deleteAnnouncementBtn').style.display = 'none';
+        document.getElementById('announcementId').value='';
+        document.getElementById('announcementTitle').value='';
+        document.getElementById('announcementContent').value='';
+        document.getElementById('announcementModalTitle').innerText='Add Announcement';
+        document.getElementById('deleteAnnouncementBtn').style.display='none';
         openModal('announcementModal');
     }
     async function saveAnnouncement() {
-        const id = document.getElementById('announcementId').value;
-        const title = document.getElementById('announcementTitle').value;
-        const content = document.getElementById('announcementContent').value;
-        const color = 'blue';
-        const expiresAt = new Date(Date.now() + 24*60*60*1000).toISOString();
-        if (!title || !content) { alert("Please fill in both title and content"); return; }
-        if (id) {
-            await db.collection('announcements').doc(id).update({ title, content, color, expiresAt });
-            const index = allAnnouncements.findIndex(a => a.id === id);
-            if (index !== -1) allAnnouncements[index] = { ...allAnnouncements[index], title, content, expiresAt };
+        const id=document.getElementById('announcementId').value;
+        const title=document.getElementById('announcementTitle').value;
+        const content=document.getElementById('announcementContent').value;
+        const color='blue';
+        const expiresAt=new Date(Date.now()+24*60*60*1000).toISOString();
+        if(!title||!content){alert("Fill title and content");return;}
+        if(id){
+            await db.collection('announcements').doc(id).update({title,content,color,expiresAt});
+            const idx=allAnnouncements.findIndex(a=>a.id===id);
+            if(idx!==-1) allAnnouncements[idx]={...allAnnouncements[idx],title,content,expiresAt};
         } else {
-            const docRef = await db.collection('announcements').add({ title, content, color, expiresAt });
-            allAnnouncements.push({ id: docRef.id, title, content, color, expiresAt });
+            const ref=await db.collection('announcements').add({title,content,color,expiresAt});
+            allAnnouncements.push({id:ref.id,title,content,color,expiresAt});
         }
         closeModal('announcementModal');
         renderAnnouncements();
-        alert("Announcement saved! It will expire in 24 hours.");
+        alert("Announcement saved (expires in 24h)");
     }
     async function deleteAnnouncement() {
-        const id = document.getElementById('announcementId').value;
-        if (!id) return;
-        if (confirm("Delete this announcement?")) {
+        const id=document.getElementById('announcementId').value;
+        if(!id) return;
+        if(confirm("Delete?")){
             await db.collection('announcements').doc(id).delete();
-            allAnnouncements = allAnnouncements.filter(a => a.id !== id);
+            allAnnouncements=allAnnouncements.filter(a=>a.id!==id);
             closeModal('announcementModal');
             renderAnnouncements();
-            alert("Announcement deleted!");
+            alert("Deleted");
         }
     }
     
-    // ==================== AUTH FUNCTIONS ====================
+    // Auth
     function showSignup() { document.getElementById('loginForm').classList.add('hidden'); document.getElementById('signupForm').classList.remove('hidden'); document.getElementById('authError').classList.add('hidden'); }
     function showLogin() { document.getElementById('signupForm').classList.add('hidden'); document.getElementById('loginForm').classList.remove('hidden'); document.getElementById('authError').classList.add('hidden'); }
     
     async function loginWithEmail() {
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-        const errorDiv = document.getElementById('authError');
+        const email=document.getElementById('loginEmail').value;
+        const pwd=document.getElementById('loginPassword').value;
+        const errDiv=document.getElementById('authError');
         try {
-            const userCredential = await auth.signInWithEmailAndPassword(email, password);
-            const user = userCredential.user;
-            const userDoc = await db.collection('users').doc(user.uid).get();
-            if (userDoc.exists) {
-                currentUserData = userDoc.data();
-                currentUserRole = currentUserData.role;
+            const cred=await auth.signInWithEmailAndPassword(email,pwd);
+            const user=cred.user;
+            const doc=await db.collection('users').doc(user.uid).get();
+            if(doc.exists){
+                currentUserData=doc.data();
+                currentUserRole=currentUserData.role;
             } else {
-                let role = "employee";
-                let name = email.split('@')[0];
-                let department = "";
-                if (email.includes("hr")) role = "hr";
-                else if (email.includes("mod")) role = "moderator";
-                currentUserData = { name: name, role: role, email: email, department: department, leaveBalance: 15, dailyRate: 800 };
-                currentUserRole = role;
-                await db.collection('users').doc(user.uid).set({ uid: user.uid, name: name, email: email, role: role, department: department, leaveBalance: 15, dailyRate: 800 });
+                let role="employee", name=email.split('@')[0], dept="";
+                if(email.includes("hr")) role="hr";
+                else if(email.includes("mod")) role="moderator";
+                currentUserData={name,role,email,department:dept,leaveBalance:15,dailyRate:800};
+                currentUserRole=role;
+                await db.collection('users').doc(user.uid).set({uid:user.uid,name,email,role,department:dept,leaveBalance:15,dailyRate:800});
             }
-            currentUser = user;
-            document.getElementById('authScreen').style.display = 'none';
+            currentUser=user;
+            document.getElementById('authScreen').style.display='none';
             document.getElementById('mainApp').classList.remove('hidden');
-            document.getElementById('welcomeName').innerText = currentUserData.name.split(' ')[0];
-            document.getElementById('userName').innerText = currentUserData.name;
-            document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n => n[0]).join('');
-            document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n => n[0]).join('');
-            document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
-            let roleText = "";
-            if(currentUserRole === 'hr') roleText = "HR Administrator - Full Access";
-            else if(currentUserRole === 'moderator') roleText = "Moderator - Full Access";
-            else if(currentUserRole === 'approver') roleText = `Department Approver - ${currentUserData.department}`;
-            else if(currentUserRole === 'supervisor') roleText = "Supervisor - Approve team requests";
-            else roleText = "Employee - Submit and track requests";
-            document.getElementById('welcomeSubtitle').innerText = roleText;
-            document.getElementById('userRoleDisplay').innerText = currentUserRole === 'hr' ? 'HR Admin' : (currentUserRole === 'moderator' ? 'Moderator' : (currentUserRole === 'approver' ? 'Approver' : (currentUserRole === 'supervisor' ? 'Supervisor' : 'Employee')));
+            document.getElementById('welcomeName').innerText=currentUserData.name.split(' ')[0];
+            document.getElementById('userName').innerText=currentUserData.name;
+            document.getElementById('userInitials').innerText=currentUserData.name.split(' ').map(n=>n[0]).join('');
+            document.getElementById('mobileUserInitials').innerText=currentUserData.name.split(' ').map(n=>n[0]).join('');
+            document.getElementById('mobileUserName').innerText=currentUserData.name.split(' ')[0];
+            let roleText="";
+            if(currentUserRole==='hr') roleText="HR Administrator - Full Access";
+            else if(currentUserRole==='moderator') roleText="Moderator - Full Access";
+            else if(currentUserRole==='approver') roleText=`Department Approver - ${currentUserData.department}`;
+            else if(currentUserRole==='supervisor') roleText="Supervisor - Approve team requests";
+            else roleText="Employee - Submit and track requests";
+            document.getElementById('welcomeSubtitle').innerText=roleText;
+            document.getElementById('userRoleDisplay').innerText=currentUserRole==='hr'?'HR Admin':(currentUserRole==='moderator'?'Moderator':(currentUserRole==='approver'?'Approver':(currentUserRole==='supervisor'?'Supervisor':'Employee')));
             renderNavigation();
             await loadAllData();
             await loadAnnouncements();
             await loadGuardWeeklySchedules();
             await refreshMyAttendanceTab();
-            if (currentUserRole === 'hr') {
-                const guardSelect = document.getElementById('guardEmployee');
-                if (guardSelect) guardSelect.innerHTML = '<option value="">Select Guard</option>' + allEmployees.filter(e => e.dept === 'Guard' || e.role === 'guard').map(emp => `<option value="${emp.id}">${emp.name}</option>`).join('');
+            if(currentUserRole==='hr'){
+                const guardSel=document.getElementById('guardEmployee');
+                if(guardSel) guardSel.innerHTML='<option value="">Select Guard</option>'+allEmployees.filter(e=>e.dept==='Guard'||e.role==='guard').map(emp=>`<option value="${emp.id}">${emp.name}</option>`).join('');
             }
             switchTab('dashboard');
-        } catch (error) { errorDiv.innerText = error.message; errorDiv.classList.remove('hidden'); }
+        } catch(e) { errDiv.innerText=e.message; errDiv.classList.remove('hidden'); }
     }
     
     async function signupWithEmail() {
-        const name = document.getElementById('signupName').value;
-        const email = document.getElementById('signupEmail').value;
-        const password = document.getElementById('signupPassword').value;
-        const role = document.getElementById('signupRole').value;
-        const department = document.getElementById('signupDepartment').value;
-        const errorDiv = document.getElementById('authError');
-        const successDiv = document.getElementById('authSuccess');
-        if (!name || !email || !password || !department) { errorDiv.innerText = "Please fill all fields including department"; errorDiv.classList.remove('hidden'); return; }
+        const name=document.getElementById('signupName').value;
+        const email=document.getElementById('signupEmail').value;
+        const pwd=document.getElementById('signupPassword').value;
+        const role=document.getElementById('signupRole').value;
+        const dept=document.getElementById('signupDepartment').value;
+        const errDiv=document.getElementById('authError');
+        const sucDiv=document.getElementById('authSuccess');
+        if(!name||!email||!pwd||!dept){ errDiv.innerText="Please fill all fields including department"; errDiv.classList.remove('hidden'); return; }
         try {
-            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-            const user = userCredential.user;
-            await db.collection('users').doc(user.uid).set({ uid: user.uid, name: name, email: email, role: role, department: department, leaveBalance: 15, dailyRate: 800, createdAt: new Date().toISOString() });
-            await db.collection('employees').add({ id: user.uid, name: name, dept: department, role: role, email: email, status: "active" });
-            successDiv.innerText = "Account created successfully! Please login.";
-            successDiv.classList.remove('hidden');
+            const cred=await auth.createUserWithEmailAndPassword(email,pwd);
+            const user=cred.user;
+            await db.collection('users').doc(user.uid).set({uid:user.uid,name,email,role,department:dept,leaveBalance:15,dailyRate:800,createdAt:new Date().toISOString()});
+            await db.collection('employees').add({id:user.uid,name,dept,role,email,status:"active"});
+            sucDiv.innerText="Account created! Please login.";
+            sucDiv.classList.remove('hidden');
             showLogin();
-            document.getElementById('signupName').value = '';
-            document.getElementById('signupEmail').value = '';
-            document.getElementById('signupPassword').value = '';
-            document.getElementById('signupDepartment').value = '';
-        } catch (error) { errorDiv.innerText = error.message; errorDiv.classList.remove('hidden'); }
+            document.getElementById('signupName').value='';
+            document.getElementById('signupEmail').value='';
+            document.getElementById('signupPassword').value='';
+            document.getElementById('signupDepartment').value='';
+        } catch(e) { errDiv.innerText=e.message; errDiv.classList.remove('hidden'); }
     }
     
-    async function logout() { await auth.signOut(); currentUser = null; document.getElementById('authScreen').style.display = 'flex'; document.getElementById('mainApp').classList.add('hidden'); }
+    async function logout() { await auth.signOut(); currentUser=null; document.getElementById('authScreen').style.display='flex'; document.getElementById('mainApp').classList.add('hidden'); }
     
     async function loadAllData() {
-        const employeesSnapshot = await db.collection('employees').get();
-        allEmployees = [];
-        employeesSnapshot.forEach(doc => { allEmployees.push({ id: doc.id, ...doc.data() }); });
-        const requestsSnapshot = await db.collection('requests').get();
-        allRequests = [];
-        requestsSnapshot.forEach(doc => { allRequests.push({ id: doc.id, ...doc.data() }); });
-        const attendanceSnapshot = await db.collection('attendance').get();
-        allAttendance = [];
-        attendanceSnapshot.forEach(doc => { allAttendance.push({ id: doc.id, ...doc.data() }); });
-        const payslipsSnapshot = await db.collection('payslips').get();
-        allPayslips = [];
-        payslipsSnapshot.forEach(doc => { allPayslips.push({ id: doc.id, ...doc.data() }); });
+        const empSnap=await db.collection('employees').get();
+        allEmployees=[];
+        empSnap.forEach(d=>allEmployees.push({id:d.id,...d.data()}));
+        const reqSnap=await db.collection('requests').get();
+        allRequests=[];
+        reqSnap.forEach(d=>allRequests.push({id:d.id,...d.data()}));
+        const attSnap=await db.collection('attendance').get();
+        allAttendance=[];
+        attSnap.forEach(d=>allAttendance.push({id:d.id,...d.data()}));
+        const paySnap=await db.collection('payslips').get();
+        allPayslips=[];
+        paySnap.forEach(d=>allPayslips.push({id:d.id,...d.data()}));
         refreshDashboard();
     }
     
     function applyFilters() {
-        const deptFilter = document.getElementById('desktopFilterDepartment')?.value || document.getElementById('filterDepartment')?.value || 'all';
-        const statusFilter = document.getElementById('desktopFilterStatus')?.value || document.getElementById('filterStatus')?.value || 'all';
-        const leaveFilter = document.getElementById('desktopFilterLeaveType')?.value || document.getElementById('filterLeaveType')?.value || 'all';
-        currentFilter = { department: deptFilter, status: statusFilter, leaveType: leaveFilter };
-        if (document.getElementById('desktopFilterDepartment')) document.getElementById('desktopFilterDepartment').value = deptFilter;
-        if (document.getElementById('filterDepartment')) document.getElementById('filterDepartment').value = deptFilter;
-        if (document.getElementById('desktopFilterStatus')) document.getElementById('desktopFilterStatus').value = statusFilter;
-        if (document.getElementById('filterStatus')) document.getElementById('filterStatus').value = statusFilter;
-        if (document.getElementById('desktopFilterLeaveType')) document.getElementById('desktopFilterLeaveType').value = leaveFilter;
-        if (document.getElementById('filterLeaveType')) document.getElementById('filterLeaveType').value = leaveFilter;
+        const dept=document.getElementById('desktopFilterDepartment')?.value||document.getElementById('filterDepartment')?.value||'all';
+        const stat=document.getElementById('desktopFilterStatus')?.value||document.getElementById('filterStatus')?.value||'all';
+        const leave=document.getElementById('desktopFilterLeaveType')?.value||document.getElementById('filterLeaveType')?.value||'all';
+        currentFilter={department:dept,status:stat,leaveType:leave};
+        if(document.getElementById('desktopFilterDepartment')) document.getElementById('desktopFilterDepartment').value=dept;
+        if(document.getElementById('filterDepartment')) document.getElementById('filterDepartment').value=dept;
+        if(document.getElementById('desktopFilterStatus')) document.getElementById('desktopFilterStatus').value=stat;
+        if(document.getElementById('filterStatus')) document.getElementById('filterStatus').value=stat;
+        if(document.getElementById('desktopFilterLeaveType')) document.getElementById('desktopFilterLeaveType').value=leave;
+        if(document.getElementById('filterLeaveType')) document.getElementById('filterLeaveType').value=leave;
         refreshDashboard();
         updateLastUpdatedTime();
     }
-    
     function getFilteredEmployees() {
-        let filtered = [...allEmployees];
-        if (currentFilter.department !== 'all') filtered = filtered.filter(emp => emp.dept === currentFilter.department);
-        if (currentFilter.status !== 'all') filtered = filtered.filter(emp => emp.status === currentFilter.status);
-        return filtered;
+        let f=[...allEmployees];
+        if(currentFilter.department!=='all') f=f.filter(e=>e.dept===currentFilter.department);
+        if(currentFilter.status!=='all') f=f.filter(e=>e.status===currentFilter.status);
+        return f;
     }
     
     function renderNavigation() {
-        const desktopNav = document.getElementById('desktopNavMenu');
-        const mobileNav = document.getElementById('mobileNavMenu');
-        let navHtml = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="home"></i> Dashboard</button>`;
-        navHtml += `<button onclick="switchTab('my-attendance')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clock"></i> My Attendance</button>`;
-        navHtml += `<button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> My Requests</button>`;
-        navHtml += `<button onclick="switchTab('payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> Payslip</button>`;
-        if (currentUserRole === 'approver' || currentUserRole === 'supervisor' || currentUserRole === 'moderator' || currentUserRole === 'hr') {
-            navHtml += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clock"></i> Pending Approvals</button>`;
-        }
-        if (currentUserRole === 'hr' || currentUserRole === 'moderator') {
-            navHtml += `<button onclick="switchTab('hr-employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="users"></i> Employees</button>
-                        <button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clipboard"></i> All Requests</button>
-                        <button onclick="switchTab('hr-payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> Payslip Mgmt</button>
-                        <button onclick="switchTab('hr-guard-schedule')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="calendar"></i> Guard Schedule</button>
-                        <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="settings"></i> Settings</button>`;
-        }
-        desktopNav.innerHTML = navHtml;
-        mobileNav.innerHTML = navHtml;
+        const desktop=document.getElementById('desktopNavMenu');
+        const mobile=document.getElementById('mobileNavMenu');
+        let html=`<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="home"></i> Dashboard</button>`;
+        html+=`<button onclick="switchTab('my-attendance')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clock"></i> My Attendance</button>`;
+        html+=`<button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> My Requests</button>`;
+        html+=`<button onclick="switchTab('payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> Payslip</button>`;
+        if(currentUserRole==='approver'||currentUserRole==='supervisor'||currentUserRole==='moderator'||currentUserRole==='hr')
+            html+=`<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clock"></i> Pending Approvals</button>`;
+        if(currentUserRole==='hr'||currentUserRole==='moderator')
+            html+=`<button onclick="switchTab('hr-employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="users"></i> Employees</button>
+                    <button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clipboard"></i> All Requests</button>
+                    <button onclick="switchTab('hr-payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> Payslip Mgmt</button>
+                    <button onclick="switchTab('hr-guard-schedule')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="calendar"></i> Guard Schedule</button>
+                    <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="settings"></i> Settings</button>`;
+        desktop.innerHTML=html;
+        mobile.innerHTML=html;
         feather.replace();
     }
     
     function switchTab(tabName) {
-        const tabs = ['dashboard', 'my-attendance', 'my-requests', 'payslip', 'approvals', 'hr-employees', 'hr-requests', 'hr-payslip', 'hr-guard-schedule', 'hr-settings'];
-        tabs.forEach(t => { const el = document.getElementById(`${t}-tab`); if(el) el.classList.add('hidden'); });
+        const tabs=['dashboard','my-attendance','my-requests','payslip','approvals','hr-employees','hr-requests','hr-payslip','hr-guard-schedule','hr-settings'];
+        tabs.forEach(t=>{const el=document.getElementById(`${t}-tab`);if(el)el.classList.add('hidden');});
         document.getElementById(`${tabName}-tab`).classList.remove('hidden');
-        if (tabName === 'payslip') refreshEmployeePayslip();
-        if (tabName === 'hr-payslip') refreshHrPayslip();
-        if (tabName === 'my-attendance') refreshMyAttendanceTab();
+        if(tabName==='payslip') refreshEmployeePayslip();
+        if(tabName==='hr-payslip') refreshHrPayslip();
+        if(tabName==='my-attendance') refreshMyAttendanceTab();
         refreshDashboard();
         closeMobileSidebar();
     }
-    
     function refreshEmployeePayslip() {
-        const myPayslips = allPayslips.filter(p => p.employeeEmail === currentUser?.email);
-        const container = document.getElementById('employeePayslipList');
-        if (container) container.innerHTML = myPayslips.map(p => `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><p class="font-bold">${p.month}</p><p class="text-sm">Days: ${p.daysPresent} | Rate: ₱${p.dailyRate}</p><p class="text-sm">Allowances: ₱${p.allowances} | Deductions: ₱${p.deductions}</p></div><div class="text-right"><p class="font-bold text-green-600">Total: ₱${p.totalSalary.toLocaleString()}</p></div></div></div>`).join('') || '<div class="text-center text-slate-400 py-8">No payslips available yet. HR will upload when ready.</div>';
+        const my=allPayslips.filter(p=>p.employeeEmail===currentUser?.email);
+        const cont=document.getElementById('employeePayslipList');
+        if(cont) cont.innerHTML=my.map(p=>`<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><p class="font-bold">${p.month}</p><p class="text-sm">Days: ${p.daysPresent} | Rate: ₱${p.dailyRate}</p><p class="text-sm">Allowances: ₱${p.allowances} | Deductions: ₱${p.deductions}</p></div><div class="text-right"><p class="font-bold text-green-600">Total: ₱${p.totalSalary.toLocaleString()}</p></div></div></div>`).join('')||'<div class="text-center py-8 text-slate-400">No payslips yet</div>';
     }
-    
     function refreshHrPayslip() {
-        const employeeSelect = document.getElementById('payslipEmployee');
-        if (employeeSelect) employeeSelect.innerHTML = '<option value="">Select Employee</option>' + allEmployees.map(emp => `<option value="${emp.id}">${emp.name} - ${emp.dept}</option>`).join('');
-        const historyDiv = document.getElementById('payslipHistory');
-        if (historyDiv) historyDiv.innerHTML = allPayslips.slice().reverse().map(p => `<div class="bg-slate-50 rounded-xl p-4 border"><div class="flex justify-between items-start"><div><p class="font-bold">${p.employeeName}</p><p class="text-sm">${p.month}</p><p class="text-sm">Days: ${p.daysPresent} | Rate: ₱${p.dailyRate}</p></div><div class="text-right"><p class="font-bold text-green-600">Total: ₱${p.totalSalary.toLocaleString()}</p></div></div></div>`).join('') || '<div class="text-center text-slate-400 py-8">No payslips generated yet</div>';
+        const sel=document.getElementById('payslipEmployee');
+        if(sel) sel.innerHTML='<option value="">Select Employee</option>'+allEmployees.map(e=>`<option value="${e.id}">${e.name} - ${e.dept}</option>`).join('');
+        const hist=document.getElementById('payslipHistory');
+        if(hist) hist.innerHTML=allPayslips.slice().reverse().map(p=>`<div class="bg-slate-50 rounded-xl p-4 border"><div class="flex justify-between items-start"><div><p class="font-bold">${p.employeeName}</p><p class="text-sm">${p.month}</p><p class="text-sm">Days: ${p.daysPresent} | Rate: ₱${p.dailyRate}</p></div><div class="text-right"><p class="font-bold text-green-600">Total: ₱${p.totalSalary.toLocaleString()}</p></div></div></div>`).join('')||'<div class="text-center py-8 text-slate-400">No payslips</div>';
     }
-    
     async function generatePayslip() {
-        const employeeId = document.getElementById('payslipEmployee').value;
-        const month = document.getElementById('payslipMonth').value;
-        const dailyRate = parseFloat(document.getElementById('dailyRate').value);
-        const daysPresent = parseInt(document.getElementById('daysPresent').value);
-        const allowances = parseFloat(document.getElementById('allowances').value);
-        const deductions = parseFloat(document.getElementById('deductions').value);
-        if (!employeeId || !month || !daysPresent) { alert("Please select employee, month and enter days present"); return; }
-        const employee = allEmployees.find(e => e.id === employeeId);
-        const totalSalary = (daysPresent * dailyRate) + allowances - deductions;
-        const newPayslip = { employeeId: employeeId, employeeName: employee.name, employeeEmail: employee.email, month: month, daysPresent: daysPresent, dailyRate: dailyRate, allowances: allowances, deductions: deductions, totalSalary: totalSalary, date: new Date().toLocaleDateString() };
-        const docRef = await db.collection('payslips').add(newPayslip);
-        allPayslips.push({ id: docRef.id, ...newPayslip });
+        const empId=document.getElementById('payslipEmployee').value;
+        const month=document.getElementById('payslipMonth').value;
+        const rate=parseFloat(document.getElementById('dailyRate').value);
+        const days=parseInt(document.getElementById('daysPresent').value);
+        const allow=parseFloat(document.getElementById('allowances').value);
+        const deduct=parseFloat(document.getElementById('deductions').value);
+        if(!empId||!month||!days){alert("Select employee, month and days present");return;}
+        const emp=allEmployees.find(e=>e.id===empId);
+        const total=(days*rate)+allow-deduct;
+        const newP={employeeId:empId,employeeName:emp.name,employeeEmail:emp.email,month:month,daysPresent:days,dailyRate:rate,allowances:allow,deductions:deduct,totalSalary:total,date:new Date().toLocaleDateString()};
+        const ref=await db.collection('payslips').add(newP);
+        allPayslips.push({id:ref.id,...newP});
         refreshHrPayslip();
-        alert(`Payslip generated for ${employee.name}\nTotal Salary: ₱${totalSalary.toLocaleString()}`);
-        document.getElementById('daysPresent').value = '';
+        alert(`Payslip for ${emp.name}: ₱${total.toLocaleString()}`);
+        document.getElementById('daysPresent').value='';
     }
     
-    function openModal(id) { document.getElementById(id).classList.add('active'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-    function openNewRequestMenu() { openModal('newRequestMenuOverlay'); }
-    function openLeaveModal() { closeModal('newRequestMenuOverlay'); openModal('leaveModalOverlay'); }
-    function openOffsetsModal() { closeModal('newRequestMenuOverlay'); openModal('offsetsModalOverlay'); }
-    function showAddEmployeeModal() { openModal('addEmployeeModal'); }
-    
-    function openRequestModal(type) {
+    // Request functions (simplified but fully functional)
+    function openModal(id){document.getElementById(id).classList.add('active');}
+    function closeModal(id){document.getElementById(id).classList.remove('active');}
+    function openNewRequestMenu(){openModal('newRequestMenuOverlay');}
+    function openLeaveModal(){closeModal('newRequestMenuOverlay');openModal('leaveModalOverlay');}
+    function openOffsetsModal(){closeModal('newRequestMenuOverlay');openModal('offsetsModalOverlay');}
+    function showAddEmployeeModal(){openModal('addEmployeeModal');}
+    function openRequestModal(type){
         closeModal('newRequestMenuOverlay');
-        document.getElementById('requestModalTitle').innerHTML = `Submit ${type}`;
-        document.getElementById('requestTypeValue').value = type;
-        document.getElementById('reqStartDate').value = '';
-        document.getElementById('reqEndDate').value = '';
-        document.getElementById('reqReason').value = '';
+        document.getElementById('requestModalTitle').innerHTML=`Submit ${type}`;
+        document.getElementById('requestTypeValue').value=type;
+        document.getElementById('reqStartDate').value='';
+        document.getElementById('reqEndDate').value='';
+        document.getElementById('reqReason').value='';
         openModal('requestModalOverlay');
     }
-    
-    function selectLeaveType(type) { closeModal('leaveModalOverlay'); openRequestModal(type); }
-    
-    async function submitRequest() {
-        const type = document.getElementById('requestTypeValue').value;
-        const startDate = document.getElementById('reqStartDate').value;
-        const endDate = document.getElementById('reqEndDate').value;
-        const reason = document.getElementById('reqReason').value;
-        if(!startDate || !endDate) { alert("Please select dates"); return; }
-        const employeeDept = currentUserData.department || "Unassigned";
-        const approverEmails = getDepartmentApprover(employeeDept);
-        let initialStatus = "pending_dept_approver";
-        if (employeeDept === "HR") initialStatus = "pending_moderator";
-        const newRequest = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: employeeDept, type: type, startDate: startDate, endDate: endDate, reason: reason, status: initialStatus, approverEmails: approverEmails, departmentApproved: employeeDept === "HR", moderatorApproved: false, hrApproved: false, createdAt: new Date().toISOString() };
-        const docRef = await db.collection('requests').add(newRequest);
-        allRequests.push({ id: docRef.id, ...newRequest });
+    function selectLeaveType(type){closeModal('leaveModalOverlay');openRequestModal(type);}
+    async function submitRequest(){
+        const type=document.getElementById('requestTypeValue').value;
+        const start=document.getElementById('reqStartDate').value;
+        const end=document.getElementById('reqEndDate').value;
+        const reason=document.getElementById('reqReason').value;
+        if(!start||!end){alert("Select dates");return;}
+        const dept=currentUserData.department||"Unassigned";
+        const approvers=getDepartmentApprover(dept);
+        let status="pending_dept_approver";
+        if(dept==="HR") status="pending_moderator";
+        const req={userId:currentUser.uid,userName:currentUserData.name,userDepartment:dept,type,startDate:start,endDate:end,reason,status,approverEmails:approvers,departmentApproved:dept==="HR",moderatorApproved:false,hrApproved:false,createdAt:new Date().toISOString()};
+        const ref=await db.collection('requests').add(req);
+        allRequests.push({id:ref.id,...req});
         closeModal('requestModalOverlay');
         refreshDashboard();
-        alert(`${type} request submitted!`);
+        alert(`${type} submitted`);
     }
-    
-    async function submitOffsets() {
-        const date = document.getElementById('offsetsDate').value;
-        const hours = document.getElementById('offsetsHours').value;
-        const reason = document.getElementById('offsetsReasonText').value;
-        if(!date || !hours) { alert("Please fill all fields"); return; }
-        const employeeDept = currentUserData.department || "Unassigned";
-        const approverEmails = getDepartmentApprover(employeeDept);
-        let initialStatus = "pending_dept_approver";
-        if (employeeDept === "HR") initialStatus = "pending_moderator";
-        const newRequest = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: employeeDept, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason: reason, status: initialStatus, approverEmails: approverEmails, departmentApproved: employeeDept === "HR", moderatorApproved: false, hrApproved: false, createdAt: new Date().toISOString() };
-        const docRef = await db.collection('requests').add(newRequest);
-        allRequests.push({ id: docRef.id, ...newRequest });
+    async function submitOffsets(){
+        const date=document.getElementById('offsetsDate').value;
+        const hours=document.getElementById('offsetsHours').value;
+        const reason=document.getElementById('offsetsReasonText').value;
+        if(!date||!hours){alert("Fill all fields");return;}
+        const dept=currentUserData.department||"Unassigned";
+        const approvers=getDepartmentApprover(dept);
+        let status="pending_dept_approver";
+        if(dept==="HR") status="pending_moderator";
+        const req={userId:currentUser.uid,userName:currentUserData.name,userDepartment:dept,type:`Offsets (${hours} hrs)`,startDate:date,endDate:date,reason,status,approverEmails:approvers,departmentApproved:dept==="HR",moderatorApproved:false,hrApproved:false,createdAt:new Date().toISOString()};
+        const ref=await db.collection('requests').add(req);
+        allRequests.push({id:ref.id,...req});
         closeModal('offsetsModalOverlay');
         refreshDashboard();
-        alert("Offset request submitted!");
+        alert("Offset submitted");
     }
-    
-    async function approveAsDepartmentApprover(id) { const req = allRequests.find(r => r.id === id); if (req && req.status === "pending_dept_approver") { req.status = "pending_moderator"; req.departmentApproved = true; await db.collection('requests').doc(id).update({ status: "pending_moderator", departmentApproved: true }); refreshDashboard(); alert("Request approved by Department! Forwarded to Moderator."); } }
-    async function approveAsModerator(id) { const req = allRequests.find(r => r.id === id); if (req && req.status === "pending_moderator") { req.status = "pending_hr"; req.moderatorApproved = true; await db.collection('requests').doc(id).update({ status: "pending_hr", moderatorApproved: true }); refreshDashboard(); alert("Request approved by Moderator! Forwarded to HR."); } }
-    async function approveAsHR(id) { const req = allRequests.find(r => r.id === id); if (req && req.status === "pending_hr") { req.status = "approved"; req.hrApproved = true; await db.collection('requests').doc(id).update({ status: "approved", hrApproved: true }); refreshDashboard(); alert("Request FULLY APPROVED!"); } }
-    async function rejectRequest(id) { const req = allRequests.find(r => r.id === id); if (req && (req.status === "pending_dept_approver" || req.status === "pending_moderator" || req.status === "pending_hr")) { req.status = "rejected"; await db.collection('requests').doc(id).update({ status: "rejected" }); refreshDashboard(); alert("Request rejected."); } }
+    async function approveAsDepartmentApprover(id){const r=allRequests.find(r=>r.id===id); if(r&&r.status==="pending_dept_approver"){r.status="pending_moderator";r.departmentApproved=true; await db.collection('requests').doc(id).update({status:"pending_moderator",departmentApproved:true}); refreshDashboard(); alert("Approved by Dept → Moderator");}}
+    async function approveAsModerator(id){const r=allRequests.find(r=>r.id===id); if(r&&r.status==="pending_moderator"){r.status="pending_hr";r.moderatorApproved=true; await db.collection('requests').doc(id).update({status:"pending_hr",moderatorApproved:true}); refreshDashboard(); alert("Approved by Moderator → HR");}}
+    async function approveAsHR(id){const r=allRequests.find(r=>r.id===id); if(r&&r.status==="pending_hr"){r.status="approved";r.hrApproved=true; await db.collection('requests').doc(id).update({status:"approved",hrApproved:true}); refreshDashboard(); alert("Fully approved");}}
+    async function rejectRequest(id){const r=allRequests.find(r=>r.id===id); if(r&&(r.status==="pending_dept_approver"||r.status==="pending_moderator"||r.status==="pending_hr")){r.status="rejected"; await db.collection('requests').doc(id).update({status:"rejected"}); refreshDashboard(); alert("Rejected");}}
     
     function refreshDashboard() {
-        const filteredEmployees = getFilteredEmployees();
-        document.getElementById('totalEmployees').innerText = filteredEmployees.length;
-        document.getElementById('filteredEmployeesInfo').innerHTML = currentFilter.department !== 'all' ? `${currentFilter.department} department` : 'Active workforce';
-        const today = new Date().toISOString().split('T')[0];
-        let deptAttendanceCount = 0;
-        if (currentFilter.department !== 'all') {
-            const deptEmployees = filteredEmployees.map(e => e.name);
-            deptAttendanceCount = allAttendance.filter(a => a.date === today && deptEmployees.includes(a.userName)).length;
-        } else { deptAttendanceCount = allAttendance.filter(a => a.date === today).length; }
-        document.getElementById('deptAttendance').innerText = deptAttendanceCount;
-        document.getElementById('deptAttendanceInfo').innerHTML = currentFilter.department !== 'all' ? `${currentFilter.department} check-ins today` : 'Today\'s check-ins';
-        let pendingCount = 0;
-        if (currentUserRole === 'approver') pendingCount = allRequests.filter(r => r.approverEmails?.includes(currentUser?.email) && r.status === "pending_dept_approver").length;
-        else if (currentUserRole === 'moderator') pendingCount = allRequests.filter(r => r.status === "pending_moderator").length;
-        else if (currentUserRole === 'hr') pendingCount = allRequests.filter(r => r.status === "pending_hr").length;
-        document.getElementById('pendingApprovals').innerText = pendingCount;
-        document.getElementById('myLeaveBalance').innerText = currentUserData?.leaveBalance || 15;
-        const myRequests = allRequests.filter(r => r.userId === currentUser.uid).slice(0,5);
-        document.getElementById('myRequestsList').innerHTML = myRequests.map(r => { let statusText = '', statusClass = ''; if(r.status === 'pending_dept_approver') { statusText = 'Waiting Department'; statusClass = 'bg-yellow-100 text-yellow-700'; } else if(r.status === 'pending_moderator') { statusText = 'Waiting Moderator'; statusClass = 'bg-blue-100 text-blue-700'; } else if(r.status === 'pending_hr') { statusText = 'Waiting HR'; statusClass = 'bg-purple-100 text-purple-700'; } else if(r.status === 'approved') { statusText = 'Approved'; statusClass = 'bg-green-100 text-green-700'; } else { statusText = 'Rejected'; statusClass = 'bg-red-100 text-red-700'; } return `<div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><div><p class="font-semibold">${r.type}</p><p class="text-xs">${r.startDate} to ${r.endDate}</p></div><span class="text-xs px-2 py-1 rounded-full ${statusClass}">${statusText}</span></div>`; }).join('') || '<div class="text-center text-slate-400 py-6">No requests yet</div>';
-        const allMyRequests = allRequests.filter(r => r.userId === currentUser.uid);
-        document.getElementById('allMyRequestsList').innerHTML = allMyRequests.map(r => { let statusText = '', statusClass = ''; if(r.status === 'pending_dept_approver') { statusText = 'Waiting Department'; statusClass = 'bg-yellow-100 text-yellow-700'; } else if(r.status === 'pending_moderator') { statusText = 'Waiting Moderator'; statusClass = 'bg-blue-100 text-blue-700'; } else if(r.status === 'pending_hr') { statusText = 'Waiting HR'; statusClass = 'bg-purple-100 text-purple-700'; } else if(r.status === 'approved') { statusText = 'Approved'; statusClass = 'bg-green-100 text-green-700'; } else { statusText = 'Rejected'; statusClass = 'bg-red-100 text-red-700'; } return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.type}</h4><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-xs text-slate-500">${r.reason}</p></div><span class="text-xs px-3 py-1 rounded-full ${statusClass}">${statusText}</span></div></div>`; }).join('') || '<div class="text-center py-8 text-slate-400">No requests yet</div>';
+        const filtered=getFilteredEmployees();
+        document.getElementById('totalEmployees').innerText=filtered.length;
+        document.getElementById('filteredEmployeesInfo').innerHTML=currentFilter.department!=='all'?`${currentFilter.department} department`:'Active workforce';
+        const today=new Date().toISOString().split('T')[0];
+        let deptAtt=0;
+        if(currentFilter.department!=='all'){
+            const names=filtered.map(e=>e.name);
+            deptAtt=allAttendance.filter(a=>a.date===today && names.includes(a.userName)).length;
+        } else deptAtt=allAttendance.filter(a=>a.date===today).length;
+        document.getElementById('deptAttendance').innerText=deptAtt;
+        document.getElementById('deptAttendanceInfo').innerHTML=currentFilter.department!=='all'?`${currentFilter.department} check-ins`:'Today\'s check-ins';
+        let pendingCount=0;
+        if(currentUserRole==='approver') pendingCount=allRequests.filter(r=>r.approverEmails?.includes(currentUser?.email) && r.status==="pending_dept_approver").length;
+        else if(currentUserRole==='moderator') pendingCount=allRequests.filter(r=>r.status==="pending_moderator").length;
+        else if(currentUserRole==='hr') pendingCount=allRequests.filter(r=>r.status==="pending_hr").length;
+        document.getElementById('pendingApprovals').innerText=pendingCount;
+        document.getElementById('myLeaveBalance').innerText=currentUserData?.leaveBalance||15;
+        const myReqs=allRequests.filter(r=>r.userId===currentUser.uid).slice(0,5);
+        document.getElementById('myRequestsList').innerHTML=myReqs.map(r=>{
+            let txt='',cls='';
+            if(r.status==='pending_dept_approver'){txt='Waiting Dept';cls='bg-yellow-100 text-yellow-700';}
+            else if(r.status==='pending_moderator'){txt='Waiting Moderator';cls='bg-blue-100 text-blue-700';}
+            else if(r.status==='pending_hr'){txt='Waiting HR';cls='bg-purple-100 text-purple-700';}
+            else if(r.status==='approved'){txt='Approved';cls='bg-green-100 text-green-700';}
+            else {txt='Rejected';cls='bg-red-100 text-red-700';}
+            return `<div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><div><p class="font-semibold">${r.type}</p><p class="text-xs">${r.startDate} to ${r.endDate}</p></div><span class="text-xs px-2 py-1 rounded-full ${cls}">${txt}</span></div>`;
+        }).join('')||'<div class="text-center py-6 text-slate-400">No requests</div>';
+        const allMy=allRequests.filter(r=>r.userId===currentUser.uid);
+        document.getElementById('allMyRequestsList').innerHTML=allMy.map(r=>{
+            let txt='',cls='';
+            if(r.status==='pending_dept_approver'){txt='Waiting Dept';cls='bg-yellow-100 text-yellow-700';}
+            else if(r.status==='pending_moderator'){txt='Waiting Moderator';cls='bg-blue-100 text-blue-700';}
+            else if(r.status==='pending_hr'){txt='Waiting HR';cls='bg-purple-100 text-purple-700';}
+            else if(r.status==='approved'){txt='Approved';cls='bg-green-100 text-green-700';}
+            else {txt='Rejected';cls='bg-red-100 text-red-700';}
+            return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.type}</h4><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-xs text-slate-500">${r.reason}</p></div><span class="text-xs px-3 py-1 rounded-full ${cls}">${txt}</span></div></div>`;
+        }).join('')||'<div class="text-center py-8 text-slate-400">No requests</div>';
         
-        // Enhanced Employee Login Status with 4 categories including On Leave
-        const loggedInUsers = [];
-        const missedUsers = [];
-        const lateUsers = [];
-        const onLeaveUsers = [];
-        
-        for (const emp of allEmployees) {
-            const todayAttendance = allAttendance.find(a => a.userId === emp.id && a.date === today);
-            // Check if employee has approved leave for today
-            const hasLeaveToday = allRequests.some(r => r.userId === emp.id && r.status === "approved" && 
-                new Date(r.startDate) <= new Date(today) && new Date(r.endDate) >= new Date(today));
-            
-            if (hasLeaveToday) {
-                onLeaveUsers.push(emp);
-            } else if (!todayAttendance || !todayAttendance.timeIn) {
-                missedUsers.push(emp);
+        // Build login status lists
+        const loggedIn=[], missed=[], late=[], onLeave=[];
+        for(const emp of allEmployees){
+            const todayAtt=allAttendance.find(a=>a.userId===emp.id && a.date===today);
+            const hasLeaveToday=allRequests.some(r=>r.userId===emp.id && r.status==="approved" && new Date(r.startDate)<=new Date(today) && new Date(r.endDate)>=new Date(today));
+            if(hasLeaveToday){
+                onLeave.push(emp);
+            } else if(!todayAtt || !todayAtt.timeIn){
+                missed.push(emp);
             } else {
-                const status = checkAttendanceStatus(todayAttendance, emp);
-                if (status === "late") {
-                    const schedule = getEmployeeWorkSchedule(emp);
-                    const scheduledHour = schedule?.startHour || 8;
-                    const scheduledMinute = schedule?.startMinute || 0;
-                    lateUsers.push({ ...emp, clockInTime: todayAttendance.timeIn, scheduledTime: `${scheduledHour.toString().padStart(2,'0')}:${scheduledMinute.toString().padStart(2,'0')}` });
+                const status=checkAttendanceStatus(todayAtt,emp);
+                if(status==="late"){
+                    const sched=getEmployeeWorkSchedule(emp);
+                    const schedHour=sched?.startHour||8, schedMin=sched?.startMinute||0;
+                    late.push({...emp,clockInTime:todayAtt.timeIn,scheduledTime:`${schedHour.toString().padStart(2,'0')}:${schedMin.toString().padStart(2,'0')}`});
                 } else {
-                    loggedInUsers.push(emp);
+                    loggedIn.push(emp);
                 }
             }
         }
+        document.getElementById('loggedInCount').innerHTML=`(${loggedIn.length})`;
+        document.getElementById('missedCount').innerHTML=`(${missed.length})`;
+        document.getElementById('lateCount').innerHTML=`(${late.length})`;
+        document.getElementById('onLeaveCount').innerHTML=`(${onLeave.length})`;
+        document.getElementById('loggedInList').innerHTML=loggedIn.map(e=>`<div class="flex justify-between p-2 bg-green-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-green-200 flex items-center justify-center text-xs font-bold">${e.name.charAt(0)}</div><span class="text-sm text-slate-700">${e.name}</span></div><span class="text-xs text-green-600">On Time</span></div>`).join('')||'<div class="text-center py-4 text-slate-400 text-sm">No employees</div>';
+        document.getElementById('missedList').innerHTML=missed.map(e=>`<div class="flex justify-between p-2 bg-red-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-red-200 flex items-center justify-center text-xs font-bold">${e.name.charAt(0)}</div><span class="text-sm text-slate-700">${e.name}</span></div><span class="text-xs text-red-600">Not checked in</span></div>`).join('')||'<div class="text-center py-4 text-slate-400 text-sm">No employees</div>';
+        document.getElementById('lateList').innerHTML=late.map(e=>`<div class="flex flex-col p-2 bg-orange-50 rounded-lg"><div class="flex justify-between items-center"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-orange-200 flex items-center justify-center text-xs font-bold">${e.name.charAt(0)}</div><span class="text-sm text-slate-700">${e.name}</span></div><span class="text-xs text-orange-600">Late</span></div><p class="text-xs text-orange-600 mt-1">Clocked in at ${e.clockInTime} (Scheduled: ${e.scheduledTime})</p></div>`).join('')||'<div class="text-center py-4 text-slate-400 text-sm">No employees</div>';
+        document.getElementById('onLeaveList').innerHTML=onLeave.map(e=>`<div class="flex justify-between p-2 bg-yellow-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-yellow-200 flex items-center justify-center text-xs font-bold">${e.name.charAt(0)}</div><span class="text-sm text-slate-700">${e.name}</span></div><span class="text-xs text-yellow-600">On Leave</span></div>`).join('')||'<div class="text-center py-4 text-slate-400 text-sm">No employees</div>';
         
-        document.getElementById('loggedInCount').innerHTML = `(${loggedInUsers.length})`;
-        document.getElementById('missedCount').innerHTML = `(${missedUsers.length})`;
-        document.getElementById('lateCount').innerHTML = `(${lateUsers.length})`;
-        document.getElementById('onLeaveCount').innerHTML = `(${onLeaveUsers.length})`;
+        let pendingReqs=[];
+        if(currentUserRole==='approver') pendingReqs=allRequests.filter(r=>r.approverEmails?.includes(currentUser?.email) && r.status==="pending_dept_approver");
+        else if(currentUserRole==='moderator') pendingReqs=allRequests.filter(r=>r.status==="pending_moderator");
+        else if(currentUserRole==='hr') pendingReqs=allRequests.filter(r=>r.status==="pending_hr");
+        document.getElementById('pendingApprovalsList').innerHTML=pendingReqs.map(r=>`
+            <div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start flex-wrap gap-3"><div><h4 class="font-bold text-lg">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-sm">Dept: ${r.userDepartment}</p><p class="text-sm">${r.reason}</p></div><div class="flex gap-2">${currentUserRole==='approver'?`<button onclick="approveAsDepartmentApprover('${r.id}')" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Approve</button><button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Reject</button>`:''}${currentUserRole==='moderator'?`<button onclick="approveAsModerator('${r.id}')" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Approve</button><button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Reject</button>`:''}${currentUserRole==='hr'?`<button onclick="approveAsHR('${r.id}')" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Approve</button><button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Reject</button>`:''}</div></div></div>
+        `).join('')||'<div class="text-center py-8 text-slate-400">No pending approvals</div>';
         
-        document.getElementById('loggedInList').innerHTML = loggedInUsers.map(emp => `<div class="flex items-center justify-between p-2 bg-green-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-green-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div><span class="text-sm text-slate-700">${emp.name}</span></div><span class="text-xs text-green-600">On Time</span></div>`).join('') || '<div class="text-center text-slate-400 py-4 text-sm">No employees</div>';
-        document.getElementById('missedList').innerHTML = missedUsers.map(emp => `<div class="flex items-center justify-between p-2 bg-red-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-red-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div><span class="text-sm text-slate-700">${emp.name}</span></div><span class="text-xs text-red-600">Not checked in</span></div>`).join('') || '<div class="text-center text-slate-400 py-4 text-sm">No employees</div>';
-        document.getElementById('lateList').innerHTML = lateUsers.map(emp => `<div class="flex items-center justify-between p-2 bg-orange-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-orange-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div><div><span class="text-sm text-slate-700">${emp.name}</span><p class="text-xs text-orange-600">Clocked in at ${emp.clockInTime} (Scheduled: ${emp.scheduledTime})</p></div></div><span class="text-xs text-orange-600">Late</span></div>`).join('') || '<div class="text-center text-slate-400 py-4 text-sm">No employees</div>';
-        document.getElementById('onLeaveList').innerHTML = onLeaveUsers.map(emp => `<div class="flex items-center justify-between p-2 bg-yellow-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-yellow-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div><span class="text-sm text-slate-700">${emp.name}</span></div><span class="text-xs text-yellow-600">On Leave</span></div>`).join('') || '<div class="text-center text-slate-400 py-4 text-sm">No employees</div>';
-        
-        let pendingRequests = [];
-        if (currentUserRole === 'approver') pendingRequests = allRequests.filter(r => r.approverEmails?.includes(currentUser?.email) && r.status === "pending_dept_approver");
-        else if (currentUserRole === 'moderator') pendingRequests = allRequests.filter(r => r.status === "pending_moderator");
-        else if (currentUserRole === 'hr') pendingRequests = allRequests.filter(r => r.status === "pending_hr");
-        document.getElementById('pendingApprovalsList').innerHTML = pendingRequests.map(r => `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start flex-wrap gap-3"><div><h4 class="font-bold text-lg">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-sm">Department: ${r.userDepartment}</p><p class="text-sm">${r.reason}</p></div><div class="flex gap-2">${currentUserRole === 'approver' ? `<button onclick="approveAsDepartmentApprover('${r.id}')" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Approve</button><button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Reject</button>` : ''}${currentUserRole === 'moderator' ? `<button onclick="approveAsModerator('${r.id}')" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Approve</button><button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Reject</button>` : ''}${currentUserRole === 'hr' ? `<button onclick="approveAsHR('${r.id}')" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Approve</button><button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Reject</button>` : ''}</div></div></div>`).join('') || '<div class="text-center py-8 text-slate-400">No pending approvals</div>';
-        
-        if (currentUserRole === 'hr' || currentUserRole === 'moderator') {
-            document.getElementById('hrEmployeesList').innerHTML = allEmployees.map(emp => { const initial = emp.name.split(' ').map(n => n[0]).join(''); return `<div class="flex justify-between items-center p-4 border-b hover:bg-slate-50"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">${initial}</div><div><p class="font-semibold">${emp.name}</p><p class="text-sm text-slate-500">${emp.dept} - ${emp.role}</p></div></div><button onclick="deleteEmployee('${emp.id}')" class="text-red-500 text-sm cursor-pointer">Delete</button></div>`; }).join('');
-            document.getElementById('allRequestsList').innerHTML = allRequests.map(r => { let statusText = ''; if(r.status === 'pending_dept_approver') statusText = 'Pending Department Approver'; else if(r.status === 'pending_moderator') statusText = 'Pending Moderator'; else if(r.status === 'pending_hr') statusText = 'Pending HR'; else if(r.status === 'approved') statusText = 'Approved'; else statusText = 'Rejected'; return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-xs">${r.startDate} - ${r.endDate}</p><p class="text-xs mt-1">${r.reason}</p><p class="text-xs text-slate-400">Dept: ${r.userDepartment}</p></div><span class="text-xs px-2 py-1 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-700' : r.status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}">${statusText}</span></div></div>`; }).join('');
+        if(currentUserRole==='hr'||currentUserRole==='moderator'){
+            document.getElementById('hrEmployeesList').innerHTML=allEmployees.map(e=>{
+                const init=e.name.split(' ').map(n=>n[0]).join('');
+                return `<div class="flex justify-between items-center p-4 border-b hover:bg-slate-50"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">${init}</div><div><p class="font-semibold">${e.name}</p><p class="text-sm text-slate-500">${e.dept} - ${e.role}</p></div></div><button onclick="deleteEmployee('${e.id}')" class="text-red-500 text-sm cursor-pointer">Delete</button></div>`;
+            }).join('');
+            document.getElementById('allRequestsList').innerHTML=allRequests.map(r=>{
+                let statusText='';
+                if(r.status==='pending_dept_approver') statusText='Pending Dept Approver';
+                else if(r.status==='pending_moderator') statusText='Pending Moderator';
+                else if(r.status==='pending_hr') statusText='Pending HR';
+                else if(r.status==='approved') statusText='Approved';
+                else statusText='Rejected';
+                return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-xs">${r.startDate} - ${r.endDate}</p><p class="text-xs mt-1">${r.reason}</p><p class="text-xs text-slate-400">Dept: ${r.userDepartment}</p></div><span class="text-xs px-2 py-1 rounded-full ${r.status==='approved'?'bg-green-100 text-green-700':r.status==='rejected'?'bg-red-100 text-red-700':'bg-yellow-100 text-yellow-700'}">${statusText}</span></div></div>`;
+            }).join('');
         }
         feather.replace();
     }
     
-    async function addEmployee() {
-        const name = document.getElementById('newEmpName').value;
-        const dept = document.getElementById('newEmpDept').value;
-        const role = document.getElementById('newEmpRole').value;
-        const pin = document.getElementById('newEmpPin').value;
-        const pass = document.getElementById('newEmpPass').value || '123456';
-        if(name && dept && pin) {
-            const newEmployee = { name: name, dept: dept, role: role, status: "active", pin: pin, createdAt: new Date().toISOString() };
-            const docRef = await db.collection('employees').add(newEmployee);
-            allEmployees.push({ id: docRef.id, ...newEmployee });
+    async function addEmployee(){
+        const name=document.getElementById('newEmpName').value;
+        const dept=document.getElementById('newEmpDept').value;
+        const role=document.getElementById('newEmpRole').value;
+        const pin=document.getElementById('newEmpPin').value;
+        const pass=document.getElementById('newEmpPass').value||'123456';
+        if(name&&dept&&pin){
+            const emp={name,dept,role,status:"active",pin,createdAt:new Date().toISOString()};
+            const ref=await db.collection('employees').add(emp);
+            allEmployees.push({id:ref.id,...emp});
             closeModal('addEmployeeModal');
             refreshDashboard();
             alert(`Employee ${name} added`);
-            document.getElementById('newEmpName').value = '';
-            document.getElementById('newEmpDept').value = '';
-            document.getElementById('newEmpPin').value = '';
-        } else { alert("Please fill all fields"); }
+            document.getElementById('newEmpName').value='';
+            document.getElementById('newEmpDept').value='';
+            document.getElementById('newEmpPin').value='';
+        } else alert("Fill all fields");
     }
-    
-    async function deleteEmployee(id) { if(confirm('Delete this employee?')){ await db.collection('employees').doc(id).delete(); allEmployees = allEmployees.filter(e => e.id !== id); refreshDashboard(); } }
-    function saveSettings(){ localStorage.setItem('device_ip', document.getElementById('deviceIp').value); alert('Settings saved'); }
-    function updateLastUpdatedTime() {
-        const now = new Date();
-        const formattedDate = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-        const lastUpdated = `${formattedDate} at ${formattedTime}`;
-        const desktopElement = document.getElementById('desktopLastUpdatedTime');
-        const mobileElement = document.getElementById('lastUpdatedTime');
-        if (desktopElement) desktopElement.innerText = lastUpdated;
-        if (mobileElement) mobileElement.innerText = lastUpdated;
+    async function deleteEmployee(id){ if(confirm("Delete?")){ await db.collection('employees').doc(id).delete(); allEmployees=allEmployees.filter(e=>e.id!==id); refreshDashboard(); } }
+    function saveSettings(){ localStorage.setItem('device_ip',document.getElementById('deviceIp').value); alert('Settings saved'); }
+    function updateLastUpdatedTime(){
+        const now=new Date();
+        const date=now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+        const time=now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'});
+        const str=`${date} at ${time}`;
+        const desk=document.getElementById('desktopLastUpdatedTime');
+        const mob=document.getElementById('lastUpdatedTime');
+        if(desk) desk.innerText=str;
+        if(mob) mob.innerText=str;
     }
+    function openMobileSidebar(){document.getElementById('mobileSidebar').classList.add('open');document.getElementById('overlay').classList.add('active');document.body.classList.add('no-scroll');}
+    function closeMobileSidebar(){document.getElementById('mobileSidebar').classList.remove('open');document.getElementById('overlay').classList.remove('active');document.body.classList.remove('no-scroll');}
     
-    function addMockPunch() { alert("Biometric integration coming soon! Use Clock In/Out buttons in My Attendance tab."); }
-    function openMobileSidebar() { document.getElementById('mobileSidebar').classList.add('open'); document.getElementById('overlay').classList.add('active'); document.body.classList.add('no-scroll'); }
-    function closeMobileSidebar() { document.getElementById('mobileSidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); document.body.classList.remove('no-scroll'); }
-    
-    auth.onAuthStateChanged(async (user) => {
-        if (user) {
-            const userDoc = await db.collection('users').doc(user.uid).get();
-            if (userDoc.exists) {
-                currentUserData = userDoc.data();
-                currentUserRole = currentUserData.role;
-                currentUser = user;
-                document.getElementById('authScreen').style.display = 'none';
+    auth.onAuthStateChanged(async(user)=>{
+        if(user){
+            const doc=await db.collection('users').doc(user.uid).get();
+            if(doc.exists){
+                currentUserData=doc.data();
+                currentUserRole=currentUserData.role;
+                currentUser=user;
+                document.getElementById('authScreen').style.display='none';
                 document.getElementById('mainApp').classList.remove('hidden');
-                document.getElementById('welcomeName').innerText = currentUserData.name.split(' ')[0];
-                document.getElementById('userName').innerText = currentUserData.name;
-                document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n => n[0]).join('');
-                document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n => n[0]).join('');
-                document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
-                let roleText = currentUserRole === 'hr' ? "HR Administrator - Full Access" : (currentUserRole === 'moderator' ? "Moderator - Full Access" : (currentUserRole === 'approver' ? `Department Approver - ${currentUserData.department}` : (currentUserRole === 'supervisor' ? "Supervisor - Approve team requests" : "Employee - Submit and track requests")));
-                document.getElementById('welcomeSubtitle').innerText = roleText;
-                document.getElementById('userRoleDisplay').innerText = currentUserRole === 'hr' ? 'HR Admin' : (currentUserRole === 'moderator' ? 'Moderator' : (currentUserRole === 'approver' ? 'Approver' : (currentUserRole === 'supervisor' ? 'Supervisor' : 'Employee')));
+                document.getElementById('welcomeName').innerText=currentUserData.name.split(' ')[0];
+                document.getElementById('userName').innerText=currentUserData.name;
+                document.getElementById('userInitials').innerText=currentUserData.name.split(' ').map(n=>n[0]).join('');
+                document.getElementById('mobileUserInitials').innerText=currentUserData.name.split(' ').map(n=>n[0]).join('');
+                document.getElementById('mobileUserName').innerText=currentUserData.name.split(' ')[0];
+                let rt="";
+                if(currentUserRole==='hr') rt="HR Administrator - Full Access";
+                else if(currentUserRole==='moderator') rt="Moderator - Full Access";
+                else if(currentUserRole==='approver') rt=`Department Approver - ${currentUserData.department}`;
+                else if(currentUserRole==='supervisor') rt="Supervisor - Approve team requests";
+                else rt="Employee - Submit and track requests";
+                document.getElementById('welcomeSubtitle').innerText=rt;
+                document.getElementById('userRoleDisplay').innerText=currentUserRole==='hr'?'HR Admin':(currentUserRole==='moderator'?'Moderator':(currentUserRole==='approver'?'Approver':(currentUserRole==='supervisor'?'Supervisor':'Employee')));
                 renderNavigation();
                 await loadAllData();
                 await loadAnnouncements();
                 await loadGuardWeeklySchedules();
                 await refreshMyAttendanceTab();
-                if (currentUserRole === 'hr') {
-                    const guardSelect = document.getElementById('guardEmployee');
-                    if (guardSelect) guardSelect.innerHTML = '<option value="">Select Guard</option>' + allEmployees.filter(e => e.dept === 'Guard' || e.role === 'guard').map(emp => `<option value="${emp.id}">${emp.name}</option>`).join('');
+                if(currentUserRole==='hr'){
+                    const gsel=document.getElementById('guardEmployee');
+                    if(gsel) gsel.innerHTML='<option value="">Select Guard</option>'+allEmployees.filter(e=>e.dept==='Guard'||e.role==='guard').map(emp=>`<option value="${emp.id}">${emp.name}</option>`).join('');
                 }
                 switchTab('dashboard');
             }
         } else {
-            document.getElementById('authScreen').style.display = 'flex';
+            document.getElementById('authScreen').style.display='flex';
             document.getElementById('mainApp').classList.add('hidden');
         }
     });
-    
     updateLastUpdatedTime();
 </script>
 </body>
