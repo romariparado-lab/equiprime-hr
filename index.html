@@ -130,6 +130,21 @@
         
         .filter-section { border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.75rem; margin-bottom: 0.75rem; }
         .filter-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem; display: block; }
+        
+        /* Announcement edit styles */
+        .announcement-edit-btn {
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .announcement-item:hover .announcement-edit-btn {
+            opacity: 1;
+        }
+        .editable-announcement {
+            cursor: pointer;
+        }
+        .editable-announcement:hover {
+            background-color: #f8fafc;
+        }
     </style>
 </head>
 <body>
@@ -160,20 +175,18 @@
             </div>
         </div>
         
-        <!-- Signup Form (UPDATED with Department field) -->
+        <!-- Signup Form -->
         <div id="signupForm" class="hidden">
             <div class="space-y-4">
                 <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
                 <input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
                 <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
                 
-                <!-- Role Selection -->
                 <select id="signupRole" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
                     <option value="employee">Employee</option>
                     <option value="supervisor">Supervisor</option>
                 </select>
                 
-                <!-- Department Selection (NEW) -->
                 <select id="signupDepartment" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
                     <option value="">Select Department</option>
                     <option value="Service and After-sales">Service and After-sales</option>
@@ -222,7 +235,6 @@
         </div>
         <nav id="mobileNavMenu" class="space-y-2 flex-1"></nav>
         
-        <!-- FILTERS SECTION -->
         <div class="mt-6 pt-4 border-t border-white/20">
             <div class="flex items-center gap-2 mb-3"><i data-feather="filter" class="text-white/70" style="width: 1rem;"></i><span class="text-xs font-semibold text-white/70 uppercase tracking-wider">Filters</span></div>
             
@@ -281,7 +293,7 @@
         </div>
     </div>
 
-    <!-- DESKTOP SIDEBAR (same structure, continued) -->
+    <!-- DESKTOP SIDEBAR -->
     <div class="desktop-sidebar">
         <div class="mb-8">
             <h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
@@ -356,9 +368,9 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT (rest of the dashboard) -->
+    <!-- MAIN CONTENT -->
     <div class="main-content">
-        <!-- Same dashboard content as before - keeping existing structure -->
+        
         <div class="mobile-header">
             <button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm">
                 <i data-feather="menu" class="text-slate-700"></i>
@@ -380,7 +392,7 @@
             </div>
         </div>
 
-        <!-- Dashboard KPI Cards -->
+        <!-- DASHBOARD TAB -->
         <div id="dashboard-tab" class="tab-content">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div class="stat-card bg-white rounded-2xl p-5 shadow-sm">
@@ -445,10 +457,17 @@
                             <div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-red-500 rounded-full"></div><h4 class="font-semibold text-slate-700">Missed Log In</h4><span class="text-xs text-slate-400" id="missedCount"></span></div><div id="missedList" class="space-y-2 max-h-48 overflow-y-auto"></div></div>
                         </div>
                     </div>
-                    <div class="bg-white rounded-2xl p-6 shadow-sm">
-                        <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="bell"></i> Announcements</h3>
-                        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-xl"><h4 class="font-bold text-blue-900">System Live</h4><p class="text-sm text-blue-700">EQUIPRIME HR is now operational</p></div>
-                        <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-xl mt-3"><h4 class="font-bold text-green-900">Biometrics Ready</h4><p class="text-sm text-green-700">ZKTeco integration available</p></div>
+                    
+                    <!-- EDITABLE ANNOUNCEMENTS SECTION -->
+                    <div class="bg-white rounded-2xl p-6 shadow-sm" id="announcementsSection">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold flex items-center gap-2"><i data-feather="bell"></i> Announcements</h3>
+                            <div id="announcementEditControls" style="display: none;">
+                                <button onclick="addNewAnnouncement()" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-1"><i data-feather="plus"></i> Add</button>
+                                <button onclick="toggleAnnouncementEditMode()" class="bg-gray-500 text-white px-3 py-1 rounded-lg text-sm ml-2">Done</button>
+                            </div>
+                        </div>
+                        <div id="announcementsList" class="space-y-3"></div>
                     </div>
                 </div>
             </div>
@@ -466,7 +485,7 @@
             </div>
         </div>
 
-        <!-- Other Tabs (same as before - abbreviated for length) -->
+        <!-- OTHER TABS -->
         <div id="my-requests-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Requests</h2><button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">New Request</button></div><div id="allMyRequestsList" class="space-y-3"></div></div>
         
         <div id="payslip-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="file-text"></i> My Payslips</h2><div id="employeePayslipList" class="space-y-4"></div></div>
@@ -483,7 +502,26 @@
     </div>
 </div>
 
-<!-- MODALS (same as before) -->
+<!-- MODALS -->
+<div id="announcementModal" class="modal-overlay">
+    <div class="modal-container">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3>
+            <button onclick="closeModal('announcementModal')" class="cursor-pointer"><i data-feather="x"></i></button>
+        </div>
+        <input type="hidden" id="announcementId">
+        <div class="space-y-4">
+            <div><label class="text-sm font-medium">Title</label><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl" placeholder="Announcement Title"></div>
+            <div><label class="text-sm font-medium">Content</label><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl" placeholder="Announcement details..."></textarea></div>
+        </div>
+        <div class="flex gap-3 mt-5">
+            <button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Save</button>
+            <button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer" id="deleteAnnouncementBtn">Delete</button>
+            <button onclick="closeModal('announcementModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button>
+        </div>
+    </div>
+</div>
+
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div></div></div>
 
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left cursor-pointer">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left cursor-pointer">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left cursor-pointer">Vacation Leave</button></div></div></div>
@@ -517,9 +555,10 @@
     let allRequests = [];
     let allAttendance = [];
     let allPayslips = [];
+    let allAnnouncements = [];
+    let editMode = false;
     let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
     
-    // Pre-defined approvers list
     const approversList = [
         { email: "cris.molina@equiprime.ph", name: "Cris Molina", role: "approver", department: "Supply Chain Logistics & Purchasing", title: "Supply Chain Manager" },
         { email: "carlo.fruto@equiprime.ph", name: "Carlo Fruto", role: "approver", department: "Admin Management", title: "General Manager" },
@@ -528,7 +567,12 @@
         { email: "ana.liwanagan@equiprime.ph", name: "Ana Liwanagan", role: "approver", department: "Accounting and Finance", title: "Accounting Manager" }
     ];
     
-    // Department to Approver mapping
+    // Default announcements
+    const defaultAnnouncements = [
+        { id: "default1", title: "System Live", content: "EQUIPRIME HR is now operational", color: "blue" },
+        { id: "default2", title: "Biometrics Ready", content: "ZKTeco integration available", color: "green" }
+    ];
+    
     function getDepartmentApprover(employeeDept) {
         const deptApproverMap = {
             "Service and After-sales": ["john.oblena@equiprime.ph", "divino.elpus@equiprime.ph"],
@@ -542,6 +586,124 @@
             "Warehouse": ["cris.molina@equiprime.ph"]
         };
         return deptApproverMap[employeeDept] || ["hrpoly@equiprime.ph", "hrvince@equiprime.ph"];
+    }
+    
+    // ==================== ANNOUNCEMENT FUNCTIONS ====================
+    async function loadAnnouncements() {
+        const announcementsSnapshot = await db.collection('announcements').get();
+        allAnnouncements = [];
+        if (announcementsSnapshot.empty) {
+            // Seed default announcements
+            for (const ann of defaultAnnouncements) {
+                const docRef = await db.collection('announcements').add(ann);
+                allAnnouncements.push({ id: docRef.id, ...ann });
+            }
+        } else {
+            announcementsSnapshot.forEach(doc => {
+                allAnnouncements.push({ id: doc.id, ...doc.data() });
+            });
+        }
+        renderAnnouncements();
+    }
+    
+    function renderAnnouncements() {
+        const container = document.getElementById('announcementsList');
+        if (!container) return;
+        
+        const canEdit = (currentUserRole === 'hr' || currentUserRole === 'moderator');
+        
+        container.innerHTML = allAnnouncements.map(ann => `
+            <div class="announcement-item group relative p-4 rounded-xl ${ann.color === 'blue' ? 'bg-blue-50 border-l-4 border-blue-500' : 'bg-green-50 border-l-4 border-green-500'}">
+                <div class="flex justify-between items-start">
+                    <div class="flex-1">
+                        <h4 class="font-bold ${ann.color === 'blue' ? 'text-blue-900' : 'text-green-900'}">${escapeHtml(ann.title)}</h4>
+                        <p class="text-sm ${ann.color === 'blue' ? 'text-blue-700' : 'text-green-700'} mt-1">${escapeHtml(ann.content)}</p>
+                    </div>
+                    ${canEdit ? `
+                        <div class="announcement-edit-btn flex gap-1">
+                            <button onclick="editAnnouncement('${ann.id}', '${escapeHtml(ann.title)}', '${escapeHtml(ann.content)}')" class="text-gray-500 hover:text-blue-600 p-1 rounded">
+                                <i data-feather="edit-2" style="width: 1rem;"></i>
+                            </button>
+                        </div>
+                    ` : ''}
+                </div>
+            </div>
+        `).join('');
+        
+        // Show edit controls for HR/Moderator
+        const editControls = document.getElementById('announcementEditControls');
+        if (editControls) {
+            editControls.style.display = canEdit ? 'flex' : 'none';
+        }
+        
+        feather.replace();
+    }
+    
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    function toggleAnnouncementEditMode() {
+        editMode = !editMode;
+        renderAnnouncements();
+    }
+    
+    function editAnnouncement(id, title, content) {
+        document.getElementById('announcementId').value = id;
+        document.getElementById('announcementTitle').value = title;
+        document.getElementById('announcementContent').value = content;
+        document.getElementById('announcementModalTitle').innerText = 'Edit Announcement';
+        document.getElementById('deleteAnnouncementBtn').style.display = 'block';
+        openModal('announcementModal');
+    }
+    
+    function addNewAnnouncement() {
+        document.getElementById('announcementId').value = '';
+        document.getElementById('announcementTitle').value = '';
+        document.getElementById('announcementContent').value = '';
+        document.getElementById('announcementModalTitle').innerText = 'Add Announcement';
+        document.getElementById('deleteAnnouncementBtn').style.display = 'none';
+        openModal('announcementModal');
+    }
+    
+    async function saveAnnouncement() {
+        const id = document.getElementById('announcementId').value;
+        const title = document.getElementById('announcementTitle').value;
+        const content = document.getElementById('announcementContent').value;
+        const color = 'blue';
+        
+        if (!title || !content) {
+            alert("Please fill in both title and content");
+            return;
+        }
+        
+        if (id) {
+            await db.collection('announcements').doc(id).update({ title, content, color });
+            const index = allAnnouncements.findIndex(a => a.id === id);
+            if (index !== -1) allAnnouncements[index] = { ...allAnnouncements[index], title, content };
+        } else {
+            const docRef = await db.collection('announcements').add({ title, content, color });
+            allAnnouncements.push({ id: docRef.id, title, content, color });
+        }
+        
+        closeModal('announcementModal');
+        renderAnnouncements();
+        alert("Announcement saved!");
+    }
+    
+    async function deleteAnnouncement() {
+        const id = document.getElementById('announcementId').value;
+        if (!id) return;
+        
+        if (confirm("Delete this announcement?")) {
+            await db.collection('announcements').doc(id).delete();
+            allAnnouncements = allAnnouncements.filter(a => a.id !== id);
+            closeModal('announcementModal');
+            renderAnnouncements();
+            alert("Announcement deleted!");
+        }
     }
     
     // ==================== AUTH FUNCTIONS ====================
@@ -620,6 +782,7 @@
             
             renderNavigation();
             await loadAllData();
+            await loadAnnouncements();
             switchTab('dashboard');
             
         } catch (error) {
@@ -896,6 +1059,12 @@
         const employeeDept = currentUserData.department || "Unassigned";
         const approverEmails = getDepartmentApprover(employeeDept);
         
+        // For HR department, skip to moderator directly
+        let initialStatus = "pending_dept_approver";
+        if (employeeDept === "HR") {
+            initialStatus = "pending_moderator";
+        }
+        
         const newRequest = {
             userId: currentUser.uid,
             userName: currentUserData.name,
@@ -904,9 +1073,9 @@
             startDate: startDate,
             endDate: endDate,
             reason: reason,
-            status: "pending_dept_approver",
+            status: initialStatus,
             approverEmails: approverEmails,
-            departmentApproved: false,
+            departmentApproved: employeeDept === "HR",
             moderatorApproved: false,
             hrApproved: false,
             createdAt: new Date().toISOString()
@@ -916,7 +1085,7 @@
         allRequests.push({ id: docRef.id, ...newRequest });
         closeModal('requestModalOverlay');
         refreshDashboard();
-        alert(`${type} request submitted! Waiting for department approver.`);
+        alert(`${type} request submitted!`);
     }
     
     async function submitOffsets() {
@@ -928,6 +1097,11 @@
         const employeeDept = currentUserData.department || "Unassigned";
         const approverEmails = getDepartmentApprover(employeeDept);
         
+        let initialStatus = "pending_dept_approver";
+        if (employeeDept === "HR") {
+            initialStatus = "pending_moderator";
+        }
+        
         const newRequest = {
             userId: currentUser.uid,
             userName: currentUserData.name,
@@ -936,9 +1110,9 @@
             startDate: date,
             endDate: date,
             reason: reason,
-            status: "pending_dept_approver",
+            status: initialStatus,
             approverEmails: approverEmails,
-            departmentApproved: false,
+            departmentApproved: employeeDept === "HR",
             moderatorApproved: false,
             hrApproved: false,
             createdAt: new Date().toISOString()
@@ -948,7 +1122,7 @@
         allRequests.push({ id: docRef.id, ...newRequest });
         closeModal('offsetsModalOverlay');
         refreshDashboard();
-        alert("Offset request submitted! Waiting for department approver.");
+        alert("Offset request submitted!");
     }
     
     async function approveAsDepartmentApprover(id) {
@@ -1178,6 +1352,7 @@
                 document.getElementById('userRoleDisplay').innerText = currentUserRole === 'hr' ? 'HR Admin' : (currentUserRole === 'moderator' ? 'Moderator' : (currentUserRole === 'approver' ? 'Approver' : (currentUserRole === 'supervisor' ? 'Supervisor' : 'Employee')));
                 renderNavigation();
                 await loadAllData();
+                await loadAnnouncements();
                 switchTab('dashboard');
             }
         } else {
