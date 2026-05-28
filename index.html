@@ -541,23 +541,25 @@
     }
     
     function checkAttendanceStatus(attendance, employee) {
-        if (!attendance || !attendance.timeIn) return "missed";
-        
-        const schedule = getEmployeeWorkSchedule(employee);
-        if (!schedule) return "on-leave";
-        
-        const [inHour, inMinute] = attendance.timeIn.split(':').map(Number);
-        const scheduledHour = schedule.startHour;
-        const scheduledMinute = schedule.startMinute;
-        
-        const inTotalMinutes = inHour * 60 + inMinute;
-        const scheduledTotalMinutes = scheduledHour * 60 + scheduledMinute;
-        const lateMinutes = inTotalMinutes - scheduledTotalMinutes;
-        
-        if (lateMinutes > 15) return "late";
-        if (attendance.timeOut) return "logged-in";
-        return "logged-in";
-    }
+    if (!attendance || !attendance.timeIn) return "missed";
+    
+    const schedule = getEmployeeWorkSchedule(employee);
+    if (!schedule) return "on-leave";
+    
+    const [inHour, inMinute] = attendance.timeIn.split(':').map(Number);
+    const scheduledHour = schedule.startHour;
+    const scheduledMinute = schedule.startMinute;
+    
+    const inTotalMinutes = inHour * 60 + inMinute;
+    const scheduledTotalMinutes = scheduledHour * 60 + scheduledMinute;
+    const lateMinutes = inTotalMinutes - scheduledTotalMinutes;
+    
+    // Any lateness (even 1 minute) is considered "late"
+    if (lateMinutes > 0) return "late";
+    
+    if (attendance.timeOut) return "logged-in";
+    return "logged-in";
+}
     
     // ==================== ATTENDANCE FUNCTIONS ====================
     async function clockIn() {
