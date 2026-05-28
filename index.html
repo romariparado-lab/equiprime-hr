@@ -9,6 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    
     <style>
         * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #f3f6fb; overflow-x: hidden; }
@@ -31,7 +36,6 @@
             flex-shrink: 0;
         }
         
-        /* Custom scrollbar for sidebar */
         .desktop-sidebar::-webkit-scrollbar { width: 4px; }
         .desktop-sidebar::-webkit-scrollbar-track { background: #1e3a8a; border-radius: 10px; }
         .desktop-sidebar::-webkit-scrollbar-thumb { background: #60a5fa; border-radius: 10px; }
@@ -111,10 +115,6 @@
         .stat-card { transition: all 0.25s ease; cursor: pointer; }
         .stat-card:hover { transform: translateY(-3px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
         
-        .status-logged-in { background-color: #d1fae5; color: #059669; }
-        .status-missed { background-color: #fee2e2; color: #dc2626; }
-        
-        /* Filter select styles */
         .filter-select {
             background-color: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.2);
@@ -134,8 +134,8 @@
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
-<div id="loginScreen" class="fixed inset-0 bg-[#004aad] z-[10000] flex items-center justify-center">
+<!-- LOGIN / SIGNUP SCREEN -->
+<div id="authScreen" class="fixed inset-0 bg-[#004aad] z-[10000] flex items-center justify-center">
     <div class="bg-white rounded-3xl p-8 w-full max-w-md mx-4 shadow-2xl">
         <div class="text-center mb-6">
             <div class="w-16 h-16 bg-[#004aad] rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -144,18 +144,44 @@
             <h1 class="text-3xl font-extrabold text-[#004aad]">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
             <p class="text-slate-500 text-sm mt-1">smart choices · smarter results</p>
         </div>
-        <div id="loginError" class="bg-red-50 text-red-600 p-3 rounded-xl text-sm mb-4 hidden"></div>
-        <div class="space-y-4">
-            <input type="text" id="loginPin" placeholder="Employee ID / PIN" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
-            <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
-            <button onclick="login()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Login</button>
+        
+        <div id="authError" class="bg-red-50 text-red-600 p-3 rounded-xl text-sm mb-4 hidden"></div>
+        <div id="authSuccess" class="bg-green-50 text-green-600 p-3 rounded-xl text-sm mb-4 hidden"></div>
+        
+        <!-- Login Form -->
+        <div id="loginForm">
+            <div class="space-y-4">
+                <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
+                <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
+                <button onclick="loginWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Login</button>
+            </div>
+            <div class="mt-4 text-center">
+                <button onclick="showSignup()" class="text-[#004aad] text-sm hover:underline">Don't have an account? Sign up</button>
+            </div>
         </div>
+        
+        <!-- Signup Form -->
+        <div id="signupForm" class="hidden">
+            <div class="space-y-4">
+                <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
+                <input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
+                <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
+                <select id="signupRole" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
+                    <option value="employee">Employee</option>
+                    <option value="supervisor">Supervisor</option>
+                </select>
+                <button onclick="signupWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Sign Up</button>
+            </div>
+            <div class="mt-4 text-center">
+                <button onclick="showLogin()" class="text-[#004aad] text-sm hover:underline">Already have an account? Login</button>
+            </div>
+        </div>
+        
         <div class="mt-6 p-4 bg-slate-50 rounded-xl text-xs text-slate-500">
-            <p class="font-semibold mb-1">Demo Credentials:</p>
-            <p>HR Admin: PIN 1000 / admin</p>
-            <p>Moderator: PIN 5001 / mod123</p>
-            <p>Supervisor: PIN 2001 / 1234</p>
-            <p>Employee: PIN 1002 / 1234</p>
+            <p class="font-semibold mb-1">Authorized Users:</p>
+            <p>HR: hrpoly@equiprime.ph / hrvince@equiprime.ph</p>
+            <p>Moderator: mod.rom@equiprime.ph / mod.dex@equiprime.ph</p>
+            <p>Other employees can sign up!</p>
         </div>
     </div>
 </div>
@@ -178,11 +204,9 @@
         </div>
         <nav id="mobileNavMenu" class="space-y-2 flex-1"></nav>
         
-        <!-- NEW FILTERS SECTION FOR MOBILE SIDEBAR -->
         <div class="mt-6 pt-4 border-t border-white/20">
             <div class="flex items-center gap-2 mb-3"><i data-feather="filter" class="text-white/70" style="width: 1rem;"></i><span class="text-xs font-semibold text-white/70 uppercase tracking-wider">Filters</span></div>
             
-            <!-- Department Filter -->
             <div class="filter-section">
                 <label class="filter-label">DEPARTMENT</label>
                 <select id="filterDepartment" class="filter-select" onchange="applyFilters()">
@@ -197,7 +221,6 @@
                 </select>
             </div>
             
-            <!-- Status Filter -->
             <div class="filter-section">
                 <label class="filter-label">STATUS</label>
                 <select id="filterStatus" class="filter-select" onchange="applyFilters()">
@@ -208,7 +231,6 @@
                 </select>
             </div>
             
-            <!-- Leave Type Filter -->
             <div class="filter-section">
                 <label class="filter-label">LEAVE TYPE</label>
                 <select id="filterLeaveType" class="filter-select" onchange="applyFilters()">
@@ -222,7 +244,6 @@
                 </select>
             </div>
             
-            <!-- Calendar / Last Updated -->
             <div class="pt-2">
                 <label class="filter-label">LAST UPDATED</label>
                 <div class="text-white/80 text-xs flex items-center gap-2">
@@ -247,11 +268,9 @@
         </div>
         <nav id="desktopNavMenu" class="space-y-2 flex-1"></nav>
         
-        <!-- NEW FILTERS SECTION FOR DESKTOP SIDEBAR -->
         <div class="mt-6 pt-4 border-t border-white/20">
             <div class="flex items-center gap-2 mb-3"><i data-feather="filter" class="text-white/70" style="width: 1rem;"></i><span class="text-xs font-semibold text-white/70 uppercase tracking-wider">Filters</span></div>
             
-            <!-- Department Filter -->
             <div class="filter-section">
                 <label class="filter-label">DEPARTMENT</label>
                 <select id="desktopFilterDepartment" class="filter-select" onchange="applyFilters()">
@@ -266,7 +285,6 @@
                 </select>
             </div>
             
-            <!-- Status Filter -->
             <div class="filter-section">
                 <label class="filter-label">STATUS</label>
                 <select id="desktopFilterStatus" class="filter-select" onchange="applyFilters()">
@@ -277,7 +295,6 @@
                 </select>
             </div>
             
-            <!-- Leave Type Filter -->
             <div class="filter-section">
                 <label class="filter-label">LEAVE TYPE</label>
                 <select id="desktopFilterLeaveType" class="filter-select" onchange="applyFilters()">
@@ -291,7 +308,6 @@
                 </select>
             </div>
             
-            <!-- Calendar / Last Updated -->
             <div class="pt-2">
                 <label class="filter-label">LAST UPDATED</label>
                 <div class="text-white/80 text-xs flex items-center gap-2">
@@ -306,8 +322,8 @@
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div>
                     <div>
-                        <p class="font-semibold text-sm" id="userName">HR Admin</p>
-                        <p class="text-xs text-slate-300" id="userRoleDisplay">Administrator</p>
+                        <p class="font-semibold text-sm" id="userName">User</p>
+                        <p class="text-xs text-slate-300" id="userRoleDisplay"></p>
                     </div>
                 </div>
                 <button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm">
@@ -317,10 +333,9 @@
         </div>
     </div>
 
-    <!-- MAIN CONTENT (unchanged - keeping all existing features) -->
+    <!-- MAIN CONTENT -->
     <div class="main-content">
         
-        <!-- MOBILE HEADER -->
         <div class="mobile-header">
             <button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm">
                 <i data-feather="menu" class="text-slate-700"></i>
@@ -331,7 +346,6 @@
             </div>
         </div>
 
-        <!-- Welcome Header -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <div>
                 <h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Welcome Back, <span id="welcomeName">User</span></h2>
@@ -343,7 +357,6 @@
             </div>
         </div>
 
-        <!-- DASHBOARD TAB -->
         <div id="dashboard-tab" class="tab-content">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div class="stat-card bg-white rounded-2xl p-5 shadow-sm">
@@ -376,7 +389,6 @@
                 </div>
             </div>
 
-            <!-- Quick Filing Options -->
             <div class="bg-white rounded-2xl p-6 shadow-sm mb-6">
                 <h3 class="text-xl font-bold mb-5 flex items-center gap-2"><i data-feather="file-text"></i> Quick Filing Options</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -404,9 +416,7 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- LEFT COLUMN -->
                 <div class="space-y-6">
-                    <!-- My Recent Requests -->
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
                         <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                             <h3 class="text-xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Recent Requests</h3>
@@ -421,9 +431,7 @@
                     </div>
                 </div>
 
-                <!-- RIGHT COLUMN -->
                 <div class="space-y-6">
-                    <!-- Employee Login Status -->
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
                         <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="users"></i> Employee Login Status</h3>
                         <div class="space-y-4">
@@ -446,7 +454,6 @@
                         </div>
                     </div>
 
-                    <!-- Announcements -->
                     <div class="bg-white rounded-2xl p-6 shadow-sm">
                         <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="bell"></i> Announcements</h3>
                         <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-xl">
@@ -461,7 +468,6 @@
                 </div>
             </div>
 
-            <!-- Approval Flow Section -->
             <div class="mt-6">
                 <div class="bg-white rounded-2xl p-6 shadow-sm">
                     <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="git-branch"></i> Approval Flow</h3>
@@ -475,7 +481,6 @@
             </div>
         </div>
 
-        <!-- OTHER TABS (unchanged) -->
         <div id="my-requests-tab" class="tab-content hidden">
             <div class="flex justify-between items-center mb-5 flex-wrap gap-2">
                 <h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Requests</h2>
@@ -535,7 +540,7 @@
     </div>
 </div>
 
-<!-- MODALS (unchanged) -->
+<!-- MODALS -->
 <div id="requestModalOverlay" class="modal-overlay">
     <div class="modal-container">
         <div class="flex justify-between items-center mb-4">
@@ -619,122 +624,271 @@
 </div>
 
 <script>
-    // ==================== DATA ====================
-    let users = [], employees = [], attendanceLogs = [], requests = [], payslips = [], currentUser = null;
+    // ==================== FIREBASE CONFIGURATION ====================
+    const firebaseConfig = {
+        apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
+        authDomain: "equiprime-hr.firebaseapp.com",
+        projectId: "equiprime-hr",
+        storageBucket: "equiprime-hr.firebasestorage.app",
+        messagingSenderId: "613422898397",
+        appId: "1:613422898397:web:e825bbf5d78905bcf20f34"
+    };
     
-    // Function to update last updated time
-    function updateLastUpdatedTime() {
-        const now = new Date();
-        const formattedDate = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
-        const lastUpdated = `${formattedDate} at ${formattedTime}`;
-        
-        const desktopElement = document.getElementById('desktopLastUpdatedTime');
-        const mobileElement = document.getElementById('lastUpdatedTime');
-        
-        if (desktopElement) desktopElement.innerText = lastUpdated;
-        if (mobileElement) mobileElement.innerText = lastUpdated;
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    
+    // ==================== GLOBAL VARIABLES ====================
+    let currentUser = null;
+    let currentUserRole = null;
+    let currentUserData = null;
+    let allEmployees = [];
+    let allRequests = [];
+    let allAttendance = [];
+    let allPayslips = [];
+    
+    // ==================== AUTH FUNCTIONS ====================
+    function showSignup() {
+        document.getElementById('loginForm').classList.add('hidden');
+        document.getElementById('signupForm').classList.remove('hidden');
+        document.getElementById('authError').classList.add('hidden');
     }
     
-    // Apply filters function (for future use - can be expanded)
-    function applyFilters() {
-        // Get values from both desktop and mobile filters
-        const desktopDept = document.getElementById('desktopFilterDepartment')?.value || 'all';
-        const mobileDept = document.getElementById('filterDepartment')?.value || 'all';
-        const desktopStatus = document.getElementById('desktopFilterStatus')?.value || 'all';
-        const mobileStatus = document.getElementById('filterStatus')?.value || 'all';
-        const desktopLeave = document.getElementById('desktopFilterLeaveType')?.value || 'all';
-        const mobileLeave = document.getElementById('filterLeaveType')?.value || 'all';
-        
-        // Sync both sides
-        if (document.getElementById('desktopFilterDepartment')) document.getElementById('desktopFilterDepartment').value = mobileDept;
-        if (document.getElementById('filterDepartment')) document.getElementById('filterDepartment').value = desktopDept;
-        if (document.getElementById('desktopFilterStatus')) document.getElementById('desktopFilterStatus').value = mobileStatus;
-        if (document.getElementById('filterStatus')) document.getElementById('filterStatus').value = desktopStatus;
-        if (document.getElementById('desktopFilterLeaveType')) document.getElementById('desktopFilterLeaveType').value = mobileLeave;
-        if (document.getElementById('filterLeaveType')) document.getElementById('filterLeaveType').value = desktopLeave;
-        
-        // For now, just show a console log - filter logic can be expanded later
-        console.log('Filters applied - Department:', desktopDept, 'Status:', desktopStatus, 'Leave Type:', desktopLeave);
-        
-        // Update last updated time
-        updateLastUpdatedTime();
+    function showLogin() {
+        document.getElementById('signupForm').classList.add('hidden');
+        document.getElementById('loginForm').classList.remove('hidden');
+        document.getElementById('authError').classList.add('hidden');
     }
     
-    function initData() {
-        users = [
-            { id: 1, pin: "1000", password: "admin", name: "Polyjem Lim", role: "hr", department: "HR & Admin", avatar: "PL", supervisorId: null, leaveBalance: 20, dailyRate: 1200 },
-            { id: 2, pin: "1001", password: "admin", name: "Vincent Cristan Eligino", role: "hr", department: "HR", avatar: "VE", supervisorId: null, leaveBalance: 20, dailyRate: 1100 },
-            { id: 3, pin: "5001", password: "mod123", name: "Moderator Rom", role: "moderator", department: "Marketing", avatar: "MR", supervisorId: null, leaveBalance: 15, dailyRate: 950 },
-            { id: 4, pin: "5002", password: "mod123", name: "Moderator Dex", role: "moderator", department: "IT Asset Management", avatar: "MD", supervisorId: null, leaveBalance: 15, dailyRate: 950 },
-            { id: 5, pin: "2001", password: "1234", name: "Cris Molina", role: "supervisor", department: "Parts & Logistics", avatar: "CM", supervisorId: 1, leaveBalance: 10, dailyRate: 1000 },
-            { id: 6, pin: "1002", password: "1234", name: "Romari Parado", role: "employee", department: "Service", avatar: "RP", supervisorId: 5, leaveBalance: 12, dailyRate: 800 },
-            { id: 7, pin: "1003", password: "1234", name: "Rhedsyne Valdez", role: "employee", department: "Marketing", avatar: "RV", supervisorId: 5, leaveBalance: 10, dailyRate: 800 },
-            { id: 8, pin: "1004", password: "1234", name: "Kimberly Baldugo", role: "employee", department: "HR", avatar: "KB", supervisorId: 1, leaveBalance: 14, dailyRate: 850 }
-        ];
-        employees = users.map(u => ({ id: u.id, name: u.name, dept: u.department, role: u.role, supervisorId: u.supervisorId, pin: u.pin, status: "active", dailyRate: u.dailyRate }));
+    async function loginWithEmail() {
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        const errorDiv = document.getElementById('authError');
+        
+        try {
+            const userCredential = await auth.signInWithEmailAndPassword(email, password);
+            const user = userCredential.user;
+            
+            // Get user role from Firestore
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (userDoc.exists) {
+                currentUserData = userDoc.data();
+                currentUserRole = currentUserData.role;
+            }
+            
+            currentUser = user;
+            document.getElementById('authScreen').style.display = 'none';
+            document.getElementById('mainApp').classList.remove('hidden');
+            
+            // Update UI with user info
+            document.getElementById('welcomeName').innerText = currentUserData.name.split(' ')[0];
+            document.getElementById('userName').innerText = currentUserData.name;
+            document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n => n[0]).join('');
+            document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n => n[0]).join('');
+            document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
+            
+            let roleText = "";
+            if(currentUserRole === 'hr') roleText = "HR Administrator - Full Access";
+            else if(currentUserRole === 'moderator') roleText = "Moderator - Review and Approve Requests";
+            else if(currentUserRole === 'supervisor') roleText = "Supervisor - Approve team requests";
+            else roleText = "Employee - Submit and track requests";
+            document.getElementById('welcomeSubtitle').innerText = roleText;
+            document.getElementById('userRoleDisplay').innerText = currentUserRole === 'hr' ? 'HR Admin' : (currentUserRole === 'moderator' ? 'Moderator' : (currentUserRole === 'supervisor' ? 'Supervisor' : 'Employee'));
+            
+            renderNavigation();
+            loadAllData();
+            switchTab('dashboard');
+            
+        } catch (error) {
+            errorDiv.innerText = error.message;
+            errorDiv.classList.remove('hidden');
+        }
+    }
+    
+    async function signupWithEmail() {
+        const name = document.getElementById('signupName').value;
+        const email = document.getElementById('signupEmail').value;
+        const password = document.getElementById('signupPassword').value;
+        const role = document.getElementById('signupRole').value;
+        const errorDiv = document.getElementById('authError');
+        const successDiv = document.getElementById('authSuccess');
+        
+        if (!name || !email || !password) {
+            errorDiv.innerText = "Please fill all fields";
+            errorDiv.classList.remove('hidden');
+            return;
+        }
+        
+        try {
+            const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+            const user = userCredential.user;
+            
+            // Save user data to Firestore
+            await db.collection('users').doc(user.uid).set({
+                uid: user.uid,
+                name: name,
+                email: email,
+                role: role,
+                department: "Unassigned",
+                leaveBalance: 15,
+                dailyRate: 800,
+                createdAt: new Date().toISOString()
+            });
+            
+            // Also add to employees collection
+            await db.collection('employees').doc(user.uid).set({
+                id: user.uid,
+                name: name,
+                dept: "Unassigned",
+                role: role,
+                email: email,
+                status: "active"
+            });
+            
+            successDiv.innerText = "Account created successfully! Please login.";
+            successDiv.classList.remove('hidden');
+            showLogin();
+            
+            document.getElementById('signupName').value = '';
+            document.getElementById('signupEmail').value = '';
+            document.getElementById('signupPassword').value = '';
+            
+        } catch (error) {
+            errorDiv.innerText = error.message;
+            errorDiv.classList.remove('hidden');
+        }
+    }
+    
+    async function logout() {
+        await auth.signOut();
+        currentUser = null;
+        document.getElementById('authScreen').style.display = 'flex';
+        document.getElementById('mainApp').classList.add('hidden');
+    }
+    
+    // ==================== LOAD DATA FROM FIRESTORE ====================
+    async function loadAllData() {
+        // Load employees
+        const employeesSnapshot = await db.collection('employees').get();
+        allEmployees = [];
+        employeesSnapshot.forEach(doc => {
+            allEmployees.push({ id: doc.id, ...doc.data() });
+        });
+        
+        // Load requests
+        const requestsSnapshot = await db.collection('requests').get();
+        allRequests = [];
+        requestsSnapshot.forEach(doc => {
+            allRequests.push({ id: doc.id, ...doc.data() });
+        });
+        
+        // Load attendance
+        const attendanceSnapshot = await db.collection('attendance').get();
+        allAttendance = [];
+        attendanceSnapshot.forEach(doc => {
+            allAttendance.push({ id: doc.id, ...doc.data() });
+        });
+        
+        // Load payslips
+        const payslipsSnapshot = await db.collection('payslips').get();
+        allPayslips = [];
+        payslipsSnapshot.forEach(doc => {
+            allPayslips.push({ id: doc.id, ...doc.data() });
+        });
+        
+        refreshDashboard();
+    }
+    
+    // ==================== UI FUNCTIONS ====================
+    function renderNavigation() {
+        const desktopNav = document.getElementById('desktopNavMenu');
+        const mobileNav = document.getElementById('mobileNavMenu');
+        let navHtml = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="home"></i> Dashboard</button>`;
+        navHtml += `<button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> My Requests</button>`;
+        if(currentUserRole === 'supervisor' || currentUserRole === 'moderator' || currentUserRole === 'hr') {
+            navHtml += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clock"></i> Pending Approvals</button>`;
+        }
+        if(currentUserRole === 'hr') {
+            navHtml += `<button onclick="switchTab('hr-employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="users"></i> Employees</button>
+                        <button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clipboard"></i> All Requests</button>
+                        <button onclick="switchTab('hr-payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> Payslip</button>
+                        <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="settings"></i> Settings</button>`;
+        }
+        desktopNav.innerHTML = navHtml;
+        mobileNav.innerHTML = navHtml;
+        feather.replace();
+    }
+    
+    function switchTab(tabName) {
+        const tabs = ['dashboard', 'my-requests', 'approvals', 'hr-employees', 'hr-requests', 'hr-payslip', 'hr-settings'];
+        tabs.forEach(t => { const el = document.getElementById(`${t}-tab`); if(el) el.classList.add('hidden'); });
+        document.getElementById(`${tabName}-tab`).classList.remove('hidden');
+        refreshDashboard();
+        closeMobileSidebar();
+    }
+    
+    function refreshDashboard() {
+        document.getElementById('totalEmployees').innerText = allEmployees.length;
+        
+        const userAttendance = allAttendance.filter(a => a.userId === currentUser.uid);
+        document.getElementById('myAttendance').innerText = userAttendance.length;
+        document.getElementById('myAttendanceRate').innerHTML = `${userAttendance.length} check-ins this month`;
+        document.getElementById('myLeaveBalance').innerText = currentUserData?.leaveBalance || 15;
+        
+        let pendingCount = 0;
+        if(currentUserRole === 'supervisor') pendingCount = allRequests.filter(r => r.supervisorId === currentUser.uid && r.status === "pending_sup").length;
+        if(currentUserRole === 'moderator') pendingCount = allRequests.filter(r => r.status === "pending_mod").length;
+        if(currentUserRole === 'hr') pendingCount = allRequests.filter(r => r.status === "pending_hr").length;
+        document.getElementById('pendingApprovals').innerText = pendingCount;
+        document.getElementById('pendingApprovalsSub').innerHTML = pendingCount + ' pending';
+        
+        const myRequests = allRequests.filter(r => r.userId === currentUser.uid).slice(0,5);
+        document.getElementById('myRequestsList').innerHTML = myRequests.map(r => {
+            let statusText = '', statusClass = '';
+            if(r.status === 'pending_sup') { statusText = 'Waiting Supervisor'; statusClass = 'bg-yellow-100 text-yellow-700'; }
+            else if(r.status === 'pending_mod') { statusText = 'Waiting Moderator'; statusClass = 'bg-blue-100 text-blue-700'; }
+            else if(r.status === 'pending_hr') { statusText = 'Waiting HR'; statusClass = 'bg-purple-100 text-purple-700'; }
+            else if(r.status === 'approved') { statusText = 'Approved'; statusClass = 'bg-green-100 text-green-700'; }
+            else { statusText = 'Rejected'; statusClass = 'bg-red-100 text-red-700'; }
+            return `<div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><div><p class="font-semibold">${r.type}</p><p class="text-xs">${r.startDate} to ${r.endDate}</p></div><span class="text-xs px-2 py-1 rounded-full ${statusClass}">${statusText}</span></div>`;
+        }).join('') || '<div class="text-center text-slate-400 py-6">No requests yet</div>';
+        
         const today = new Date().toISOString().split('T')[0];
-        attendanceLogs = [
-            { id: 1, userId: 6, userName: "Romari Parado", date: today, timeIn: "08:05 AM", status: "Present" },
-            { id: 2, userId: 7, userName: "Rhedsyne Valdez", date: today, timeIn: "08:12 AM", status: "Present" }
-        ];
-        requests = [];
-        payslips = JSON.parse(localStorage.getItem('equiprime_payslips')) || [];
-        saveAllData();
-    }
-    
-    function saveAllData() { 
-        localStorage.setItem('equiprime_users', JSON.stringify(users)); 
-        localStorage.setItem('equiprime_employees', JSON.stringify(employees)); 
-        localStorage.setItem('equiprime_attendance', JSON.stringify(attendanceLogs)); 
-        localStorage.setItem('equiprime_requests', JSON.stringify(requests));
-        localStorage.setItem('equiprime_payslips', JSON.stringify(payslips));
-    }
-    
-    function loadAllData() { 
-        users = JSON.parse(localStorage.getItem('equiprime_users')) || []; 
-        employees = JSON.parse(localStorage.getItem('equiprime_employees')) || []; 
-        attendanceLogs = JSON.parse(localStorage.getItem('equiprime_attendance')) || []; 
-        requests = JSON.parse(localStorage.getItem('equiprime_requests')) || [];
-        payslips = JSON.parse(localStorage.getItem('equiprime_payslips')) || [];
-        if(users.length === 0) initData(); 
-    }
-    
-    function refreshEmployeeLoginStatus() {
-        const today = new Date().toISOString().split('T')[0];
-        const loggedInUsers = attendanceLogs.filter(log => log.date === today).map(log => log.userId);
-        
-        const loggedIn = employees.filter(emp => loggedInUsers.includes(emp.id));
-        const missed = employees.filter(emp => !loggedInUsers.includes(emp.id));
+        const loggedInUsers = allAttendance.filter(a => a.date === today).map(a => a.userId);
+        const loggedIn = allEmployees.filter(emp => loggedInUsers.includes(emp.id));
+        const missed = allEmployees.filter(emp => !loggedInUsers.includes(emp.id));
         
         document.getElementById('loggedInCount').innerHTML = `(${loggedIn.length})`;
         document.getElementById('missedCount').innerHTML = `(${missed.length})`;
         
         document.getElementById('loggedInList').innerHTML = loggedIn.map(emp => `
             <div class="flex items-center justify-between p-2 bg-green-50 rounded-lg">
-                <div class="flex items-center gap-2">
-                    <div class="w-6 h-6 rounded-full bg-green-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div>
-                    <span class="text-sm text-slate-700">${emp.name}</span>
-                </div>
+                <div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-green-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div><span class="text-sm text-slate-700">${emp.name}</span></div>
                 <span class="text-xs text-green-600">Checked in</span>
             </div>
         `).join('') || '<div class="text-center text-slate-400 py-4 text-sm">No employees logged in today</div>';
         
         document.getElementById('missedList').innerHTML = missed.map(emp => `
             <div class="flex items-center justify-between p-2 bg-red-50 rounded-lg">
-                <div class="flex items-center gap-2">
-                    <div class="w-6 h-6 rounded-full bg-red-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div>
-                    <span class="text-sm text-slate-700">${emp.name}</span>
-                </div>
+                <div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-red-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div><span class="text-sm text-slate-700">${emp.name}</span></div>
                 <span class="text-xs text-red-600">Not checked in</span>
             </div>
         `).join('') || '<div class="text-center text-slate-400 py-4 text-sm">All employees have checked in!</div>';
+        
+        if(currentUserRole === 'hr') {
+            document.getElementById('hrEmployeesList').innerHTML = allEmployees.map(emp => {
+                const initial = emp.name.split(' ').map(n => n[0]).join('');
+                return `<div class="flex justify-between items-center p-4 border-b hover:bg-slate-50"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">${initial}</div><div><p class="font-semibold">${emp.name}</p><p class="text-sm text-slate-500">${emp.dept} - ${emp.role}</p></div></div><button onclick="deleteEmployee('${emp.id}')" class="text-red-500 text-sm cursor-pointer">Delete</button></div>`;
+            }).join('');
+        }
+        
+        feather.replace();
     }
     
-    // MODAL FUNCTIONS
+    // ==================== REQUEST FUNCTIONS ====================
     function openModal(id) { document.getElementById(id).classList.add('active'); }
     function closeModal(id) { document.getElementById(id).classList.remove('active'); }
-    
     function openNewRequestMenu() { openModal('newRequestMenuOverlay'); }
     function openLeaveModal() { closeModal('newRequestMenuOverlay'); openModal('leaveModalOverlay'); }
     function openOffsetsModal() { closeModal('newRequestMenuOverlay'); openModal('offsetsModalOverlay'); }
@@ -755,98 +909,126 @@
         openRequestModal(type);
     }
     
-    function submitRequest() {
+    async function submitRequest() {
         const type = document.getElementById('requestTypeValue').value;
         const startDate = document.getElementById('reqStartDate').value;
         const endDate = document.getElementById('reqEndDate').value;
         const reason = document.getElementById('reqReason').value;
         if(!startDate || !endDate) { alert("Please select dates"); return; }
-        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: type, startDate: startDate, endDate: endDate, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, createdAt: new Date().toISOString() });
-        saveAllData(); closeModal('requestModalOverlay'); refreshDashboard(); alert(`${type} request submitted`);
+        
+        const newRequest = {
+            userId: currentUser.uid,
+            userName: currentUserData.name,
+            type: type,
+            startDate: startDate,
+            endDate: endDate,
+            reason: reason,
+            status: "pending_sup",
+            supervisorId: currentUserData.supervisorId || null,
+            createdAt: new Date().toISOString()
+        };
+        
+        const docRef = await db.collection('requests').add(newRequest);
+        allRequests.push({ id: docRef.id, ...newRequest });
+        closeModal('requestModalOverlay');
+        refreshDashboard();
+        alert(`${type} request submitted`);
     }
     
-    function submitOffsets() {
+    async function submitOffsets() {
         const date = document.getElementById('offsetsDate').value;
         const hours = document.getElementById('offsetsHours').value;
         const reason = document.getElementById('offsetsReasonText').value;
         if(!date || !hours) { alert("Please fill all fields"); return; }
-        requests.unshift({ id: Date.now(), userId: currentUser.id, userName: currentUser.name, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason: reason, status: "pending_sup", supervisorId: currentUser.supervisorId, createdAt: new Date().toISOString() });
-        saveAllData(); closeModal('offsetsModalOverlay'); refreshDashboard(); alert("Offset request submitted");
-    }
-    
-    function login() {
-        const pin = document.getElementById('loginPin').value;
-        const password = document.getElementById('loginPassword').value;
-        const user = users.find(u => u.pin === pin && u.password === password);
-        if(user) {
-            currentUser = user;
-            document.getElementById('loginScreen').style.display = 'none';
-            document.getElementById('mainApp').classList.remove('hidden');
-            document.getElementById('welcomeName').innerText = user.name.split(' ')[0];
-            document.getElementById('userName').innerText = user.name;
-            document.getElementById('userInitials').innerText = user.avatar;
-            document.getElementById('mobileUserInitials').innerText = user.avatar;
-            document.getElementById('mobileUserName').innerText = user.name.split(' ')[0];
-            
-            let roleText = "";
-            if(user.role === 'hr') roleText = "HR Administrator - Full Access";
-            else if(user.role === 'moderator') roleText = "Moderator - Review and Approve Requests";
-            else if(user.role === 'supervisor') roleText = "Supervisor - Approve team requests";
-            else roleText = "Employee - Submit and track requests";
-            document.getElementById('welcomeSubtitle').innerText = roleText;
-            document.getElementById('userRoleDisplay').innerText = user.role === 'hr' ? 'HR Admin' : (user.role === 'moderator' ? 'Moderator' : (user.role === 'supervisor' ? 'Supervisor' : 'Employee'));
-            
-            renderNavigation();
-            refreshDashboard();
-            switchTab('dashboard');
-            
-            // Update last updated time on login
-            updateLastUpdatedTime();
-        } else {
-            document.getElementById('loginError').innerText = 'Invalid PIN or Password';
-            document.getElementById('loginError').classList.remove('hidden');
-        }
-    }
-    
-    function logout() { currentUser = null; document.getElementById('loginScreen').style.display = 'flex'; document.getElementById('mainApp').classList.add('hidden'); }
-    
-    function renderNavigation() {
-        const role = currentUser?.role;
-        const desktopNav = document.getElementById('desktopNavMenu');
-        const mobileNav = document.getElementById('mobileNavMenu');
-        let navHtml = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="home"></i> Dashboard</button>`;
-        navHtml += `<button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> My Requests</button>`;
-        if(role === 'supervisor' || role === 'moderator' || role === 'hr') {
-            navHtml += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clock"></i> Pending Approvals</button>`;
-        }
-        if(role === 'hr') {
-            navHtml += `<button onclick="switchTab('hr-employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="users"></i> Employees</button>
-                        <button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clipboard"></i> All Requests</button>
-                        <button onclick="switchTab('hr-payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> Payslip</button>
-                        <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="settings"></i> Settings</button>`;
-        }
-        desktopNav.innerHTML = navHtml;
-        mobileNav.innerHTML = navHtml;
-        feather.replace();
-    }
-    
-    function switchTab(tabName) {
-        const tabs = ['dashboard', 'my-requests', 'approvals', 'hr-employees', 'hr-requests', 'hr-payslip', 'hr-settings'];
-        tabs.forEach(t => { const el = document.getElementById(`${t}-tab`); if(el) el.classList.add('hidden'); });
-        document.getElementById(`${tabName}-tab`).classList.remove('hidden');
-        if(tabName === 'hr-payslip') refreshPayslipTab();
+        
+        const newRequest = {
+            userId: currentUser.uid,
+            userName: currentUserData.name,
+            type: `Offsets (${hours} hrs)`,
+            startDate: date,
+            endDate: date,
+            reason: reason,
+            status: "pending_sup",
+            supervisorId: currentUserData.supervisorId || null,
+            createdAt: new Date().toISOString()
+        };
+        
+        const docRef = await db.collection('requests').add(newRequest);
+        allRequests.push({ id: docRef.id, ...newRequest });
+        closeModal('offsetsModalOverlay');
         refreshDashboard();
-        closeMobileSidebar();
+        alert("Offset request submitted");
     }
     
-    function refreshPayslipTab() {
-        const employeeSelect = document.getElementById('payslipEmployee');
-        if(employeeSelect) {
-            employeeSelect.innerHTML = '<option value="">Select Employee</option>' + employees.map(emp => `<option value="${emp.id}">${emp.name} - ${emp.dept}</option>`).join('');
-        }
+    async function approveAsSupervisor(id) { 
+        const req = allRequests.find(r => r.id === id); 
+        if(req && req.status === "pending_sup") { 
+            req.status = "pending_mod"; 
+            await db.collection('requests').doc(id).update({ status: "pending_mod" });
+            refreshDashboard(); 
+            alert("Request forwarded to Moderator"); 
+        } 
+    }
+    
+    async function approveAsModerator(id) { 
+        const req = allRequests.find(r => r.id === id); 
+        if(req && req.status === "pending_mod") { 
+            req.status = "pending_hr"; 
+            await db.collection('requests').doc(id).update({ status: "pending_hr" });
+            refreshDashboard(); 
+            alert("Request forwarded to HR"); 
+        } 
+    }
+    
+    async function approveAsHR(id) { 
+        const req = allRequests.find(r => r.id === id); 
+        if(req && req.status === "pending_hr") { 
+            req.status = "approved"; 
+            await db.collection('requests').doc(id).update({ status: "approved" });
+            refreshDashboard(); 
+            alert("Request fully approved"); 
+        } 
+    }
+    
+    async function rejectRequest(id) { 
+        const req = allRequests.find(r => r.id === id); 
+        if(req && (req.status === "pending_sup" || req.status === "pending_mod" || req.status === "pending_hr")) { 
+            req.status = "rejected"; 
+            await db.collection('requests').doc(id).update({ status: "rejected" });
+            refreshDashboard(); 
+            alert("Request rejected"); 
+        } 
+    }
+    
+    async function generatePayslip() {
+        const employeeId = document.getElementById('payslipEmployee').value;
+        const month = document.getElementById('payslipMonth').value;
+        const dailyRate = parseFloat(document.getElementById('dailyRate').value);
+        const daysPresent = parseInt(document.getElementById('daysPresent').value);
+        const allowances = parseFloat(document.getElementById('allowances').value);
+        const deductions = parseFloat(document.getElementById('deductions').value);
+        if(!employeeId || !month || !daysPresent) { alert("Please select employee, month and enter days present"); return; }
+        const employee = allEmployees.find(e => e.id === employeeId);
+        const totalSalary = (daysPresent * dailyRate) + allowances - deductions;
+        
+        const newPayslip = {
+            employeeId: employeeId,
+            employeeName: employee.name,
+            month: month,
+            daysPresent: daysPresent,
+            dailyRate: dailyRate,
+            allowances: allowances,
+            deductions: deductions,
+            totalSalary: totalSalary,
+            date: new Date().toLocaleDateString()
+        };
+        
+        const docRef = await db.collection('payslips').add(newPayslip);
+        allPayslips.push({ id: docRef.id, ...newPayslip });
+        
         const historyDiv = document.getElementById('payslipHistory');
-        if(historyDiv && payslips) {
-            historyDiv.innerHTML = payslips.slice().reverse().map(p => `
+        if(historyDiv) {
+            historyDiv.innerHTML = allPayslips.slice().reverse().map(p => `
                 <div class="bg-slate-50 rounded-xl p-4 border">
                     <div class="flex justify-between items-start">
                         <div><p class="font-bold">${p.employeeName}</p><p class="text-sm text-slate-600">${p.month}</p><p class="text-sm">Days: ${p.daysPresent} | Rate: ${p.dailyRate}</p></div>
@@ -855,148 +1037,99 @@
                 </div>
             `).join('') || '<div class="text-center text-slate-400 py-8">No payslips generated yet</div>';
         }
-    }
-    
-    function generatePayslip() {
-        const employeeId = document.getElementById('payslipEmployee').value;
-        const month = document.getElementById('payslipMonth').value;
-        const dailyRate = parseFloat(document.getElementById('dailyRate').value);
-        const daysPresent = parseInt(document.getElementById('daysPresent').value);
-        const allowances = parseFloat(document.getElementById('allowances').value);
-        const deductions = parseFloat(document.getElementById('deductions').value);
-        if(!employeeId || !month || !daysPresent) { alert("Please select employee, month and enter days present"); return; }
-        const employee = employees.find(e => e.id == employeeId);
-        const totalSalary = (daysPresent * dailyRate) + allowances - deductions;
-        payslips.push({ id: Date.now(), employeeId: employeeId, employeeName: employee.name, month: month, daysPresent: daysPresent, dailyRate: dailyRate, allowances: allowances, deductions: deductions, totalSalary: totalSalary, date: new Date().toLocaleDateString() });
-        saveAllData(); refreshPayslipTab();
+        
         alert(`Payslip generated for ${employee.name}\nTotal Salary: ${totalSalary.toLocaleString()}`);
         document.getElementById('daysPresent').value = '';
     }
     
-    function approveAsSupervisor(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_sup") { req.status = "pending_mod"; saveAllData(); refreshDashboard(); alert("Request forwarded to Moderator"); } }
-    function approveAsModerator(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_mod") { req.status = "pending_hr"; saveAllData(); refreshDashboard(); alert("Request forwarded to HR"); } }
-    function approveAsHR(id) { const req = requests.find(r => r.id === id); if(req && req.status === "pending_hr") { req.status = "approved"; saveAllData(); refreshDashboard(); alert("Request fully approved"); } }
-    function rejectRequest(id) { const req = requests.find(r => r.id === id); if(req && (req.status === "pending_sup" || req.status === "pending_mod" || req.status === "pending_hr")) { req.status = "rejected"; saveAllData(); refreshDashboard(); alert("Request rejected"); } }
-    
-    function refreshDashboard() {
-        const role = currentUser?.role;
-        
-        document.getElementById('totalEmployees').innerText = employees.length;
-        
-        refreshEmployeeLoginStatus();
-        
-        if(role === 'hr') {
-            const totalAttendance = attendanceLogs.filter(l => l.date === new Date().toISOString().split('T')[0]).length;
-            document.getElementById('myAttendance').innerText = totalAttendance;
-            document.getElementById('myAttendanceRate').innerHTML = `${totalAttendance} total check-ins today`;
-            document.getElementById('myLeaveBalance').innerText = "N/A";
-        } else {
-            const userAttendance = attendanceLogs.filter(l => l.userId === currentUser.id);
-            document.getElementById('myAttendance').innerText = userAttendance.length;
-            document.getElementById('myAttendanceRate').innerHTML = `${userAttendance.length} check-ins this month`;
-            document.getElementById('myLeaveBalance').innerText = currentUser.leaveBalance;
-        }
-        
-        let pendingCount = 0;
-        if(role === 'supervisor') pendingCount = requests.filter(r => r.supervisorId === currentUser.id && r.status === "pending_sup").length;
-        if(role === 'moderator') pendingCount = requests.filter(r => r.status === "pending_mod").length;
-        if(role === 'hr') pendingCount = requests.filter(r => r.status === "pending_hr").length;
-        document.getElementById('pendingApprovals').innerText = pendingCount;
-        document.getElementById('pendingApprovalsSub').innerHTML = pendingCount + ' pending';
-        
-        const myRequests = requests.filter(r => r.userId === currentUser.id).slice(0,5);
-        document.getElementById('myRequestsList').innerHTML = myRequests.map(r => {
-            let statusText = '', statusClass = '';
-            if(r.status === 'pending_sup') { statusText = 'Waiting Supervisor'; statusClass = 'bg-yellow-100 text-yellow-700'; }
-            else if(r.status === 'pending_mod') { statusText = 'Waiting Moderator'; statusClass = 'bg-blue-100 text-blue-700'; }
-            else if(r.status === 'pending_hr') { statusText = 'Waiting HR'; statusClass = 'bg-purple-100 text-purple-700'; }
-            else if(r.status === 'approved') { statusText = 'Approved'; statusClass = 'bg-green-100 text-green-700'; }
-            else { statusText = 'Rejected'; statusClass = 'bg-red-100 text-red-700'; }
-            return `<div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><div><p class="font-semibold">${r.type}</p><p class="text-xs">${r.startDate} to ${r.endDate}</p></div><span class="text-xs px-2 py-1 rounded-full ${statusClass}">${statusText}</span></div>`;
-        }).join('') || '<div class="text-center text-slate-400 py-6">No requests yet</div>';
-        
-        const allMyRequests = requests.filter(r => r.userId === currentUser.id);
-        document.getElementById('allMyRequestsList').innerHTML = allMyRequests.map(r => {
-            let statusText = '', statusClass = '';
-            if(r.status === 'pending_sup') { statusText = 'Waiting Supervisor'; statusClass = 'bg-yellow-100 text-yellow-700'; }
-            else if(r.status === 'pending_mod') { statusText = 'Waiting Moderator'; statusClass = 'bg-blue-100 text-blue-700'; }
-            else if(r.status === 'pending_hr') { statusText = 'Waiting HR'; statusClass = 'bg-purple-100 text-purple-700'; }
-            else if(r.status === 'approved') { statusText = 'Approved'; statusClass = 'bg-green-100 text-green-700'; }
-            else { statusText = 'Rejected'; statusClass = 'bg-red-100 text-red-700'; }
-            return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.type}</h4><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-xs text-slate-500">${r.reason}</p></div><span class="text-xs px-3 py-1 rounded-full ${statusClass}">${statusText}</span></div></div>`;
-        }).join('') || '<div class="text-center py-8 text-slate-400">No requests yet</div>';
-        
-        let pendingRequests = [];
-        if(role === 'supervisor') pendingRequests = requests.filter(r => r.supervisorId === currentUser.id && r.status === "pending_sup");
-        if(role === 'moderator') pendingRequests = requests.filter(r => r.status === "pending_mod");
-        if(role === 'hr') pendingRequests = requests.filter(r => r.status === "pending_hr");
-        
-        document.getElementById('pendingApprovalsList').innerHTML = pendingRequests.map(r => `
-            <div class="bg-white rounded-xl p-4 shadow-sm border">
-                <div class="flex justify-between items-start flex-wrap gap-3">
-                    <div><h4 class="font-bold text-lg">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-sm">${r.reason}</p></div>
-                    <div class="flex gap-2">
-                        ${role === 'supervisor' ? `<button onclick="approveAsSupervisor(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Reject</button>` : ''}
-                        ${role === 'moderator' ? `<button onclick="approveAsModerator(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Reject</button>` : ''}
-                        ${role === 'hr' ? `<button onclick="approveAsHR(${r.id})" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Approve</button><button onclick="rejectRequest(${r.id})" class="bg-red-600 text-white px-4 py-2 rounded-lg text-sm cursor-pointer">Reject</button>` : ''}
-                    </div>
-                </div>
-            </div>
-        `).join('') || '<div class="text-center py-8 text-slate-400">No pending approvals</div>';
-        
-        if(role === 'hr') {
-            document.getElementById('hrEmployeesList').innerHTML = employees.map(emp => {
-                const supervisor = users.find(u => u.id === emp.supervisorId);
-                const initial = emp.name.split(' ').map(n => n[0]).join('');
-                return `<div class="flex justify-between items-center p-4 border-b hover:bg-slate-50"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">${initial}</div><div><p class="font-semibold">${emp.name}</p><p class="text-sm text-slate-500">${emp.dept} - ${emp.role}</p></div></div><button onclick="deleteEmployee(${emp.id})" class="text-red-500 text-sm cursor-pointer">Delete</button></div>`;
-            }).join('');
-            
-            document.getElementById('allRequestsList').innerHTML = requests.map(r => {
-                let statusText = '';
-                if(r.status === 'pending_sup') statusText = 'Pending Supervisor';
-                else if(r.status === 'pending_mod') statusText = 'Pending Moderator';
-                else if(r.status === 'pending_hr') statusText = 'Pending HR';
-                else if(r.status === 'approved') statusText = 'Approved';
-                else statusText = 'Rejected';
-                return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-xs">${r.startDate} - ${r.endDate}</p><p class="text-xs mt-1">${r.reason}</p></div><span class="text-xs px-2 py-1 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-700' : r.status === 'rejected' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'}">${statusText}</span></div></div>`;
-            }).join('');
-        }
-        
-        const supervisorSelect = document.getElementById('newEmpSupervisor');
-        if(supervisorSelect) {
-            const supervisors = users.filter(u => u.role === 'supervisor' || u.role === 'moderator' || u.role === 'hr');
-            supervisorSelect.innerHTML = '<option value="">No Supervisor</option>' + supervisors.map(s => `<option value="${s.id}">${s.name} (${s.role})</option>`).join('');
-        }
-        feather.replace();
-        
-        // Update last updated time whenever dashboard refreshes
-        updateLastUpdatedTime();
-    }
-    
-    function addEmployee() {
+    async function addEmployee() {
         const name = document.getElementById('newEmpName').value;
         const dept = document.getElementById('newEmpDept').value;
         const role = document.getElementById('newEmpRole').value;
-        const supervisorId = document.getElementById('newEmpSupervisor').value ? parseInt(document.getElementById('newEmpSupervisor').value) : null;
         const pin = document.getElementById('newEmpPin').value;
-        const pass = document.getElementById('newEmpPass').value || '1234';
+        
         if(name && dept && pin) {
-            const newId = Math.max(...users.map(u=>u.id),0)+1;
-            const avatar = name.split(' ').map(n=>n[0]).join('');
-            users.push({ id: newId, pin, password: pass, name, role, department: dept, avatar, supervisorId, leaveBalance: 15, dailyRate: 800 });
-            employees.push({ id: newId, name, dept, role, supervisorId, pin, status: 'active', dailyRate: 800 });
-            saveAllData(); closeModal('addEmployeeModal'); refreshDashboard(); alert(`Employee ${name} added`);
-            document.getElementById('newEmpName').value = ''; document.getElementById('newEmpDept').value = ''; document.getElementById('newEmpPin').value = '';
+            const newEmployee = {
+                name: name,
+                dept: dept,
+                role: role,
+                status: "active",
+                createdAt: new Date().toISOString()
+            };
+            
+            const docRef = await db.collection('employees').add(newEmployee);
+            allEmployees.push({ id: docRef.id, ...newEmployee });
+            closeModal('addEmployeeModal');
+            refreshDashboard();
+            alert(`Employee ${name} added`);
+            document.getElementById('newEmpName').value = '';
+            document.getElementById('newEmpDept').value = '';
+            document.getElementById('newEmpPin').value = '';
         } else { alert("Please fill all fields"); }
     }
     
-    function deleteEmployee(id) { if(confirm('Delete this employee?')){ users = users.filter(u => u.id !== id); employees = employees.filter(e => e.id !== id); saveAllData(); refreshDashboard(); } }
+    async function deleteEmployee(id) { 
+        if(confirm('Delete this employee?')){ 
+            await db.collection('employees').doc(id).delete();
+            allEmployees = allEmployees.filter(e => e.id !== id); 
+            refreshDashboard(); 
+        } 
+    }
+    
     function saveSettings(){ localStorage.setItem('device_ip', document.getElementById('deviceIp').value); alert('Settings saved'); }
+    function applyFilters() { updateLastUpdatedTime(); }
+    function updateLastUpdatedTime() {
+        const now = new Date();
+        const formattedDate = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        const formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+        const lastUpdated = `${formattedDate} at ${formattedTime}`;
+        const desktopElement = document.getElementById('desktopLastUpdatedTime');
+        const mobileElement = document.getElementById('lastUpdatedTime');
+        if (desktopElement) desktopElement.innerText = lastUpdated;
+        if (mobileElement) mobileElement.innerText = lastUpdated;
+    }
+    
+    function addMockPunch() {
+        const now = new Date();
+        const today = now.toISOString().split('T')[0];
+        const time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        alert("Biometric integration coming soon! This is a demo.");
+    }
     
     function openMobileSidebar() { document.getElementById('mobileSidebar').classList.add('open'); document.getElementById('overlay').classList.add('active'); document.body.classList.add('no-scroll'); }
     function closeMobileSidebar() { document.getElementById('mobileSidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); document.body.classList.remove('no-scroll'); }
     
-    loadAllData();
+    // Set up real-time listeners
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            // User is signed in
+            db.collection('users').doc(user.uid).get().then(doc => {
+                if (doc.exists) {
+                    currentUserData = doc.data();
+                    currentUserRole = currentUserData.role;
+                    currentUser = user;
+                    document.getElementById('authScreen').style.display = 'none';
+                    document.getElementById('mainApp').classList.remove('hidden');
+                    document.getElementById('welcomeName').innerText = currentUserData.name.split(' ')[0];
+                    document.getElementById('userName').innerText = currentUserData.name;
+                    document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n => n[0]).join('');
+                    document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n => n[0]).join('');
+                    document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
+                    let roleText = currentUserRole === 'hr' ? "HR Administrator - Full Access" : (currentUserRole === 'moderator' ? "Moderator - Review and Approve Requests" : (currentUserRole === 'supervisor' ? "Supervisor - Approve team requests" : "Employee - Submit and track requests"));
+                    document.getElementById('welcomeSubtitle').innerText = roleText;
+                    document.getElementById('userRoleDisplay').innerText = currentUserRole === 'hr' ? 'HR Admin' : (currentUserRole === 'moderator' ? 'Moderator' : (currentUserRole === 'supervisor' ? 'Supervisor' : 'Employee'));
+                    renderNavigation();
+                    loadAllData();
+                    switchTab('dashboard');
+                }
+            });
+        } else {
+            document.getElementById('authScreen').style.display = 'flex';
+            document.getElementById('mainApp').classList.add('hidden');
+        }
+    });
+    
+    updateLastUpdatedTime();
 </script>
 </body>
 </html>
