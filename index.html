@@ -137,10 +137,14 @@
         .status-logged-in { background-color: #d1fae5; color: #059669; }
         .status-missed { background-color: #fee2e2; color: #dc2626; }
         .status-late { background-color: #fed7aa; color: #c2410c; }
-        .status-halfday { background-color: #fef3c7; color: #d97706; }
+        .status-on-leave { background-color: #fef3c7; color: #d97706; }
         
         .clock-btn { transition: all 0.2s ease; }
         .clock-btn:active { transform: scale(0.98); }
+        
+        .day-checkbox { width: 18px; height: 18px; cursor: pointer; }
+        .schedule-day { display: flex; align-items: center; gap: 8px; padding: 8px; border-bottom: 1px solid #e2e8f0; }
+        .schedule-day:hover { background-color: #f8fafc; }
     </style>
 </head>
 <body>
@@ -335,7 +339,7 @@
                             <div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-green-500 rounded-full"></div><h4 class="font-semibold text-slate-700">Logged In Today</h4><span class="text-xs text-slate-400" id="loggedInCount"></span></div><div id="loggedInList" class="space-y-2 max-h-40 overflow-y-auto"></div></div>
                             <div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-red-500 rounded-full"></div><h4 class="font-semibold text-slate-700">Missed Log In</h4><span class="text-xs text-slate-400" id="missedCount"></span></div><div id="missedList" class="space-y-2 max-h-40 overflow-y-auto"></div></div>
                             <div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-orange-500 rounded-full"></div><h4 class="font-semibold text-slate-700">Late</h4><span class="text-xs text-slate-400" id="lateCount"></span></div><div id="lateList" class="space-y-2 max-h-40 overflow-y-auto"></div></div>
-                            <div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-yellow-500 rounded-full"></div><h4 class="font-semibold text-slate-700">Half Day</h4><span class="text-xs text-slate-400" id="halfdayCount"></span></div><div id="halfdayList" class="space-y-2 max-h-40 overflow-y-auto"></div></div>
+                            <div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-yellow-500 rounded-full"></div><h4 class="font-semibold text-slate-700">On Leave</h4><span class="text-xs text-slate-400" id="onLeaveCount"></span></div><div id="onLeaveList" class="space-y-2 max-h-40 overflow-y-auto"></div></div>
                         </div>
                     </div>
                     
@@ -396,26 +400,29 @@
             </div>
         </div>
 
-        <!-- GUARD SCHEDULE TAB (HR Only) -->
+        <!-- GUARD SCHEDULE MANAGEMENT TAB (HR Only) - Weekly Rotational -->
         <div id="hr-guard-schedule-tab" class="tab-content hidden">
-            <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="users"></i> Guard Schedule Management</h2>
+            <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="calendar"></i> Guard Weekly Schedule Management</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <h3 class="text-xl font-bold mb-4">Assign Guard Schedule</h3>
+                    <h3 class="text-xl font-bold mb-4">Assign Weekly Rotational Schedule</h3>
                     <div class="space-y-4">
                         <select id="guardEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Guard</option></select>
-                        <select id="guardShift" class="w-full p-3 border rounded-xl">
-                            <option value="">Select Shift</option>
-                            <option value="Morning Shift (6:00 AM - 2:00 PM)">Morning Shift (6:00 AM - 2:00 PM)</option>
-                            <option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon Shift (2:00 PM - 10:00 PM)</option>
-                            <option value="Night Shift (10:00 PM - 6:00 AM)">Night Shift (10:00 PM - 6:00 AM)</option>
-                        </select>
-                        <input type="date" id="guardScheduleDate" class="w-full p-3 border rounded-xl">
-                        <button onclick="assignGuardSchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold cursor-pointer">Assign Schedule</button>
+                        <div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 bg-slate-50">
+                            <p class="text-sm font-semibold text-slate-700 mb-2">Select days and shift for this guard:</p>
+                            <div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
+                            <div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
+                            <div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
+                            <div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
+                            <div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
+                            <div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
+                            <div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div>
+                        </div>
+                        <button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold cursor-pointer">Assign Weekly Schedule</button>
                     </div>
                 </div>
                 <div class="bg-white rounded-2xl p-6 shadow-sm">
-                    <h3 class="text-xl font-bold mb-4">Guard Schedules</h3>
+                    <h3 class="text-xl font-bold mb-4">Assigned Guard Schedules</h3>
                     <div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div>
                 </div>
             </div>
@@ -438,7 +445,7 @@
     </div>
 </div>
 
-<!-- MODALS -->
+<!-- MODALS (abbreviated for length - kept same structure) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><div><label class="text-sm font-medium">Title</label><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl" placeholder="Announcement Title"></div><div><label class="text-sm font-medium">Content</label><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl" placeholder="Announcement details..."></textarea></div></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div></div></div>
 
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 cursor-pointer">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1 cursor-pointer">Cancel</button></div></div></div>
@@ -475,22 +482,25 @@
     let allAttendance = [];
     let allPayslips = [];
     let allAnnouncements = [];
-    let guardSchedules = [];
+    let guardWeeklySchedules = [];
     let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
     
     // Department working hours configuration
     const departmentWorkingHours = {
-        // Service and After-sales, Warehouse - Monday to Saturday 8am-5pm
         "Service and After-sales": { startHour: 8, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5,6] },
         "Warehouse": { startHour: 8, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5,6] },
-        // Admin departments - Monday to Friday 9am-5pm
         "Accounting and Finance": { startHour: 9, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] },
         "Marketing": { startHour: 9, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] },
         "Sales": { startHour: 9, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] },
         "HR": { startHour: 9, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] },
         "Supply Chain Logistics & Purchasing": { startHour: 9, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] },
-        "Admin Management": { startHour: 9, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] }
+        "Admin Management": { startHour: 9, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] },
+        "Guard": { startHour: 0, startMinute: 0, endHour: 23, endMinute: 59, workDays: [1,2,3,4,5,6,7] } // Guards use weekly schedules
     };
+    
+    // Day mapping
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const dayIndices = { "Sunday": 0, "Monday": 1, "Tuesday": 2, "Wednesday": 3, "Thursday": 4, "Friday": 5, "Saturday": 6 };
     
     const defaultAnnouncements = [
         { id: "default1", title: "System Live", content: "EQUIPRIME HR is now operational", color: "blue", expiresAt: new Date(Date.now() + 24*60*60*1000).toISOString() },
@@ -511,29 +521,41 @@
         return deptApproverMap[employeeDept] || ["hrpoly@equiprime.ph", "hrvince@equiprime.ph"];
     }
     
-    function getEmployeeWorkSchedule(dept) {
-        return departmentWorkingHours[dept] || { startHour: 8, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] };
+    function getEmployeeWorkSchedule(emp) {
+        if (emp.dept === "Guard") {
+            // Get guard's schedule for today
+            const today = new Date();
+            const todayName = dayNames[today.getDay()];
+            const guardSchedule = guardWeeklySchedules.find(s => s.guardId === emp.id && s.active);
+            if (guardSchedule && guardSchedule.schedule[todayName]) {
+                const schedule = guardSchedule.schedule[todayName];
+                if (schedule === "Rest Day") return null;
+                const [shiftName, hours] = schedule.split(" - ");
+                if (shiftName === "Morning Shift") return { startHour: 6, startMinute: 0, endHour: 14, endMinute: 0 };
+                if (shiftName === "Afternoon Shift") return { startHour: 14, startMinute: 0, endHour: 22, endMinute: 0 };
+                if (shiftName === "Night Shift") return { startHour: 22, startMinute: 0, endHour: 6, endMinute: 0 };
+            }
+            return null;
+        }
+        return departmentWorkingHours[emp.dept] || { startHour: 8, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] };
     }
     
-    function checkAttendanceStatus(attendance, employeeDept) {
+    function checkAttendanceStatus(attendance, employee) {
         if (!attendance || !attendance.timeIn) return "missed";
         
-        const schedule = getEmployeeWorkSchedule(employeeDept);
+        const schedule = getEmployeeWorkSchedule(employee);
+        if (!schedule) return "on-leave";
+        
         const [inHour, inMinute] = attendance.timeIn.split(':').map(Number);
         const scheduledHour = schedule.startHour;
         const scheduledMinute = schedule.startMinute;
         
-        // Check if late (more than 15 minutes late)
         const inTotalMinutes = inHour * 60 + inMinute;
         const scheduledTotalMinutes = scheduledHour * 60 + scheduledMinute;
         const lateMinutes = inTotalMinutes - scheduledTotalMinutes;
         
         if (lateMinutes > 15) return "late";
-        
-        // Check if half day (worked less than 4 hours)
-        if (attendance.hoursWorked && attendance.hoursWorked < 4) return "halfday";
         if (attendance.timeOut) return "logged-in";
-        
         return "logged-in";
     }
     
@@ -596,52 +618,73 @@
         }
     }
     
-    // ==================== GUARD SCHEDULE FUNCTIONS ====================
-    async function loadGuardSchedules() {
-        const schedulesSnapshot = await db.collection('guardSchedules').get();
-        guardSchedules = [];
-        schedulesSnapshot.forEach(doc => { guardSchedules.push({ id: doc.id, ...doc.data() }); });
+    // ==================== GUARD WEEKLY SCHEDULE FUNCTIONS ====================
+    async function loadGuardWeeklySchedules() {
+        const schedulesSnapshot = await db.collection('guardWeeklySchedules').get();
+        guardWeeklySchedules = [];
+        schedulesSnapshot.forEach(doc => { guardWeeklySchedules.push({ id: doc.id, ...doc.data() }); });
         if (currentUserRole === 'hr') renderGuardSchedules();
     }
     
     function renderGuardSchedules() {
         const container = document.getElementById('guardSchedulesList');
         if (!container) return;
-        container.innerHTML = guardSchedules.map(s => `
-            <div class="bg-slate-50 rounded-xl p-3 border">
+        container.innerHTML = guardWeeklySchedules.map(s => {
+            const scheduleText = Object.entries(s.schedule).filter(([day, shift]) => shift).map(([day, shift]) => `${day}: ${shift}`).join(' | ');
+            return `<div class="bg-slate-50 rounded-xl p-3 border">
                 <div class="flex justify-between items-start">
-                    <div><p class="font-semibold">${s.guardName}</p><p class="text-sm">${s.shift}</p><p class="text-xs text-slate-500">Date: ${s.date}</p></div>
+                    <div><p class="font-semibold">${s.guardName}</p><p class="text-xs text-slate-500">${scheduleText}</p><p class="text-xs text-slate-400 mt-1">Assigned: ${new Date(s.createdAt).toLocaleDateString()}</p></div>
                     <button onclick="deleteGuardSchedule('${s.id}')" class="text-red-500 text-sm">Delete</button>
                 </div>
-            </div>
-        `).join('') || '<div class="text-center text-slate-400 py-4">No guard schedules assigned</div>';
+            </div>`;
+        }).join('') || '<div class="text-center text-slate-400 py-4">No guard schedules assigned</div>';
     }
     
-    async function assignGuardSchedule() {
+    async function assignGuardWeeklySchedule() {
         const guardId = document.getElementById('guardEmployee').value;
-        const shift = document.getElementById('guardShift').value;
-        const date = document.getElementById('guardScheduleDate').value;
-        if (!guardId || !shift || !date) { alert("Please select guard, shift and date"); return; }
+        if (!guardId) { alert("Please select a guard"); return; }
+        
+        const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        const schedule = {};
+        let hasSchedule = false;
+        
+        for (const day of days) {
+            const checkbox = document.getElementById(`day${day}`);
+            const shiftSelect = document.getElementById(`shift${day}`);
+            if (checkbox && checkbox.checked && shiftSelect && shiftSelect.value) {
+                schedule[day] = shiftSelect.value;
+                hasSchedule = true;
+            }
+        }
+        
+        if (!hasSchedule) { alert("Please select at least one day with a shift"); return; }
+        
         const guard = allEmployees.find(e => e.id === guardId);
-        const newSchedule = { guardId: guardId, guardName: guard.name, shift: shift, date: date, assignedBy: currentUser.uid, createdAt: new Date().toISOString() };
-        const docRef = await db.collection('guardSchedules').add(newSchedule);
-        guardSchedules.push({ id: docRef.id, ...newSchedule });
+        const newSchedule = { guardId: guardId, guardName: guard.name, schedule: schedule, active: true, createdAt: new Date().toISOString(), assignedBy: currentUser.uid };
+        const docRef = await db.collection('guardWeeklySchedules').add(newSchedule);
+        guardWeeklySchedules.push({ id: docRef.id, ...newSchedule });
         renderGuardSchedules();
-        alert(`Schedule assigned to ${guard.name}`);
+        alert(`Weekly schedule assigned to ${guard.name}`);
+        
+        // Reset form
+        for (const day of days) {
+            const checkbox = document.getElementById(`day${day}`);
+            const shiftSelect = document.getElementById(`shift${day}`);
+            if (checkbox) checkbox.checked = false;
+            if (shiftSelect) shiftSelect.value = "";
+        }
         document.getElementById('guardEmployee').value = '';
-        document.getElementById('guardShift').value = '';
-        document.getElementById('guardScheduleDate').value = '';
     }
     
     async function deleteGuardSchedule(id) {
         if (confirm('Delete this schedule?')) {
-            await db.collection('guardSchedules').doc(id).delete();
-            guardSchedules = guardSchedules.filter(s => s.id !== id);
+            await db.collection('guardWeeklySchedules').doc(id).delete();
+            guardWeeklySchedules = guardWeeklySchedules.filter(s => s.id !== id);
             renderGuardSchedules();
         }
     }
     
-    // ==================== ANNOUNCEMENT FUNCTIONS (with expiration) ====================
+    // ==================== ANNOUNCEMENT FUNCTIONS ====================
     async function loadAnnouncements() {
         const announcementsSnapshot = await db.collection('announcements').get();
         allAnnouncements = [];
@@ -770,7 +813,7 @@
             renderNavigation();
             await loadAllData();
             await loadAnnouncements();
-            await loadGuardSchedules();
+            await loadGuardWeeklySchedules();
             await refreshMyAttendanceTab();
             if (currentUserRole === 'hr') {
                 const guardSelect = document.getElementById('guardEmployee');
@@ -858,7 +901,7 @@
             navHtml += `<button onclick="switchTab('hr-employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="users"></i> Employees</button>
                         <button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="clipboard"></i> All Requests</button>
                         <button onclick="switchTab('hr-payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="file-text"></i> Payslip Mgmt</button>
-                        <button onclick="switchTab('hr-guard-schedule')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="users"></i> Guard Schedule</button>
+                        <button onclick="switchTab('hr-guard-schedule')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="calendar"></i> Guard Schedule</button>
                         <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer"><i data-feather="settings"></i> Settings</button>`;
         }
         desktopNav.innerHTML = navHtml;
@@ -990,33 +1033,44 @@
         const allMyRequests = allRequests.filter(r => r.userId === currentUser.uid);
         document.getElementById('allMyRequestsList').innerHTML = allMyRequests.map(r => { let statusText = '', statusClass = ''; if(r.status === 'pending_dept_approver') { statusText = 'Waiting Department'; statusClass = 'bg-yellow-100 text-yellow-700'; } else if(r.status === 'pending_moderator') { statusText = 'Waiting Moderator'; statusClass = 'bg-blue-100 text-blue-700'; } else if(r.status === 'pending_hr') { statusText = 'Waiting HR'; statusClass = 'bg-purple-100 text-purple-700'; } else if(r.status === 'approved') { statusText = 'Approved'; statusClass = 'bg-green-100 text-green-700'; } else { statusText = 'Rejected'; statusClass = 'bg-red-100 text-red-700'; } return `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.type}</h4><p class="text-sm">${r.startDate} - ${r.endDate}</p><p class="text-xs text-slate-500">${r.reason}</p></div><span class="text-xs px-3 py-1 rounded-full ${statusClass}">${statusText}</span></div></div>`; }).join('') || '<div class="text-center py-8 text-slate-400">No requests yet</div>';
         
-        // Enhanced Employee Login Status with 4 categories
+        // Enhanced Employee Login Status with 4 categories including On Leave
         const loggedInUsers = [];
         const missedUsers = [];
         const lateUsers = [];
-        const halfdayUsers = [];
+        const onLeaveUsers = [];
         
         for (const emp of allEmployees) {
             const todayAttendance = allAttendance.find(a => a.userId === emp.id && a.date === today);
-            if (!todayAttendance || !todayAttendance.timeIn) {
+            // Check if employee has approved leave for today
+            const hasLeaveToday = allRequests.some(r => r.userId === emp.id && r.status === "approved" && 
+                new Date(r.startDate) <= new Date(today) && new Date(r.endDate) >= new Date(today));
+            
+            if (hasLeaveToday) {
+                onLeaveUsers.push(emp);
+            } else if (!todayAttendance || !todayAttendance.timeIn) {
                 missedUsers.push(emp);
             } else {
-                const status = checkAttendanceStatus(todayAttendance, emp.dept);
-                if (status === "late") lateUsers.push(emp);
-                else if (status === "halfday") halfdayUsers.push(emp);
-                else loggedInUsers.push(emp);
+                const status = checkAttendanceStatus(todayAttendance, emp);
+                if (status === "late") {
+                    const schedule = getEmployeeWorkSchedule(emp);
+                    const scheduledHour = schedule?.startHour || 8;
+                    const scheduledMinute = schedule?.startMinute || 0;
+                    lateUsers.push({ ...emp, clockInTime: todayAttendance.timeIn, scheduledTime: `${scheduledHour.toString().padStart(2,'0')}:${scheduledMinute.toString().padStart(2,'0')}` });
+                } else {
+                    loggedInUsers.push(emp);
+                }
             }
         }
         
         document.getElementById('loggedInCount').innerHTML = `(${loggedInUsers.length})`;
         document.getElementById('missedCount').innerHTML = `(${missedUsers.length})`;
         document.getElementById('lateCount').innerHTML = `(${lateUsers.length})`;
-        document.getElementById('halfdayCount').innerHTML = `(${halfdayUsers.length})`;
+        document.getElementById('onLeaveCount').innerHTML = `(${onLeaveUsers.length})`;
         
         document.getElementById('loggedInList').innerHTML = loggedInUsers.map(emp => `<div class="flex items-center justify-between p-2 bg-green-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-green-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div><span class="text-sm text-slate-700">${emp.name}</span></div><span class="text-xs text-green-600">On Time</span></div>`).join('') || '<div class="text-center text-slate-400 py-4 text-sm">No employees</div>';
         document.getElementById('missedList').innerHTML = missedUsers.map(emp => `<div class="flex items-center justify-between p-2 bg-red-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-red-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div><span class="text-sm text-slate-700">${emp.name}</span></div><span class="text-xs text-red-600">Not checked in</span></div>`).join('') || '<div class="text-center text-slate-400 py-4 text-sm">No employees</div>';
-        document.getElementById('lateList').innerHTML = lateUsers.map(emp => `<div class="flex items-center justify-between p-2 bg-orange-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-orange-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div><span class="text-sm text-slate-700">${emp.name}</span></div><span class="text-xs text-orange-600">Late</span></div>`).join('') || '<div class="text-center text-slate-400 py-4 text-sm">No employees</div>';
-        document.getElementById('halfdayList').innerHTML = halfdayUsers.map(emp => `<div class="flex items-center justify-between p-2 bg-yellow-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-yellow-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div><span class="text-sm text-slate-700">${emp.name}</span></div><span class="text-xs text-yellow-600">Half Day</span></div>`).join('') || '<div class="text-center text-slate-400 py-4 text-sm">No employees</div>';
+        document.getElementById('lateList').innerHTML = lateUsers.map(emp => `<div class="flex items-center justify-between p-2 bg-orange-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-orange-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div><div><span class="text-sm text-slate-700">${emp.name}</span><p class="text-xs text-orange-600">Clocked in at ${emp.clockInTime} (Scheduled: ${emp.scheduledTime})</p></div></div><span class="text-xs text-orange-600">Late</span></div>`).join('') || '<div class="text-center text-slate-400 py-4 text-sm">No employees</div>';
+        document.getElementById('onLeaveList').innerHTML = onLeaveUsers.map(emp => `<div class="flex items-center justify-between p-2 bg-yellow-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-yellow-200 flex items-center justify-center text-xs font-bold">${emp.name.charAt(0)}</div><span class="text-sm text-slate-700">${emp.name}</span></div><span class="text-xs text-yellow-600">On Leave</span></div>`).join('') || '<div class="text-center text-slate-400 py-4 text-sm">No employees</div>';
         
         let pendingRequests = [];
         if (currentUserRole === 'approver') pendingRequests = allRequests.filter(r => r.approverEmails?.includes(currentUser?.email) && r.status === "pending_dept_approver");
@@ -1087,7 +1141,7 @@
                 renderNavigation();
                 await loadAllData();
                 await loadAnnouncements();
-                await loadGuardSchedules();
+                await loadGuardWeeklySchedules();
                 await refreshMyAttendanceTab();
                 if (currentUserRole === 'hr') {
                     const guardSelect = document.getElementById('guardEmployee');
