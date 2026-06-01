@@ -80,7 +80,6 @@
         body.dark .bg-yellow-50 { background-color: #422c00 !important; color: #fbbf24 !important; }
 
         /* ========== UNIFORM LOGIN SCREEN BACKGROUND ========== */
-        /* Light mode: both columns white, dark mode: both columns dark */
         #authScreen .rainy-bg,
         #authScreen .login-col {
             background-color: white;
@@ -90,7 +89,6 @@
         body.dark #authScreen .login-col {
             background-color: #0f172a;
         }
-        /* Remove gradient from rainy-bg */
         .rainy-bg {
             background: none !important;
             padding: 3rem;
@@ -102,7 +100,6 @@
             flex-direction: column;
             justify-content: center;
         }
-        /* Raindrops become semi-transparent dark/light adaptive */
         .raindrop {
             position: absolute;
             background: rgba(0,0,0,0.2);
@@ -132,7 +129,7 @@
             background: rgba(255,255,255,0.1);
             color: #e2e8f0;
         }
-        /* Desktop adjustments: right column centered login */
+        /* Desktop: right column - centered login card exactly where red marks indicate */
         @media (min-width: 1024px) {
             .rainy-bg h1 {
                 font-size: 3rem !important;
@@ -149,7 +146,7 @@
             }
             .login-card {
                 width: 100%;
-                max-width: 480px;
+                max-width: 460px;
                 margin: 0 auto;
                 padding: 2rem;
                 background: white;
@@ -167,7 +164,7 @@
                 padding: 0.75rem 1rem !important;
             }
         }
-        /* Mobile: keep stacking */
+        /* Mobile layout untouched (stacking) */
         @media (max-width: 767px) {
             .schedule-day {
                 flex-wrap: wrap;
@@ -180,6 +177,9 @@
             .rainy-bg {
                 padding: 1.5rem;
             }
+            .login-card {
+                margin: 1rem;
+            }
         }
         @keyframes fall {
             to {
@@ -191,10 +191,10 @@
 </head>
 <body>
 
-<!-- ========== LOGIN SCREEN WITH UNIFORM BACKGROUND ========== -->
+<!-- ========== LOGIN SCREEN WITH PERFECTLY CENTERED CARD ========== -->
 <div id="authScreen" class="fixed inset-0 z-[10000] overflow-y-auto">
     <div class="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-        <!-- LEFT: Branding (no gradient, same bg as right) -->
+        <!-- LEFT: Branding (rainy effect, uniform background) -->
         <div class="rainy-bg">
             <div class="relative z-10 max-w-2xl mx-auto lg:mx-0 lg:ml-auto lg:mr-0 w-full px-4">
                 <div class="mb-6">
@@ -390,7 +390,7 @@
 <div id="editLeaveModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><div><label class="text-sm font-medium">Employee Name</label><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl" readonly></div><div><label class="text-sm font-medium">Leave Balance (days)</label><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" step="1"></div></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 
 <script>
-    // ========== RAIN EFFECT (light/dark adaptive) ==========
+    // ========== RAIN EFFECT ==========
     function createRain() {
         const container = document.querySelector('.rainy-bg');
         if (!container) return;
@@ -462,7 +462,6 @@
     let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
     const restrictedEmails = ["hr@equiprime.ph", "mod@equiprime.ph"];
 
-    // Department working hours (unchanged)
     const departmentWorkingHours = {
         "Service and After-sales": { startHour: 8, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5,6] },
         "Warehouse": { startHour: 8, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5,6] },
@@ -527,7 +526,6 @@
         return "logged-in";
     }
 
-    // Reset function for moderator
     window.resetAllSystemData = async function() {
         if (!currentUser || currentUser.email !== "mod@equiprime.ph") {
             alert("Only Moderator can perform a full system reset.");
@@ -545,7 +543,6 @@
         location.reload();
     };
 
-    // Attendance functions
     async function clockIn() {
         if (restrictedEmails.includes(currentUser.email)) {
             alert("HR and Moderator accounts cannot clock in/out. Please use a regular employee account for attendance.");
@@ -602,13 +599,11 @@
         if (historyBody) historyBody.innerHTML = userAtt.map(a => `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100 text-green-700':'bg-yellow-100 text-yellow-700'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull科技</tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">No records</td></tr>';
     }
 
-    // Guard schedule functions
     async function loadGuardWeeklySchedules() { const snap = await db.collection('guardWeeklySchedules').get(); guardWeeklySchedules = []; snap.forEach(doc => guardWeeklySchedules.push({ id: doc.id, ...doc.data() })); if (currentUserRole === 'hr') renderGuardSchedules(); }
     function renderGuardSchedules() { const container = document.getElementById('guardSchedulesList'); if (!container) return; container.innerHTML = guardWeeklySchedules.map(s => `<div class="bg-slate-50 rounded-xl p-3 border"><div class="flex justify-between items-start"><div><p class="font-semibold">${s.guardName}</p><p class="text-xs text-slate-500">${Object.entries(s.schedule).map(([d,sh])=>`${d}: ${sh}`).join(' | ')}</p><p class="text-xs text-slate-400">Assigned: ${new Date(s.createdAt).toLocaleDateString()}</p></div><button onclick="deleteGuardSchedule('${s.id}')" class="text-red-500 text-sm">Delete</button></div></div>`).join('') || '<div class="text-center text-slate-400 py-4">No guard schedules</div>'; }
     async function assignGuardWeeklySchedule() { const guardId = document.getElementById('guardEmployee').value; if (!guardId) { alert("Select a guard"); return; } const days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]; const schedule = {}; let has = false; for (const d of days) { const chk = document.getElementById(`day${d}`); const sel = document.getElementById(`shift${d}`); if (chk && chk.checked && sel && sel.value) { schedule[d] = sel.value; has = true; } } if (!has) { alert("Select at least one day with shift"); return; } const guard = allEmployees.find(e => e.id === guardId); const newSched = { guardId, guardName: guard.name, schedule, active: true, createdAt: new Date().toISOString(), assignedBy: currentUser.uid }; const docRef = await db.collection('guardWeeklySchedules').add(newSched); guardWeeklySchedules.push({ id: docRef.id, ...newSched }); renderGuardSchedules(); alert(`Weekly schedule assigned to ${guard.name}`); for (const d of days) { document.getElementById(`day${d}`).checked = false; document.getElementById(`shift${d}`).value = ""; } document.getElementById('guardEmployee').value = ''; }
     async function deleteGuardSchedule(id) { if (confirm("Delete this schedule?")) { await db.collection('guardWeeklySchedules').doc(id).delete(); guardWeeklySchedules = guardWeeklySchedules.filter(s => s.id !== id); renderGuardSchedules(); } }
 
-    // Announcements
     async function loadAnnouncements() {
         const snap = await db.collection('announcements').get();
         allAnnouncements = [];
@@ -624,7 +619,6 @@
     async function saveAnnouncement() { const id=document.getElementById('announcementId').value; const title=document.getElementById('announcementTitle').value; const content=document.getElementById('announcementContent').value; const expiresAt=new Date(Date.now()+24*60*60*1000).toISOString(); if(!title||!content){alert("Fill title and content");return;} if(id){ await db.collection('announcements').doc(id).update({title,content,expiresAt}); const idx=allAnnouncements.findIndex(a=>a.id===id); if(idx!==-1) allAnnouncements[idx]={...allAnnouncements[idx],title,content,expiresAt}; } else { const ref=await db.collection('announcements').add({title,content,color:'blue',expiresAt}); allAnnouncements.push({id:ref.id,title,content,color:'blue',expiresAt}); } closeModal('announcementModal'); renderAnnouncements(); alert("Announcement saved (expires in 24h)"); }
     async function deleteAnnouncement() { const id=document.getElementById('announcementId').value; if(!id) return; if(confirm("Delete?")){ await db.collection('announcements').doc(id).delete(); allAnnouncements=allAnnouncements.filter(a=>a.id!==id); closeModal('announcementModal'); renderAnnouncements(); alert("Deleted"); } }
 
-    // Data loading
     async function loadAllData() {
         const empSnap=await db.collection('employees').get(); allEmployees=[]; empSnap.forEach(d=>allEmployees.push({id:d.id,...d.data()}));
         const reqSnap=await db.collection('requests').get(); allRequests=[]; reqSnap.forEach(d=>allRequests.push({id:d.id,...d.data()}));
@@ -633,12 +627,10 @@
         refreshDashboard();
     }
 
-    // Filter functions
     function applyFilters() { const dept=document.getElementById('desktopFilterDepartment')?.value||document.getElementById('filterDepartment')?.value||'all'; const stat=document.getElementById('desktopFilterStatus')?.value||document.getElementById('filterStatus')?.value||'all'; const leave=document.getElementById('desktopFilterLeaveType')?.value||document.getElementById('filterLeaveType')?.value||'all'; currentFilter={department:dept,status:stat,leaveType:leave}; if(document.getElementById('desktopFilterDepartment')) document.getElementById('desktopFilterDepartment').value=dept; if(document.getElementById('filterDepartment')) document.getElementById('filterDepartment').value=dept; if(document.getElementById('desktopFilterStatus')) document.getElementById('desktopFilterStatus').value=stat; if(document.getElementById('filterStatus')) document.getElementById('filterStatus').value=stat; if(document.getElementById('desktopFilterLeaveType')) document.getElementById('desktopFilterLeaveType').value=leave; if(document.getElementById('filterLeaveType')) document.getElementById('filterLeaveType').value=leave; refreshDashboard(); updateLastUpdatedTime(); }
     function getFilteredEmployees() { let f=[...allEmployees]; if(currentFilter.department!=='all') f=f.filter(e=>e.dept===currentFilter.department); if(currentFilter.status!=='all') f=f.filter(e=>e.status===currentFilter.status); return f; }
     function updateLastUpdatedTime() { const now=new Date(); const str=`${now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} at ${now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`; document.getElementById('desktopLastUpdatedTime') && (document.getElementById('desktopLastUpdatedTime').innerText=str); document.getElementById('lastUpdatedTime') && (document.getElementById('lastUpdatedTime').innerText=str); }
 
-    // Edit leave balance
     function editLeaveBalance(empId, empName, currentBalance) {
         document.getElementById('editEmployeeId').value = empId;
         document.getElementById('editEmployeeName').value = empName;
@@ -662,7 +654,6 @@
         alert(`Leave balance updated to ${newBalance} days`);
     }
 
-    // Payslip auto-compute with other deduction
     function computeMonthlyDeductions(monthlySalary) {
         const sss = Math.min(monthlySalary, 30000) * 0.045;
         const philHealth = Math.min(monthlySalary, 100000) * 0.025;
@@ -676,13 +667,7 @@
             else if (taxableIncome <= 666667) tax = (33333 - 20833) * 0.15 + (66667 - 33333) * 0.20 + (166667 - 66667) * 0.25 + (taxableIncome - 166667) * 0.30;
             else tax = (33333 - 20833) * 0.15 + (66667 - 33333) * 0.20 + (166667 - 66667) * 0.25 + (666667 - 166667) * 0.30 + (taxableIncome - 666667) * 0.35;
         }
-        return {
-            sss: Math.round(sss),
-            philHealth: Math.round(philHealth),
-            pagIbig: pagIbig,
-            tax: Math.round(tax),
-            totalDeductions: Math.round(sss + philHealth + pagIbig + tax)
-        };
+        return { sss: Math.round(sss), philHealth: Math.round(philHealth), pagIbig: pagIbig, tax: Math.round(tax), totalDeductions: Math.round(sss + philHealth + pagIbig + tax) };
     }
     async function generatePayslipAuto() {
         if (!currentUser || (currentUser.email !== "hr@equiprime.ph")) {
@@ -713,22 +698,10 @@
         const netPay = periodSalary - totalDeductions;
         const cutOffLabel = cutOff === 'first' ? '1st cut-off (27th-10th)' : '2nd cut-off (11th-26th)';
         const newPayslip = {
-            employeeId: empId,
-            employeeName: employee.name,
-            employeeEmail: employee.email,
-            month: month,
-            cutOff: cutOffLabel,
-            dailyRate: dailyRate,
-            daysPresent: daysPresent,
-            basicSalaryPeriod: periodSalary,
-            sss: halfSss,
-            philHealth: halfPhil,
-            pagIbig: halfPag,
-            withholdingTax: halfTax,
-            otherDeduction: otherDeduction,
-            totalDeductions: totalDeductions,
-            netPay: netPay,
-            date: new Date().toLocaleDateString()
+            employeeId: empId, employeeName: employee.name, employeeEmail: employee.email, month: month, cutOff: cutOffLabel,
+            dailyRate: dailyRate, daysPresent: daysPresent, basicSalaryPeriod: periodSalary, sss: halfSss, philHealth: halfPhil,
+            pagIbig: halfPag, withholdingTax: halfTax, otherDeduction: otherDeduction, totalDeductions: totalDeductions,
+            netPay: netPay, date: new Date().toLocaleDateString()
         };
         const docRef = await db.collection('payslips').add(newPayslip);
         allPayslips.push({ id: docRef.id, ...newPayslip });
@@ -764,7 +737,6 @@
         `).join('') || '<div class="text-center py-8 text-slate-400">No payslips yet</div>';
     }
 
-    // Request functions
     function openModal(id){document.getElementById(id).classList.add('active');} function closeModal(id){document.getElementById(id).classList.remove('active');}
     function openNewRequestMenu(){openModal('newRequestMenuOverlay');} function openLeaveModal(){closeModal('newRequestMenuOverlay');openModal('leaveModalOverlay');} function openOffsetsModal(){closeModal('newRequestMenuOverlay');openModal('offsetsModalOverlay');} function showAddEmployeeModal(){openModal('addEmployeeModal');}
     function openRequestModal(type){ closeModal('newRequestMenuOverlay'); document.getElementById('requestModalTitle').innerHTML=`Submit ${type}`; document.getElementById('requestTypeValue').value=type; document.getElementById('reqStartDate').value=''; document.getElementById('reqEndDate').value=''; document.getElementById('reqReason').value=''; openModal('requestModalOverlay'); }
@@ -776,12 +748,10 @@
     async function approveAsHR(id){const r=allRequests.find(r=>r.id===id); if(r&&r.status==="pending_hr"){r.status="approved";r.hrApproved=true; await db.collection('requests').doc(id).update({status:"approved",hrApproved:true}); refreshDashboard(); alert("Fully approved");}}
     async function rejectRequest(id){const r=allRequests.find(r=>r.id===id); if(r&&(r.status==="pending_dept_approver"||r.status==="pending_moderator"||r.status==="pending_hr")){r.status="rejected"; await db.collection('requests').doc(id).update({status:"rejected"}); refreshDashboard(); alert("Rejected");}}
 
-    // Employee management
     async function addEmployee(){ const name=document.getElementById('newEmpName').value; const dept=document.getElementById('newEmpDept').value; const role=document.getElementById('newEmpRole').value; const pin=document.getElementById('newEmpPin').value; const pass=document.getElementById('newEmpPass').value||'123456'; if(name&&dept&&pin){ const emp={name,dept,role,status:"active",pin,leaveBalance:15,createdAt:new Date().toISOString()}; const ref=await db.collection('employees').add(emp); allEmployees.push({id:ref.id,...emp}); closeModal('addEmployeeModal'); refreshDashboard(); alert(`Employee ${name} added`); document.getElementById('newEmpName').value=''; document.getElementById('newEmpDept').value=''; document.getElementById('newEmpPin').value=''; } else alert("Fill all fields"); }
     async function deleteEmployee(id){ if(confirm("Delete?")){ await db.collection('employees').doc(id).delete(); allEmployees=allEmployees.filter(e=>e.id!==id); refreshDashboard(); } }
     function saveSettings(){ localStorage.setItem('device_ip',document.getElementById('deviceIp').value); alert('Settings saved'); }
 
-    // Auth functions
     function showSignup() { document.getElementById('loginForm').classList.add('hidden'); document.getElementById('signupForm').classList.remove('hidden'); document.getElementById('authError').classList.add('hidden'); }
     function showLogin() { document.getElementById('signupForm').classList.add('hidden'); document.getElementById('loginForm').classList.remove('hidden'); document.getElementById('authError').classList.add('hidden'); }
     async function loginWithEmail() {
@@ -871,7 +841,6 @@
     function openMobileSidebar(){document.getElementById('mobileSidebar').classList.add('open');document.getElementById('overlay').classList.add('active');document.body.classList.add('no-scroll');}
     function closeMobileSidebar(){document.getElementById('mobileSidebar').classList.remove('open');document.getElementById('overlay').classList.remove('active');document.body.classList.remove('no-scroll');}
 
-    // Navigation and tab switching
     function renderNavigation() {
         const role=currentUserRole;
         let html=`<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="home"></i> Dashboard</button>`;
@@ -948,7 +917,6 @@
         feather.replace();
     }
 
-    // Auth state listener
     auth.onAuthStateChanged(async (user) => {
         if (user) {
             const doc = await db.collection('users').doc(user.uid).get();
