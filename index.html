@@ -79,107 +79,32 @@
         body.dark .mobile-header .bg-white i { color: white; }
         body.dark .bg-yellow-50 { background-color: #422c00 !important; color: #fbbf24 !important; }
 
-        /* ========== UNIFORM LOGIN SCREEN BACKGROUND ========== */
-        #authScreen .rainy-bg,
-        #authScreen .login-col {
-            background-color: white;
-            transition: background-color 0.3s;
-        }
-        body.dark #authScreen .rainy-bg,
-        body.dark #authScreen .login-col {
-            background-color: #0f172a;
-        }
-        .rainy-bg {
-            background: none !important;
-            padding: 3rem;
-            position: relative;
-            overflow: hidden;
+        /* ========== RAINY BACKGROUND (full screen) ========== */
+        .rainy-full {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            background: linear-gradient(145deg, #1a2a3a 0%, #2c3e4e 100%);
+            z-index: 0;
+            overflow: hidden;
+        }
+        body.dark .rainy-full {
+            background: linear-gradient(145deg, #0a0e1a 0%, #1a1f2e 100%);
         }
         .raindrop {
             position: absolute;
-            background: rgba(0,0,0,0.2);
+            background: rgba(255,255,255,0.6);
             width: 2px;
             height: 8px;
             border-radius: 2px;
             animation: fall linear infinite;
             pointer-events: none;
-            z-index: 2;
+            z-index: 1;
         }
         body.dark .raindrop {
             background: rgba(255,255,255,0.3);
-        }
-        .weather-widget {
-            background: rgba(0,0,0,0.05);
-            backdrop-filter: blur(4px);
-            border-radius: 999px;
-            padding: 0.25rem 0.75rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.75rem;
-            color: #1e293b;
-            margin-top: 1rem;
-        }
-        body.dark .weather-widget {
-            background: rgba(255,255,255,0.1);
-            color: #e2e8f0;
-        }
-        /* Desktop: right column - centered login card exactly where red marks indicate */
-        @media (min-width: 1024px) {
-            .rainy-bg h1 {
-                font-size: 3rem !important;
-                line-height: 1.2;
-            }
-            .rainy-bg p {
-                font-size: 1rem !important;
-            }
-            .login-col {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                min-height: 100vh;
-            }
-            .login-card {
-                width: 100%;
-                max-width: 460px;
-                margin: 0 auto;
-                padding: 2rem;
-                background: white;
-                border-radius: 1.5rem;
-                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
-            }
-            body.dark .login-card {
-                background: #1e293b;
-                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4);
-            }
-            .login-card input,
-            .login-card button,
-            .login-card select {
-                font-size: 0.95rem !important;
-                padding: 0.75rem 1rem !important;
-            }
-        }
-        /* Mobile layout untouched (stacking) */
-        @media (max-width: 767px) {
-            .schedule-day {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-            .schedule-day select {
-                width: 100% !important;
-                margin-top: 0.25rem;
-            }
-            .rainy-bg {
-                padding: 1.5rem;
-            }
-            .login-card {
-                margin: 1rem;
-            }
         }
         @keyframes fall {
             to {
@@ -187,85 +112,173 @@
                 opacity: 0;
             }
         }
+
+        /* ========== CENTERED LOGIN CONTAINER ========== */
+        .login-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+        .login-card-wrapper {
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+            width: 100%;
+            max-width: 1100px;
+            overflow: hidden;
+        }
+        body.dark .login-card-wrapper {
+            background: #1e293b;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+        /* Branding side */
+        .branding-side {
+            padding: 2rem;
+            background: transparent;
+            color: white;
+        }
+        body.dark .branding-side {
+            background: transparent;
+        }
+        .branding-side h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .branding-side p {
+            margin-top: 1rem;
+            opacity: 0.9;
+        }
+        .weather-widget {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(4px);
+            border-radius: 999px;
+            padding: 0.25rem 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            margin-top: 1rem;
+        }
+        /* Login side */
+        .login-side {
+            padding: 2rem;
+            background: white;
+        }
+        body.dark .login-side {
+            background: #1e293b;
+        }
+        .login-card-inner {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        @media (max-width: 1023px) {
+            .login-card-wrapper {
+                max-width: 500px;
+            }
+            .branding-side {
+                text-align: center;
+            }
+            .branding-side h1 {
+                font-size: 1.8rem;
+            }
+            .weather-widget {
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .branding-side h1 {
+                font-size: 3rem;
+            }
+            .login-side {
+                padding: 2.5rem;
+            }
+        }
     </style>
 </head>
 <body>
 
-<!-- ========== LOGIN SCREEN WITH PERFECTLY CENTERED CARD ========== -->
-<div id="authScreen" class="fixed inset-0 z-[10000] overflow-y-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-        <!-- LEFT: Branding (rainy effect, uniform background) -->
-        <div class="rainy-bg">
-            <div class="relative z-10 max-w-2xl mx-auto lg:mx-0 lg:ml-auto lg:mr-0 w-full px-4">
-                <div class="mb-6">
-                    <img src="welcome logo.jpg" alt="EQUIPRIME" class="h-12 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
+<!-- ========== RAINY BACKGROUND (full screen) ========== -->
+<div class="rainy-full" id="rainyBackground"></div>
+
+<!-- ========== CENTERED LOGIN SCREEN ========== -->
+<div id="authScreen" class="login-container">
+    <div class="login-card-wrapper">
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+            <!-- LEFT: Branding -->
+            <div class="branding-side">
+                <div class="mb-4">
+                    <img src="welcome logo.jpg" alt="EQUIPRIME" class="h-12 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
                 </div>
-                <h1 class="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white">Smart Choices.<br>Smarter Results.</h1>
-                <p class="text-slate-600 dark:text-slate-300 text-sm mt-3 leading-relaxed">
-                    Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.
-                </p>
+                <h1>Smart Choices.<br>Smarter Results.</h1>
+                <p>Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.</p>
                 <div class="weather-widget">
                     <i data-feather="cloud-rain" class="w-3 h-3"></i>
                     <span>🌧️ Rainy · 24°C</span>
                 </div>
                 <div class="flex gap-5 mt-6">
-                    <a href="#" class="text-slate-500 hover:text-[#004aad] dark:text-slate-400 dark:hover:text-white"><i data-feather="facebook" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-slate-500 hover:text-[#004aad] dark:text-slate-400 dark:hover:text-white"><i data-feather="instagram" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-slate-500 hover:text-[#004aad] dark:text-slate-400 dark:hover:text-white"><i data-feather="globe" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="facebook" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="globe" class="w-5 h-5"></i></a>
                 </div>
-                <div class="flex flex-wrap gap-3 text-xs text-slate-500 dark:text-slate-400 mt-8">
-                    <a href="#" class="hover:text-[#004aad] dark:hover:text-white">Privacy Policy</a><span>•</span>
-                    <a href="#" class="hover:text-[#004aad] dark:hover:text-white">Contact</a><span>•</span>
+                <div class="flex flex-wrap gap-3 text-xs text-white/70 mt-8">
+                    <a href="#" class="hover:text-white">Privacy Policy</a><span>•</span>
+                    <a href="#" class="hover:text-white">Contact</a><span>•</span>
                     <span>© 2026 EQUIPRIME</span>
                 </div>
             </div>
-        </div>
 
-        <!-- RIGHT: Centered Login Card -->
-        <div class="login-col">
-            <div class="login-card">
-                <div class="text-center mb-5">
-                    <img src="logo.png" alt="EQUIPRIME HR" class="h-12 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
-                    <h1 class="text-2xl font-extrabold text-[#004aad] dark:text-white mt-2">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm">smart choices · smarter results</p>
-                </div>
-                <div id="authError" class="bg-red-50 text-red-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
-                <div id="authSuccess" class="bg-green-50 text-green-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
-                <div id="loginForm">
-                    <div class="space-y-3">
-                        <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white">
-                        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white">
-                        <button onclick="loginWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition text-sm">Login</button>
+            <!-- RIGHT: Login Card (white) -->
+            <div class="login-side">
+                <div class="login-card-inner">
+                    <div class="text-center mb-5">
+                        <img src="logo.png" alt="EQUIPRIME HR" class="h-12 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
+                        <h1 class="text-2xl font-extrabold text-[#004aad] dark:text-white mt-2">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
+                        <p class="text-slate-500 dark:text-slate-400 text-sm">smart choices · smarter results</p>
                     </div>
-                    <div class="mt-3 text-center"><button onclick="showSignup()" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Don't have an account? Sign up</button></div>
-                </div>
-                <div id="signupForm" class="hidden">
-                    <div class="space-y-2">
-                        <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600">
-                        <input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600">
-                        <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600">
-                        <select id="signupRole" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600"><option value="employee">Employee</option><option value="supervisor">Supervisor</option></select>
-                        <select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600">
-                            <option value="">Select Department</option>
-                            <option value="Service and After-sales">Service and After-sales</option>
-                            <option value="Sales">Sales Department</option>
-                            <option value="Accounting and Finance">Accounting and Finance</option>
-                            <option value="Marketing">Marketing Department</option>
-                            <option value="HR">HR Department</option>
-                            <option value="Warehouse">Warehouse Department</option>
-                            <option value="Supply Chain Logistics & Purchasing">Supply Chain</option>
-                            <option value="Admin Management">Admin Management</option>
-                            <option value="Guard">Security Guard</option>
-                        </select>
-                        <button onclick="signupWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition text-sm">Sign Up</button>
+                    <div id="authError" class="bg-red-50 text-red-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
+                    <div id="authSuccess" class="bg-green-50 text-green-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
+                    <div id="loginForm">
+                        <div class="space-y-3">
+                            <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white">
+                            <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white">
+                            <button onclick="loginWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition text-sm">Login</button>
+                        </div>
+                        <div class="mt-3 text-center"><button onclick="showSignup()" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Don't have an account? Sign up</button></div>
                     </div>
-                    <div class="mt-3 text-center"><button onclick="showLogin()" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Already have an account? Login</button></div>
-                </div>
-                <div class="mt-5 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl text-xs text-slate-500 dark:text-slate-400">
-                    <p class="font-semibold mb-1">Authorized Users:</p>
-                    <p>HR: hr@equiprime.ph / hr@equiprime.ph</p>
-                    <p>Moderator: mod@equiprime.ph / mod@equiprime.ph</p>
-                    <p>Other employees can sign up!</p>
+                    <div id="signupForm" class="hidden">
+                        <div class="space-y-2">
+                            <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600">
+                            <input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600">
+                            <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600">
+                            <select id="signupRole" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600"><option value="employee">Employee</option><option value="supervisor">Supervisor</option></select>
+                            <select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600">
+                                <option value="">Select Department</option>
+                                <option value="Service and After-sales">Service and After-sales</option>
+                                <option value="Sales">Sales Department</option>
+                                <option value="Accounting and Finance">Accounting and Finance</option>
+                                <option value="Marketing">Marketing Department</option>
+                                <option value="HR">HR Department</option>
+                                <option value="Warehouse">Warehouse Department</option>
+                                <option value="Supply Chain Logistics & Purchasing">Supply Chain</option>
+                                <option value="Admin Management">Admin Management</option>
+                                <option value="Guard">Security Guard</option>
+                            </select>
+                            <button onclick="signupWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition text-sm">Sign Up</button>
+                        </div>
+                        <div class="mt-3 text-center"><button onclick="showLogin()" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Already have an account? Login</button></div>
+                    </div>
+                    <div class="mt-5 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl text-xs text-slate-500 dark:text-slate-400">
+                        <p class="font-semibold mb-1">Authorized Users:</p>
+                        <p>HR: hr@equiprime.ph / hr@equiprime.ph</p>
+                        <p>Moderator: mod@equiprime.ph / mod@equiprime.ph</p>
+                        <p>Other employees can sign up!</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -323,7 +336,7 @@
             <div class="bg-yellow-50 text-yellow-700 px-3 py-1.5 rounded-full text-xs flex items-center gap-1"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div> Biometrics ready (demo mode)</div>
         </div>
 
-        <!-- DASHBOARD TAB (full content) -->
+        <!-- DASHBOARD TAB -->
         <div id="dashboard-tab" class="tab-content">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div class="stat-card bg-white rounded-2xl p-5 shadow-sm"><div class="flex justify-between items-start"><div><p class="text-slate-500 text-sm">Total Employees</p><h3 class="text-3xl font-bold mt-2" id="totalEmployees">0</h3></div><div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center"><i data-feather="users" class="text-blue-600"></i></div></div></div>
@@ -390,12 +403,12 @@
 <div id="editLeaveModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><div><label class="text-sm font-medium">Employee Name</label><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl" readonly></div><div><label class="text-sm font-medium">Leave Balance (days)</label><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" step="1"></div></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 
 <script>
-    // ========== RAIN EFFECT ==========
+    // ========== RAIN EFFECT (full screen) ==========
     function createRain() {
-        const container = document.querySelector('.rainy-bg');
+        const container = document.getElementById('rainyBackground');
         if (!container) return;
         const isMobile = window.innerWidth < 768;
-        const raindropCount = isMobile ? 25 : 60;
+        const raindropCount = isMobile ? 30 : 80;
         for (let i = 0; i < raindropCount; i++) {
             const drop = document.createElement('div');
             drop.classList.add('raindrop');
