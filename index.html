@@ -79,10 +79,10 @@
         body.dark .mobile-header .bg-white i { color: white; }
         body.dark .bg-yellow-50 { background-color: #422c00 !important; color: #fbbf24 !important; }
 
-        /* ========== RAINY THEME & FULL-WIDTH DESKTOP LOGIN ========== */
+        /* ========== RAINY THEME & DESKTOP LOGIN (LARGER SIZES) ========== */
         .rainy-bg {
             background: linear-gradient(145deg, #1a2a3a 0%, #2c3e4e 100%);
-            padding: 2rem;
+            padding: 3rem;
             position: relative;
             overflow: hidden;
             height: 100%;
@@ -91,11 +91,24 @@
             flex-direction: column;
             justify-content: center;
         }
-        /* Desktop: no border-radius on left, full height */
+        /* Desktop: no border-radius, full width, larger text */
         @media (min-width: 1024px) {
             .rainy-bg {
                 border-radius: 0;
-                min-height: 100vh;
+                padding: 4rem;
+            }
+            .rainy-bg h1 {
+                font-size: 3.5rem !important;
+                line-height: 1.2;
+            }
+            .rainy-bg p {
+                font-size: 1.125rem !important;
+                margin-top: 1rem;
+            }
+            .weather-widget {
+                font-size: 1rem;
+                padding: 0.5rem 1.25rem;
+                margin-top: 1.5rem;
             }
             .login-card {
                 border-radius: 0;
@@ -103,9 +116,22 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: center;
-                padding: 2rem 3rem;
+                padding: 3rem 4rem;
                 margin: 0;
                 width: 100%;
+            }
+            .login-card h1 {
+                font-size: 2.5rem !important;
+            }
+            .login-card input,
+            .login-card button,
+            .login-card select {
+                font-size: 1rem !important;
+                padding: 0.875rem 1rem !important;
+            }
+            .login-card .bg-slate-50 {
+                font-size: 0.875rem !important;
+                padding: 1rem !important;
             }
             #authScreen .grid {
                 gap: 0;
@@ -140,7 +166,7 @@
             margin-top: 1rem;
         }
 
-        /* Mobile adjustments for guard schedule */
+        /* Mobile adjustments for guard schedule (compact) */
         @media (max-width: 767px) {
             .schedule-day {
                 flex-wrap: wrap;
@@ -164,29 +190,29 @@
 </head>
 <body>
 
-<!-- ========== FULL-WIDTH DESKTOP LOGIN SCREEN ========== -->
+<!-- ========== FULL-WIDTH DESKTOP LOGIN SCREEN (LARGER SIZES) ========== -->
 <div id="authScreen" class="fixed inset-0 z-[10000] bg-white overflow-y-auto">
     <div class="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-        <!-- LEFT: Rainy Branding (full left) -->
+        <!-- LEFT: Rainy Branding (full left, larger text) -->
         <div class="rainy-bg">
-            <div class="relative z-10 max-w-md mx-auto lg:mx-0 lg:ml-auto lg:mr-0 w-full px-4">
-                <div class="mb-6">
-                    <img src="welcome logo.jpg" alt="EQUIPRIME" class="h-12 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
+            <div class="relative z-10 max-w-2xl mx-auto lg:mx-0 lg:ml-auto lg:mr-0 w-full">
+                <div class="mb-8">
+                    <img src="welcome logo.jpg" alt="EQUIPRIME" class="h-16 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
                 </div>
-                <h1 class="text-3xl lg:text-4xl font-extrabold text-white drop-shadow-lg">Smart Choices.<br>Smarter Results.</h1>
-                <p class="text-white/90 text-sm lg:text-base mt-3 leading-relaxed">
+                <h1 class="text-4xl font-extrabold text-white drop-shadow-lg">Smart Choices.<br>Smarter Results.</h1>
+                <p class="text-white/90 text-base mt-4 leading-relaxed">
                     Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.
                 </p>
                 <div class="weather-widget">
-                    <i data-feather="cloud-rain" class="w-3 h-3"></i>
+                    <i data-feather="cloud-rain" class="w-4 h-4"></i>
                     <span>🌧️ Rainy · 24°C</span>
                 </div>
-                <div class="flex gap-5 mt-6">
-                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="facebook" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="instagram" class="w-5 h-5"></i></a>
-                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="globe" class="w-5 h-5"></i></a>
+                <div class="flex gap-6 mt-8">
+                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="facebook" class="w-6 h-6"></i></a>
+                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="instagram" class="w-6 h-6"></i></a>
+                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="globe" class="w-6 h-6"></i></a>
                 </div>
-                <div class="flex flex-wrap gap-3 text-xs text-white/70 mt-8">
+                <div class="flex flex-wrap gap-4 text-sm text-white/70 mt-10">
                     <a href="#" class="hover:text-white">Privacy Policy</a><span>•</span>
                     <a href="#" class="hover:text-white">Contact</a><span>•</span>
                     <span>© 2026 EQUIPRIME</span>
@@ -194,26 +220,26 @@
             </div>
         </div>
 
-        <!-- RIGHT: Login Card (full right) -->
-        <div class="login-card bg-white flex items-center justify-center p-6 lg:p-12">
-            <div class="w-full max-w-md">
-                <div class="text-center mb-6">
-                    <img src="logo.png" alt="EQUIPRIME HR" class="h-12 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
-                    <h1 class="text-2xl lg:text-3xl font-extrabold text-[#004aad] mt-2">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
-                    <p class="text-slate-500 text-sm">smart choices · smarter results</p>
+        <!-- RIGHT: Login Card (full right, larger inputs) -->
+        <div class="login-card bg-white flex items-center justify-center p-8 lg:p-12">
+            <div class="w-full max-w-lg">
+                <div class="text-center mb-8">
+                    <img src="logo.png" alt="EQUIPRIME HR" class="h-16 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
+                    <h1 class="text-3xl font-extrabold text-[#004aad] mt-3">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
+                    <p class="text-slate-500 text-base">smart choices · smarter results</p>
                 </div>
-                <div id="authError" class="bg-red-50 text-red-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
-                <div id="authSuccess" class="bg-green-50 text-green-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
+                <div id="authError" class="bg-red-50 text-red-600 p-3 rounded-lg text-sm mb-4 hidden"></div>
+                <div id="authSuccess" class="bg-green-50 text-green-600 p-3 rounded-lg text-sm mb-4 hidden"></div>
                 <div id="loginForm">
-                    <div class="space-y-3">
-                        <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none">
-                        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none">
-                        <button onclick="loginWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Login</button>
+                    <div class="space-y-4">
+                        <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-4 border rounded-xl text-base focus:ring-2 focus:ring-[#004aad] outline-none">
+                        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-4 border rounded-xl text-base focus:ring-2 focus:ring-[#004aad] outline-none">
+                        <button onclick="loginWithEmail()" class="w-full bg-[#004aad] text-white py-4 rounded-xl font-semibold hover:bg-[#003a8a] transition text-base">Login</button>
                     </div>
-                    <div class="mt-3 text-center"><button onclick="showSignup()" class="text-[#004aad] text-sm hover:underline">Don't have an account? Sign up</button></div>
+                    <div class="mt-5 text-center"><button onclick="showSignup()" class="text-[#004aad] text-base hover:underline">Don't have an account? Sign up</button></div>
                 </div>
                 <div id="signupForm" class="hidden">
-                    <div class="space-y-2">
+                    <div class="space-y-3">
                         <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm">
                         <input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm">
                         <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm">
@@ -232,12 +258,12 @@
                         </select>
                         <button onclick="signupWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Sign Up</button>
                     </div>
-                    <div class="mt-3 text-center"><button onclick="showLogin()" class="text-[#004aad] text-sm hover:underline">Already have an account? Login</button></div>
+                    <div class="mt-4 text-center"><button onclick="showLogin()" class="text-[#004aad] text-sm hover:underline">Already have an account? Login</button></div>
                 </div>
-                <div class="mt-5 p-3 bg-slate-50 rounded-xl text-xs text-slate-500">
-                    <p class="font-semibold mb-1">Authorized Users:</p>
-                    <p>HR: hrpoly@equiprime.ph / hrvince@equiprime.ph</p>
-                    <p>Moderator: mod.rom@equiprime.ph / mod.dex@equiprime.ph</p>
+                <div class="mt-8 p-4 bg-slate-50 rounded-xl text-sm text-slate-500">
+                    <p class="font-semibold mb-2">Authorized Users:</p>
+                    <p>HR: hr@equiprime.ph / hr@equiprime.ph</p>
+                    <p>Moderator: mod@equiprime.ph / mod@equiprime.ph</p>
                     <p>Other employees can sign up!</p>
                 </div>
             </div>
@@ -436,7 +462,7 @@
     let allAnnouncements = [];
     let guardWeeklySchedules = [];
     let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
-    const restrictedEmails = ["hrpoly@equiprime.ph", "hrvince@equiprime.ph", "mod.rom@equiprime.ph", "mod.dex@equiprime.ph"];
+    const restrictedEmails = ["hr@equiprime.ph", "mod@equiprime.ph"];
 
     // Department working hours
     const departmentWorkingHours = {
@@ -456,19 +482,19 @@
         { title: "Biometrics Ready", content: "ZKTeco integration available", color: "green", expiresAt: new Date(Date.now() + 24*60*60*1000).toISOString() }
     ];
 
-    // Helper functions
+    // Helper functions (unchanged)
     function getDepartmentApprover(employeeDept) {
         const map = {
             "Service and After-sales": ["john.oblena@equiprime.ph", "divino.elpus@equiprime.ph"],
             "Accounting and Finance": ["ana.liwanagan@equiprime.ph"],
             "Supply Chain Logistics & Purchasing": ["cris.molina@equiprime.ph"],
             "Admin Management": ["carlo.fruto@equiprime.ph"],
-            "HR": ["hrpoly@equiprime.ph", "hrvince@equiprime.ph"],
+            "HR": ["hr@equiprime.ph"],
             "Sales": ["carlo.fruto@equiprime.ph"],
             "Marketing": ["carlo.fruto@equiprime.ph"],
             "Warehouse": ["cris.molina@equiprime.ph"]
         };
-        return map[employeeDept] || ["hrpoly@equiprime.ph", "hrvince@equiprime.ph"];
+        return map[employeeDept] || ["hr@equiprime.ph"];
     }
     function getEmployeeWorkSchedule(emp) {
         if (emp.dept === "Guard") {
@@ -505,8 +531,8 @@
 
     // Reset function for moderator
     window.resetAllSystemData = async function() {
-        if (!currentUser || currentUser.email !== "mod.rom@equiprime.ph") {
-            alert("Only Moderator Rom can perform a full system reset.");
+        if (!currentUser || currentUser.email !== "mod@equiprime.ph") {
+            alert("Only Moderator can perform a full system reset.");
             return;
         }
         if (!confirm("⚠️ WARNING: This will delete ALL employees, attendance, requests, payslips, announcements, and guard schedules. This action cannot be undone. Are you sure?")) return;
@@ -661,8 +687,8 @@
         };
     }
     async function generatePayslipAuto() {
-        if (!currentUser || (currentUser.email !== "hrpoly@equiprime.ph" && currentUser.email !== "hrvince@equiprime.ph")) {
-            alert("Only HR administrators (hrpoly@equiprime.ph or hrvince@equiprime.ph) can generate payslips.");
+        if (!currentUser || (currentUser.email !== "hr@equiprime.ph")) {
+            alert("Only HR administrators (hr@equiprime.ph) can generate payslips.");
             return;
         }
         const empId = document.getElementById('payslipEmployee').value;
@@ -808,7 +834,7 @@
             }
             const resetContainer = document.getElementById('resetButtonContainer');
             if (resetContainer) {
-                if (currentUser.email === "mod.rom@equiprime.ph") resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition w-full">⚠️ Reset All System Data (Moderator Rom only)</button><p class="text-xs text-slate-500 mt-2">Deletes ALL employees, attendance, requests, payslips, announcements, guard schedules.</p>`;
+                if (currentUser.email === "mod@equiprime.ph") resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition w-full">⚠️ Reset All System Data (Moderator only)</button><p class="text-xs text-slate-500 mt-2">Deletes ALL employees, attendance, requests, payslips, announcements, guard schedules.</p>`;
                 else resetContainer.innerHTML = "";
             }
             switchTab('dashboard');
@@ -953,7 +979,7 @@
                 }
                 const resetContainer = document.getElementById('resetButtonContainer');
                 if (resetContainer) {
-                    if (currentUser.email === "mod.rom@equiprime.ph") resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition w-full">⚠️ Reset All System Data (Moderator Rom only)</button><p class="text-xs text-slate-500 mt-2">Deletes ALL employees, attendance, requests, payslips, announcements, guard schedules.</p>`;
+                    if (currentUser.email === "mod@equiprime.ph") resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition w-full">⚠️ Reset All System Data (Moderator only)</button><p class="text-xs text-slate-500 mt-2">Deletes ALL employees, attendance, requests, payslips, announcements, guard schedules.</p>`;
                     else resetContainer.innerHTML = "";
                 }
                 switchTab('dashboard');
