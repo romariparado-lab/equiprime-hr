@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Professional HRIS</title>
+    <title>EQUIPRIME HR - Smart HRIS</title>
     <link rel="manifest" href="manifest.json">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <style>
-        /* ========== ALL EXISTING STYLES (unchanged) ========== */
+        /* ========== BASE STYLES ========== */
         * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #f3f6fb; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         .tab-active { background-color: #004aad; color: white; }
@@ -44,10 +44,6 @@
         .filter-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem; display: block; }
         .announcement-edit-btn { opacity: 0; transition: opacity 0.2s ease; }
         .announcement-item:hover .announcement-edit-btn { opacity: 1; }
-        .status-logged-in { background-color: #d1fae5; color: #059669; }
-        .status-missed { background-color: #fee2e2; color: #dc2626; }
-        .status-late { background-color: #fed7aa; color: #c2410c; }
-        .status-on-leave { background-color: #fef3c7; color: #d97706; }
         .clock-btn { transition: all 0.2s ease; }
         .clock-btn:active { transform: scale(0.98); }
         .day-checkbox { width: 18px; height: 18px; cursor: pointer; }
@@ -56,137 +52,118 @@
         .editable-leave { cursor: pointer; color: #004aad; }
         .editable-leave:hover { text-decoration: underline; }
 
-        /* Dark mode */
-        body.dark {
-            background: #0f172a;
-            color: #e2e8f0;
-        }
-        body.dark .bg-white,
-        body.dark .bg-slate-50,
-        body.dark .bg-gray-50,
-        body.dark .bg-slate-100,
-        body.dark .stat-card {
+        /* ========== DARK MODE STYLES ========== */
+        body.dark { background: #0f172a; color: #e2e8f0; }
+        body.dark .bg-white, body.dark .bg-slate-50, body.dark .bg-gray-50, body.dark .bg-slate-100, body.dark .stat-card,
+        body.dark .modal-container, body.dark .bg-white.rounded-2xl, body.dark .bg-slate-50.rounded-xl,
+        body.dark .bg-white.shadow-sm, body.dark .announcement-item {
             background-color: #1e293b !important;
             color: #cbd5e1;
         }
-        body.dark .text-slate-700,
-        body.dark .text-slate-800,
-        body.dark .text-slate-600,
-        body.dark .text-slate-500 {
+        body.dark .text-slate-700, body.dark .text-slate-800, body.dark .text-slate-600, body.dark .text-slate-500,
+        body.dark .text-slate-400, body.dark .text-gray-700, body.dark .text-gray-600, body.dark .text-gray-500 {
             color: #cbd5e1 !important;
         }
-        body.dark .border,
-        body.dark .border-slate-200,
-        body.dark .border-slate-100 {
+        body.dark .border, body.dark .border-slate-200, body.dark .border-slate-100, body.dark .border-gray-200 {
             border-color: #334155 !important;
         }
-        body.dark .bg-slate-50,
-        body.dark .bg-gray-50 {
-            background-color: #0f172a !important;
-        }
-        body.dark .modal-container {
-            background-color: #1e293b;
-            color: #e2e8f0;
-        }
-        body.dark .filter-select {
-            background-color: #1e293b;
-            border-color: #475569;
-            color: white;
-        }
-        body.dark .desktop-sidebar {
-            background-color: #0f172a !important;
-        }
-        body.dark .mobile-sidebar {
-            background-color: #0f172a !important;
-        }
+        body.dark .bg-slate-50, body.dark .bg-gray-50 { background-color: #0f172a !important; }
+        body.dark .filter-select { background-color: #1e293b; border-color: #475569; color: white; }
+        body.dark .desktop-sidebar, body.dark .mobile-sidebar { background-color: #0f172a !important; }
+        body.dark .stat-card .bg-blue-100, body.dark .stat-card .bg-green-100, body.dark .stat-card .bg-orange-100,
+        body.dark .stat-card .bg-purple-100 { background-color: #334155 !important; }
+        body.dark button.bg-slate-100 { background-color: #334155 !important; color: white; }
+        body.dark .mobile-header button.bg-white { background-color: #1e293b !important; }
+        body.dark .mobile-header .bg-white i { color: white; }
+        body.dark .bg-yellow-50 { background-color: #422c00 !important; color: #fbbf24 !important; }
     </style>
 </head>
 <body>
 
-<!-- NEW LOGIN SCREEN: left branding, right login (with correct logos) -->
-<div id="authScreen" class="fixed inset-0 z-[10000] flex items-center justify-center bg-white lg:bg-gradient-to-br lg:from-blue-50 lg:to-indigo-50 overflow-y-auto">
-    <div class="w-full max-w-7xl mx-auto p-6 md:p-10">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
-            <!-- LEFT COLUMN - Welcome remarks with welcome logo.jpg -->
-            <div class="relative flex flex-col justify-center p-8 lg:p-12 rounded-3xl bg-white/80 backdrop-blur-sm shadow-xl">
-                <div class="flex justify-center lg:justify-start mb-8">
-                    <img src="welcome logo.jpg" alt="EQUIPRIME Welcome" class="h-20 w-auto" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
+<!-- ========== NEW LOGIN SCREEN: LEFT BRANDING + WELCOME REMARKS, RIGHT LOGIN ========== -->
+<div id="authScreen" class="fixed inset-0 z-[10000] flex items-center justify-center bg-white lg:bg-[#f8fafd] overflow-y-auto">
+    <div class="w-full max-w-6xl mx-auto p-4 md:p-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <!-- LEFT COLUMN - Branding & Welcome Remarks -->
+            <div class="text-center lg:text-left px-4 lg:px-8">
+                <div class="flex justify-center lg:justify-start mb-6">
+                    <img src="welcome logo.jpg" alt="EQUIPRIME Logo" class="h-16 w-auto" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
                 </div>
-                <h1 class="text-4xl md:text-5xl font-extrabold text-slate-800 leading-tight">Smart Choices.<br>Smarter Results.</h1>
-                <p class="text-slate-600 mt-6 text-lg leading-relaxed">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-slate-800">Smart Choices.<br>Smarter Results.</h1>
+                <p class="text-slate-600 mt-4 text-base leading-relaxed max-w-md mx-auto lg:mx-0">
                     Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.
                 </p>
-                <div class="flex gap-6 mt-10">
-                    <a href="#" class="text-slate-500 hover:text-[#004aad] transition"><i data-feather="facebook" class="w-7 h-7"></i></a>
-                    <a href="#" class="text-slate-500 hover:text-[#004aad] transition"><i data-feather="instagram" class="w-7 h-7"></i></a>
-                    <a href="#" class="text-slate-500 hover:text-[#004aad] transition"><i data-feather="globe" class="w-7 h-7"></i></a>
+                <div class="flex justify-center lg:justify-start gap-5 mt-8">
+                    <a href="#" class="text-slate-500 hover:text-[#004aad] transition"><i data-feather="facebook" class="w-6 h-6"></i></a>
+                    <a href="#" class="text-slate-500 hover:text-[#004aad] transition"><i data-feather="instagram" class="w-6 h-6"></i></a>
+                    <a href="#" class="text-slate-500 hover:text-[#004aad] transition"><i data-feather="globe" class="w-6 h-6"></i></a>
                 </div>
-                <div class="flex flex-wrap gap-4 text-sm text-slate-500 mt-12 pt-4 border-t border-slate-200">
+                <div class="flex flex-wrap justify-center lg:justify-start gap-4 text-sm text-slate-500 mt-8">
                     <a href="#" class="hover:text-[#004aad]">Privacy Policy</a><span>•</span>
                     <a href="#" class="hover:text-[#004aad]">Contact</a><span>•</span>
                     <span>© 2026 EQUIPRIME</span>
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN - Login card with logo.png above title -->
-            <div class="flex items-center">
-                <div class="bg-white rounded-3xl p-8 md:p-10 shadow-2xl w-full max-w-md mx-auto">
-                    <div class="text-center mb-8">
-                        <div class="flex justify-center mb-4">
-                            <img src="logo.png" alt="Company Logo" class="h-16 w-auto" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
+            <!-- RIGHT COLUMN - Login Card -->
+            <div class="bg-white rounded-3xl p-8 shadow-2xl max-w-md mx-auto w-full">
+                <div class="text-center mb-6">
+                    <div class="flex justify-center mb-4">
+                        <div class="w-16 h-16 bg-[#004aad] rounded-2xl flex items-center justify-center">
+                            <i data-feather="briefcase" class="text-white" style="width:2rem;"></i>
                         </div>
-                        <h1 class="text-3xl font-extrabold text-[#004aad]">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
-                        <p class="text-slate-500 text-sm mt-1">smart choices · smarter results</p>
                     </div>
-                    <div id="authError" class="bg-red-50 text-red-600 p-3 rounded-xl text-sm mb-4 hidden"></div>
-                    <div id="authSuccess" class="bg-green-50 text-green-600 p-3 rounded-xl text-sm mb-4 hidden"></div>
-                    <div id="loginForm">
-                        <div class="space-y-5">
-                            <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
-                            <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
-                            <button onclick="loginWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Login</button>
-                        </div>
-                        <div class="mt-5 text-center"><button onclick="showSignup()" class="text-[#004aad] text-sm hover:underline">Don't have an account? Sign up</button></div>
+                    <h1 class="text-3xl font-extrabold text-[#004aad]">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
+                    <p class="text-slate-500 text-sm mt-1">smart choices · smarter results</p>
+                </div>
+                <div id="authError" class="bg-red-50 text-red-600 p-3 rounded-xl text-sm mb-4 hidden"></div>
+                <div id="authSuccess" class="bg-green-50 text-green-600 p-3 rounded-xl text-sm mb-4 hidden"></div>
+                <div id="loginForm">
+                    <div class="space-y-4">
+                        <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
+                        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
+                        <button onclick="loginWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Login</button>
                     </div>
-                    <div id="signupForm" class="hidden">
-                        <div class="space-y-4">
-                            <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl">
-                            <input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl">
-                            <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl">
-                            <select id="signupRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option></select>
-                            <select id="signupDepartment" class="w-full p-3 border rounded-xl">
-                                <option value="">Select Department</option>
-                                <option value="Service and After-sales">Service and After-sales</option>
-                                <option value="Sales">Sales Department</option>
-                                <option value="Accounting and Finance">Accounting and Finance</option>
-                                <option value="Marketing">Marketing Department</option>
-                                <option value="HR">HR Department</option>
-                                <option value="Warehouse">Warehouse Department</option>
-                                <option value="Supply Chain Logistics & Purchasing">Supply Chain Logistics & Purchasing</option>
-                                <option value="Admin Management">Admin Management</option>
-                                <option value="Guard">Security Guard</option>
-                            </select>
-                            <button onclick="signupWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Sign Up</button>
-                        </div>
-                        <div class="mt-4 text-center"><button onclick="showLogin()" class="text-[#004aad] text-sm hover:underline">Already have an account? Login</button></div>
+                    <div class="mt-4 text-center"><button onclick="showSignup()" class="text-[#004aad] text-sm hover:underline">Don't have an account? Sign up</button></div>
+                </div>
+                <div id="signupForm" class="hidden">
+                    <div class="space-y-4">
+                        <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl">
+                        <input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl">
+                        <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl">
+                        <select id="signupRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option></select>
+                        <select id="signupDepartment" class="w-full p-3 border rounded-xl">
+                            <option value="">Select Department</option>
+                            <option value="Service and After-sales">Service and After-sales</option>
+                            <option value="Sales">Sales Department</option>
+                            <option value="Accounting and Finance">Accounting and Finance</option>
+                            <option value="Marketing">Marketing Department</option>
+                            <option value="HR">HR Department</option>
+                            <option value="Warehouse">Warehouse Department</option>
+                            <option value="Supply Chain Logistics & Purchasing">Supply Chain Logistics & Purchasing</option>
+                            <option value="Admin Management">Admin Management</option>
+                            <option value="Guard">Security Guard</option>
+                        </select>
+                        <button onclick="signupWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Sign Up</button>
                     </div>
-                    <div class="mt-6 p-4 bg-slate-50 rounded-xl text-xs text-slate-500">
-                        <p class="font-semibold mb-1">Authorized Users:</p>
-                        <p>HR: hrpoly@equiprime.ph / hrvince@equiprime.ph</p>
-                        <p>Moderator: mod.rom@equiprime.ph / mod.dex@equiprime.ph</p>
-                        <p>Other employees can sign up!</p>
-                    </div>
+                    <div class="mt-4 text-center"><button onclick="showLogin()" class="text-[#004aad] text-sm hover:underline">Already have an account? Login</button></div>
+                </div>
+                <div class="mt-6 p-4 bg-slate-50 rounded-xl text-xs text-slate-500">
+                    <p class="font-semibold mb-1">Authorized Users:</p>
+                    <p>HR: hrpoly@equiprime.ph / hrvince@equiprime.ph</p>
+                    <p>Moderator: mod.rom@equiprime.ph / mod.dex@equiprime.ph</p>
+                    <p>Other employees can sign up!</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- ========== MAIN APP – EVERYTHING BELOW IS YOUR EXISTING WORKING SYSTEM ========== -->
+<!-- MAIN APP CONTAINER -->
 <div id="mainApp" class="hidden app-container">
     <div id="overlay" class="overlay" onclick="closeMobileSidebar()"></div>
 
-    <!-- MOBILE SIDEBAR (with night mode) -->
+    <!-- MOBILE SIDEBAR (with night mode toggle) -->
     <div id="mobileSidebar" class="mobile-sidebar">
         <div class="flex justify-end mb-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x"></i></button></div>
         <div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div>
@@ -206,7 +183,7 @@
         <div class="pt-2 border-t border-white/20 mt-2"><button onclick="logout()" class="w-full flex items-center gap-3 text-white/70 p-3 rounded-xl"><i data-feather="log-out"></i> Logout</button></div>
     </div>
 
-    <!-- DESKTOP SIDEBAR (with night mode) -->
+    <!-- DESKTOP SIDEBAR (with night mode toggle) -->
     <div class="desktop-sidebar">
         <div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p></div>
         <nav id="desktopNavMenu" class="space-y-2 flex-1"></nav>
@@ -225,12 +202,28 @@
         <div class="mt-auto pt-8"><div class="bg-white/10 rounded-2xl p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div><button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="log-out"></i> Logout</button></div></div>
     </div>
 
-    <!-- MAIN CONTENT (all existing tabs – same as your previous working version) -->
+    <!-- MAIN CONTENT AREA (all tabs) -->
     <div class="main-content">
-        <div class="mobile-header"><button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-[#004aad] text-white flex items-center justify-center text-xs font-bold" id="mobileUserInitials">HR</div><span id="mobileUserName" class="text-sm font-semibold text-slate-700">User</span></div></div>
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6"><div><h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Welcome Back, <span id="welcomeName">User</span></h2><p class="text-slate-500 text-sm mt-1" id="welcomeSubtitle"></p></div><div class="bg-yellow-50 text-yellow-700 px-3 py-1.5 rounded-full text-xs flex items-center gap-1"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>Biometrics ready (demo mode)</div></div>
+        <div class="mobile-header">
+            <button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button>
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-full bg-[#004aad] text-white flex items-center justify-center text-xs font-bold" id="mobileUserInitials">HR</div>
+                <span id="mobileUserName" class="text-sm font-semibold text-slate-700">User</span>
+            </div>
+        </div>
 
-        <!-- DASHBOARD TAB (full existing content) -->
+        <!-- Welcome row with greeting -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <div>
+                <h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Welcome Back, <span id="welcomeName">User</span></h2>
+                <p class="text-slate-500 text-sm mt-1" id="welcomeSubtitle"></p>
+            </div>
+            <div class="bg-yellow-50 text-yellow-700 px-3 py-1.5 rounded-full text-xs flex items-center gap-1">
+                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div> Biometrics ready (demo mode)
+            </div>
+        </div>
+
+        <!-- DASHBOARD TAB -->
         <div id="dashboard-tab" class="tab-content">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div class="stat-card bg-white rounded-2xl p-5 shadow-sm"><div class="flex justify-between items-start"><div><p class="text-slate-500 text-sm">Total Employees</p><h3 class="text-3xl font-bold mt-2" id="totalEmployees">0</h3></div><div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center"><i data-feather="users" class="text-blue-600"></i></div></div><p class="text-green-600 text-sm mt-4" id="filteredEmployeesInfo">Active workforce</p></div>
@@ -246,36 +239,48 @@
             <div class="mt-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="git-branch"></i> Approval Flow</h3><div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-sm"><div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Employee submits</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Department Approver</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-purple-500 rounded-full"></span> Moderator</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> HR Admin</div></div></div></div>
         </div>
 
-        <!-- MY ATTENDANCE TAB (full existing) -->
+        <!-- MY ATTENDANCE TAB -->
         <div id="my-attendance-tab" class="tab-content hidden">
             <div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-700 transition clock-btn flex items-center gap-2"><i data-feather="log-in"></i> Clock In</button><button onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-red-700 transition clock-btn flex items-center gap-2"><i data-feather="log-out"></i> Clock Out</button></div></div>
             <div class="bg-white rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="calendar"></i> Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500" id="todayTimeInfo"></div></div></div>
             <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="list"></i> Attendance History</h3><div class="overflow-x-auto"><table class="w-full"><thead class="bg-slate-50"><tr><th class="p-3 text-left text-sm font-semibold">Date</th><th class="p-3 text-left text-sm font-semibold">Clock In</th><th class="p-3 text-left text-sm font-semibold">Clock Out</th><th class="p-3 text-left text-sm font-semibold">Hours Worked</th><th class="p-3 text-left text-sm font-semibold">Status</th></tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div>
         </div>
 
-        <!-- GUARD WEEKLY SCHEDULE TAB (full existing) -->
-        <div id="hr-guard-schedule-tab" class="tab-content hidden">
-            <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="calendar"></i> Guard Weekly Schedule Management</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 bg-slate-50"><p class="text-sm font-semibold text-slate-700 mb-2">Select days and shift for this guard:</p><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Assign Weekly Schedule</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div>
-        </div>
-
-        <!-- MY REQUESTS, PAYSLIP, APPROVALS, HR TABS (identical to previous working version) -->
+        <!-- MY REQUESTS TAB -->
         <div id="my-requests-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Requests</h2><button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">New Request</button></div><div id="allMyRequestsList" class="space-y-3"></div></div>
+
+        <!-- PAYSLIP TAB -->
         <div id="payslip-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="file-text"></i> My Payslips</h2><div id="employeePayslipList" class="space-y-4"></div></div>
+
+        <!-- APPROVALS TAB -->
         <div id="approvals-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clock"></i> Pending Approvals</h2><div id="pendingApprovalsList" class="space-y-4"></div></div>
+
+        <!-- HR EMPLOYEES TAB -->
+        <div id="hr-employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="users"></i> Employee Directory</h2><button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Add Employee</button></div><div id="hrEmployeesList" class="bg-white rounded-2xl shadow-sm overflow-hidden"></div></div>
+
+        <!-- HR REQUESTS TAB -->
+        <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
+
+        <!-- HR PAYSLIP MANAGEMENT -->
         <div id="hr-payslip-tab" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl"><div><label class="text-sm font-medium">Cut-off Period</label><select id="cutOffPeriod" class="w-full p-3 border rounded-xl"><option value="first">1st cut-off (27th-10th)</option><option value="second">2nd cut-off (11th-26th)</option></select></div><input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl" placeholder="Daily Rate"><input type="number" id="daysPresent" class="w-full p-3 border rounded-xl" placeholder="Days Present (this cut-off)"><input type="number" id="otherDeduction" value="0" step="0.01" class="w-full p-3 border rounded-xl" placeholder="Other Deduction (e.g., loan, advance)"><button onclick="generatePayslipAuto()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Generate Payslip (Auto-Compute)</button></div></div>
                 <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div>
             </div>
         </div>
-        <div id="hr-employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="users"></i> Employee Directory</h2><button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Add Employee</button></div><div id="hrEmployeesList" class="bg-white rounded-2xl shadow-sm overflow-hidden"></div></div>
-        <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
+
+        <!-- GUARD WEEKLY SCHEDULE TAB -->
+        <div id="hr-guard-schedule-tab" class="tab-content hidden">
+            <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="calendar"></i> Guard Weekly Schedule Management</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 bg-slate-50"><p class="text-sm font-semibold text-slate-700 mb-2">Select days and shift for this guard:</p><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Assign Weekly Schedule</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div>
+        </div>
+
+        <!-- HR SETTINGS (with reset button for moderator) -->
         <div id="hr-settings-tab" class="tab-content hidden"><div class="bg-white rounded-2xl p-6 space-y-6"><div><label class="font-semibold text-sm">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl mt-1"></div><button onclick="saveSettings()" class="bg-[#004aad] text-white px-5 py-2 rounded-xl">Save Settings</button><hr><div id="resetButtonContainer"></div></div></div>
     </div>
 </div>
 
-<!-- ALL MODALS (announcement, request, leave, offsets, add employee, edit leave) – identical to previous working version -->
+<!-- ALL MODALS (unchanged) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><div><label class="text-sm font-medium">Title</label><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl" placeholder="Announcement Title"></div><div><label class="text-sm font-medium">Content</label><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl" placeholder="Announcement details..."></textarea></div></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left">Vacation Leave</button></div></div></div>
@@ -285,11 +290,12 @@
 <div id="editLeaveModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><div><label class="text-sm font-medium">Employee Name</label><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl" readonly></div><div><label class="text-sm font-medium">Leave Balance (days)</label><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" step="1"></div></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 
 <script>
-    // ========== NIGHT MODE TOGGLE ==========
+    // ========== NIGHT MODE TOGGLE (global) ==========
     function toggleNightMode() {
         document.body.classList.toggle('dark');
         const isDark = document.body.classList.contains('dark');
         localStorage.setItem('nightMode', isDark ? 'enabled' : 'disabled');
+        // Update icons
         const icons = ['nightModeIconDesktop', 'nightModeIconMobile'];
         icons.forEach(id => {
             const icon = document.getElementById(id);
@@ -297,6 +303,7 @@
         });
         if (typeof feather !== 'undefined') feather.replace();
     }
+    // Load saved night mode preference
     if (localStorage.getItem('nightMode') === 'enabled') {
         document.body.classList.add('dark');
         const icons = ['nightModeIconDesktop', 'nightModeIconMobile'];
@@ -326,7 +333,7 @@
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // ========== GLOBAL VARIABLES (same as previous working version) ==========
+    // ========== GLOBAL VARIABLES ==========
     let currentUser = null;
     let currentUserRole = null;
     let currentUserData = null;
@@ -339,7 +346,7 @@
     let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
     const restrictedEmails = ["hrpoly@equiprime.ph", "hrvince@equiprime.ph", "mod.rom@equiprime.ph", "mod.dex@equiprime.ph"];
 
-    // ========== DEPARTMENT WORKING HOURS (unchanged) ==========
+    // Department working hours
     const departmentWorkingHours = {
         "Service and After-sales": { startHour: 8, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5,6] },
         "Warehouse": { startHour: 8, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5,6] },
@@ -357,20 +364,514 @@
         { title: "Biometrics Ready", content: "ZKTeco integration available", color: "green", expiresAt: new Date(Date.now() + 24*60*60*1000).toISOString() }
     ];
 
-    // Helper functions (exactly as before)
-    function getDepartmentApprover(employeeDept) { /* same implementation */ }
-    function getEmployeeWorkSchedule(emp) { /* same */ }
-    function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }); }
-    function checkAttendanceStatus(attendance, employee) { /* same logic */ }
+    // Helper functions
+    function getDepartmentApprover(employeeDept) {
+        const map = {
+            "Service and After-sales": ["john.oblena@equiprime.ph", "divino.elpus@equiprime.ph"],
+            "Accounting and Finance": ["ana.liwanagan@equiprime.ph"],
+            "Supply Chain Logistics & Purchasing": ["cris.molina@equiprime.ph"],
+            "Admin Management": ["carlo.fruto@equiprime.ph"],
+            "HR": ["hrpoly@equiprime.ph", "hrvince@equiprime.ph"],
+            "Sales": ["carlo.fruto@equiprime.ph"],
+            "Marketing": ["carlo.fruto@equiprime.ph"],
+            "Warehouse": ["cris.molina@equiprime.ph"]
+        };
+        return map[employeeDept] || ["hrpoly@equiprime.ph", "hrvince@equiprime.ph"];
+    }
+    function getEmployeeWorkSchedule(emp) {
+        if (emp.dept === "Guard") {
+            const today = new Date();
+            const todayName = dayNames[today.getDay()];
+            const guardSchedule = guardWeeklySchedules.find(s => s.guardId === emp.id && s.active);
+            if (guardSchedule && guardSchedule.schedule[todayName]) {
+                const shift = guardSchedule.schedule[todayName];
+                if (shift === "Rest Day") return null;
+                if (shift.includes("Morning")) return { startHour: 6, startMinute: 0, endHour: 14, endMinute: 0 };
+                if (shift.includes("Afternoon")) return { startHour: 14, startMinute: 0, endHour: 22, endMinute: 0 };
+                if (shift.includes("Night")) return { startHour: 22, startMinute: 0, endHour: 6, endMinute: 0 };
+            }
+            return null;
+        }
+        return departmentWorkingHours[emp.dept] || { startHour: 8, startMinute: 0, endHour: 17, endMinute: 0, workDays: [1,2,3,4,5] };
+    }
+    function getCurrentTime24() {
+        const now = new Date();
+        return now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+    }
+    function checkAttendanceStatus(attendance, employee) {
+        if (!attendance || !attendance.timeIn) return "missed";
+        const schedule = getEmployeeWorkSchedule(employee);
+        if (!schedule) return "on-leave";
+        const [inHour, inMinute] = attendance.timeIn.split(':').map(Number);
+        const scheduledHour = schedule.startHour;
+        const scheduledMinute = schedule.startMinute;
+        const inTotal = inHour * 60 + inMinute;
+        const scheduledTotal = scheduledHour * 60 + scheduledMinute;
+        if (inTotal > scheduledTotal) return "late";
+        return "logged-in";
+    }
 
-    // Reset function (only for mod.rom)
-    window.resetAllSystemData = async function() { /* same */ };
+    // Reset function for moderator
+    window.resetAllSystemData = async function() {
+        if (!currentUser || currentUser.email !== "mod.rom@equiprime.ph") {
+            alert("Only Moderator Rom can perform a full system reset.");
+            return;
+        }
+        if (!confirm("⚠️ WARNING: This will delete ALL employees, attendance, requests, payslips, announcements, and guard schedules. This action cannot be undone. Are you sure?")) return;
+        const collections = ['employees', 'attendance', 'requests', 'payslips', 'announcements', 'guardWeeklySchedules'];
+        for (const col of collections) {
+            const snapshot = await db.collection(col).get();
+            const batch = db.batch();
+            snapshot.docs.forEach(doc => batch.delete(doc.ref));
+            await batch.commit();
+        }
+        alert("All system data has been reset. The page will reload.");
+        location.reload();
+    };
 
-    // All existing functions: clockIn, clockOut, refreshMyAttendanceTab, loadGuardWeeklySchedules, renderGuardSchedules, assignGuardWeeklySchedule, deleteGuardSchedule, loadAnnouncements, renderAnnouncements, editAnnouncement, addNewAnnouncement, saveAnnouncement, deleteAnnouncement, loadAllData, applyFilters, getFilteredEmployees, updateLastUpdatedTime, editLeaveBalance, saveLeaveBalance, computeMonthlyDeductions, generatePayslipAuto, refreshHrPayslip, refreshEmployeePayslip, openModal, closeModal, openNewRequestMenu, openLeaveModal, openOffsetsModal, showAddEmployeeModal, openRequestModal, selectLeaveType, submitRequest, submitOffsets, approveAsDepartmentApprover, approveAsModerator, approveAsHR, rejectRequest, addEmployee, deleteEmployee, saveSettings, showSignup, showLogin, loginWithEmail, signupWithEmail, logout, openMobileSidebar, closeMobileSidebar, renderNavigation, switchTab, refreshDashboard, and the auth state listener – all identical to your previous working version.
-    // For brevity, I've omitted the full implementation here, but rest assured the complete file includes them.
-    // The final file you will receive contains every function exactly as it was in your last stable build.
+    // Attendance functions
+    async function clockIn() {
+        if (restrictedEmails.includes(currentUser.email)) {
+            alert("HR and Moderator accounts cannot clock in/out. Please use a regular employee account for attendance.");
+            return;
+        }
+        const today = new Date().toISOString().split('T')[0];
+        const time = getCurrentTime24();
+        const existing = allAttendance.find(a => a.userId === currentUser.uid && a.date === today);
+        if (existing && existing.timeIn) { alert("Already clocked in today!"); return; }
+        const newAtt = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: currentUserData.department, date: today, timeIn: time, timeOut: null, status: "Present", createdAt: new Date().toISOString() };
+        const docRef = await db.collection('attendance').add(newAtt);
+        allAttendance.push({ id: docRef.id, ...newAtt });
+        alert(`Clocked in at ${time}`);
+        refreshMyAttendanceTab();
+        refreshDashboard();
+    }
+    async function clockOut() {
+        if (restrictedEmails.includes(currentUser.email)) {
+            alert("HR and Moderator accounts cannot clock in/out.");
+            return;
+        }
+        const today = new Date().toISOString().split('T')[0];
+        const time = getCurrentTime24();
+        const record = allAttendance.find(a => a.userId === currentUser.uid && a.date === today);
+        if (!record || !record.timeIn) { alert("Clock in first!"); return; }
+        if (record.timeOut) { alert("Already clocked out!"); return; }
+        const timeInDate = new Date(`${today}T${record.timeIn}:00`);
+        const timeOutDate = new Date(`${today}T${time}:00`);
+        const hours = ((timeOutDate - timeInDate) / (1000 * 60 * 60)).toFixed(2);
+        await db.collection('attendance').doc(record.id).update({ timeOut: time, hoursWorked: hours });
+        record.timeOut = time;
+        record.hoursWorked = hours;
+        alert(`Clocked out at ${time} | Hours: ${hours}`);
+        refreshMyAttendanceTab();
+        refreshDashboard();
+    }
+    async function refreshMyAttendanceTab() {
+        const today = new Date().toISOString().split('T')[0];
+        const userAtt = allAttendance.filter(a => a.userId === currentUser.uid).sort((a,b)=>b.date.localeCompare(a.date));
+        const todayRec = userAtt.find(a=>a.date===today);
+        const statusIcon = document.getElementById('todayStatusIcon');
+        const statusText = document.getElementById('todayStatusText');
+        const timeInfo = document.getElementById('todayTimeInfo');
+        if (todayRec && todayRec.timeIn) {
+            statusIcon.innerHTML = '✅';
+            statusText.innerHTML = todayRec.timeOut ? 'Completed' : 'Clocked In';
+            timeInfo.innerHTML = todayRec.timeOut ? `Clocked in at ${todayRec.timeIn} | Clocked out at ${todayRec.timeOut} | Hours: ${todayRec.hoursWorked||'...'}` : `Clocked in at ${todayRec.timeIn} | Not yet clocked out`;
+        } else {
+            statusIcon.innerHTML = '⏰';
+            statusText.innerHTML = 'Not clocked in yet';
+            timeInfo.innerHTML = 'Click "Clock In" to start your day';
+        }
+        const historyBody = document.getElementById('attendanceHistoryList');
+        if (historyBody) historyBody.innerHTML = userAtt.map(a => `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100 text-green-700':'bg-yellow-100 text-yellow-700'}">${a.timeOut?'Complete':'In Progress'}</span></td></tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">No records</td></tr>';
+    }
 
-    console.log("All systems ready – login, dashboard, attendance, payslip, guard schedule, night mode, and branding are fully functional.");
+    // Guard schedule functions
+    async function loadGuardWeeklySchedules() { const snap = await db.collection('guardWeeklySchedules').get(); guardWeeklySchedules = []; snap.forEach(doc => guardWeeklySchedules.push({ id: doc.id, ...doc.data() })); if (currentUserRole === 'hr') renderGuardSchedules(); }
+    function renderGuardSchedules() { const container = document.getElementById('guardSchedulesList'); if (!container) return; container.innerHTML = guardWeeklySchedules.map(s => `<div class="bg-slate-50 rounded-xl p-3 border"><div class="flex justify-between items-start"><div><p class="font-semibold">${s.guardName}</p><p class="text-xs text-slate-500">${Object.entries(s.schedule).map(([d,sh])=>`${d}: ${sh}`).join(' | ')}</p><p class="text-xs text-slate-400">Assigned: ${new Date(s.createdAt).toLocaleDateString()}</p></div><button onclick="deleteGuardSchedule('${s.id}')" class="text-red-500 text-sm">Delete</button></div></div>`).join('') || '<div class="text-center text-slate-400 py-4">No guard schedules</div>'; }
+    async function assignGuardWeeklySchedule() { const guardId = document.getElementById('guardEmployee').value; if (!guardId) { alert("Select a guard"); return; } const days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]; const schedule = {}; let has = false; for (const d of days) { const chk = document.getElementById(`day${d}`); const sel = document.getElementById(`shift${d}`); if (chk && chk.checked && sel && sel.value) { schedule[d] = sel.value; has = true; } } if (!has) { alert("Select at least one day with shift"); return; } const guard = allEmployees.find(e => e.id === guardId); const newSched = { guardId, guardName: guard.name, schedule, active: true, createdAt: new Date().toISOString(), assignedBy: currentUser.uid }; const docRef = await db.collection('guardWeeklySchedules').add(newSched); guardWeeklySchedules.push({ id: docRef.id, ...newSched }); renderGuardSchedules(); alert(`Weekly schedule assigned to ${guard.name}`); for (const d of days) { document.getElementById(`day${d}`).checked = false; document.getElementById(`shift${d}`).value = ""; } document.getElementById('guardEmployee').value = ''; }
+    async function deleteGuardSchedule(id) { if (confirm("Delete this schedule?")) { await db.collection('guardWeeklySchedules').doc(id).delete(); guardWeeklySchedules = guardWeeklySchedules.filter(s => s.id !== id); renderGuardSchedules(); } }
+
+    // Announcements
+    async function loadAnnouncements() {
+        const snap = await db.collection('announcements').get();
+        allAnnouncements = [];
+        const now = new Date();
+        snap.forEach(doc => { const data = doc.data(); if (data.expiresAt && new Date(data.expiresAt) < now) db.collection('announcements').doc(doc.id).delete(); else allAnnouncements.push({ id: doc.id, ...data }); });
+        if (allAnnouncements.length === 0) for (const ann of defaultAnnouncements) { const ref = await db.collection('announcements').add(ann); allAnnouncements.push({ id: ref.id, ...ann }); }
+        renderAnnouncements();
+    }
+    function renderAnnouncements() { const container = document.getElementById('announcementsList'); if (!container) return; const canEdit = (currentUserRole === 'hr' || currentUserRole === 'moderator'); container.innerHTML = allAnnouncements.map(a => `<div class="announcement-item group relative p-4 rounded-xl ${a.color==='blue'?'bg-blue-50 border-l-4 border-blue-500':'bg-green-50 border-l-4 border-green-500'}"><div class="flex justify-between items-start"><div class="flex-1"><h4 class="font-bold ${a.color==='blue'?'text-blue-900':'text-green-900'}">${escapeHtml(a.title)}</h4><p class="text-sm ${a.color==='blue'?'text-blue-700':'text-green-700'} mt-1">${escapeHtml(a.content)}</p><p class="text-xs text-slate-400 mt-1">Expires: ${new Date(a.expiresAt).toLocaleDateString()}</p></div>${canEdit ? `<div class="announcement-edit-btn"><button onclick="editAnnouncement('${a.id}','${escapeHtml(a.title)}','${escapeHtml(a.content)}')" class="text-gray-500 hover:text-blue-600 p-1 rounded"><i data-feather="edit-2" style="width:1rem;"></i></button></div>` : ''}</div></div>`).join(''); document.getElementById('announcementEditControls').style.display = canEdit ? 'flex' : 'none'; feather.replace(); }
+    function escapeHtml(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
+    function editAnnouncement(id,title,content) { document.getElementById('announcementId').value=id; document.getElementById('announcementTitle').value=title; document.getElementById('announcementContent').value=content; document.getElementById('announcementModalTitle').innerText='Edit Announcement'; document.getElementById('deleteAnnouncementBtn').style.display='block'; openModal('announcementModal'); }
+    function addNewAnnouncement() { document.getElementById('announcementId').value=''; document.getElementById('announcementTitle').value=''; document.getElementById('announcementContent').value=''; document.getElementById('announcementModalTitle').innerText='Add Announcement'; document.getElementById('deleteAnnouncementBtn').style.display='none'; openModal('announcementModal'); }
+    async function saveAnnouncement() { const id=document.getElementById('announcementId').value; const title=document.getElementById('announcementTitle').value; const content=document.getElementById('announcementContent').value; const expiresAt=new Date(Date.now()+24*60*60*1000).toISOString(); if(!title||!content){alert("Fill title and content");return;} if(id){ await db.collection('announcements').doc(id).update({title,content,expiresAt}); const idx=allAnnouncements.findIndex(a=>a.id===id); if(idx!==-1) allAnnouncements[idx]={...allAnnouncements[idx],title,content,expiresAt}; } else { const ref=await db.collection('announcements').add({title,content,color:'blue',expiresAt}); allAnnouncements.push({id:ref.id,title,content,color:'blue',expiresAt}); } closeModal('announcementModal'); renderAnnouncements(); alert("Announcement saved (expires in 24h)"); }
+    async function deleteAnnouncement() { const id=document.getElementById('announcementId').value; if(!id) return; if(confirm("Delete?")){ await db.collection('announcements').doc(id).delete(); allAnnouncements=allAnnouncements.filter(a=>a.id!==id); closeModal('announcementModal'); renderAnnouncements(); alert("Deleted"); } }
+
+    // Data loading
+    async function loadAllData() {
+        const empSnap=await db.collection('employees').get(); allEmployees=[]; empSnap.forEach(d=>allEmployees.push({id:d.id,...d.data()}));
+        const reqSnap=await db.collection('requests').get(); allRequests=[]; reqSnap.forEach(d=>allRequests.push({id:d.id,...d.data()}));
+        const attSnap=await db.collection('attendance').get(); allAttendance=[]; attSnap.forEach(d=>allAttendance.push({id:d.id,...d.data()}));
+        const paySnap=await db.collection('payslips').get(); allPayslips=[]; paySnap.forEach(d=>allPayslips.push({id:d.id,...d.data()}));
+        refreshDashboard();
+    }
+
+    // Filter functions
+    function applyFilters() { const dept=document.getElementById('desktopFilterDepartment')?.value||document.getElementById('filterDepartment')?.value||'all'; const stat=document.getElementById('desktopFilterStatus')?.value||document.getElementById('filterStatus')?.value||'all'; const leave=document.getElementById('desktopFilterLeaveType')?.value||document.getElementById('filterLeaveType')?.value||'all'; currentFilter={department:dept,status:stat,leaveType:leave}; if(document.getElementById('desktopFilterDepartment')) document.getElementById('desktopFilterDepartment').value=dept; if(document.getElementById('filterDepartment')) document.getElementById('filterDepartment').value=dept; if(document.getElementById('desktopFilterStatus')) document.getElementById('desktopFilterStatus').value=stat; if(document.getElementById('filterStatus')) document.getElementById('filterStatus').value=stat; if(document.getElementById('desktopFilterLeaveType')) document.getElementById('desktopFilterLeaveType').value=leave; if(document.getElementById('filterLeaveType')) document.getElementById('filterLeaveType').value=leave; refreshDashboard(); updateLastUpdatedTime(); }
+    function getFilteredEmployees() { let f=[...allEmployees]; if(currentFilter.department!=='all') f=f.filter(e=>e.dept===currentFilter.department); if(currentFilter.status!=='all') f=f.filter(e=>e.status===currentFilter.status); return f; }
+    function updateLastUpdatedTime() { const now=new Date(); const str=`${now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})} at ${now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'})}`; document.getElementById('desktopLastUpdatedTime') && (document.getElementById('desktopLastUpdatedTime').innerText=str); document.getElementById('lastUpdatedTime') && (document.getElementById('lastUpdatedTime').innerText=str); }
+
+    // Edit leave balance
+    function editLeaveBalance(empId, empName, currentBalance) {
+        document.getElementById('editEmployeeId').value = empId;
+        document.getElementById('editEmployeeName').value = empName;
+        document.getElementById('editLeaveBalance').value = currentBalance;
+        openModal('editLeaveModal');
+    }
+    async function saveLeaveBalance() {
+        const empId = document.getElementById('editEmployeeId').value;
+        const newBalance = parseInt(document.getElementById('editLeaveBalance').value);
+        if (isNaN(newBalance)) { alert("Please enter a valid number"); return; }
+        await db.collection('employees').doc(empId).update({ leaveBalance: newBalance });
+        const empIndex = allEmployees.findIndex(e => e.id === empId);
+        if (empIndex !== -1) allEmployees[empIndex].leaveBalance = newBalance;
+        const userRecord = allEmployees.find(e => e.id === empId);
+        if (userRecord && userRecord.email) {
+            const userQuery = await db.collection('users').where('email', '==', userRecord.email).get();
+            userQuery.forEach(doc => { db.collection('users').doc(doc.id).update({ leaveBalance: newBalance }); });
+        }
+        closeModal('editLeaveModal');
+        refreshDashboard();
+        alert(`Leave balance updated to ${newBalance} days`);
+    }
+
+    // Payslip auto-compute with other deduction
+    function computeMonthlyDeductions(monthlySalary) {
+        const sss = Math.min(monthlySalary, 30000) * 0.045;
+        const philHealth = Math.min(monthlySalary, 100000) * 0.025;
+        const pagIbig = monthlySalary > 10000 ? 200 : 100;
+        let taxableIncome = monthlySalary - (sss + philHealth + pagIbig);
+        let tax = 0;
+        if (taxableIncome > 20833) {
+            if (taxableIncome <= 33333) tax = (taxableIncome - 20833) * 0.15;
+            else if (taxableIncome <= 66667) tax = (33333 - 20833) * 0.15 + (taxableIncome - 33333) * 0.20;
+            else if (taxableIncome <= 166667) tax = (33333 - 20833) * 0.15 + (66667 - 33333) * 0.20 + (taxableIncome - 66667) * 0.25;
+            else if (taxableIncome <= 666667) tax = (33333 - 20833) * 0.15 + (66667 - 33333) * 0.20 + (166667 - 66667) * 0.25 + (taxableIncome - 166667) * 0.30;
+            else tax = (33333 - 20833) * 0.15 + (66667 - 33333) * 0.20 + (166667 - 66667) * 0.25 + (666667 - 166667) * 0.30 + (taxableIncome - 666667) * 0.35;
+        }
+        return {
+            sss: Math.round(sss),
+            philHealth: Math.round(philHealth),
+            pagIbig: pagIbig,
+            tax: Math.round(tax),
+            totalDeductions: Math.round(sss + philHealth + pagIbig + tax)
+        };
+    }
+    async function generatePayslipAuto() {
+        if (!currentUser || (currentUser.email !== "hrpoly@equiprime.ph" && currentUser.email !== "hrvince@equiprime.ph")) {
+            alert("Only HR administrators (hrpoly@equiprime.ph or hrvince@equiprime.ph) can generate payslips.");
+            return;
+        }
+        const empId = document.getElementById('payslipEmployee').value;
+        const month = document.getElementById('payslipMonth').value;
+        const cutOff = document.getElementById('cutOffPeriod').value;
+        const dailyRate = parseFloat(document.getElementById('dailyRate').value);
+        const daysPresent = parseInt(document.getElementById('daysPresent').value);
+        const otherDeduction = parseFloat(document.getElementById('otherDeduction').value) || 0;
+        if (!empId || !month || isNaN(daysPresent) || daysPresent <= 0) {
+            alert("Please select an employee, month, cut-off period, and enter days present.");
+            return;
+        }
+        const employee = allEmployees.find(e => e.id === empId);
+        if (!employee) { alert("Employee not found."); return; }
+        const periodSalary = dailyRate * daysPresent;
+        const monthlySalary = periodSalary * 2;
+        const deductions = computeMonthlyDeductions(monthlySalary);
+        const halfSss = Math.round(deductions.sss / 2);
+        const halfPhil = Math.round(deductions.philHealth / 2);
+        const halfPag = Math.round(deductions.pagIbig / 2);
+        const halfTax = Math.round(deductions.tax / 2);
+        const totalStatutory = halfSss + halfPhil + halfPag + halfTax;
+        const totalDeductions = totalStatutory + otherDeduction;
+        const netPay = periodSalary - totalDeductions;
+        const cutOffLabel = cutOff === 'first' ? '1st cut-off (27th-10th)' : '2nd cut-off (11th-26th)';
+        const newPayslip = {
+            employeeId: empId,
+            employeeName: employee.name,
+            employeeEmail: employee.email,
+            month: month,
+            cutOff: cutOffLabel,
+            dailyRate: dailyRate,
+            daysPresent: daysPresent,
+            basicSalaryPeriod: periodSalary,
+            sss: halfSss,
+            philHealth: halfPhil,
+            pagIbig: halfPag,
+            withholdingTax: halfTax,
+            otherDeduction: otherDeduction,
+            totalDeductions: totalDeductions,
+            netPay: netPay,
+            date: new Date().toLocaleDateString()
+        };
+        const docRef = await db.collection('payslips').add(newPayslip);
+        allPayslips.push({ id: docRef.id, ...newPayslip });
+        refreshHrPayslip();
+        alert(`Payslip generated for ${employee.name}\nPeriod salary: ₱${periodSalary.toFixed(2)}\nOther Deduction: ₱${otherDeduction.toFixed(2)}\nNet pay: ₱${netPay.toFixed(2)}`);
+        document.getElementById('daysPresent').value = '';
+        document.getElementById('otherDeduction').value = '0';
+    }
+    function refreshHrPayslip() {
+        const sel = document.getElementById('payslipEmployee');
+        if (sel) sel.innerHTML = '<option value="">Select Employee</option>' + allEmployees.map(e => `<option value="${e.id}">${e.name} - ${e.dept}</option>`).join('');
+        const historyDiv = document.getElementById('payslipHistory');
+        if (historyDiv) {
+            historyDiv.innerHTML = allPayslips.slice().reverse().map(p => `
+                <div class="bg-slate-50 rounded-xl p-4 border">
+                    <div class="flex justify-between items-start">
+                        <div><p class="font-bold">${p.employeeName}</p><p class="text-sm">${p.month} (${p.cutOff})</p><p class="text-sm">Days: ${p.daysPresent} | Rate: ₱${p.dailyRate}</p><p class="text-xs">Period salary: ₱${p.basicSalaryPeriod}</p><p class="text-xs">SSS: ₱${p.sss} | PhilHealth: ₱${p.philHealth} | Pag-IBIG: ₱${p.pagIbig} | Tax: ₱${p.withholdingTax}</p><p class="text-xs">Other Deduction: ₱${p.otherDeduction || 0}</p></div>
+                        <div class="text-right"><p class="font-bold text-green-600">Net pay: ₱${p.netPay.toLocaleString()}</p><p class="text-xs text-slate-400">Generated: ${p.date}</p></div>
+                    </div>
+                </div>
+            `).join('') || '<div class="text-center py-8 text-slate-400">No payslips</div>';
+        }
+    }
+    function refreshEmployeePayslip() {
+        const my = allPayslips.filter(p => p.employeeEmail === currentUser?.email);
+        document.getElementById('employeePayslipList').innerHTML = my.map(p => `
+            <div class="bg-white rounded-xl p-4 shadow-sm border">
+                <div class="flex justify-between items-start">
+                    <div><p class="font-bold">${p.month} (${p.cutOff})</p><p class="text-sm">Days: ${p.daysPresent} | Rate: ₱${p.dailyRate}</p><p class="text-sm">Basic: ₱${p.basicSalaryPeriod}</p><p class="text-xs">Deductions: SSS ₱${p.sss}, PhilHealth ₱${p.philHealth}, Pag-IBIG ₱${p.pagIbig}, Tax ₱${p.withholdingTax}, Other ₱${p.otherDeduction || 0}</p></div>
+                    <div class="text-right"><p class="font-bold text-green-600">Net: ₱${p.netPay.toLocaleString()}</p></div>
+                </div>
+            </div>
+        `).join('') || '<div class="text-center py-8 text-slate-400">No payslips yet</div>';
+    }
+
+    // Request functions
+    function openModal(id){document.getElementById(id).classList.add('active');} function closeModal(id){document.getElementById(id).classList.remove('active');}
+    function openNewRequestMenu(){openModal('newRequestMenuOverlay');} function openLeaveModal(){closeModal('newRequestMenuOverlay');openModal('leaveModalOverlay');} function openOffsetsModal(){closeModal('newRequestMenuOverlay');openModal('offsetsModalOverlay');} function showAddEmployeeModal(){openModal('addEmployeeModal');}
+    function openRequestModal(type){ closeModal('newRequestMenuOverlay'); document.getElementById('requestModalTitle').innerHTML=`Submit ${type}`; document.getElementById('requestTypeValue').value=type; document.getElementById('reqStartDate').value=''; document.getElementById('reqEndDate').value=''; document.getElementById('reqReason').value=''; openModal('requestModalOverlay'); }
+    function selectLeaveType(type){closeModal('leaveModalOverlay');openRequestModal(type);}
+    async function submitRequest(){ const type=document.getElementById('requestTypeValue').value; const start=document.getElementById('reqStartDate').value; const end=document.getElementById('reqEndDate').value; const reason=document.getElementById('reqReason').value; if(!start||!end){alert("Select dates");return;} const dept=currentUserData.department||"Unassigned"; const approvers=getDepartmentApprover(dept); let status="pending_dept_approver"; if(dept==="HR") status="pending_moderator"; const req={userId:currentUser.uid,userName:currentUserData.name,userDepartment:dept,type,startDate:start,endDate:end,reason,status,approverEmails:approvers,departmentApproved:dept==="HR",moderatorApproved:false,hrApproved:false,createdAt:new Date().toISOString()}; const ref=await db.collection('requests').add(req); allRequests.push({id:ref.id,...req}); closeModal('requestModalOverlay'); refreshDashboard(); alert(`${type} submitted`); }
+    async function submitOffsets(){ const date=document.getElementById('offsetsDate').value; const hours=document.getElementById('offsetsHours').value; const reason=document.getElementById('offsetsReasonText').value; if(!date||!hours){alert("Fill all fields");return;} const dept=currentUserData.department||"Unassigned"; const approvers=getDepartmentApprover(dept); let status="pending_dept_approver"; if(dept==="HR") status="pending_moderator"; const req={userId:currentUser.uid,userName:currentUserData.name,userDepartment:dept,type:`Offsets (${hours} hrs)`,startDate:date,endDate:date,reason,status,approverEmails:approvers,departmentApproved:dept==="HR",moderatorApproved:false,hrApproved:false,createdAt:new Date().toISOString()}; const ref=await db.collection('requests').add(req); allRequests.push({id:ref.id,...req}); closeModal('offsetsModalOverlay'); refreshDashboard(); alert("Offset submitted"); }
+    async function approveAsDepartmentApprover(id){const r=allRequests.find(r=>r.id===id); if(r&&r.status==="pending_dept_approver"){r.status="pending_moderator";r.departmentApproved=true; await db.collection('requests').doc(id).update({status:"pending_moderator",departmentApproved:true}); refreshDashboard(); alert("Approved by Dept → Moderator");}}
+    async function approveAsModerator(id){const r=allRequests.find(r=>r.id===id); if(r&&r.status==="pending_moderator"){r.status="pending_hr";r.moderatorApproved=true; await db.collection('requests').doc(id).update({status:"pending_hr",moderatorApproved:true}); refreshDashboard(); alert("Approved by Moderator → HR");}}
+    async function approveAsHR(id){const r=allRequests.find(r=>r.id===id); if(r&&r.status==="pending_hr"){r.status="approved";r.hrApproved=true; await db.collection('requests').doc(id).update({status:"approved",hrApproved:true}); refreshDashboard(); alert("Fully approved");}}
+    async function rejectRequest(id){const r=allRequests.find(r=>r.id===id); if(r&&(r.status==="pending_dept_approver"||r.status==="pending_moderator"||r.status==="pending_hr")){r.status="rejected"; await db.collection('requests').doc(id).update({status:"rejected"}); refreshDashboard(); alert("Rejected");}}
+
+    // Employee management
+    async function addEmployee(){ const name=document.getElementById('newEmpName').value; const dept=document.getElementById('newEmpDept').value; const role=document.getElementById('newEmpRole').value; const pin=document.getElementById('newEmpPin').value; const pass=document.getElementById('newEmpPass').value||'123456'; if(name&&dept&&pin){ const emp={name,dept,role,status:"active",pin,leaveBalance:15,createdAt:new Date().toISOString()}; const ref=await db.collection('employees').add(emp); allEmployees.push({id:ref.id,...emp}); closeModal('addEmployeeModal'); refreshDashboard(); alert(`Employee ${name} added`); document.getElementById('newEmpName').value=''; document.getElementById('newEmpDept').value=''; document.getElementById('newEmpPin').value=''; } else alert("Fill all fields"); }
+    async function deleteEmployee(id){ if(confirm("Delete?")){ await db.collection('employees').doc(id).delete(); allEmployees=allEmployees.filter(e=>e.id!==id); refreshDashboard(); } }
+    function saveSettings(){ localStorage.setItem('device_ip',document.getElementById('deviceIp').value); alert('Settings saved'); }
+
+    // Auth functions
+    function showSignup() { document.getElementById('loginForm').classList.add('hidden'); document.getElementById('signupForm').classList.remove('hidden'); document.getElementById('authError').classList.add('hidden'); }
+    function showLogin() { document.getElementById('signupForm').classList.add('hidden'); document.getElementById('loginForm').classList.remove('hidden'); document.getElementById('authError').classList.add('hidden'); }
+    async function loginWithEmail() {
+        const email=document.getElementById('loginEmail').value;
+        const pwd=document.getElementById('loginPassword').value;
+        const errDiv=document.getElementById('authError');
+        try {
+            const cred=await auth.signInWithEmailAndPassword(email,pwd);
+            const user=cred.user;
+            const doc=await db.collection('users').doc(user.uid).get();
+            if (doc.exists) {
+                currentUserData=doc.data();
+                currentUserRole=currentUserData.role;
+            } else {
+                let role="employee";
+                let name=email.split('@')[0];
+                let dept="";
+                if (email.includes("hr")) role="hr";
+                else if (email.includes("mod")) role="moderator";
+                currentUserData={name,role,email,department:dept,leaveBalance:15,dailyRate:800};
+                currentUserRole=role;
+                await db.collection('users').doc(user.uid).set({uid:user.uid,name,email,role,department:dept,leaveBalance:15,dailyRate:800});
+            }
+            currentUser=user;
+            document.getElementById('authScreen').style.display='none';
+            document.getElementById('mainApp').classList.remove('hidden');
+            document.getElementById('welcomeName').innerText=currentUserData.name.split(' ')[0];
+            document.getElementById('userName').innerText=currentUserData.name;
+            document.getElementById('userInitials').innerText=currentUserData.name.split(' ').map(n=>n[0]).join('');
+            document.getElementById('mobileUserInitials').innerText=currentUserData.name.split(' ').map(n=>n[0]).join('');
+            document.getElementById('mobileUserName').innerText=currentUserData.name.split(' ')[0];
+            let roleText="";
+            if (currentUserRole==='hr') roleText="HR Administrator - Full Access";
+            else if (currentUserRole==='moderator') roleText="Moderator - Full Access";
+            else if (currentUserRole==='approver') roleText=`Department Approver - ${currentUserData.department}`;
+            else if (currentUserRole==='supervisor') roleText="Supervisor - Approve team requests";
+            else roleText="Employee - Submit and track requests";
+            document.getElementById('welcomeSubtitle').innerText=roleText;
+            document.getElementById('userRoleDisplay').innerText=currentUserRole==='hr'?'HR Admin':(currentUserRole==='moderator'?'Moderator':(currentUserRole==='approver'?'Approver':(currentUserRole==='supervisor'?'Supervisor':'Employee')));
+            renderNavigation();
+            await loadAllData();
+            await loadAnnouncements();
+            await loadGuardWeeklySchedules();
+            await refreshMyAttendanceTab();
+            if (currentUserRole==='hr') {
+                const gsel=document.getElementById('guardEmployee');
+                if (gsel) gsel.innerHTML='<option value="">Select Guard</option>'+allEmployees.filter(e=>e.dept==='Guard'||e.role==='guard').map(emp=>`<option value="${emp.id}">${emp.name}</option>`).join('');
+            }
+            const resetContainer = document.getElementById('resetButtonContainer');
+            if (resetContainer) {
+                if (currentUser.email === "mod.rom@equiprime.ph") resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition w-full">⚠️ Reset All System Data (Moderator Rom only)</button><p class="text-xs text-slate-500 mt-2">Deletes ALL employees, attendance, requests, payslips, announcements, guard schedules.</p>`;
+                else resetContainer.innerHTML = "";
+            }
+            switchTab('dashboard');
+        } catch(e) {
+            errDiv.innerText=e.message;
+            errDiv.classList.remove('hidden');
+        }
+    }
+    async function signupWithEmail() {
+        const name=document.getElementById('signupName').value;
+        const email=document.getElementById('signupEmail').value;
+        const pwd=document.getElementById('signupPassword').value;
+        const role=document.getElementById('signupRole').value;
+        const dept=document.getElementById('signupDepartment').value;
+        const errDiv=document.getElementById('authError');
+        const sucDiv=document.getElementById('authSuccess');
+        if (!name||!email||!pwd||!dept) { errDiv.innerText="Please fill all fields including department"; errDiv.classList.remove('hidden'); return; }
+        try {
+            const cred=await auth.createUserWithEmailAndPassword(email,pwd);
+            const user=cred.user;
+            await db.collection('users').doc(user.uid).set({uid:user.uid,name,email,role,department:dept,leaveBalance:15,dailyRate:800,createdAt:new Date().toISOString()});
+            await db.collection('employees').add({id:user.uid,name,dept,role,email,status:"active",leaveBalance:15});
+            sucDiv.innerText="Account created! Please login.";
+            sucDiv.classList.remove('hidden');
+            showLogin();
+            document.getElementById('signupName').value='';
+            document.getElementById('signupEmail').value='';
+            document.getElementById('signupPassword').value='';
+            document.getElementById('signupDepartment').value='';
+        } catch(e) {
+            errDiv.innerText=e.message;
+            errDiv.classList.remove('hidden');
+        }
+    }
+    async function logout() { await auth.signOut(); currentUser=null; document.getElementById('authScreen').style.display='flex'; document.getElementById('mainApp').classList.add('hidden'); }
+    function openMobileSidebar(){document.getElementById('mobileSidebar').classList.add('open');document.getElementById('overlay').classList.add('active');document.body.classList.add('no-scroll');}
+    function closeMobileSidebar(){document.getElementById('mobileSidebar').classList.remove('open');document.getElementById('overlay').classList.remove('active');document.body.classList.remove('no-scroll');}
+
+    // Navigation and tab switching
+    function renderNavigation() {
+        const role=currentUserRole;
+        let html=`<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="home"></i> Dashboard</button>`;
+        if (!restrictedEmails.includes(currentUser?.email)) html+=`<button onclick="switchTab('my-attendance')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> My Attendance</button>`;
+        html+=`<button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Requests</button><button onclick="switchTab('payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> Payslip</button>`;
+        if (role==='approver'||role==='supervisor'||role==='moderator'||role==='hr') html+=`<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> Pending Approvals</button>`;
+        if (role==='hr'||role==='moderator') html+=`<button onclick="switchTab('hr-employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="users"></i> Employees</button><button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clipboard"></i> All Requests</button><button onclick="switchTab('hr-payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> Payslip Mgmt</button><button onclick="switchTab('hr-guard-schedule')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="calendar"></i> Guard Schedule</button><button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="settings"></i> Settings</button>`;
+        document.getElementById('desktopNavMenu').innerHTML=html;
+        document.getElementById('mobileNavMenu').innerHTML=html;
+        feather.replace();
+    }
+    function switchTab(tabName) {
+        const tabs=['dashboard','my-attendance','my-requests','payslip','approvals','hr-employees','hr-requests','hr-payslip','hr-guard-schedule','hr-settings'];
+        tabs.forEach(t=>{const el=document.getElementById(`${t}-tab`);if(el)el.classList.add('hidden');});
+        document.getElementById(`${tabName}-tab`).classList.remove('hidden');
+        if (tabName==='payslip') refreshEmployeePayslip();
+        if (tabName==='hr-payslip') refreshHrPayslip();
+        if (tabName==='my-attendance') refreshMyAttendanceTab();
+        refreshDashboard();
+        closeMobileSidebar();
+    }
+    function refreshDashboard() {
+        const filtered = getFilteredEmployees();
+        document.getElementById('totalEmployees').innerText = filtered.length;
+        const today = new Date().toISOString().split('T')[0];
+        let deptAtt = 0;
+        if (currentFilter.department !== 'all') {
+            const names = filtered.map(e => e.name);
+            deptAtt = allAttendance.filter(a => a.date === today && names.includes(a.userName)).length;
+        } else deptAtt = allAttendance.filter(a => a.date === today).length;
+        document.getElementById('deptAttendance').innerText = deptAtt;
+        let pendingCount = 0;
+        if (currentUserRole === 'approver') pendingCount = allRequests.filter(r => r.approverEmails?.includes(currentUser?.email) && r.status === "pending_dept_approver").length;
+        else if (currentUserRole === 'moderator') pendingCount = allRequests.filter(r => r.status === "pending_moderator").length;
+        else if (currentUserRole === 'hr') pendingCount = allRequests.filter(r => r.status === "pending_hr").length;
+        document.getElementById('pendingApprovals').innerText = pendingCount;
+        document.getElementById('myLeaveBalance').innerText = currentUserData?.leaveBalance || 15;
+        const myReqs = allRequests.filter(r => r.userId === currentUser.uid).slice(0,5);
+        document.getElementById('myRequestsList').innerHTML = myReqs.map(r => `<div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl"><div><p class="font-semibold">${r.type}</p><p class="text-xs">${r.startDate} to ${r.endDate}</p></div><span class="text-xs px-2 py-1 rounded-full ${r.status==='approved'?'bg-green-100 text-green-700':r.status==='rejected'?'bg-red-100 text-red-700':'bg-yellow-100 text-yellow-700'}">${r.status}</span></div>`).join('')||'<div class="text-center py-6 text-slate-400">No requests</div>';
+        
+        const loggedIn=[], missed=[], late=[], onLeave=[];
+        for (const emp of allEmployees) {
+            if (restrictedEmails.includes(emp.email)) continue;
+            const todayAtt = allAttendance.find(a => a.userId === emp.id && a.date === today);
+            const hasLeaveToday = allRequests.some(r => r.userId === emp.id && r.status === "approved" && new Date(r.startDate) <= new Date(today) && new Date(r.endDate) >= new Date(today));
+            if (hasLeaveToday) onLeave.push(emp);
+            else if (!todayAtt || !todayAtt.timeIn) missed.push(emp);
+            else {
+                const status = checkAttendanceStatus(todayAtt, emp);
+                if (status === "late") {
+                    const schedule = getEmployeeWorkSchedule(emp);
+                    const schedHour = schedule?.startHour || 8;
+                    const schedMin = schedule?.startMinute || 0;
+                    late.push({ ...emp, clockInTime: todayAtt.timeIn, scheduledTime: `${schedHour.toString().padStart(2,'0')}:${schedMin.toString().padStart(2,'0')}` });
+                } else loggedIn.push(emp);
+            }
+        }
+        document.getElementById('loggedInCount').innerHTML = `(${loggedIn.length})`;
+        document.getElementById('missedCount').innerHTML = `(${missed.length})`;
+        document.getElementById('lateCount').innerHTML = `(${late.length})`;
+        document.getElementById('onLeaveCount').innerHTML = `(${onLeave.length})`;
+        document.getElementById('loggedInList').innerHTML = loggedIn.map(e=>`<div class="flex justify-between p-2 bg-green-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-green-200 flex items-center justify-center text-xs font-bold">${e.name.charAt(0)}</div><span class="text-sm text-slate-700">${e.name}</span></div><span class="text-xs text-green-600">On Time</span></div>`).join('')||'<div class="text-center py-4 text-slate-400">No employees</div>';
+        document.getElementById('missedList').innerHTML = missed.map(e=>`<div class="flex justify-between p-2 bg-red-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-red-200 flex items-center justify-center text-xs font-bold">${e.name.charAt(0)}</div><span class="text-sm text-slate-700">${e.name}</span></div><span class="text-xs text-red-600">Not checked in</span></div>`).join('')||'<div class="text-center py-4 text-slate-400">No employees</div>';
+        document.getElementById('lateList').innerHTML = late.map(e=>`<div class="flex flex-col p-2 bg-orange-50 rounded-lg"><div class="flex justify-between items-center"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-orange-200 flex items-center justify-center text-xs font-bold">${e.name.charAt(0)}</div><span class="text-sm text-slate-700">${e.name}</span></div><span class="text-xs text-orange-600">Late</span></div><p class="text-xs text-orange-600 mt-1">Clocked in at ${e.clockInTime} (Scheduled: ${e.scheduledTime})</p></div>`).join('')||'<div class="text-center py-4 text-slate-400">No employees</div>';
+        document.getElementById('onLeaveList').innerHTML = onLeave.map(e=>`<div class="flex justify-between p-2 bg-yellow-50 rounded-lg"><div class="flex items-center gap-2"><div class="w-6 h-6 rounded-full bg-yellow-200 flex items-center justify-center text-xs font-bold">${e.name.charAt(0)}</div><span class="text-sm text-slate-700">${e.name}</span></div><span class="text-xs text-yellow-600">On Leave</span></div>`).join('')||'<div class="text-center py-4 text-slate-400">No employees</div>';
+        
+        if (currentUserRole === 'hr' || currentUserRole === 'moderator') {
+            document.getElementById('hrEmployeesList').innerHTML = allEmployees.map(e => {
+                const init = e.name.split(' ').map(n=>n[0]).join('');
+                return `<div class="flex justify-between items-center p-4 border-b hover:bg-slate-50"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">${init}</div><div><p class="font-semibold">${e.name}</p><p class="text-sm text-slate-500">${e.dept} - ${e.role}</p><p class="text-xs">Leave balance: <span class="editable-leave" onclick="editLeaveBalance('${e.id}','${e.name}',${e.leaveBalance || 0})">${e.leaveBalance || 0} days</span> (click to edit)</p></div></div><button onclick="deleteEmployee('${e.id}')" class="text-red-500 text-sm">Delete</button></div>`;
+            }).join('');
+            document.getElementById('allRequestsList').innerHTML = allRequests.map(r => `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><h4 class="font-bold">${r.userName}</h4><p class="text-sm">${r.type}</p><p class="text-xs">${r.startDate} - ${r.endDate}</p><p class="text-xs mt-1">${r.reason}</p></div><span class="text-xs px-2 py-1 rounded-full ${r.status==='approved'?'bg-green-100 text-green-700':r.status==='rejected'?'bg-red-100 text-red-700':'bg-yellow-100 text-yellow-700'}">${r.status}</span></div></div>`).join('');
+        }
+        feather.replace();
+    }
+
+    // Auth state listener
+    auth.onAuthStateChanged(async (user) => {
+        if (user) {
+            const doc = await db.collection('users').doc(user.uid).get();
+            if (doc.exists) {
+                currentUserData = doc.data();
+                currentUserRole = currentUserData.role;
+                currentUser = user;
+                document.getElementById('authScreen').style.display = 'none';
+                document.getElementById('mainApp').classList.remove('hidden');
+                document.getElementById('welcomeName').innerText = currentUserData.name.split(' ')[0];
+                document.getElementById('userName').innerText = currentUserData.name;
+                document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join('');
+                document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join('');
+                document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
+                let rt = currentUserRole==='hr'?"HR Administrator - Full Access":(currentUserRole==='moderator'?"Moderator - Full Access":(currentUserRole==='approver'?`Department Approver - ${currentUserData.department}`:(currentUserRole==='supervisor'?"Supervisor - Approve team requests":"Employee - Submit and track requests")));
+                document.getElementById('welcomeSubtitle').innerText = rt;
+                document.getElementById('userRoleDisplay').innerText = currentUserRole==='hr'?'HR Admin':(currentUserRole==='moderator'?'Moderator':(currentUserRole==='approver'?'Approver':(currentUserRole==='supervisor'?'Supervisor':'Employee')));
+                renderNavigation();
+                await loadAllData();
+                await loadAnnouncements();
+                await loadGuardWeeklySchedules();
+                await refreshMyAttendanceTab();
+                if (currentUserRole==='hr') {
+                    const gsel = document.getElementById('guardEmployee');
+                    if (gsel) gsel.innerHTML = '<option value="">Select Guard</option>' + allEmployees.filter(e=>e.dept==='Guard'||e.role==='guard').map(emp=>`<option value="${emp.id}">${emp.name}</option>`).join('');
+                }
+                const resetContainer = document.getElementById('resetButtonContainer');
+                if (resetContainer) {
+                    if (currentUser.email === "mod.rom@equiprime.ph") resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition w-full">⚠️ Reset All System Data (Moderator Rom only)</button><p class="text-xs text-slate-500 mt-2">Deletes ALL employees, attendance, requests, payslips, announcements, guard schedules.</p>`;
+                    else resetContainer.innerHTML = "";
+                }
+                switchTab('dashboard');
+            }
+        } else {
+            document.getElementById('authScreen').style.display = 'flex';
+            document.getElementById('mainApp').classList.add('hidden');
+        }
+    });
+    updateLastUpdatedTime();
 </script>
 </body>
 </html>
