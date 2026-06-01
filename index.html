@@ -86,6 +86,7 @@
             overflow: hidden;
             border-radius: 2rem;
             box-shadow: 0 20px 35px -10px rgba(0,0,0,0.3);
+            min-height: 100%;
         }
         .rainy-bg::before {
             content: "";
@@ -131,29 +132,41 @@
             width: 1rem;
             height: 1rem;
         }
-        /* Keep login card unchanged */
-        .login-card {
-            background: white;
-            border-radius: 2rem;
-            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.25);
+        /* Mobile adjustments for login screen */
+        @media (max-width: 1023px) {
+            .rainy-bg {
+                border-radius: 1.5rem;
+                margin-bottom: 1.5rem;
+                padding: 2rem 1rem;
+            }
+            .weather-widget {
+                font-size: 0.7rem;
+                padding: 0.3rem 0.8rem;
+            }
+            .login-card {
+                margin-top: 0;
+            }
+            #authScreen .grid {
+                gap: 1rem;
+            }
         }
     </style>
 </head>
 <body>
 
-<!-- ========== LOGIN SCREEN WITH RAINY SEASON DESIGN ========== -->
-<div id="authScreen" class="fixed inset-0 z-[10000] flex items-center justify-center bg-white lg:bg-[#f8fafd] overflow-y-auto">
-    <div class="w-full max-w-6xl mx-auto p-4 md:p-6">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <!-- LEFT COLUMN - Branding with rainy effect -->
-            <div class="rainy-bg text-center lg:text-left px-4 lg:px-8 py-12 relative overflow-hidden">
+<!-- ========== LOGIN SCREEN WITH RAINY SEASON DESIGN (FIXED MOBILE LAYOUT) ========== -->
+<div id="authScreen" class="fixed inset-0 z-[10000] flex items-center justify-center bg-white lg:bg-[#f8fafd] overflow-y-auto p-4">
+    <div class="w-full max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+            <!-- LEFT COLUMN - Branding with rainy effect (full width on mobile) -->
+            <div class="rainy-bg text-center lg:text-left px-4 lg:px-8 py-8 lg:py-12 relative overflow-hidden">
                 <!-- Raindrops will be injected via JS -->
                 <div class="relative z-10">
-                    <div class="flex justify-center lg:justify-start mb-6">
-                        <img src="welcome logo.jpg" alt="EQUIPRIME Logo" class="h-16 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
+                    <div class="flex justify-center lg:justify-start mb-5">
+                        <img src="welcome logo.jpg" alt="EQUIPRIME Logo" class="h-12 lg:h-16 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
                     </div>
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-white drop-shadow-lg">Smart Choices.<br>Smarter Results.</h1>
-                    <p class="text-white/90 mt-4 text-base leading-relaxed max-w-md mx-auto lg:mx-0">
+                    <h1 class="text-2xl md:text-4xl font-extrabold text-white drop-shadow-lg">Smart Choices.<br>Smarter Results.</h1>
+                    <p class="text-white/90 mt-3 text-sm md:text-base leading-relaxed max-w-md mx-auto lg:mx-0">
                         Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.
                     </p>
                     <!-- Weather widget -->
@@ -162,12 +175,12 @@
                         <span>Rainy Season · Moderate showers</span>
                         <span class="text-xs opacity-80">🌡️ 24°C</span>
                     </div>
-                    <div class="flex justify-center lg:justify-start gap-5 mt-8">
-                        <a href="#" class="text-white/80 hover:text-white transition"><i data-feather="facebook" class="w-6 h-6"></i></a>
-                        <a href="#" class="text-white/80 hover:text-white transition"><i data-feather="instagram" class="w-6 h-6"></i></a>
-                        <a href="#" class="text-white/80 hover:text-white transition"><i data-feather="globe" class="w-6 h-6"></i></a>
+                    <div class="flex justify-center lg:justify-start gap-5 mt-6">
+                        <a href="#" class="text-white/80 hover:text-white transition"><i data-feather="facebook" class="w-5 h-5 lg:w-6 lg:h-6"></i></a>
+                        <a href="#" class="text-white/80 hover:text-white transition"><i data-feather="instagram" class="w-5 h-5 lg:w-6 lg:h-6"></i></a>
+                        <a href="#" class="text-white/80 hover:text-white transition"><i data-feather="globe" class="w-5 h-5 lg:w-6 lg:h-6"></i></a>
                     </div>
-                    <div class="flex flex-wrap justify-center lg:justify-start gap-4 text-sm text-white/70 mt-8">
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-3 text-xs lg:text-sm text-white/70 mt-6">
                         <a href="#" class="hover:text-white">Privacy Policy</a><span>•</span>
                         <a href="#" class="hover:text-white">Contact</a><span>•</span>
                         <span>© 2026 EQUIPRIME</span>
@@ -175,32 +188,32 @@
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN - Login Card (unchanged) -->
-            <div class="login-card p-8 max-w-md mx-auto w-full">
-                <div class="text-center mb-6">
-                    <div class="flex justify-center mb-4">
-                        <img src="logo.png" alt="EQUIPRIME Logo" class="h-16 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
+            <!-- RIGHT COLUMN - Login Card (responsive width) -->
+            <div class="login-card bg-white rounded-3xl p-6 lg:p-8 shadow-2xl w-full">
+                <div class="text-center mb-5">
+                    <div class="flex justify-center mb-3">
+                        <img src="logo.png" alt="EQUIPRIME Logo" class="h-12 lg:h-16 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
                     </div>
-                    <h1 class="text-3xl font-extrabold text-[#004aad]">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
-                    <p class="text-slate-500 text-sm mt-1">smart choices · smarter results</p>
+                    <h1 class="text-2xl lg:text-3xl font-extrabold text-[#004aad]">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
+                    <p class="text-slate-500 text-xs lg:text-sm mt-1">smart choices · smarter results</p>
                 </div>
                 <div id="authError" class="bg-red-50 text-red-600 p-3 rounded-xl text-sm mb-4 hidden"></div>
                 <div id="authSuccess" class="bg-green-50 text-green-600 p-3 rounded-xl text-sm mb-4 hidden"></div>
                 <div id="loginForm">
-                    <div class="space-y-4">
-                        <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
-                        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none">
+                    <div class="space-y-3">
+                        <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none text-sm lg:text-base">
+                        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-[#004aad] outline-none text-sm lg:text-base">
                         <button onclick="loginWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Login</button>
                     </div>
                     <div class="mt-4 text-center"><button onclick="showSignup()" class="text-[#004aad] text-sm hover:underline">Don't have an account? Sign up</button></div>
                 </div>
                 <div id="signupForm" class="hidden">
-                    <div class="space-y-4">
-                        <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl">
-                        <input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl">
-                        <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl">
-                        <select id="signupRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option></select>
-                        <select id="signupDepartment" class="w-full p-3 border rounded-xl">
+                    <div class="space-y-3">
+                        <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm">
+                        <input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm">
+                        <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm">
+                        <select id="signupRole" class="w-full p-3 border rounded-xl text-sm"><option value="employee">Employee</option><option value="supervisor">Supervisor</option></select>
+                        <select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm">
                             <option value="">Select Department</option>
                             <option value="Service and After-sales">Service and After-sales</option>
                             <option value="Sales">Sales Department</option>
@@ -216,7 +229,7 @@
                     </div>
                     <div class="mt-4 text-center"><button onclick="showLogin()" class="text-[#004aad] text-sm hover:underline">Already have an account? Login</button></div>
                 </div>
-                <div class="mt-6 p-4 bg-slate-50 rounded-xl text-xs text-slate-500">
+                <div class="mt-5 p-3 bg-slate-50 rounded-xl text-xs text-slate-500">
                     <p class="font-semibold mb-1">Authorized Users:</p>
                     <p>HR: hrpoly@equiprime.ph / hrvince@equiprime.ph</p>
                     <p>Moderator: mod.rom@equiprime.ph / mod.dex@equiprime.ph</p>
@@ -227,10 +240,10 @@
     </div>
 </div>
 
-<!-- MAIN APP CONTAINER (same as before) -->
+<!-- MAIN APP CONTAINER (unchanged from previous working version) -->
 <div id="mainApp" class="hidden app-container">
     <div id="overlay" class="overlay" onclick="closeMobileSidebar()"></div>
-    <!-- MOBILE SIDEBAR (unchanged) -->
+    <!-- MOBILE SIDEBAR -->
     <div id="mobileSidebar" class="mobile-sidebar">
         <div class="flex justify-end mb-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x"></i></button></div>
         <div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div>
@@ -250,7 +263,7 @@
         <div class="pt-2 border-t border-white/20 mt-2"><button onclick="logout()" class="w-full flex items-center gap-3 text-white/70 p-3 rounded-xl"><i data-feather="log-out"></i> Logout</button></div>
     </div>
 
-    <!-- DESKTOP SIDEBAR (unchanged) -->
+    <!-- DESKTOP SIDEBAR -->
     <div class="desktop-sidebar">
         <div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p></div>
         <nav id="desktopNavMenu" class="space-y-2 flex-1"></nav>
@@ -269,7 +282,7 @@
         <div class="mt-auto pt-8"><div class="bg-white/10 rounded-2xl p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div><button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="log-out"></i> Logout</button></div></div>
     </div>
 
-    <!-- MAIN CONTENT (unchanged – all tabs, modals, scripts) -->
+    <!-- MAIN CONTENT (all tabs) - same as previous full version -->
     <div class="main-content">
         <div class="mobile-header">
             <button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button>
@@ -346,7 +359,7 @@
     </div>
 </div>
 
-<!-- MODALS (same as before) -->
+<!-- ALL MODALS (unchanged) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><div><label class="text-sm font-medium">Title</label><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl" placeholder="Announcement Title"></div><div><label class="text-sm font-medium">Content</label><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl" placeholder="Announcement details..."></textarea></div></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left">Vacation Leave</button></div></div></div>
@@ -356,16 +369,16 @@
 <div id="editLeaveModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><div><label class="text-sm font-medium">Employee Name</label><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl" readonly></div><div><label class="text-sm font-medium">Leave Balance (days)</label><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" step="1"></div></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 
 <script>
-    // ========== RAIN EFFECT FOR LOGIN SCREEN ==========
+    // ========== RAIN EFFECT ==========
     function createRain() {
         const container = document.querySelector('.rainy-bg');
         if (!container) return;
-        const raindropCount = 80;
+        const raindropCount = window.innerWidth < 768 ? 40 : 80;
         for (let i = 0; i < raindropCount; i++) {
             const drop = document.createElement('div');
             drop.classList.add('raindrop');
             const left = Math.random() * 100;
-            const duration = Math.random() * 1.5 + 1; // 1 to 2.5s
+            const duration = Math.random() * 1.5 + 1;
             const delay = Math.random() * 5;
             drop.style.left = `${left}%`;
             drop.style.animationDuration = `${duration}s`;
@@ -374,14 +387,13 @@
             container.appendChild(drop);
         }
     }
-    // Wait for DOM to load
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', createRain);
     } else {
         createRain();
     }
 
-    // ========== NIGHT MODE TOGGLE ==========
+    // ========== NIGHT MODE ==========
     function toggleNightMode() {
         document.body.classList.toggle('dark');
         const isDark = document.body.classList.contains('dark');
@@ -409,7 +421,7 @@
             .catch(err => console.log('Service Worker registration failed', err));
     }
 
-    // ========== FIREBASE CONFIGURATION ==========
+    // ========== FIREBASE ==========
     const firebaseConfig = {
         apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
         authDomain: "equiprime-hr.firebaseapp.com",
@@ -572,7 +584,7 @@
             timeInfo.innerHTML = 'Click "Clock In" to start your day';
         }
         const historyBody = document.getElementById('attendanceHistoryList');
-        if (historyBody) historyBody.innerHTML = userAtt.map(a => `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100 text-green-700':'bg-yellow-100 text-yellow-700'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull科技</tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">No records</td></tr>';
+        if (historyBody) historyBody.innerHTML = userAtt.map(a => `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100 text-green-700':'bg-yellow-100 text-yellow-700'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull科技<tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">No records</td></tr>';
     }
 
     // Guard schedule functions
