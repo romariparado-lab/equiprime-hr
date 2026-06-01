@@ -78,40 +78,108 @@
         body.dark .mobile-header button.bg-white { background-color: #1e293b !important; }
         body.dark .mobile-header .bg-white i { color: white; }
         body.dark .bg-yellow-50 { background-color: #422c00 !important; color: #fbbf24 !important; }
+
+        /* ========== RAINY SEASON THEME FOR LOGIN SCREEN ========== */
+        .rainy-bg {
+            position: relative;
+            background: linear-gradient(145deg, #1a2a3a 0%, #2c3e4e 100%);
+            overflow: hidden;
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.3);
+        }
+        .rainy-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(transparent, transparent 2px, rgba(255,255,255,0.05) 2px, rgba(255,255,255,0.05) 4px);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .raindrop {
+            position: absolute;
+            background: rgba(255,255,255,0.6);
+            width: 2px;
+            height: 12px;
+            border-radius: 2px;
+            animation: fall linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+        .weather-widget {
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            padding: 0.4rem 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: white;
+            margin-top: 1rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .weather-widget i {
+            width: 1rem;
+            height: 1rem;
+        }
+        /* Keep login card unchanged */
+        .login-card {
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 25px 40px -12px rgba(0,0,0,0.25);
+        }
     </style>
 </head>
 <body>
 
-<!-- ========== LOGIN SCREEN: LEFT BRANDING (welcome logo.jpg) + RIGHT LOGIN CARD (logo.png) ========== -->
+<!-- ========== LOGIN SCREEN WITH RAINY SEASON DESIGN ========== -->
 <div id="authScreen" class="fixed inset-0 z-[10000] flex items-center justify-center bg-white lg:bg-[#f8fafd] overflow-y-auto">
     <div class="w-full max-w-6xl mx-auto p-4 md:p-6">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-            <!-- LEFT COLUMN - Branding with welcome logo -->
-            <div class="text-center lg:text-left px-4 lg:px-8">
-                <div class="flex justify-center lg:justify-start mb-6">
-                    <img src="welcome logo.jpg" alt="EQUIPRIME Logo" class="h-16 w-auto">
-                </div>
-                <h1 class="text-3xl md:text-4xl font-extrabold text-slate-800">Smart Choices.<br>Smarter Results.</h1>
-                <p class="text-slate-600 mt-4 text-base leading-relaxed max-w-md mx-auto lg:mx-0">
-                    Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.
-                </p>
-                <div class="flex justify-center lg:justify-start gap-5 mt-8">
-                    <a href="#" class="text-slate-500 hover:text-[#004aad] transition"><i data-feather="facebook" class="w-6 h-6"></i></a>
-                    <a href="#" class="text-slate-500 hover:text-[#004aad] transition"><i data-feather="instagram" class="w-6 h-6"></i></a>
-                    <a href="#" class="text-slate-500 hover:text-[#004aad] transition"><i data-feather="globe" class="w-6 h-6"></i></a>
-                </div>
-                <div class="flex flex-wrap justify-center lg:justify-start gap-4 text-sm text-slate-500 mt-8">
-                    <a href="#" class="hover:text-[#004aad]">Privacy Policy</a><span>•</span>
-                    <a href="#" class="hover:text-[#004aad]">Contact</a><span>•</span>
-                    <span>© 2026 EQUIPRIME</span>
+            <!-- LEFT COLUMN - Branding with rainy effect -->
+            <div class="rainy-bg text-center lg:text-left px-4 lg:px-8 py-12 relative overflow-hidden">
+                <!-- Raindrops will be injected via JS -->
+                <div class="relative z-10">
+                    <div class="flex justify-center lg:justify-start mb-6">
+                        <img src="welcome logo.jpg" alt="EQUIPRIME Logo" class="h-16 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
+                    </div>
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-white drop-shadow-lg">Smart Choices.<br>Smarter Results.</h1>
+                    <p class="text-white/90 mt-4 text-base leading-relaxed max-w-md mx-auto lg:mx-0">
+                        Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.
+                    </p>
+                    <!-- Weather widget -->
+                    <div class="weather-widget">
+                        <i data-feather="cloud-rain" class="text-white"></i>
+                        <span>Rainy Season · Moderate showers</span>
+                        <span class="text-xs opacity-80">🌡️ 24°C</span>
+                    </div>
+                    <div class="flex justify-center lg:justify-start gap-5 mt-8">
+                        <a href="#" class="text-white/80 hover:text-white transition"><i data-feather="facebook" class="w-6 h-6"></i></a>
+                        <a href="#" class="text-white/80 hover:text-white transition"><i data-feather="instagram" class="w-6 h-6"></i></a>
+                        <a href="#" class="text-white/80 hover:text-white transition"><i data-feather="globe" class="w-6 h-6"></i></a>
+                    </div>
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4 text-sm text-white/70 mt-8">
+                        <a href="#" class="hover:text-white">Privacy Policy</a><span>•</span>
+                        <a href="#" class="hover:text-white">Contact</a><span>•</span>
+                        <span>© 2026 EQUIPRIME</span>
+                    </div>
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN - Login Card with logo.png as briefcase icon -->
-            <div class="bg-white rounded-3xl p-8 shadow-2xl max-w-md mx-auto w-full">
+            <!-- RIGHT COLUMN - Login Card (unchanged) -->
+            <div class="login-card p-8 max-w-md mx-auto w-full">
                 <div class="text-center mb-6">
                     <div class="flex justify-center mb-4">
-                        <img src="logo.png" alt="EQUIPRIME Logo" class="h-16 w-auto">
+                        <img src="logo.png" alt="EQUIPRIME Logo" class="h-16 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
                     </div>
                     <h1 class="text-3xl font-extrabold text-[#004aad]">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
                     <p class="text-slate-500 text-sm mt-1">smart choices · smarter results</p>
@@ -159,11 +227,10 @@
     </div>
 </div>
 
-<!-- MAIN APP CONTAINER -->
+<!-- MAIN APP CONTAINER (same as before) -->
 <div id="mainApp" class="hidden app-container">
     <div id="overlay" class="overlay" onclick="closeMobileSidebar()"></div>
-
-    <!-- MOBILE SIDEBAR (with night mode toggle) -->
+    <!-- MOBILE SIDEBAR (unchanged) -->
     <div id="mobileSidebar" class="mobile-sidebar">
         <div class="flex justify-end mb-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x"></i></button></div>
         <div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div>
@@ -183,7 +250,7 @@
         <div class="pt-2 border-t border-white/20 mt-2"><button onclick="logout()" class="w-full flex items-center gap-3 text-white/70 p-3 rounded-xl"><i data-feather="log-out"></i> Logout</button></div>
     </div>
 
-    <!-- DESKTOP SIDEBAR (with night mode toggle) -->
+    <!-- DESKTOP SIDEBAR (unchanged) -->
     <div class="desktop-sidebar">
         <div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p></div>
         <nav id="desktopNavMenu" class="space-y-2 flex-1"></nav>
@@ -202,7 +269,7 @@
         <div class="mt-auto pt-8"><div class="bg-white/10 rounded-2xl p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div><button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="log-out"></i> Logout</button></div></div>
     </div>
 
-    <!-- MAIN CONTENT AREA (all tabs - same as previous working version) -->
+    <!-- MAIN CONTENT (unchanged – all tabs, modals, scripts) -->
     <div class="main-content">
         <div class="mobile-header">
             <button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button>
@@ -212,7 +279,6 @@
             </div>
         </div>
 
-        <!-- Welcome row with greeting -->
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
             <div>
                 <h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Welcome Back, <span id="welcomeName">User</span></h2>
@@ -275,12 +341,12 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 bg-slate-50"><p class="text-sm font-semibold text-slate-700 mb-2">Select days and shift for this guard:</p><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Assign Weekly Schedule</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div>
         </div>
 
-        <!-- HR SETTINGS (with reset button for moderator) -->
+        <!-- HR SETTINGS -->
         <div id="hr-settings-tab" class="tab-content hidden"><div class="bg-white rounded-2xl p-6 space-y-6"><div><label class="font-semibold text-sm">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl mt-1"></div><button onclick="saveSettings()" class="bg-[#004aad] text-white px-5 py-2 rounded-xl">Save Settings</button><hr><div id="resetButtonContainer"></div></div></div>
     </div>
 </div>
 
-<!-- ALL MODALS (unchanged - as in previous working version) -->
+<!-- MODALS (same as before) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><div><label class="text-sm font-medium">Title</label><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl" placeholder="Announcement Title"></div><div><label class="text-sm font-medium">Content</label><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl" placeholder="Announcement details..."></textarea></div></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left">Vacation Leave</button></div></div></div>
@@ -290,7 +356,32 @@
 <div id="editLeaveModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><div><label class="text-sm font-medium">Employee Name</label><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl" readonly></div><div><label class="text-sm font-medium">Leave Balance (days)</label><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" step="1"></div></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 
 <script>
-    // ========== NIGHT MODE TOGGLE (global) ==========
+    // ========== RAIN EFFECT FOR LOGIN SCREEN ==========
+    function createRain() {
+        const container = document.querySelector('.rainy-bg');
+        if (!container) return;
+        const raindropCount = 80;
+        for (let i = 0; i < raindropCount; i++) {
+            const drop = document.createElement('div');
+            drop.classList.add('raindrop');
+            const left = Math.random() * 100;
+            const duration = Math.random() * 1.5 + 1; // 1 to 2.5s
+            const delay = Math.random() * 5;
+            drop.style.left = `${left}%`;
+            drop.style.animationDuration = `${duration}s`;
+            drop.style.animationDelay = `${delay}s`;
+            drop.style.opacity = Math.random() * 0.5 + 0.3;
+            container.appendChild(drop);
+        }
+    }
+    // Wait for DOM to load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', createRain);
+    } else {
+        createRain();
+    }
+
+    // ========== NIGHT MODE TOGGLE ==========
     function toggleNightMode() {
         document.body.classList.toggle('dark');
         const isDark = document.body.classList.contains('dark');
