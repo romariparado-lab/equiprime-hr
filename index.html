@@ -79,25 +79,37 @@
         body.dark .mobile-header .bg-white i { color: white; }
         body.dark .bg-yellow-50 { background-color: #422c00 !important; color: #fbbf24 !important; }
 
-        /* ========== RAINY SEASON THEME (Mobile-Optimized) ========== */
+        /* ========== RAINY THEME & FULL-WIDTH DESKTOP LOGIN ========== */
         .rainy-bg {
             background: linear-gradient(145deg, #1a2a3a 0%, #2c3e4e 100%);
-            border-radius: 1.5rem;
-            padding: 1.5rem;
+            padding: 2rem;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.2);
-        }
-        .rainy-bg::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
             height: 100%;
-            background: repeating-linear-gradient(transparent, transparent 2px, rgba(255,255,255,0.05) 2px, rgba(255,255,255,0.05) 4px);
-            pointer-events: none;
-            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        /* Desktop: no border-radius on left, full height */
+        @media (min-width: 1024px) {
+            .rainy-bg {
+                border-radius: 0;
+                min-height: 100vh;
+            }
+            .login-card {
+                border-radius: 0;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding: 2rem 3rem;
+                margin: 0;
+                width: 100%;
+            }
+            #authScreen .grid {
+                gap: 0;
+            }
         }
         .raindrop {
             position: absolute;
@@ -125,117 +137,115 @@
             gap: 0.5rem;
             font-size: 0.75rem;
             color: white;
-            margin-top: 0.75rem;
+            margin-top: 1rem;
         }
-        /* Mobile layout: login card directly below rainy header */
-        @media (max-width: 1023px) {
-            #authScreen {
-                padding: 1rem;
-                align-items: flex-start !important;
-                overflow-y: auto;
+
+        /* Mobile adjustments for guard schedule */
+        @media (max-width: 767px) {
+            .schedule-day {
+                flex-wrap: wrap;
+                gap: 0.5rem;
             }
-            .rainy-bg {
-                margin-bottom: 1rem;
+            .schedule-day select {
+                width: 100% !important;
+                margin-top: 0.25rem;
             }
-            .rainy-bg h1 {
-                font-size: 1.5rem !important;
+            .schedule-day label {
+                flex: 1;
             }
-            .login-card {
-                padding: 1.25rem !important;
-                border-radius: 1.5rem;
+            #guardSchedulesList .bg-slate-50 {
+                padding: 0.75rem;
             }
-            .login-card img {
-                height: 2.5rem;
-            }
-            .login-card h1 {
-                font-size: 1.5rem;
-            }
-            .weather-widget {
-                font-size: 0.7rem;
+            #guardSchedulesList .text-xs {
+                word-break: break-word;
             }
         }
     </style>
 </head>
 <body>
 
-<!-- ========== MOBILE-OPTIMIZED LOGIN SCREEN ========== -->
-<div id="authScreen" class="fixed inset-0 z-[10000] bg-white lg:bg-[#f8fafd] overflow-y-auto">
-    <div class="w-full max-w-md mx-auto px-4 py-6 lg:max-w-6xl lg:grid lg:grid-cols-2 lg:gap-8 lg:items-center">
-        <!-- Rainy Header (full width on mobile) -->
-        <div class="rainy-bg text-center lg:text-left">
-            <div class="flex justify-center lg:justify-start mb-4">
-                <img src="welcome logo.jpg" alt="EQUIPRIME" class="h-12 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
-            </div>
-            <h1 class="text-2xl font-extrabold text-white drop-shadow-lg">Smart Choices.<br>Smarter Results.</h1>
-            <p class="text-white/90 text-sm mt-2 leading-relaxed">
-                Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.
-            </p>
-            <div class="weather-widget">
-                <i data-feather="cloud-rain" class="w-3 h-3"></i>
-                <span>🌧️ Rainy · 24°C</span>
-            </div>
-            <div class="flex justify-center lg:justify-start gap-5 mt-5">
-                <a href="#" class="text-white/80 hover:text-white"><i data-feather="facebook" class="w-5 h-5"></i></a>
-                <a href="#" class="text-white/80 hover:text-white"><i data-feather="instagram" class="w-5 h-5"></i></a>
-                <a href="#" class="text-white/80 hover:text-white"><i data-feather="globe" class="w-5 h-5"></i></a>
-            </div>
-            <div class="flex flex-wrap justify-center lg:justify-start gap-3 text-xs text-white/70 mt-5">
-                <a href="#" class="hover:text-white">Privacy Policy</a><span>•</span>
-                <a href="#" class="hover:text-white">Contact</a><span>•</span>
-                <span>© 2026 EQUIPRIME</span>
+<!-- ========== FULL-WIDTH DESKTOP LOGIN SCREEN ========== -->
+<div id="authScreen" class="fixed inset-0 z-[10000] bg-white overflow-y-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+        <!-- LEFT: Rainy Branding (full left) -->
+        <div class="rainy-bg">
+            <div class="relative z-10 max-w-md mx-auto lg:mx-0 lg:ml-auto lg:mr-0 w-full px-4">
+                <div class="mb-6">
+                    <img src="welcome logo.jpg" alt="EQUIPRIME" class="h-12 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
+                </div>
+                <h1 class="text-3xl lg:text-4xl font-extrabold text-white drop-shadow-lg">Smart Choices.<br>Smarter Results.</h1>
+                <p class="text-white/90 text-sm lg:text-base mt-3 leading-relaxed">
+                    Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.
+                </p>
+                <div class="weather-widget">
+                    <i data-feather="cloud-rain" class="w-3 h-3"></i>
+                    <span>🌧️ Rainy · 24°C</span>
+                </div>
+                <div class="flex gap-5 mt-6">
+                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="facebook" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="globe" class="w-5 h-5"></i></a>
+                </div>
+                <div class="flex flex-wrap gap-3 text-xs text-white/70 mt-8">
+                    <a href="#" class="hover:text-white">Privacy Policy</a><span>•</span>
+                    <a href="#" class="hover:text-white">Contact</a><span>•</span>
+                    <span>© 2026 EQUIPRIME</span>
+                </div>
             </div>
         </div>
 
-        <!-- Login Card -->
-        <div class="login-card bg-white rounded-2xl shadow-xl p-6">
-            <div class="text-center mb-4">
-                <img src="logo.png" alt="EQUIPRIME HR" class="h-12 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
-                <h1 class="text-2xl font-extrabold text-[#004aad] mt-1">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
-                <p class="text-slate-500 text-xs">smart choices · smarter results</p>
-            </div>
-            <div id="authError" class="bg-red-50 text-red-600 p-2 rounded-lg text-xs mb-3 hidden"></div>
-            <div id="authSuccess" class="bg-green-50 text-green-600 p-2 rounded-lg text-xs mb-3 hidden"></div>
-            <div id="loginForm">
-                <div class="space-y-3">
-                    <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none">
-                    <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none">
-                    <button onclick="loginWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Login</button>
+        <!-- RIGHT: Login Card (full right) -->
+        <div class="login-card bg-white flex items-center justify-center p-6 lg:p-12">
+            <div class="w-full max-w-md">
+                <div class="text-center mb-6">
+                    <img src="logo.png" alt="EQUIPRIME HR" class="h-12 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
+                    <h1 class="text-2xl lg:text-3xl font-extrabold text-[#004aad] mt-2">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
+                    <p class="text-slate-500 text-sm">smart choices · smarter results</p>
                 </div>
-                <div class="mt-3 text-center"><button onclick="showSignup()" class="text-[#004aad] text-sm hover:underline">Don't have an account? Sign up</button></div>
-            </div>
-            <div id="signupForm" class="hidden">
-                <div class="space-y-2">
-                    <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm">
-                    <input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm">
-                    <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm">
-                    <select id="signupRole" class="w-full p-3 border rounded-xl text-sm"><option value="employee">Employee</option><option value="supervisor">Supervisor</option></select>
-                    <select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm">
-                        <option value="">Select Department</option>
-                        <option value="Service and After-sales">Service and After-sales</option>
-                        <option value="Sales">Sales Department</option>
-                        <option value="Accounting and Finance">Accounting and Finance</option>
-                        <option value="Marketing">Marketing Department</option>
-                        <option value="HR">HR Department</option>
-                        <option value="Warehouse">Warehouse Department</option>
-                        <option value="Supply Chain Logistics & Purchasing">Supply Chain</option>
-                        <option value="Admin Management">Admin Management</option>
-                        <option value="Guard">Security Guard</option>
-                    </select>
-                    <button onclick="signupWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Sign Up</button>
+                <div id="authError" class="bg-red-50 text-red-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
+                <div id="authSuccess" class="bg-green-50 text-green-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
+                <div id="loginForm">
+                    <div class="space-y-3">
+                        <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none">
+                        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none">
+                        <button onclick="loginWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Login</button>
+                    </div>
+                    <div class="mt-3 text-center"><button onclick="showSignup()" class="text-[#004aad] text-sm hover:underline">Don't have an account? Sign up</button></div>
                 </div>
-                <div class="mt-3 text-center"><button onclick="showLogin()" class="text-[#004aad] text-sm hover:underline">Already have an account? Login</button></div>
-            </div>
-            <div class="mt-5 p-3 bg-slate-50 rounded-xl text-xs text-slate-500">
-                <p class="font-semibold mb-1">Authorized Users:</p>
-                <p>HR: hrpoly@equiprime.ph / hrvince@equiprime.ph</p>
-                <p>Moderator: mod.rom@equiprime.ph / mod.dex@equiprime.ph</p>
-                <p>Other employees can sign up!</p>
+                <div id="signupForm" class="hidden">
+                    <div class="space-y-2">
+                        <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm">
+                        <input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm">
+                        <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm">
+                        <select id="signupRole" class="w-full p-3 border rounded-xl text-sm"><option value="employee">Employee</option><option value="supervisor">Supervisor</option></select>
+                        <select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm">
+                            <option value="">Select Department</option>
+                            <option value="Service and After-sales">Service and After-sales</option>
+                            <option value="Sales">Sales Department</option>
+                            <option value="Accounting and Finance">Accounting and Finance</option>
+                            <option value="Marketing">Marketing Department</option>
+                            <option value="HR">HR Department</option>
+                            <option value="Warehouse">Warehouse Department</option>
+                            <option value="Supply Chain Logistics & Purchasing">Supply Chain</option>
+                            <option value="Admin Management">Admin Management</option>
+                            <option value="Guard">Security Guard</option>
+                        </select>
+                        <button onclick="signupWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Sign Up</button>
+                    </div>
+                    <div class="mt-3 text-center"><button onclick="showLogin()" class="text-[#004aad] text-sm hover:underline">Already have an account? Login</button></div>
+                </div>
+                <div class="mt-5 p-3 bg-slate-50 rounded-xl text-xs text-slate-500">
+                    <p class="font-semibold mb-1">Authorized Users:</p>
+                    <p>HR: hrpoly@equiprime.ph / hrvince@equiprime.ph</p>
+                    <p>Moderator: mod.rom@equiprime.ph / mod.dex@equiprime.ph</p>
+                    <p>Other employees can sign up!</p>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- MAIN APP CONTAINER (same full functionality) -->
+<!-- MAIN APP CONTAINER (unchanged from previous full version) -->
 <div id="mainApp" class="hidden app-container">
     <div id="overlay" class="overlay" onclick="closeMobileSidebar()"></div>
     <!-- MOBILE SIDEBAR -->
@@ -275,7 +285,7 @@
         <div class="mt-auto pt-8"><div class="bg-white/10 rounded-2xl p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div><button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="log-out"></i> Logout</button></div></div>
     </div>
 
-    <!-- MAIN CONTENT (all tabs) - exactly as previous working version -->
+    <!-- MAIN CONTENT (identical to previous working version) -->
     <div class="main-content">
         <div class="mobile-header">
             <button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button>
@@ -346,7 +356,7 @@
     </div>
 </div>
 
-<!-- MODALS (all unchanged) -->
+<!-- ALL MODALS (unchanged) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><div><label class="text-sm font-medium">Title</label><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl" placeholder="Announcement Title"></div><div><label class="text-sm font-medium">Content</label><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl" placeholder="Announcement details..."></textarea></div></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left">Vacation Leave</button></div></div></div>
@@ -356,7 +366,7 @@
 <div id="editLeaveModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><div><label class="text-sm font-medium">Employee Name</label><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl" readonly></div><div><label class="text-sm font-medium">Leave Balance (days)</label><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" step="1"></div></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 
 <script>
-    // ========== RAIN EFFECT (fewer drops on mobile) ==========
+    // ========== RAIN EFFECT ==========
     function createRain() {
         const container = document.querySelector('.rainy-bg');
         if (!container) return;
@@ -565,7 +575,7 @@
             timeInfo.innerHTML = 'Click "Clock In" to start your day';
         }
         const historyBody = document.getElementById('attendanceHistoryList');
-        if (historyBody) historyBody.innerHTML = userAtt.map(a => `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100 text-green-700':'bg-yellow-100 text-yellow-700'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull科技</tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">No records</td></table>';
+        if (historyBody) historyBody.innerHTML = userAtt.map(a => `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100 text-green-700':'bg-yellow-100 text-yellow-700'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull科技</tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">No records</td></tr>';
     }
 
     // Guard schedule functions
