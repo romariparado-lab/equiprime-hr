@@ -79,9 +79,20 @@
         body.dark .mobile-header .bg-white i { color: white; }
         body.dark .bg-yellow-50 { background-color: #422c00 !important; color: #fbbf24 !important; }
 
-        /* ========== RAINY THEME & DESKTOP LOGIN (CENTERED LOGIN CARD) ========== */
+        /* ========== UNIFORM LOGIN SCREEN BACKGROUND ========== */
+        /* Light mode: both columns white, dark mode: both columns dark */
+        #authScreen .rainy-bg,
+        #authScreen .login-col {
+            background-color: white;
+            transition: background-color 0.3s;
+        }
+        body.dark #authScreen .rainy-bg,
+        body.dark #authScreen .login-col {
+            background-color: #0f172a;
+        }
+        /* Remove gradient from rainy-bg */
         .rainy-bg {
-            background: linear-gradient(145deg, #1a2a3a 0%, #2c3e4e 100%);
+            background: none !important;
             padding: 3rem;
             position: relative;
             overflow: hidden;
@@ -91,60 +102,10 @@
             flex-direction: column;
             justify-content: center;
         }
-        /* Desktop: left side full height, right side centered */
-        @media (min-width: 1024px) {
-            .rainy-bg {
-                border-radius: 0;
-                padding: 4rem;
-            }
-            .rainy-bg h1 {
-                font-size: 3.5rem !important;
-                line-height: 1.2;
-            }
-            .rainy-bg p {
-                font-size: 1.125rem !important;
-                margin-top: 1rem;
-            }
-            .weather-widget {
-                font-size: 1rem;
-                padding: 0.5rem 1.25rem;
-                margin-top: 1.5rem;
-            }
-            /* Right column: flex center, no forced height */
-            .login-col {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                min-height: 100vh;
-                background: white;
-            }
-            .login-card {
-                width: 100%;
-                max-width: 500px;
-                margin: 0 auto;
-                padding: 2rem;
-                border-radius: 1.5rem;
-            }
-            .login-card h1 {
-                font-size: 2rem !important;
-            }
-            .login-card input,
-            .login-card button,
-            .login-card select {
-                font-size: 1rem !important;
-                padding: 0.875rem 1rem !important;
-            }
-            .login-card .bg-slate-50 {
-                font-size: 0.875rem !important;
-                padding: 1rem !important;
-            }
-            #authScreen .grid {
-                gap: 0;
-            }
-        }
+        /* Raindrops become semi-transparent dark/light adaptive */
         .raindrop {
             position: absolute;
-            background: rgba(255,255,255,0.6);
+            background: rgba(0,0,0,0.2);
             width: 2px;
             height: 8px;
             border-radius: 2px;
@@ -152,14 +113,11 @@
             pointer-events: none;
             z-index: 2;
         }
-        @keyframes fall {
-            to {
-                transform: translateY(100vh);
-                opacity: 0;
-            }
+        body.dark .raindrop {
+            background: rgba(255,255,255,0.3);
         }
         .weather-widget {
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.05);
             backdrop-filter: blur(4px);
             border-radius: 999px;
             padding: 0.25rem 0.75rem;
@@ -167,11 +125,49 @@
             align-items: center;
             gap: 0.5rem;
             font-size: 0.75rem;
-            color: white;
+            color: #1e293b;
             margin-top: 1rem;
         }
-
-        /* Mobile adjustments (unchanged) */
+        body.dark .weather-widget {
+            background: rgba(255,255,255,0.1);
+            color: #e2e8f0;
+        }
+        /* Desktop adjustments: right column centered login */
+        @media (min-width: 1024px) {
+            .rainy-bg h1 {
+                font-size: 3rem !important;
+                line-height: 1.2;
+            }
+            .rainy-bg p {
+                font-size: 1rem !important;
+            }
+            .login-col {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+            }
+            .login-card {
+                width: 100%;
+                max-width: 480px;
+                margin: 0 auto;
+                padding: 2rem;
+                background: white;
+                border-radius: 1.5rem;
+                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+            }
+            body.dark .login-card {
+                background: #1e293b;
+                box-shadow: 0 25px 50px -12px rgba(0,0,0,0.4);
+            }
+            .login-card input,
+            .login-card button,
+            .login-card select {
+                font-size: 0.95rem !important;
+                padding: 0.75rem 1rem !important;
+            }
+        }
+        /* Mobile: keep stacking */
         @media (max-width: 767px) {
             .schedule-day {
                 flex-wrap: wrap;
@@ -181,45 +177,45 @@
                 width: 100% !important;
                 margin-top: 0.25rem;
             }
-            .schedule-day label {
-                flex: 1;
+            .rainy-bg {
+                padding: 1.5rem;
             }
-            #guardSchedulesList .bg-slate-50 {
-                padding: 0.75rem;
-            }
-            #guardSchedulesList .text-xs {
-                word-break: break-word;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
             }
         }
     </style>
 </head>
 <body>
 
-<!-- ========== FULL-WIDTH DESKTOP LOGIN SCREEN (CENTRED LOGIN CARD) ========== -->
-<div id="authScreen" class="fixed inset-0 z-[10000] bg-white overflow-y-auto">
+<!-- ========== LOGIN SCREEN WITH UNIFORM BACKGROUND ========== -->
+<div id="authScreen" class="fixed inset-0 z-[10000] overflow-y-auto">
     <div class="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
-        <!-- LEFT: Rainy Branding (full left, unchanged) -->
+        <!-- LEFT: Branding (no gradient, same bg as right) -->
         <div class="rainy-bg">
-            <div class="relative z-10 max-w-2xl mx-auto lg:mx-0 lg:ml-auto lg:mr-0 w-full">
-                <div class="mb-8">
-                    <img src="welcome logo.jpg" alt="EQUIPRIME" class="h-16 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
+            <div class="relative z-10 max-w-2xl mx-auto lg:mx-0 lg:ml-auto lg:mr-0 w-full px-4">
+                <div class="mb-6">
+                    <img src="welcome logo.jpg" alt="EQUIPRIME" class="h-12 w-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
                 </div>
-                <h1 class="text-4xl font-extrabold text-white drop-shadow-lg">Smart Choices.<br>Smarter Results.</h1>
-                <p class="text-white/90 text-base mt-4 leading-relaxed">
+                <h1 class="text-2xl lg:text-3xl font-extrabold text-slate-800 dark:text-white">Smart Choices.<br>Smarter Results.</h1>
+                <p class="text-slate-600 dark:text-slate-300 text-sm mt-3 leading-relaxed">
                     Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.
                 </p>
                 <div class="weather-widget">
-                    <i data-feather="cloud-rain" class="w-4 h-4"></i>
+                    <i data-feather="cloud-rain" class="w-3 h-3"></i>
                     <span>🌧️ Rainy · 24°C</span>
                 </div>
-                <div class="flex gap-6 mt-8">
-                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="facebook" class="w-6 h-6"></i></a>
-                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="instagram" class="w-6 h-6"></i></a>
-                    <a href="#" class="text-white/80 hover:text-white"><i data-feather="globe" class="w-6 h-6"></i></a>
+                <div class="flex gap-5 mt-6">
+                    <a href="#" class="text-slate-500 hover:text-[#004aad] dark:text-slate-400 dark:hover:text-white"><i data-feather="facebook" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-slate-500 hover:text-[#004aad] dark:text-slate-400 dark:hover:text-white"><i data-feather="instagram" class="w-5 h-5"></i></a>
+                    <a href="#" class="text-slate-500 hover:text-[#004aad] dark:text-slate-400 dark:hover:text-white"><i data-feather="globe" class="w-5 h-5"></i></a>
                 </div>
-                <div class="flex flex-wrap gap-4 text-sm text-white/70 mt-10">
-                    <a href="#" class="hover:text-white">Privacy Policy</a><span>•</span>
-                    <a href="#" class="hover:text-white">Contact</a><span>•</span>
+                <div class="flex flex-wrap gap-3 text-xs text-slate-500 dark:text-slate-400 mt-8">
+                    <a href="#" class="hover:text-[#004aad] dark:hover:text-white">Privacy Policy</a><span>•</span>
+                    <a href="#" class="hover:text-[#004aad] dark:hover:text-white">Contact</a><span>•</span>
                     <span>© 2026 EQUIPRIME</span>
                 </div>
             </div>
@@ -228,28 +224,28 @@
         <!-- RIGHT: Centered Login Card -->
         <div class="login-col">
             <div class="login-card">
-                <div class="text-center mb-6">
-                    <img src="logo.png" alt="EQUIPRIME HR" class="h-14 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
-                    <h1 class="text-2xl font-extrabold text-[#004aad] mt-2">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
-                    <p class="text-slate-500 text-sm">smart choices · smarter results</p>
+                <div class="text-center mb-5">
+                    <img src="logo.png" alt="EQUIPRIME HR" class="h-12 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
+                    <h1 class="text-2xl font-extrabold text-[#004aad] dark:text-white mt-2">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm">smart choices · smarter results</p>
                 </div>
                 <div id="authError" class="bg-red-50 text-red-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
                 <div id="authSuccess" class="bg-green-50 text-green-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
                 <div id="loginForm">
                     <div class="space-y-3">
-                        <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none">
-                        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none">
+                        <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white">
+                        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white">
                         <button onclick="loginWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition text-sm">Login</button>
                     </div>
-                    <div class="mt-3 text-center"><button onclick="showSignup()" class="text-[#004aad] text-sm hover:underline">Don't have an account? Sign up</button></div>
+                    <div class="mt-3 text-center"><button onclick="showSignup()" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Don't have an account? Sign up</button></div>
                 </div>
                 <div id="signupForm" class="hidden">
                     <div class="space-y-2">
-                        <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm">
-                        <input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm">
-                        <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm">
-                        <select id="signupRole" class="w-full p-3 border rounded-xl text-sm"><option value="employee">Employee</option><option value="supervisor">Supervisor</option></select>
-                        <select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm">
+                        <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600">
+                        <input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600">
+                        <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600">
+                        <select id="signupRole" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600"><option value="employee">Employee</option><option value="supervisor">Supervisor</option></select>
+                        <select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600">
                             <option value="">Select Department</option>
                             <option value="Service and After-sales">Service and After-sales</option>
                             <option value="Sales">Sales Department</option>
@@ -263,9 +259,9 @@
                         </select>
                         <button onclick="signupWithEmail()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition text-sm">Sign Up</button>
                     </div>
-                    <div class="mt-3 text-center"><button onclick="showLogin()" class="text-[#004aad] text-sm hover:underline">Already have an account? Login</button></div>
+                    <div class="mt-3 text-center"><button onclick="showLogin()" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Already have an account? Login</button></div>
                 </div>
-                <div class="mt-5 p-3 bg-slate-50 rounded-xl text-xs text-slate-500">
+                <div class="mt-5 p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl text-xs text-slate-500 dark:text-slate-400">
                     <p class="font-semibold mb-1">Authorized Users:</p>
                     <p>HR: hr@equiprime.ph / hr@equiprime.ph</p>
                     <p>Moderator: mod@equiprime.ph / mod@equiprime.ph</p>
@@ -276,10 +272,9 @@
     </div>
 </div>
 
-<!-- MAIN APP CONTAINER (same as previous full version) -->
+<!-- MAIN APP CONTAINER (unchanged full functionality) -->
 <div id="mainApp" class="hidden app-container">
     <div id="overlay" class="overlay" onclick="closeMobileSidebar()"></div>
-    <!-- MOBILE SIDEBAR -->
     <div id="mobileSidebar" class="mobile-sidebar">
         <div class="flex justify-end mb-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x"></i></button></div>
         <div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div>
@@ -298,7 +293,6 @@
         <div class="pt-2 border-t border-white/20 mt-2"><button onclick="logout()" class="w-full flex items-center gap-3 text-white/70 p-3 rounded-xl"><i data-feather="log-out"></i> Logout</button></div>
     </div>
 
-    <!-- DESKTOP SIDEBAR -->
     <div class="desktop-sidebar">
         <div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p></div>
         <nav id="desktopNavMenu" class="space-y-2 flex-1"></nav>
@@ -316,7 +310,6 @@
         <div class="mt-auto pt-8"><div class="bg-white/10 rounded-2xl p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div><button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="log-out"></i> Logout</button></div></div>
     </div>
 
-    <!-- MAIN CONTENT (identical to previous working version) -->
     <div class="main-content">
         <div class="mobile-header">
             <button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button>
@@ -330,7 +323,7 @@
             <div class="bg-yellow-50 text-yellow-700 px-3 py-1.5 rounded-full text-xs flex items-center gap-1"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div> Biometrics ready (demo mode)</div>
         </div>
 
-        <!-- DASHBOARD TAB -->
+        <!-- DASHBOARD TAB (full content) -->
         <div id="dashboard-tab" class="tab-content">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div class="stat-card bg-white rounded-2xl p-5 shadow-sm"><div class="flex justify-between items-start"><div><p class="text-slate-500 text-sm">Total Employees</p><h3 class="text-3xl font-bold mt-2" id="totalEmployees">0</h3></div><div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center"><i data-feather="users" class="text-blue-600"></i></div></div></div>
@@ -387,7 +380,7 @@
     </div>
 </div>
 
-<!-- ALL MODALS (unchanged) -->
+<!-- MODALS (unchanged) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><div><label class="text-sm font-medium">Title</label><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl" placeholder="Announcement Title"></div><div><label class="text-sm font-medium">Content</label><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl" placeholder="Announcement details..."></textarea></div></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left">Vacation Leave</button></div></div></div>
@@ -397,7 +390,7 @@
 <div id="editLeaveModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><div><label class="text-sm font-medium">Employee Name</label><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl" readonly></div><div><label class="text-sm font-medium">Leave Balance (days)</label><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" step="1"></div></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 
 <script>
-    // ========== RAIN EFFECT ==========
+    // ========== RAIN EFFECT (light/dark adaptive) ==========
     function createRain() {
         const container = document.querySelector('.rainy-bg');
         if (!container) return;
@@ -409,7 +402,7 @@
             drop.style.left = Math.random() * 100 + '%';
             drop.style.animationDuration = Math.random() * 1.5 + 0.8 + 's';
             drop.style.animationDelay = Math.random() * 5 + 's';
-            drop.style.opacity = Math.random() * 0.5 + 0.3;
+            drop.style.opacity = Math.random() * 0.5 + 0.2;
             container.appendChild(drop);
         }
     }
