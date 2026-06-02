@@ -113,7 +113,7 @@
             }
         }
 
-        /* ========== LOGIN SPLIT: 50/50, TRANSPARENT LEFT, OPAQUE RIGHT ========== */
+        /* ========== LOGIN SPLIT: 50/50, RAIN BEHIND ========== */
         .login-split {
             position: relative;
             z-index: 10;
@@ -170,7 +170,13 @@
             width: 100%;
             max-width: 400px;
         }
-        /* Fix contrast for authorized users text */
+        /* Fix for light mode: EQUIPRIME text dark */
+        .login-card h1 {
+            color: #004aad !important;
+        }
+        body.dark .login-card h1 {
+            color: white !important;
+        }
         .login-card .bg-slate-50 {
             background-color: #f8fafc !important;
             color: #1e293b !important;
@@ -193,6 +199,7 @@
             }
             .branding-content {
                 text-align: center;
+                margin: 0 auto;
             }
             .branding-content h1 {
                 font-size: 1.8rem;
@@ -210,24 +217,24 @@
 <!-- ========== FULL SCREEN RAINY BACKGROUND ========== -->
 <div class="rainy-full" id="rainyBackground"></div>
 
-<!-- ========== LOGIN SCREEN: 50/50 SPLIT, RAIN BEHIND ========== -->
+<!-- ========== LOGIN SCREEN: 50/50 SPLIT ========== -->
 <div id="authScreen" class="login-split">
     <!-- LEFT: Branding (transparent, shows rain) -->
     <div class="branding-half">
         <div class="branding-content">
-            <img src="welcome logo.jpg" alt="EQUIPRIME" class="h-12 mb-6" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
+            <img src="welcome logo.jpg" alt="EQUIPRIME" class="h-12 mb-6 mx-auto lg:mx-0" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
             <h1>Smart Choices.<br>Smarter Results.</h1>
             <p>Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.</p>
             <div class="weather-widget">
                 <i data-feather="cloud-rain" class="w-3 h-3"></i>
                 <span>🌧️ Rainy · 24°C</span>
             </div>
-            <div class="flex gap-5 mt-6">
+            <div class="flex gap-5 mt-6 justify-center lg:justify-start">
                 <a href="#" class="text-white/80 hover:text-white"><i data-feather="facebook" class="w-5 h-5"></i></a>
                 <a href="#" class="text-white/80 hover:text-white"><i data-feather="instagram" class="w-5 h-5"></i></a>
                 <a href="#" class="text-white/80 hover:text-white"><i data-feather="globe" class="w-5 h-5"></i></a>
             </div>
-            <div class="flex flex-wrap gap-3 text-xs text-white/70 mt-8">
+            <div class="flex flex-wrap gap-3 text-xs text-white/70 mt-8 justify-center lg:justify-start">
                 <a href="#" class="hover:text-white">Privacy Policy</a><span>•</span>
                 <a href="#" class="hover:text-white">Contact</a><span>•</span>
                 <span>© 2026 EQUIPRIME</span>
@@ -240,7 +247,7 @@
         <div class="login-card">
             <div class="text-center mb-5">
                 <img src="logo.png" alt="EQUIPRIME HR" class="h-12 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
-                <h1 class="text-2xl font-extrabold text-[#004aad] dark:text-white mt-2">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
+                <h1 class="text-2xl font-extrabold mt-2">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
                 <p class="text-slate-500 dark:text-slate-400 text-sm">smart choices · smarter results</p>
             </div>
             <div id="authError" class="bg-red-50 text-red-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
@@ -285,7 +292,7 @@
     </div>
 </div>
 
-<!-- ========== MAIN APP CONTAINER (fully functional, all tabs restored) ========== -->
+<!-- ========== MAIN APP CONTAINER (fully functional) ========== -->
 <div id="mainApp" class="hidden app-container">
     <div id="overlay" class="overlay" onclick="closeMobileSidebar()"></div>
 
