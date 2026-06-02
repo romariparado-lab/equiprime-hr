@@ -54,7 +54,7 @@
         .editable-leave { cursor: pointer; color: #004aad; }
         .editable-leave:hover { text-decoration: underline; }
 
-        /* ========== DARK MODE STYLES ========== */
+        /* ========== DARK MODE STYLES (only for main app) ========== */
         body.dark { background: #0f172a; color: #e2e8f0; }
         body.dark .bg-white, body.dark .bg-slate-50, body.dark .bg-gray-50, body.dark .bg-slate-100, body.dark .stat-card,
         body.dark .modal-container, body.dark .bg-white.rounded-2xl, body.dark .bg-slate-50.rounded-xl,
@@ -79,7 +79,7 @@
         body.dark .mobile-header .bg-white i { color: white; }
         body.dark .bg-yellow-50 { background-color: #422c00 !important; color: #fbbf24 !important; }
 
-        /* ========== LOGIN SPLIT: 50/50 WITH PIXEL RAIN ========== */
+        /* ========== LOGIN SPLIT: 50/50 ========== */
         .login-split {
             display: flex;
             width: 100%;
@@ -88,7 +88,7 @@
         .branding-half {
             width: 50%;
             position: relative;
-            background-color: #111424;
+            background: linear-gradient(to bottom, #001f3f, #002a54);
             overflow: hidden;
         }
         .login-half {
@@ -102,7 +102,7 @@
         body.dark .login-half {
             background: #1e293b;
         }
-        /* Pixel rain canvas and overlay */
+        /* Canvas rain and lightning inside left half */
         .branding-half canvas {
             display: block;
             position: absolute;
@@ -118,7 +118,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #fff;
+            background-color: #fcf7f2;
             opacity: 0;
             z-index: 2;
             pointer-events: none;
@@ -128,199 +128,234 @@
         }
         @keyframes lightningstrike {
             0%   { opacity: 0; }
-            10%  { opacity: 0.8; background-color: #e2e8f0; }
+            10%  { opacity: 0.7; }
             15%  { opacity: 0; }
-            20%  { opacity: 0.5; background-color: #cbd5e1; }
+            20%  { opacity: 0.4; }
             30%  { opacity: 0; }
             100% { opacity: 0; }
         }
-        /* Pixel character container */
-        .character-container {
+        /* Character scaler and container */
+        .character-scaler {
             position: absolute;
             bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 15%;
             z-index: 3;
-            width: 120px;
-            height: 180px;
-            animation: pixelBounce 1.2s steps(2) infinite;
+            --base-height: 220px;
+            --target-height: 50vh;
+            transform: scale(calc(var(--target-height) / var(--base-height)));
             transform-origin: bottom center;
         }
-        .umbrella {
-            width: 120px;
-            height: 50px;
-            background: #ff4757;
-            border-radius: 60px 60px 0 0;
-            box-shadow: inset -15px 0 0 rgba(0,0,0,0.2), 0 6px 0 #ff6b81;
-            position: relative;
-        }
-        .umbrella::before {
-            content: '';
-            position: absolute;
-            top: -8px;
-            left: 56px;
-            width: 8px;
-            height: 8px;
-            background: #ffa502;
-        }
-        .umbrella::after {
-            content: '';
-            position: absolute;
-            bottom: -50px;
-            left: 56px;
-            width: 8px;
-            height: 50px;
-            background: #f1f2f6;
-        }
-        .person {
-            width: 50px;
-            height: 90px;
-            background: #ffa502;
-            margin: 40px auto 0 auto;
-            border-radius: 12px 12px 0 0;
-            box-shadow: inset -10px 0 0 rgba(0,0,0,0.15);
-            position: relative;
-            z-index: -1;
-        }
-        .person::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 4px;
-            width: 42px;
-            height: 10px;
-            background: #333;
-            box-shadow: -6px 0 0 #222, 6px 0 0 #222;
-        }
-        @keyframes pixelBounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-4px); }
-        }
-        /* Branding content overlay (text, logo, etc.) */
-        .branding-content {
-            position: relative;
-            z-index: 4;
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 2rem;
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        .character-container {
+            width: 140px;
+            height: 220px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            height: 100%;
+            justify-content: flex-end;
+            animation: breathing 2s ease-in-out infinite alternate;
+            transform-origin: bottom center;
+        }
+        @keyframes breathing {
+            0% { transform: translateY(0) scaleY(1); }
+            100% { transform: translateY(-3px) scaleY(1.02); }
+        }
+        .umbrella-canopy {
+            width: 140px;
+            height: 55px;
+            background: #fcf7f2;
+            border-radius: 70px 70px 10px 10px;
+            position: relative;
+            box-shadow: inset -20px 0 0 rgba(0,0,0,0.08);
+        }
+        .umbrella-canopy::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 35px;
+            width: 70px;
+            height: 55px;
+            border-left: 2px solid #fbc300;
+            border-right: 2px solid #fbc300;
+            border-radius: 70px 70px 0 0;
+            opacity: 0.5;
+        }
+        .umbrella-tip {
+            width: 6px;
+            height: 12px;
+            background: #acaa93;
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 3px 3px 0 0;
+        }
+        .umbrella-stick {
+            width: 4px;
+            height: 75px;
+            background: #acaa93;
+            position: relative;
+            z-index: 2;
+        }
+        .umbrella-stick::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: -4px;
+            width: 10px;
+            height: 10px;
+            border: 4px solid #acaa93;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+        .person-body {
+            position: absolute;
+            bottom: 0;
+            width: 70px;
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+        .hood {
+            width: 44px;
+            height: 44px;
+            background: #fbc300;
+            border-radius: 50% 50% 45% 45%;
+            position: relative;
+            box-shadow: inset -6px 4px 0 rgba(0,0,0,0.1);
+            z-index: 3;
+        }
+        .face {
+            width: 28px;
+            height: 28px;
+            background: #ffdd93;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+        }
+        .face::before, .face::after {
+            content: '';
+            position: absolute;
+            top: 12px;
+            width: 4px;
+            height: 4px;
+            background: #002a54;
+            border-radius: 50%;
+        }
+        .face::before { left: 5px; }
+        .face::after { right: 5px; }
+        .face-blush {
+            position: absolute;
+            top: 16px;
+            width: 28px;
+            height: 4px;
+        }
+        .face-blush::before, .face-blush::after {
+            content: '';
+            position: absolute;
+            width: 5px;
+            height: 3px;
+            background: rgba(255, 107, 129, 0.6);
+            border-radius: 50%;
+        }
+        .face-blush::before { left: 3px; }
+        .face-blush::after { right: 3px; }
+        .coat {
+            width: 54px;
+            height: 65px;
+            background: #fbc300;
+            border-radius: 20px 20px 4px 4px;
+            margin-top: -6px;
+            position: relative;
+            box-shadow: inset -10px 0 0 rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+        .coat::after {
+            content: '';
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 14px;
+            background: rgba(0, 42, 84, 0.15);
+            border-radius: 0 0 12px 12px;
+        }
+        .legs {
+            width: 44px;
+            height: 18px;
+            display: flex;
+            justify-content: space-between;
+            position: absolute;
+            bottom: 0;
+        }
+        .boot {
+            width: 16px;
+            height: 18px;
+            background: #acaa93;
+            border-radius: 4px 4px 2px 2px;
+            position: relative;
+        }
+        .boot::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -2px;
+            width: 20px;
+            height: 6px;
+            background: rgba(0, 42, 84, 0.3);
+            border-radius: 3px;
+        }
+        .branding-text {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
             text-align: center;
+            z-index: 4;
+            color: rgba(252,247,242,0.6);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
             pointer-events: none;
         }
-        .branding-content a {
-            pointer-events: auto;
-        }
-        .branding-content h1 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-        }
-        .branding-content p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-        .weather-widget {
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            border-radius: 999px;
-            padding: 0.25rem 0.75rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.75rem;
-            margin-top: 1rem;
-        }
-        .login-card {
-            width: 100%;
-            max-width: 400px;
-        }
-        .login-card h1 {
-            color: #004aad !important;
-        }
-        body.dark .login-card h1 {
-            color: white !important;
-        }
-        .login-card .bg-slate-50 {
-            background-color: #f8fafc !important;
-            color: #1e293b !important;
-        }
-        body.dark .login-card .bg-slate-50 {
-            background-color: #334155 !important;
-            color: #cbd5e1 !important;
-        }
         @media (max-width: 1023px) {
-            .login-split {
-                flex-direction: column;
-            }
-            .branding-half, .login-half {
-                width: 100%;
-                min-height: 50vh;
-            }
-            .branding-content {
-                padding: 1.5rem;
-            }
-            .character-container {
-                width: 100px;
-                height: 150px;
-                bottom: 20px;
-            }
-            .umbrella {
-                width: 100px;
-                height: 40px;
-            }
-            .umbrella::after {
-                bottom: -40px;
-                height: 40px;
-                left: 46px;
-            }
-            .person {
-                height: 70px;
-            }
+            .login-split { flex-direction: column; }
+            .branding-half, .login-half { width: 100%; min-height: 50vh; }
+            .character-scaler { left: 8%; --target-height: 45vh; }
+            .branding-text { font-size: 0.6rem; }
         }
-        @media (min-width: 1024px) {
-            .branding-content h1 {
-                font-size: 2.5rem;
-            }
-        }
+        .login-card { width: 100%; max-width: 400px; }
+        .login-card h1 { color: #004aad !important; }
+        body.dark .login-card h1 { color: white !important; }
+        .login-card .bg-slate-50 { background-color: #f8fafc !important; color: #1e293b !important; }
+        body.dark .login-card .bg-slate-50 { background-color: #334155 !important; color: #cbd5e1 !important; }
     </style>
 </head>
 <body>
 
-<!-- ========== LOGIN SCREEN: 50/50 SPLIT WITH PIXEL RAIN ========== -->
+<!-- ========== LOGIN SCREEN: 50/50 SPLIT WITH BRANDED RAIN ANIMATION ========== -->
 <div id="authScreen" class="login-split">
-    <!-- LEFT: Branding with pixel rain, lightning, pixel character -->
+    <!-- LEFT: Branding with rain, character, lightning -->
     <div class="branding-half" id="brandingHalf">
         <canvas id="rainCanvas"></canvas>
         <div class="lightning-overlay" id="lightning"></div>
-        <div class="character-container" id="character">
-            <div class="umbrella"></div>
-            <div class="person"></div>
-        </div>
-        <div class="branding-content">
-            <img src="welcome logo.jpg" alt="EQUIPRIME" class="h-12 mb-4" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
-            <h1>Smart Choices.<br>Smarter Results.</h1>
-            <p>Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.</p>
-            <div class="weather-widget">
-                <i data-feather="cloud-rain" class="w-3 h-3"></i>
-                <span>🌧️ Rainy · 24°C</span>
-            </div>
-            <div class="flex gap-5 mt-6 justify-center">
-                <a href="#" class="text-white/80 hover:text-white"><i data-feather="facebook" class="w-5 h-5"></i></a>
-                <a href="#" class="text-white/80 hover:text-white"><i data-feather="instagram" class="w-5 h-5"></i></a>
-                <a href="#" class="text-white/80 hover:text-white"><i data-feather="globe" class="w-5 h-5"></i></a>
-            </div>
-            <div class="flex flex-wrap gap-3 text-xs text-white/70 mt-8 justify-center">
-                <a href="#" class="hover:text-white">Privacy Policy</a><span>•</span>
-                <a href="#" class="hover:text-white">Contact</a><span>•</span>
-                <span>© 2026 EQUIPRIME</span>
+        <div class="character-scaler">
+            <div class="character-container" id="character">
+                <div class="umbrella-tip"></div>
+                <div class="umbrella-canopy"></div>
+                <div class="umbrella-stick"></div>
+                <div class="person-body">
+                    <div class="hood"><div class="face"><div class="face-blush"></div></div></div>
+                    <div class="coat"></div>
+                    <div class="legs"><div class="boot"></div><div class="boot"></div></div>
+                </div>
             </div>
         </div>
+        <div class="branding-text">EQUIPRIME · smart choices, smarter results</div>
     </div>
 
     <!-- RIGHT: Login Card (unchanged) -->
@@ -414,7 +449,7 @@
         <div class="mt-auto pt-8"><div class="bg-white/10 rounded-2xl p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div><button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="log-out"></i> Logout</button></div></div>
     </div>
 
-    <!-- MAIN CONTENT (all tabs) -->
+    <!-- MAIN CONTENT (all tabs) - same as fully functional previous version -->
     <div class="main-content">
         <div class="mobile-header">
             <button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button>
@@ -448,7 +483,7 @@
         <div id="my-attendance-tab" class="tab-content hidden">
             <div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-700 transition clock-btn flex items-center gap-2"><i data-feather="log-in"></i> Clock In</button><button onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-red-700 transition clock-btn flex items-center gap-2"><i data-feather="log-out"></i> Clock Out</button></div></div>
             <div class="bg-white rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="calendar"></i> Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500" id="todayTimeInfo"></div></div></div>
-            <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="list"></i> Attendance History</h3><div class="overflow-x-auto"><table class="w-full"><thead class="bg-slate-50"><tr><th class="p-3 text-left text-sm font-semibold">Date</th><th class="p-3 text-left text-sm font-semibold">Clock In</th><th class="p-3 text-left text-sm font-semibold">Clock Out</th><th class="p-3 text-left text-sm font-semibold">Hours Worked</th><th class="p-3 text-left text-sm font-semibold">Status</th><tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div>
+            <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="list"></i> Attendance History</h3><div class="overflow-x-auto"><table class="w-full"><thead class="bg-slate-50"><tr><th class="p-3 text-left text-sm font-semibold">Date</th><th class="p-3 text-left text-sm font-semibold">Clock In</th><th class="p-3 text-left text-sm font-semibold">Clock Out</th><th class="p-3 text-left text-sm font-semibold">Hours Worked</th><th class="p-3 text-left text-sm font-semibold">Status</th></tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div>
         </div>
 
         <!-- MY REQUESTS TAB -->
@@ -495,11 +530,11 @@
 <div id="editLeaveModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><div><label class="text-sm font-medium">Employee Name</label><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl" readonly></div><div><label class="text-sm font-medium">Leave Balance (days)</label><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" step="1"></div></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 
 <script>
-    // ========== PIXEL RAIN + LIGHTNING + RIPPLES (inside branding-half) ==========
+    // ========== BRANDED RAIN + LIGHTNING + RIPPLES (inside left half) ==========
     let rainCanvas, ctx, drops = [], ripples = [], lightningDiv, characterDiv, animationId;
-    const MAX_DROPS = 100;
+    const MAX_DROPS = 110;
 
-    function initPixelRain() {
+    function initBrandedRain() {
         const container = document.querySelector('.branding-half');
         if (!container) return;
         rainCanvas = document.getElementById('rainCanvas');
@@ -580,8 +615,8 @@
                 p.y += p.speed;
                 p.x += 1;
 
-                // Collision with umbrella (top ~20px)
-                if (p.x > umbrellaLeft && p.x < umbrellaRight && p.y >= umbrellaTop && p.y <= umbrellaTop + 25) {
+                // Collision with umbrella (top ~25px)
+                if (p.x > umbrellaLeft && p.x < umbrellaRight && p.y >= umbrellaTop && p.y <= umbrellaTop + 30) {
                     resetDrop(p);
                 }
                 // Floor collision -> create ripple
@@ -611,7 +646,7 @@
         drawRain();
     }
 
-    // Lightning generator (only within left half)
+    // Lightning generator
     function initLightning() {
         const lightning = document.getElementById('lightning');
         if (!lightning) return;
@@ -630,7 +665,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
-        initPixelRain();
+        initBrandedRain();
         initLightning();
     });
 
@@ -822,7 +857,7 @@
             timeInfo.innerHTML = 'Click "Clock In" to start your day';
         }
         const historyBody = document.getElementById('attendanceHistoryList');
-        if (historyBody) historyBody.innerHTML = userAtt.map(a => `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}<td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100 text-green-700':'bg-yellow-100 text-yellow-700'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">No records</td></tr>';
+        if (historyBody) historyBody.innerHTML = userAtt.map(a => `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100 text-green-700':'bg-yellow-100 text-yellow-700'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull科技</tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center text-slate-400">No records</td></tr>';
     }
 
     async function loadGuardWeeklySchedules() { const snap = await db.collection('guardWeeklySchedules').get(); guardWeeklySchedules = []; snap.forEach(doc => guardWeeklySchedules.push({ id: doc.id, ...doc.data() })); if (currentUserRole === 'hr') renderGuardSchedules(); }
