@@ -289,7 +289,7 @@
             }
         }
 
-        /* ========== NEW ATTENDANCE SUMMARY MODULE STYLES ========== */
+        /* ========== ATTENDANCE SUMMARY MODULE STYLES ========== */
         .attendance-summary-container {
             background: #f8fafc;
             border-radius: 1rem;
@@ -537,7 +537,7 @@
         <div class="mobile-header"><button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-[#004aad] text-white flex items-center justify-center text-xs font-bold" id="mobileUserInitials">HR</div><span id="mobileUserName" class="text-sm font-semibold text-slate-700">User</span></div></div>
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6"><div><h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Welcome Back, <span id="welcomeName">User</span></h2><p class="text-slate-500 text-sm mt-1" id="welcomeSubtitle"></p></div><div class="bg-yellow-50 text-yellow-700 px-3 py-1.5 rounded-full text-xs flex items-center gap-1"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div> Biometrics ready (demo mode)</div></div>
 
-        <!-- DASHBOARD TAB (unchanged) -->
+        <!-- DASHBOARD TAB -->
         <div id="dashboard-tab" class="tab-content">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div class="stat-card bg-white rounded-2xl p-5 shadow-sm"><div class="flex justify-between items-start"><div><p class="text-slate-500 text-sm">Total Employees</p><h3 class="text-3xl font-bold mt-2" id="totalEmployees">0</h3></div><div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center"><i data-feather="users" class="text-blue-600"></i></div></div></div>
@@ -550,29 +550,29 @@
             <div class="mt-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="git-branch"></i> Approval Flow</h3><div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-sm"><div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Employee submits</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Department Approver</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-purple-500 rounded-full"></span> Moderator</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> HR Admin</div></div></div></div>
         </div>
 
-        <!-- MY ATTENDANCE TAB (unchanged) -->
+        <!-- MY ATTENDANCE TAB -->
         <div id="my-attendance-tab" class="tab-content hidden">
             <div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-700 transition clock-btn flex items-center gap-2"><i data-feather="log-in"></i> Clock In</button><button onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-red-700 transition clock-btn flex items-center gap-2"><i data-feather="log-out"></i> Clock Out</button></div></div>
             <div class="bg-white rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="calendar"></i> Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500" id="todayTimeInfo"></div></div></div>
             <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="list"></i> Attendance History</h3><div class="overflow-x-auto"><table class="w-full"><thead class="bg-slate-50"><tr><th class="p-3 text-left text-sm font-semibold">Date</th><th class="p-3 text-left text-sm font-semibold">Clock In</th><th class="p-3 text-left text-sm font-semibold">Clock Out</th><th class="p-3 text-left text-sm font-semibold">Hours Worked</th><th class="p-3 text-left text-sm font-semibold">Status</th></tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div>
         </div>
 
-        <!-- MY REQUESTS TAB (unchanged) -->
+        <!-- MY REQUESTS TAB -->
         <div id="my-requests-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Requests</h2><button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">New Request</button></div><div id="allMyRequestsList" class="space-y-3"></div></div>
 
-        <!-- PAYSLIP TAB (unchanged) -->
+        <!-- PAYSLIP TAB -->
         <div id="payslip-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="file-text"></i> My Payslips</h2><div id="employeePayslipList" class="space-y-4"></div></div>
 
-        <!-- APPROVALS TAB (unchanged) -->
+        <!-- APPROVALS TAB -->
         <div id="approvals-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clock"></i> Pending Approvals</h2><div id="pendingApprovalsList" class="space-y-4"></div></div>
 
-        <!-- HR EMPLOYEES TAB (unchanged) -->
+        <!-- HR EMPLOYEES TAB -->
         <div id="hr-employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="users"></i> Employee Directory</h2><button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Add Employee</button></div><div id="hrEmployeesList" class="bg-white rounded-2xl shadow-sm overflow-hidden"></div></div>
 
-        <!-- HR REQUESTS TAB (unchanged) -->
+        <!-- HR REQUESTS TAB -->
         <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
 
-        <!-- HR PAYSLIP MANAGEMENT (unchanged) -->
+        <!-- HR PAYSLIP MANAGEMENT -->
         <div id="hr-payslip-tab" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl"><div><label class="text-sm font-medium">Cut-off Period</label><select id="cutOffPeriod" class="w-full p-3 border rounded-xl"><option value="first">1st cut-off (27th-10th)</option><option value="second">2nd cut-off (11th-26th)</option></select></div><input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl" placeholder="Daily Rate"><input type="number" id="daysPresent" class="w-full p-3 border rounded-xl" placeholder="Days Present (this cut-off)"><input type="number" id="otherDeduction" value="0" step="0.01" class="w-full p-3 border rounded-xl" placeholder="Other Deduction (e.g., loan, advance)"><button onclick="generatePayslipAuto()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Generate Payslip (Auto-Compute)</button></div></div>
@@ -580,13 +580,13 @@
             </div>
         </div>
 
-        <!-- GUARD WEEKLY SCHEDULE TAB (unchanged) -->
+        <!-- GUARD WEEKLY SCHEDULE TAB -->
         <div id="hr-guard-schedule-tab" class="tab-content hidden">
             <h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="calendar"></i> Guard Weekly Schedule Management</h2>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 bg-slate-50"><p class="text-sm font-semibold text-slate-700 mb-2">Select days and shift for this guard:</p><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Assign Weekly Schedule</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div>
         </div>
 
-        <!-- ========== NEW ATTENDANCE SUMMARY TAB (fully integrated) ========== -->
+        <!-- ATTENDANCE SUMMARY TAB (HR only) -->
         <div id="attendance-summary-tab" class="tab-content hidden">
             <div class="attendance-summary-container">
                 <div class="attendance-toolbar">
@@ -621,7 +621,7 @@
             </div>
         </div>
 
-        <!-- HR SETTINGS (unchanged) -->
+        <!-- HR SETTINGS (with reset button for moderators) -->
         <div id="hr-settings-tab" class="tab-content hidden"><div class="bg-white rounded-2xl p-6 space-y-6"><div><label class="font-semibold text-sm">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl mt-1"></div><button onclick="saveSettings()" class="bg-[#004aad] text-white px-5 py-2 rounded-xl">Save Settings</button><hr><div id="resetButtonContainer"></div></div></div>
     </div>
 </div>
@@ -849,9 +849,9 @@
         return inTot > schedTot ? "late" : "logged-in";
     }
 
-    // Reset for moderator (unchanged)
+    // Reset for moderator (FIXED: now checks role, not specific email)
     window.resetAllSystemData = async function() {
-        if (!currentUser || currentUser.email !== "mod@equiprime.ph") {
+        if (currentUserRole !== 'moderator') {
             alert("Only Moderator can perform a full system reset.");
             return;
         }
@@ -903,7 +903,7 @@
         document.getElementById('todayStatusIcon').innerHTML = todayRec?.timeIn ? '✅' : '⏰';
         document.getElementById('todayStatusText').innerHTML = todayRec?.timeIn ? (todayRec.timeOut ? 'Completed' : 'Clocked In') : 'Not clocked in yet';
         document.getElementById('todayTimeInfo').innerHTML = todayRec?.timeIn ? `In: ${todayRec.timeIn} | Out: ${todayRec.timeOut||'--'} | Hours: ${todayRec.hoursWorked||'--'}` : '';
-        document.getElementById('attendanceHistoryList').innerHTML = userAtt.map(a => `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center">No records</td></tr>';
+        document.getElementById('attendanceHistoryList').innerHTML = userAtt.map(a => `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center">No records</td><tr>';
     }
 
     // Guard schedule (unchanged)
@@ -1067,12 +1067,16 @@
             if (currentUserRole==='hr') {
                 const gsel=document.getElementById('guardEmployee');
                 if (gsel) gsel.innerHTML='<option value="">Select Guard</option>'+allEmployees.filter(e=>e.dept==='Guard'||e.role==='guard').map(emp=>`<option value="${emp.id}">${emp.name}</option>`).join('');
-                populateYearDropdown(); // populate years for summary
+                populateYearDropdown();
             }
             const resetContainer = document.getElementById('resetButtonContainer');
             if (resetContainer) {
-                if (currentUser.email === "mod@equiprime.ph") resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition w-full">⚠️ Reset All System Data (Moderator only)</button><p class="text-xs text-slate-500 mt-2">Deletes ALL employees, attendance, requests, payslips, announcements, guard schedules.</p>`;
-                else resetContainer.innerHTML = "";
+                // SHOW RESET BUTTON FOR ANY MODERATOR (role-based)
+                if (currentUserRole === 'moderator') {
+                    resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition w-full">⚠️ Reset All System Data (Moderator only)</button><p class="text-xs text-slate-500 mt-2">Deletes ALL employees, attendance, requests, payslips, announcements, guard schedules.</p>`;
+                } else {
+                    resetContainer.innerHTML = "";
+                }
             }
             switchTab('dashboard');
         } catch(e) { errDiv.innerText=e.message; errDiv.classList.remove('hidden'); }
@@ -1233,7 +1237,7 @@
     async function loadEmployeeCalendar(employeeId) {
         const year = parseInt(document.getElementById('summaryYear').value);
         const month = parseInt(document.getElementById('summaryMonth').value);
-        const half = document.getElementById('cutoffFilter').value; // '1' or '2'
+        const half = document.getElementById('cutoffFilter').value;
         const startDay = half === '1' ? 1 : 16;
         let endDay = half === '1' ? 15 : new Date(year, month+1, 0).getDate();
         if (half === '2') endDay = new Date(year, month+1, 0).getDate();
@@ -1274,7 +1278,6 @@
         document.getElementById('lateCountSummary').innerText = late;
         document.getElementById('missingCountSummary').innerText = incomplete;
         document.getElementById('leaveCountSummary').innerText = leave;
-        // Details table
         const detailsRows = days.map(day => {
             const attRecord = empAttendance.find(a => a.date === day.date);
             const isLeave = empLeaves.some(leave => new Date(leave.startDate) <= new Date(day.date) && new Date(leave.endDate) >= new Date(day.date));
@@ -1328,8 +1331,11 @@
                 }
                 const resetContainer = document.getElementById('resetButtonContainer');
                 if (resetContainer) {
-                    if (currentUser.email === "mod@equiprime.ph") resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition w-full">⚠️ Reset All System Data (Moderator only)</button><p class="text-xs text-slate-500 mt-2">Deletes ALL employees, attendance, requests, payslips, announcements, guard schedules.</p>`;
-                    else resetContainer.innerHTML = "";
+                    if (currentUserRole === 'moderator') {
+                        resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl hover:bg-red-700 transition w-full">⚠️ Reset All System Data (Moderator only)</button><p class="text-xs text-slate-500 mt-2">Deletes ALL employees, attendance, requests, payslips, announcements, guard schedules.</p>`;
+                    } else {
+                        resetContainer.innerHTML = "";
+                    }
                 }
                 switchTab('dashboard');
             }
