@@ -310,23 +310,43 @@
             background: rgba(0, 42, 84, 0.3);
             border-radius: 3px;
         }
-        .branding-text {
+        /* Branding text and content overlay */
+        .branding-content {
             position: absolute;
-            bottom: 20px;
+            top: 0;
             left: 0;
             right: 0;
-            text-align: center;
             z-index: 4;
-            color: rgba(252,247,242,0.6);
-            font-size: 0.8rem;
-            letter-spacing: 2px;
+            text-align: center;
+            padding: 2rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             pointer-events: none;
+        }
+        .branding-content a, .branding-content button {
+            pointer-events: auto;
+        }
+        .branding-content h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .weather-widget {
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            border-radius: 999px;
+            padding: 0.25rem 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            margin-top: 1rem;
         }
         @media (max-width: 1023px) {
             .login-split { flex-direction: column; }
             .branding-half, .login-half { width: 100%; min-height: 50vh; }
             .character-scaler { left: 8%; --target-height: 45vh; }
-            .branding-text { font-size: 0.6rem; }
+            .branding-content h1 { font-size: 1.5rem; }
         }
         .login-card { width: 100%; max-width: 400px; }
         .login-card h1 { color: #004aad !important; }
@@ -337,7 +357,7 @@
 </head>
 <body>
 
-<!-- ========== LOGIN SCREEN: 50/50 SPLIT WITH BRANDED RAIN ANIMATION ========== -->
+<!-- ========== LOGIN SCREEN: 50/50 SPLIT WITH BRANDING + RAIN ========== -->
 <div id="authScreen" class="login-split">
     <!-- LEFT: Branding with rain, character, lightning -->
     <div class="branding-half" id="brandingHalf">
@@ -355,7 +375,26 @@
                 </div>
             </div>
         </div>
-        <div class="branding-text">EQUIPRIME · smart choices, smarter results</div>
+        <!-- Branding Content Overlay -->
+        <div class="branding-content">
+            <img src="welcome logo.jpg" alt="EQUIPRIME" class="h-12 mx-auto mb-3" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
+            <h1>Smart Choices.<br>Smarter Results.</h1>
+            <p class="text-sm">Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.</p>
+            <div class="weather-widget">
+                <i data-feather="cloud-rain" class="w-3 h-3"></i>
+                <span>🌧️ Rainy · 24°C</span>
+            </div>
+            <div class="flex gap-5 mt-4 justify-center">
+                <a href="#" class="text-white/80 hover:text-white"><i data-feather="facebook" class="w-5 h-5"></i></a>
+                <a href="#" class="text-white/80 hover:text-white"><i data-feather="instagram" class="w-5 h-5"></i></a>
+                <a href="#" class="text-white/80 hover:text-white"><i data-feather="globe" class="w-5 h-5"></i></a>
+            </div>
+            <div class="flex flex-wrap gap-3 text-xs text-white/70 mt-4 justify-center">
+                <a href="#" class="hover:text-white">Privacy Policy</a><span>•</span>
+                <a href="#" class="hover:text-white">Contact</a><span>•</span>
+                <span>© 2026 EQUIPRIME</span>
+            </div>
+        </div>
     </div>
 
     <!-- RIGHT: Login Card (unchanged) -->
@@ -449,7 +488,7 @@
         <div class="mt-auto pt-8"><div class="bg-white/10 rounded-2xl p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div><button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="log-out"></i> Logout</button></div></div>
     </div>
 
-    <!-- MAIN CONTENT (all tabs) - same as fully functional previous version -->
+    <!-- MAIN CONTENT (all tabs) - identical to fully functional previous version -->
     <div class="main-content">
         <div class="mobile-header">
             <button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button>
@@ -515,7 +554,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 bg-slate-50"><p class="text-sm font-semibold text-slate-700 mb-2">Select days and shift for this guard:</p><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Assign Weekly Schedule</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div>
         </div>
 
-        <!-- HR SETTINGS -->
+        <!-- HR SETTINGS (with reset button for moderator) -->
         <div id="hr-settings-tab" class="tab-content hidden"><div class="bg-white rounded-2xl p-6 space-y-6"><div><label class="font-semibold text-sm">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl mt-1"></div><button onclick="saveSettings()" class="bg-[#004aad] text-white px-5 py-2 rounded-xl">Save Settings</button><hr><div id="resetButtonContainer"></div></div></div>
     </div>
 </div>
@@ -615,7 +654,7 @@
                 p.y += p.speed;
                 p.x += 1;
 
-                // Collision with umbrella (top ~25px)
+                // Collision with umbrella (top ~30px)
                 if (p.x > umbrellaLeft && p.x < umbrellaRight && p.y >= umbrellaTop && p.y <= umbrellaTop + 30) {
                     resetDrop(p);
                 }
@@ -740,7 +779,7 @@
         { title: "Biometrics Ready", content: "ZKTeco integration available", color: "green", expiresAt: new Date(Date.now() + 24*60*60*1000).toISOString() }
     ];
 
-    // Helper functions
+    // Helper functions (unchanged from previous working version)
     function getDepartmentApprover(employeeDept) {
         const map = {
             "Service and After-sales": ["john.oblena@equiprime.ph", "divino.elpus@equiprime.ph"],
