@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Smart HRIS | Payslip Restricted</title>
+    <title>EQUIPRIME HR - Smart HRIS with Modern Payslip</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -15,7 +15,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.12/dist/lottie-player.js"></script>
     <style>
-        /* ========== BASE STYLES (same as original) ========== */
+        /* ========== BASE STYLES ========== */
         * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #f3f6fb; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         .tab-active { background-color: #004aad; color: white; }
@@ -120,7 +120,7 @@
         body.dark .login-card .bg-slate-50 { background-color: #334155 !important; color: #cbd5e1 !important; }
         @media (max-width: 1023px) { .login-split { flex-direction: column; } .branding-half, .login-half { width: 100%; min-height: 60vh; } .branding-content { padding: 1rem; max-width: 90%; } .branding-main-image { max-width: 70%; } .character-container { width: 100px; height: 150px; bottom: 20px; } .umbrella { width: 100px; height: 40px; } .umbrella::after { bottom: -40px; height: 40px; left: 46px; } .person { height: 70px; } }
 
-        /* Attendance summary styles (abbreviated) */
+        /* Attendance summary styles */
         .attendance-summary-container { background: #f8fafc; border-radius: 1rem; padding: 1.25rem; }
         body.dark .attendance-summary-container { background: #0f172a; }
         .attendance-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
@@ -171,10 +171,42 @@
         .adaptive-lottie-layer lottie-player { width: 100%; height: 100%; opacity: 0.4; transition: opacity 0.8s ease; }
         body.dark .adaptive-lottie-layer lottie-player { opacity: 0.3; }
         .app-container, .login-split { position: relative; z-index: 1; }
+
+        /* Modern Payslip Modal Styles */
+        .payslip-modal-container {
+            max-width: 900px;
+            width: 95%;
+            background: white;
+            border-radius: 1rem;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+        .payslip-card {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 1rem;
+            border-top: 6px solid #004aad;
+        }
+        .company-logo { font-size: 1.5rem; font-weight: 700; color: #004aad; letter-spacing: -0.5px; }
+        .meta-label { font-size: 0.7rem; text-transform: uppercase; color: #6c757d; font-weight: 600; }
+        .meta-value { font-size: 0.9rem; color: #212529; font-weight: 500; }
+        .table-custom th { background-color: #f8f9fa; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.5px; }
+        .net-pay-box { background: #eef2ff; border-radius: 8px; padding: 1rem; border: 1px solid #c7d2fe; }
+        body.dark .payslip-card { background: #1e293b; color: #e2e8f0; }
+        body.dark .payslip-card .meta-value { color: #e2e8f0; }
+        body.dark .table-custom th { background-color: #334155; color: #e2e8f0; }
+        body.dark .net-pay-box { background: #1e2a3e; border-color: #3b4b6e; }
+        @media print {
+            .no-print { display: none !important; }
+            .payslip-modal-container { width: 100%; max-width: none; margin: 0; padding: 0; }
+            .payslip-card { padding: 0.5rem; box-shadow: none; border: none; }
+            body.dark .payslip-card { background: white; color: black; }
+        }
     </style>
 </head>
 <body>
 
+<!-- Adaptive Background Layers -->
 <div id="adaptiveBgGradient" class="adaptive-bg-gradient"></div>
 <div id="adaptiveLottieContainer" class="adaptive-lottie-layer"></div>
 
@@ -271,7 +303,7 @@
     </div>
 </div>
 
-<!-- MAIN APP CONTAINER (identical to original but with payslip restriction) -->
+<!-- MAIN APP CONTAINER -->
 <div id="mainApp" class="hidden app-container">
     <div id="overlay" class="overlay" onclick="closeMobileSidebar()"></div>
     <div id="mobileSidebar" class="mobile-sidebar"><div class="flex justify-end mb-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x"></i></button></div><div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div><nav id="mobileNavMenu" class="space-y-2 flex-1"></nav><div class="mt-6 pt-4 border-t border-white/20"><div class="filter-section"><label class="filter-label">DEPARTMENT</label><select id="filterDepartment" class="filter-select" onchange="applyFilters()"><option value="all">All Departments</option><option value="Service and After-sales">Service and After-sales</option><option value="Sales">Sales</option><option value="Accounting and Finance">Accounting</option><option value="Marketing">Marketing</option><option value="HR">HR</option><option value="Warehouse">Warehouse</option><option value="Supply Chain Logistics & Purchasing">Supply Chain</option><option value="Admin Management">Admin Management</option><option value="Guard">Guard</option></select></div><div class="filter-section"><label class="filter-label">STATUS</label><select id="filterStatus" class="filter-select" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="on-leave">On Leave</option></select></div><div class="filter-section"><label class="filter-label">LEAVE TYPE</label><select id="filterLeaveType" class="filter-select" onchange="applyFilters()"><option value="all">All Leave Types</option><option value="Official Business">Official Business</option><option value="Vacation Leave">Vacation Leave</option><option value="Sick Leave">Sick Leave</option><option value="Birthday Leave">Birthday Leave</option><option value="Emergency Leave">Emergency Leave</option><option value="Offset">Offset</option></select></div><div class="pt-2"><label class="filter-label">LAST UPDATED</label><div class="text-white/80 text-xs flex items-center gap-2"><i data-feather="calendar" style="width:0.8rem;"></i><span id="lastUpdatedTime">Loading...</span></div></div></div><div class="pt-4 border-t border-white/20 mt-2"><button onclick="toggleNightMode()" class="w-full flex items-center gap-3 text-white/70 hover:text-white p-3 rounded-xl transition"><i data-feather="moon" id="nightModeIconMobile"></i> <span>Night Mode</span></button></div><div class="pt-2 border-t border-white/20 mt-2"><button onclick="logout()" class="w-full flex items-center gap-3 text-white/70 p-3 rounded-xl"><i data-feather="log-out"></i> Logout</button></div></div>
@@ -312,28 +344,56 @@
         <!-- HR REQUESTS TAB -->
         <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
 
-        <!-- HR PAYSLIP MANAGEMENT -->
-        <div id="hr-payslip-tab" class="tab-content hidden"><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl"><div><label class="text-sm font-medium">Cut-off Period</label><select id="cutOffPeriod" class="w-full p-3 border rounded-xl"><option value="first">1st cut-off (27th-10th)</option><option value="second">2nd cut-off (11th-26th)</option></select></div><input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl" placeholder="Daily Rate"><input type="number" id="daysPresent" class="w-full p-3 border rounded-xl" placeholder="Days Present (this cut-off)"><input type="number" id="otherDeduction" value="0" step="0.01" class="w-full p-3 border rounded-xl" placeholder="Other Deduction (e.g., loan, advance)"><button id="generatePayslipBtn" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Generate Payslip (Auto-Compute)</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
+        <!-- HR PAYSLIP MANAGEMENT (with modern payslip modal) -->
+        <div id="hr-payslip-tab" class="tab-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">Generate Payslip</h3>
+                    <div class="space-y-4">
+                        <select id="payslipEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Employee</option></select>
+                        <input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl">
+                        <div><label class="text-sm font-medium">Cut-off Period</label><select id="cutOffPeriod" class="w-full p-3 border rounded-xl"><option value="first">1st cut-off (27th-10th)</option><option value="second">2nd cut-off (11th-26th)</option></select></div>
+                        <input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl" placeholder="Daily Rate">
+                        <input type="number" id="daysPresent" class="w-full p-3 border rounded-xl" placeholder="Days Present (this cut-off)">
+                        <input type="number" id="otherDeduction" value="0" step="0.01" class="w-full p-3 border rounded-xl" placeholder="Other Deduction (e.g., loan, advance)">
+                        <button id="generatePayslipBtn" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Generate Payslip (Auto-Compute)</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">All Payslips History</h3>
+                    <div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div>
+                </div>
+            </div>
+        </div>
 
         <!-- GUARD WEEKLY SCHEDULE TAB -->
         <div id="hr-guard-schedule-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="calendar"></i> Guard Weekly Schedule Management</h2><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 bg-slate-50"><p class="text-sm font-semibold text-slate-700 mb-2">Select days and shift for this guard:</p><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Assign Weekly Schedule</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
 
-        <!-- ATTENDANCE SUMMARY TAB (HR only) -->
-        <div id="attendance-summary-tab" class="tab-content hidden"><div class="attendance-summary-container"><div class="attendance-toolbar"><h2>Attendance Summary</h2><div class="attendance-filters"><select id="summaryYear"></select><select id="summaryMonth"><option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option></select><select id="cutoffFilter"><option value="1">1st Half (1st-15th)</option><option value="2">2nd Half (16th-End)</option></select><button id="refreshSummaryBtn" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Load</button></div></div><div class="attendance-grid"><div class="employee-list"><h3>Employees</h3><div id="employeeListContainer"></div></div><div class="summary-content"><div class="summary-cards"><div class="summary-card"><small>Completed Days</small><h3 id="completedCount">0</h3></div><div class="summary-card"><small>Late</small><h3 id="lateCountSummary">0</h3></div><div class="summary-card"><small>Incomplete</small><h3 id="missingCountSummary">0</h3></div><div class="summary-card"><small>Leave</small><h3 id="leaveCountSummary">0</h3></div></div><div class="calendar-box"><h3 style="margin-bottom:15px;">Attendance Calendar</h3><div id="calendarGrid" class="calendar-grid"></div></div><div class="details-box"><h3 style="margin-bottom:15px;">Employee Attendance Details</h3><table class="details-table"><thead><tr><th>Date</th><th>Clock In</th><th>Clock Out</th><th>Status</th></tr></thead><tbody id="attendanceDetails"></tbody></table></div></div></div></div></div>
+        <!-- ATTENDANCE SUMMARY TAB -->
+        <div id="attendance-summary-tab" class="tab-content hidden"><div class="attendance-summary-container"><div class="attendance-toolbar"><h2>Attendance Summary</h2><div class="attendance-filters"><select id="summaryYear"></select><select id="summaryMonth"><option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option></select><select id="cutoffFilter"><option value="1">1st Half (1st-15th)</option><option value="2">2nd Half (16th-End)</option></select><button id="refreshSummaryBtn" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Load</button></div></div><div class="attendance-grid"><div class="employee-list"><h3>Employees</h3><div id="employeeListContainer"></div></div><div class="summary-content"><div class="summary-cards"><div class="summary-card"><small>Completed Days</small><h3 id="completedCount">0</h3></div><div class="summary-card"><small>Late</small><h3 id="lateCountSummary">0</h3></div><div class="summary-card"><small>Incomplete</small><h3 id="missingCountSummary">0</h3></div><div class="summary-card"><small>Leave</small><h3 id="leaveCountSummary">0</h3></div></div><div class="calendar-box"><h3 style="margin-bottom:15px;">Attendance Calendar</h3><div id="calendarGrid" class="calendar-grid"></div></div><div class="details-box"><h3 style="margin-bottom:15px;">Employee Attendance Details</h3><table class="details-table"><thead><tr><th>Date</th><th>Clock In</th><th>Clock Out</th><th>Status</th></tr></thead><tbody id="attendanceDetails"></tbody></td></div></div></div></div></div>
 
         <!-- HR SETTINGS -->
         <div id="hr-settings-tab" class="tab-content hidden"><div class="bg-white rounded-2xl p-6 space-y-6"><div><label class="font-semibold text-sm">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl mt-1"></div><button onclick="saveSettings()" class="bg-[#004aad] text-white px-5 py-2 rounded-xl">Save Settings</button><hr><div id="resetButtonContainer"></div></div></div>
     </div>
 </div>
 
-<!-- MODALS (same as original) -->
-<div id="announcementModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><div><label class="text-sm font-medium">Title</label><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl" placeholder="Announcement Title"></div><div><label class="text-sm font-medium">Content</label><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl" placeholder="Announcement details..."></textarea></div></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
-<div id="requestModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
-<div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left">Vacation Leave</button></div></div></div>
-<div id="offsetsModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeModal('offsetsModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl"><input type="number" id="offsetsHours" step="0.5" class="w-full p-3 border rounded-xl" placeholder="Hours to Offset"><textarea id="offsetsReasonText" rows="2" class="w-full p-3 border rounded-xl" placeholder="Reason"></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitOffsets()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('offsetsModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
-<div id="newRequestMenuOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Request Type</h3><button onclick="closeModal('newRequestMenuOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="openRequestModal('Official Business')" class="w-full p-3 bg-slate-50 rounded-xl text-left">Official Business</button><button onclick="openRequestModal('Overtime')" class="w-full p-3 bg-slate-50 rounded-xl text-left">Overtime</button><button onclick="openRequestModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 rounded-xl text-left">Certificate of Attendance</button><button onclick="closeModal('newRequestMenuOverlay'); openLeaveModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left">Leave</button><button onclick="closeModal('newRequestMenuOverlay'); openOffsetsModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left">Offsets</button></div></div></div>
-<div id="addEmployeeModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="text" id="newEmpName" class="w-full p-3 border rounded-xl" placeholder="Full Name"><input type="text" id="newEmpDept" class="w-full p-3 border rounded-xl" placeholder="Department"><select id="newEmpRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option><option value="approver">Department Approver</option></select><select id="newEmpSupervisor" class="w-full p-3 border rounded-xl"><option value="">No Supervisor</option></select><input type="text" id="newEmpPin" class="w-full p-3 border rounded-xl" placeholder="PIN"><input type="password" id="newEmpPass" class="w-full p-3 border rounded-xl" placeholder="Password"></div><div class="flex gap-3 mt-5"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('addEmployeeModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
-<div id="editLeaveModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><div><label class="text-sm font-medium">Employee Name</label><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl" readonly></div><div><label class="text-sm font-medium">Leave Balance (days)</label><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" step="1"></div></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
+<!-- Modern Payslip Modal -->
+<div id="payslipModal" class="modal-overlay">
+    <div class="payslip-modal-container">
+        <div class="payslip-card">
+            <div class="flex justify-between items-start mb-4 no-print">
+                <h2 class="text-xl font-bold text-slate-800 dark:text-white">Payslip Preview</h2>
+                <button onclick="closeModal('payslipModal')" class="text-gray-500 hover:text-gray-700"><i data-feather="x"></i></button>
+            </div>
+            <div id="payslipContent">
+                <!-- dynamic content will be injected -->
+            </div>
+            <div class="text-right no-print mt-4">
+                <button onclick="window.print()" class="bg-[#004aad] text-white px-4 py-2 rounded-lg text-sm">Print Statement</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     // ========== PIXEL RAIN + LIGHTNING ==========
@@ -453,7 +513,7 @@
         window.addEventListener('focus', applyAdaptiveTheme);
     })();
 
-    // ========== FIREBASE & FULL HRIS SCRIPT (with Payslip restriction by email) ==========
+    // ========== FIREBASE & FULL HRIS SCRIPT (with Modern Payslip Modal) ==========
     const firebaseConfig = {
         apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
         authDomain: "equiprime-hr.firebaseapp.com",
@@ -470,7 +530,6 @@
     let allEmployees = [], allRequests = [], allAttendance = [], allPayslips = [], allAnnouncements = [], guardWeeklySchedules = [];
     let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
     const restrictedEmails = ["hr@equiprime.ph", "mod@equiprime.ph"];
-    // Authorized emails for payslip generation
     const payslipAuthorizedEmails = ["hrpoly@equiprime.ph", "hrvince@equiprime.ph", "mod.dex@equiprime.ph", "mod.rom@equiprime.ph"];
 
     const departmentWorkingHours = {
@@ -652,7 +711,53 @@
         return { sss: Math.round(sss), philHealth: Math.round(philHealth), pagIbig, tax: Math.round(tax), totalDeductions: Math.round(sss+philHealth+pagIbig+tax) };
     }
 
-    // ========== MODIFIED: Payslip generation allowed only for specific emails ==========
+    // Modern Payslip Modal Generation
+    function showModernPayslip(employee, payslipData) {
+        const { month, cutOff, dailyRate, daysPresent, basicSalaryPeriod, sss, philHealth, pagIbig, withholdingTax, otherDeduction, netPay } = payslipData;
+        const periodLabel = cutOff === '1st cut-off (27th-10th)' ? '1st cut-off (27th-10th)' : '2nd cut-off (11th-26th)';
+        const earningsHtml = `<tr><td>Basic Salary (${dailyRate} x ${daysPresent} days)</td><td class="text-end">₱${basicSalaryPeriod.toFixed(2)}</td></tr>`;
+        const deductionsHtml = `
+            <tr><td>SSS Contribution</td><td class="text-end text-danger">-₱${sss.toFixed(2)}</td></tr>
+            <tr><td>PhilHealth</td><td class="text-end text-danger">-₱${philHealth.toFixed(2)}</td></tr>
+            <tr><td>Pag-IBIG</td><td class="text-end text-danger">-₱${pagIbig.toFixed(2)}</td></tr>
+            <tr><td>Withholding Tax</td><td class="text-end text-danger">-₱${withholdingTax.toFixed(2)}</td></tr>
+            ${otherDeduction > 0 ? `<tr><td>Other Deduction</td><td class="text-end text-danger">-₱${otherDeduction.toFixed(2)}</td></tr>` : ''}
+        `;
+        const modalContent = `
+            <div class="payslip-card" style="padding: 0;">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <div class="company-logo">EQUIPRIME<span style="color:#f4df17;">HR</span></div>
+                        <div class="text-muted small">Official Earnings Statement</div>
+                    </div>
+                    <div class="text-end">
+                        <h4 class="text-uppercase fw-bold m-0 text-secondary">Payslip</h4>
+                        <div class="text-muted small">Period: ${month} (${periodLabel})</div>
+                    </div>
+                </div>
+                <hr class="text-muted opacity-25">
+                <div class="row g-3 my-3" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <div style="flex:1"><div class="meta-label">Employee Name</div><div class="meta-value">${employee.name}</div></div>
+                    <div style="flex:1"><div class="meta-label">Employee ID</div><div class="meta-value">${employee.id || employee.email}</div></div>
+                    <div style="flex:1"><div class="meta-label">Designation</div><div class="meta-value">${employee.dept} - ${employee.role}</div></div>
+                    <div style="flex:1"><div class="meta-label">Payment Mode</div><div class="meta-value">Bank Transfer</div></div>
+                </div>
+                <div class="row mt-5 g-4" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                    <div style="flex:1"><h6 class="fw-bold text-success mb-3">Earnings</h6><table class="table-custom w-full border"><thead><tr><th>Description</th><th class="text-end">Amount</th></tr></thead><tbody>${earningsHtml}</tbody></table></div>
+                    <div style="flex:1"><h6 class="fw-bold text-danger mb-3">Deductions</h6><table class="table-custom w-full border"><thead><tr><th>Description</th><th class="text-end">Amount</th></tr></thead><tbody>${deductionsHtml}</tbody></table></div>
+                </div>
+                <div class="row mt-4 align-items-center" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="text-muted small">* This is a system-generated document and requires no physical signature.</div>
+                    <div class="net-pay-box d-flex justify-content-between align-items-center" style="display: flex; justify-content: space-between; align-items: center; gap: 1rem;">
+                        <div><span class="text-primary fw-bold text-uppercase small d-block">Take-Home Pay</span><strong class="fs-4 text-dark">₱${netPay.toFixed(2)}</strong></div>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.getElementById('payslipContent').innerHTML = modalContent;
+        openModal('payslipModal');
+    }
+
     async function generatePayslipAuto() {
         if (!currentUser || !currentUser.email) { alert("You must be logged in."); return; }
         if (!payslipAuthorizedEmails.includes(currentUser.email)) {
@@ -680,7 +785,8 @@
         const docRef = await db.collection('payslips').add(newPayslip);
         allPayslips.push({ id: docRef.id, ...newPayslip });
         refreshHrPayslip();
-        alert(`Payslip generated for ${employee.name}\nNet pay: ₱${netPay.toFixed(2)}`);
+        // Show modern payslip modal
+        showModernPayslip(employee, { month, cutOff: cutOffLabel, dailyRate, daysPresent, basicSalaryPeriod: periodSalary, sss: halfSss, philHealth: halfPhil, pagIbig: halfPag, withholdingTax: halfTax, otherDeduction, netPay });
         document.getElementById('daysPresent').value = '';
         document.getElementById('otherDeduction').value = '0';
     }
