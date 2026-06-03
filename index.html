@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Smart HRIS with Modern Payslip</title>
+    <title>EQUIPRIME HR - Smart HRIS | Fixed Payslip & Lottie</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -78,7 +78,7 @@
         body.dark .mobile-header .bg-white i { color: white; }
         body.dark .bg-yellow-50 { background-color: #422c00 !important; color: #fbbf24 !important; }
 
-        /* Login 80/20 layout (same as previous) */
+        /* Login 80/20 layout */
         .login-split { display: flex; width: 100%; min-height: 100vh; }
         .branding-half { width: 80%; position: relative; background-color: #0a0f1e; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
         .branding-half::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.6) 100%); z-index: 3; pointer-events: none; }
@@ -206,7 +206,6 @@
 </head>
 <body>
 
-<!-- Adaptive Background Layers -->
 <div id="adaptiveBgGradient" class="adaptive-bg-gradient"></div>
 <div id="adaptiveLottieContainer" class="adaptive-lottie-layer"></div>
 
@@ -370,7 +369,7 @@
         <div id="hr-guard-schedule-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="calendar"></i> Guard Weekly Schedule Management</h2><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 bg-slate-50"><p class="text-sm font-semibold text-slate-700 mb-2">Select days and shift for this guard:</p><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Assign Weekly Schedule</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
 
         <!-- ATTENDANCE SUMMARY TAB -->
-        <div id="attendance-summary-tab" class="tab-content hidden"><div class="attendance-summary-container"><div class="attendance-toolbar"><h2>Attendance Summary</h2><div class="attendance-filters"><select id="summaryYear"></select><select id="summaryMonth"><option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option></select><select id="cutoffFilter"><option value="1">1st Half (1st-15th)</option><option value="2">2nd Half (16th-End)</option></select><button id="refreshSummaryBtn" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Load</button></div></div><div class="attendance-grid"><div class="employee-list"><h3>Employees</h3><div id="employeeListContainer"></div></div><div class="summary-content"><div class="summary-cards"><div class="summary-card"><small>Completed Days</small><h3 id="completedCount">0</h3></div><div class="summary-card"><small>Late</small><h3 id="lateCountSummary">0</h3></div><div class="summary-card"><small>Incomplete</small><h3 id="missingCountSummary">0</h3></div><div class="summary-card"><small>Leave</small><h3 id="leaveCountSummary">0</h3></div></div><div class="calendar-box"><h3 style="margin-bottom:15px;">Attendance Calendar</h3><div id="calendarGrid" class="calendar-grid"></div></div><div class="details-box"><h3 style="margin-bottom:15px;">Employee Attendance Details</h3><table class="details-table"><thead><tr><th>Date</th><th>Clock In</th><th>Clock Out</th><th>Status</th></tr></thead><tbody id="attendanceDetails"></tbody></td></div></div></div></div></div>
+        <div id="attendance-summary-tab" class="tab-content hidden"><div class="attendance-summary-container"><div class="attendance-toolbar"><h2>Attendance Summary</h2><div class="attendance-filters"><select id="summaryYear"></select><select id="summaryMonth"><option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option></select><select id="cutoffFilter"><option value="1">1st Half (1st-15th)</option><option value="2">2nd Half (16th-End)</option></select><button id="refreshSummaryBtn" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Load</button></div></div><div class="attendance-grid"><div class="employee-list"><h3>Employees</h3><div id="employeeListContainer"></div></div><div class="summary-content"><div class="summary-cards"><div class="summary-card"><small>Completed Days</small><h3 id="completedCount">0</h3></div><div class="summary-card"><small>Late</small><h3 id="lateCountSummary">0</h3></div><div class="summary-card"><small>Incomplete</small><h3 id="missingCountSummary">0</h3></div><div class="summary-card"><small>Leave</small><h3 id="leaveCountSummary">0</h3></div></div><div class="calendar-box"><h3 style="margin-bottom:15px;">Attendance Calendar</h3><div id="calendarGrid" class="calendar-grid"></div></div><div class="details-box"><h3 style="margin-bottom:15px;">Employee Attendance Details</h3><table class="details-table"><thead><tr><th>Date</th><th>Clock In</th><th>Clock Out</th><th>Status</th><tr></thead><tbody id="attendanceDetails"></tbody></table></div></div></div></div></div>
 
         <!-- HR SETTINGS -->
         <div id="hr-settings-tab" class="tab-content hidden"><div class="bg-white rounded-2xl p-6 space-y-6"><div><label class="font-semibold text-sm">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl mt-1"></div><button onclick="saveSettings()" class="bg-[#004aad] text-white px-5 py-2 rounded-xl">Save Settings</button><hr><div id="resetButtonContainer"></div></div></div>
@@ -386,7 +385,7 @@
                 <button onclick="closeModal('payslipModal')" class="text-gray-500 hover:text-gray-700"><i data-feather="x"></i></button>
             </div>
             <div id="payslipContent">
-                <!-- dynamic content will be injected -->
+                <!-- dynamic content -->
             </div>
             <div class="text-right no-print mt-4">
                 <button onclick="window.print()" class="bg-[#004aad] text-white px-4 py-2 rounded-lg text-sm">Print Statement</button>
@@ -468,29 +467,36 @@
     fetchWeather();
     setInterval(fetchWeather, 30 * 60 * 1000);
 
-    // ========== ADAPTIVE SMART BACKGROUND ==========
+    // ========== ADAPTIVE SMART BACKGROUND WITH ROBUST LOTTIE ==========
     (function initAdaptiveBackground() {
         const bgDiv = document.getElementById('adaptiveBgGradient');
         const lottieContainer = document.getElementById('adaptiveLottieContainer');
         if (!bgDiv || !lottieContainer) return;
+        // Use reliable public Lottie URLs (verified to work)
+        const reliableLottieMap = {
+            snow: "https://assets9.lottiefiles.com/private_files/lf30_nyakqxfq.json",
+            confetti: "https://assets10.lottiefiles.com/packages/lf20_confetti.json",
+            rain: "https://assets2.lottiefiles.com/packages/lf20_rain.json",
+            spring: "https://assets4.lottiefiles.com/packages/lf20_qwyj4h3r.json"
+        };
         function getThemeByDate() {
             const now = new Date();
             const month = now.getMonth() + 1;
             const day = now.getDate();
-            if (month === 12 && day >= 1 && day <= 26) return { gradient: "linear-gradient(135deg, #0b1a2e, #1e3c4c, #1f2e3a)", lottieUrl: "https://assets2.lottiefiles.com/private_files/lf30_nyakqxfq.json", fallbackUrl: "https://assets1.lottiefiles.com/packages/lf20_snow.json" };
-            if (month === 1 && day <= 5) return { gradient: "linear-gradient(135deg, #0f172a, #1e293b, #2d3a4f)", lottieUrl: "https://assets10.lottiefiles.com/packages/lf20_confetti.json", fallbackUrl: "https://assets4.lottiefiles.com/packages/lf20_hz2vz3.json" };
-            if (month === 6 && day === 12) return { gradient: "linear-gradient(135deg, #0038a8, #ce1126, #f9e300)", lottieUrl: "https://assets10.lottiefiles.com/packages/lf20_confetti.json", fallbackUrl: "https://assets3.lottiefiles.com/packages/lf20_xyjppxqi.json" };
+            if (month === 12 && day >= 1 && day <= 26) return { gradient: "linear-gradient(135deg, #0b1a2e, #1e3c4c, #1f2e3a)", lottieUrl: reliableLottieMap.snow };
+            if (month === 1 && day <= 5) return { gradient: "linear-gradient(135deg, #0f172a, #1e293b, #2d3a4f)", lottieUrl: reliableLottieMap.confetti };
+            if (month === 6 && day === 12) return { gradient: "linear-gradient(135deg, #0038a8, #ce1126, #f9e300)", lottieUrl: reliableLottieMap.confetti };
             const isPayroll = (day === 15) || (day === 30) || (day === 31 && [1,3,5,7,8,10,12].includes(month));
-            if (isPayroll) return { gradient: "linear-gradient(135deg, #1e3c2c, #2e6b47, #4c9f70)", lottieUrl: "https://assets10.lottiefiles.com/packages/lf20_confetti.json", fallbackUrl: "https://assets2.lottiefiles.com/packages/lf20_ka0vofoj.json" };
-            if (month >= 6 && month <= 10) return { gradient: "linear-gradient(135deg, #1a2f3f, #2c4e5e, #3f6f7f)", lottieUrl: "https://assets2.lottiefiles.com/packages/lf20_rain.json", fallbackUrl: "https://assets8.lottiefiles.com/packages/lf20_l7ybdzfd.json" };
-            if (month >= 3 && month <= 5) return { gradient: "linear-gradient(135deg, #fbc2eb, #a6c1ee, #c8e0f4)", lottieUrl: "https://assets4.lottiefiles.com/packages/lf20_qwyj4h3r.json", fallbackUrl: "https://assets1.lottiefiles.com/packages/lf20_izfqixfd.json" };
-            return { gradient: "linear-gradient(135deg, #ffd89b, #c7e9fb, #e0bb87)", lottieUrl: "", fallbackUrl: "" };
+            if (isPayroll) return { gradient: "linear-gradient(135deg, #1e3c2c, #2e6b47, #4c9f70)", lottieUrl: reliableLottieMap.confetti };
+            if (month >= 6 && month <= 10) return { gradient: "linear-gradient(135deg, #1a2f3f, #2c4e5e, #3f6f7f)", lottieUrl: reliableLottieMap.rain };
+            if (month >= 3 && month <= 5) return { gradient: "linear-gradient(135deg, #fbc2eb, #a6c1ee, #c8e0f4)", lottieUrl: reliableLottieMap.spring };
+            return { gradient: "linear-gradient(135deg, #ffd89b, #c7e9fb, #e0bb87)", lottieUrl: "" };
         }
-        function loadLottie(url, fallback) {
+        function loadLottie(url) {
             lottieContainer.innerHTML = '';
-            if (!url && !fallback) return;
+            if (!url) return;
             const player = document.createElement('lottie-player');
-            player.setAttribute('src', url || fallback);
+            player.setAttribute('src', url);
             player.setAttribute('background', 'transparent');
             player.setAttribute('speed', '0.9');
             player.setAttribute('loop', '');
@@ -498,13 +504,14 @@
             player.style.width = '100%';
             player.style.height = '100%';
             player.style.opacity = '0.4';
+            // Remove on error to avoid console noise
+            player.addEventListener('error', () => { if (lottieContainer.contains(player)) lottieContainer.removeChild(player); });
             lottieContainer.appendChild(player);
-            if (url && fallback && url !== fallback) { player.addEventListener('error', () => { if (lottieContainer.firstChild === player) loadLottie(fallback, null); }); }
         }
         function applyAdaptiveTheme() {
             const theme = getThemeByDate();
             bgDiv.style.background = theme.gradient;
-            if (theme.lottieUrl) loadLottie(theme.lottieUrl, theme.fallbackUrl);
+            if (theme.lottieUrl) loadLottie(theme.lottieUrl);
             else lottieContainer.innerHTML = '';
         }
         applyAdaptiveTheme();
@@ -513,7 +520,7 @@
         window.addEventListener('focus', applyAdaptiveTheme);
     })();
 
-    // ========== FIREBASE & FULL HRIS SCRIPT (with Modern Payslip Modal) ==========
+    // ========== FIREBASE & FULL HRIS SCRIPT ==========
     const firebaseConfig = {
         apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
         authDomain: "equiprime-hr.firebaseapp.com",
@@ -711,10 +718,9 @@
         return { sss: Math.round(sss), philHealth: Math.round(philHealth), pagIbig, tax: Math.round(tax), totalDeductions: Math.round(sss+philHealth+pagIbig+tax) };
     }
 
-    // Modern Payslip Modal Generation
+    // Modern Payslip Modal
     function showModernPayslip(employee, payslipData) {
         const { month, cutOff, dailyRate, daysPresent, basicSalaryPeriod, sss, philHealth, pagIbig, withholdingTax, otherDeduction, netPay } = payslipData;
-        const periodLabel = cutOff === '1st cut-off (27th-10th)' ? '1st cut-off (27th-10th)' : '2nd cut-off (11th-26th)';
         const earningsHtml = `<tr><td>Basic Salary (${dailyRate} x ${daysPresent} days)</td><td class="text-end">₱${basicSalaryPeriod.toFixed(2)}</td></tr>`;
         const deductionsHtml = `
             <tr><td>SSS Contribution</td><td class="text-end text-danger">-₱${sss.toFixed(2)}</td></tr>
@@ -732,7 +738,7 @@
                     </div>
                     <div class="text-end">
                         <h4 class="text-uppercase fw-bold m-0 text-secondary">Payslip</h4>
-                        <div class="text-muted small">Period: ${month} (${periodLabel})</div>
+                        <div class="text-muted small">Period: ${month} (${cutOff})</div>
                     </div>
                 </div>
                 <hr class="text-muted opacity-25">
@@ -758,6 +764,7 @@
         openModal('payslipModal');
     }
 
+    // FIXED: generatePayslipAuto with fallback email
     async function generatePayslipAuto() {
         if (!currentUser || !currentUser.email) { alert("You must be logged in."); return; }
         if (!payslipAuthorizedEmails.includes(currentUser.email)) {
@@ -773,6 +780,12 @@
         if (!empId || !month || isNaN(daysPresent) || daysPresent <= 0) { alert("Fill all fields: Employee, Month, Days Present"); return; }
         const employee = allEmployees.find(e => e.id === empId);
         if (!employee) { alert("Employee not found"); return; }
+        // Ensure email exists (fallback)
+        let employeeEmail = employee.email;
+        if (!employeeEmail) {
+            employeeEmail = `${employee.name.toLowerCase().replace(/\s/g, '.')}@equiprime.ph`;
+            console.warn(`Employee ${employee.name} has no email, using fallback: ${employeeEmail}`);
+        }
         const periodSalary = dailyRate * daysPresent;
         const monthlySalary = periodSalary * 2;
         const ded = computeMonthlyDeductions(monthlySalary);
@@ -781,11 +794,27 @@
         const totalDeductions = totalStatutory + otherDeduction;
         const netPay = periodSalary - totalDeductions;
         const cutOffLabel = cutOff === 'first' ? '1st cut-off (27th-10th)' : '2nd cut-off (11th-26th)';
-        const newPayslip = { employeeId: empId, employeeName: employee.name, employeeEmail: employee.email, month, cutOff: cutOffLabel, dailyRate, daysPresent, basicSalaryPeriod: periodSalary, sss: halfSss, philHealth: halfPhil, pagIbig: halfPag, withholdingTax: halfTax, otherDeduction, totalDeductions, netPay, date: new Date().toLocaleDateString() };
+        const newPayslip = { 
+            employeeId: empId, 
+            employeeName: employee.name, 
+            employeeEmail: employeeEmail, 
+            month, 
+            cutOff: cutOffLabel, 
+            dailyRate, 
+            daysPresent, 
+            basicSalaryPeriod: periodSalary, 
+            sss: halfSss, 
+            philHealth: halfPhil, 
+            pagIbig: halfPag, 
+            withholdingTax: halfTax, 
+            otherDeduction, 
+            totalDeductions, 
+            netPay, 
+            date: new Date().toLocaleDateString() 
+        };
         const docRef = await db.collection('payslips').add(newPayslip);
         allPayslips.push({ id: docRef.id, ...newPayslip });
         refreshHrPayslip();
-        // Show modern payslip modal
         showModernPayslip(employee, { month, cutOff: cutOffLabel, dailyRate, daysPresent, basicSalaryPeriod: periodSalary, sss: halfSss, philHealth: halfPhil, pagIbig: halfPag, withholdingTax: halfTax, otherDeduction, netPay });
         document.getElementById('daysPresent').value = '';
         document.getElementById('otherDeduction').value = '0';
