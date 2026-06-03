@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Smart HRIS | 80/20 Layout</title>
+    <title>EQUIPRIME HR - Smart HRIS | Payslip Restricted</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -13,10 +13,9 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-    <!-- Lottie Player for dynamic animated background -->
     <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.12/dist/lottie-player.js"></script>
     <style>
-        /* ========== BASE STYLES (original) ========== */
+        /* ========== BASE STYLES (same as original) ========== */
         * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #f3f6fb; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         .tab-active { background-color: #004aad; color: white; }
@@ -55,8 +54,6 @@
         .schedule-day:hover { background-color: #f8fafc; }
         .editable-leave { cursor: pointer; color: #004aad; }
         .editable-leave:hover { text-decoration: underline; }
-
-        /* ========== DARK MODE STYLES ========== */
         body.dark { background: #0f172a; color: #e2e8f0; }
         body.dark .bg-white, body.dark .bg-slate-50, body.dark .bg-gray-50, body.dark .bg-slate-100, body.dark .stat-card,
         body.dark .modal-container, body.dark .bg-white.rounded-2xl, body.dark .bg-slate-50.rounded-xl,
@@ -81,247 +78,49 @@
         body.dark .mobile-header .bg-white i { color: white; }
         body.dark .bg-yellow-50 { background-color: #422c00 !important; color: #fbbf24 !important; }
 
-        /* ========== LOGIN SPLIT: 80% LEFT / 20% RIGHT with VERTICAL FLEX LAYOUT ========== */
-        .login-split {
-            display: flex;
-            width: 100%;
-            min-height: 100vh;
-        }
-        /* LEFT SIDE: 80% width, flex column for vertical division */
-        .branding-half {
-            width: 80%;
-            position: relative;
-            background-color: #0a0f1e;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-        /* Gradient overlays for better brand visibility */
-        .branding-half::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.6) 100%);
-            z-index: 3;
-            pointer-events: none;
-        }
-        .branding-half::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(0,0,0,0.4) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.4) 100%);
-            z-index: 3;
-            pointer-events: none;
-        }
-        /* Right side: 20% width */
-        .login-half {
-            width: 20%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-        body.dark .login-half {
-            background: #1e293b;
-        }
-        /* Canvas for pixel rain */
-        .branding-half canvas {
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        .lightning-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #fff;
-            opacity: 0;
-            z-index: 2;
-            pointer-events: none;
-        }
+        /* Login 80/20 layout (same as previous) */
+        .login-split { display: flex; width: 100%; min-height: 100vh; }
+        .branding-half { width: 80%; position: relative; background-color: #0a0f1e; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
+        .branding-half::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.6) 100%); z-index: 3; pointer-events: none; }
+        .branding-half::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(0,0,0,0.4) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.4) 100%); z-index: 3; pointer-events: none; }
+        .login-half { width: 20%; background: white; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+        body.dark .login-half { background: #1e293b; }
+        .branding-half canvas { display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .lightning-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: #fff; opacity: 0; z-index: 2; pointer-events: none; }
         .flash-active { animation: lightningstrike 0.4s ease-out; }
         @keyframes lightningstrike { 0% { opacity: 0; } 10% { opacity: 0.8; background-color: #e2e8f0; } 15% { opacity: 0; } 20% { opacity: 0.5; background-color: #cbd5e1; } 30% { opacity: 0; } 100% { opacity: 0; } }
-        /* Pixel character */
-        .character-container {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 4;
-            width: 120px;
-            height: 180px;
-            animation: pixelBounce 1.2s steps(2) infinite;
-            transform-origin: bottom center;
-        }
+        .character-container { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); z-index: 4; width: 120px; height: 180px; animation: pixelBounce 1.2s steps(2) infinite; transform-origin: bottom center; }
         .umbrella { width: 120px; height: 50px; background: #ff4757; border-radius: 60px 60px 0 0; box-shadow: inset -15px 0 0 rgba(0,0,0,0.2), 0 6px 0 #ff6b81; position: relative; }
         .umbrella::before { content: ''; position: absolute; top: -8px; left: 56px; width: 8px; height: 8px; background: #ffa502; }
         .umbrella::after { content: ''; position: absolute; bottom: -50px; left: 56px; width: 8px; height: 50px; background: #f1f2f6; }
         .person { width: 50px; height: 90px; background: #ffa502; margin: 40px auto 0 auto; border-radius: 12px 12px 0 0; box-shadow: inset -10px 0 0 rgba(0,0,0,0.15); position: relative; z-index: -1; }
         .person::after { content: ''; position: absolute; bottom: -10px; left: 4px; width: 42px; height: 10px; background: #333; box-shadow: -6px 0 0 #222, 6px 0 0 #222; }
         @keyframes pixelBounce { 0%, 100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(-4px); } }
-
-        /* Branding content container: vertical flex, full height, centered */
-        .branding-content {
-            position: relative;
-            z-index: 5;
-            width: 100%;
-            max-width: 550px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            text-align: center;
-            pointer-events: none;
-            backdrop-filter: blur(4px);
-            background: rgba(0,0,0,0.3);
-            border-radius: 48px;
-            padding: 1.5rem;
-        }
+        .branding-content { position: relative; z-index: 5; width: 100%; max-width: 550px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; pointer-events: none; backdrop-filter: blur(4px); background: rgba(0,0,0,0.3); border-radius: 48px; padding: 1.5rem; }
         .branding-content a { pointer-events: auto; }
-        /* Top 50%: branding-image.png */
-        .branding-image-wrapper {
-            flex: 5; /* 50% of available space */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-        .branding-main-image {
-            max-width: 85%;
-            max-height: 85%;
-            object-fit: contain;
-            border-radius: 24px;
-            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.4);
-            border: 2px solid rgba(255,255,255,0.2);
-        }
-        /* Next 10%: welcome-logo.png */
-        .welcome-logo-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-        }
-        .branding-logo {
-            max-height: 60px;
-            max-width: 80%;
-            object-fit: contain;
-        }
-        /* Remaining 40%: text, icons, links, copyright */
-        .branding-text-section {
-            flex: 4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.8rem;
-            width: 100%;
-        }
-        .branding-content h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin: 0;
-            letter-spacing: -0.02em;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-        }
-        .branding-subtext {
-            font-size: 0.9rem;
-            opacity: 0.95;
-            max-width: 320px;
-            margin: 0 auto;
-        }
-        .weather-widget {
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(8px);
-            border-radius: 999px;
-            padding: 0.4rem 1rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-top: 0.25rem;
-        }
-        .social-icons {
-            display: flex;
-            gap: 1.25rem;
-            justify-content: center;
-            margin-top: 0.25rem;
-        }
-        .social-icons a {
-            color: white;
-            background: rgba(255,255,255,0.15);
-            padding: 8px;
-            border-radius: 50%;
-            display: inline-flex;
-            transition: 0.2s;
-        }
-        .social-icons a:hover {
-            background: rgba(255,255,255,0.3);
-            transform: translateY(-2px);
-        }
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            justify-content: center;
-            font-size: 0.75rem;
-            margin-top: 0.25rem;
-        }
-        .footer-links a {
-            color: rgba(255,255,255,0.9);
-            transition: 0.2s;
-        }
-        .footer-links a:hover {
-            color: white;
-            text-decoration: underline;
-        }
-        .copyright {
-            font-size: 0.7rem;
-            opacity: 0.8;
-            margin-top: 0.25rem;
-        }
-
-        /* Login card styling */
-        .login-card {
-            width: 100%;
-            max-width: 320px;
-        }
+        .branding-image-wrapper { flex: 5; display: flex; align-items: center; justify-content: center; width: 100%; }
+        .branding-main-image { max-width: 85%; max-height: 85%; object-fit: contain; border-radius: 24px; box-shadow: 0 20px 30px -12px rgba(0,0,0,0.4); border: 2px solid rgba(255,255,255,0.2); }
+        .welcome-logo-wrapper { flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
+        .branding-logo { max-height: 60px; max-width: 80%; object-fit: contain; }
+        .branding-text-section { flex: 4; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.8rem; width: 100%; }
+        .branding-content h1 { font-size: 1.8rem; font-weight: 800; margin: 0; letter-spacing: -0.02em; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+        .branding-subtext { font-size: 0.9rem; opacity: 0.95; max-width: 320px; margin: 0 auto; }
+        .weather-widget { background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); border-radius: 999px; padding: 0.4rem 1rem; display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; font-weight: 500; margin-top: 0.25rem; }
+        .social-icons { display: flex; gap: 1.25rem; justify-content: center; margin-top: 0.25rem; }
+        .social-icons a { color: white; background: rgba(255,255,255,0.15); padding: 8px; border-radius: 50%; display: inline-flex; transition: 0.2s; }
+        .social-icons a:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
+        .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; font-size: 0.75rem; margin-top: 0.25rem; }
+        .footer-links a { color: rgba(255,255,255,0.9); transition: 0.2s; }
+        .footer-links a:hover { color: white; text-decoration: underline; }
+        .copyright { font-size: 0.7rem; opacity: 0.8; margin-top: 0.25rem; }
+        .login-card { width: 100%; max-width: 320px; }
         .login-card h1 { color: #004aad !important; }
         body.dark .login-card h1 { color: white !important; }
         .login-card .bg-slate-50 { background-color: #f8fafc !important; color: #1e293b !important; }
         body.dark .login-card .bg-slate-50 { background-color: #334155 !important; color: #cbd5e1 !important; }
+        @media (max-width: 1023px) { .login-split { flex-direction: column; } .branding-half, .login-half { width: 100%; min-height: 60vh; } .branding-content { padding: 1rem; max-width: 90%; } .branding-main-image { max-width: 70%; } .character-container { width: 100px; height: 150px; bottom: 20px; } .umbrella { width: 100px; height: 40px; } .umbrella::after { bottom: -40px; height: 40px; left: 46px; } .person { height: 70px; } }
 
-        @media (max-width: 1023px) {
-            .login-split { flex-direction: column; }
-            .branding-half, .login-half { width: 100%; min-height: 60vh; }
-            .branding-content { padding: 1rem; max-width: 90%; }
-            .branding-main-image { max-width: 70%; }
-            .character-container { width: 100px; height: 150px; bottom: 20px; }
-            .umbrella { width: 100px; height: 40px; }
-            .umbrella::after { bottom: -40px; height: 40px; left: 46px; }
-            .person { height: 70px; }
-        }
-
-        /* ========== ATTENDANCE SUMMARY MODULE STYLES ========== */
+        /* Attendance summary styles (abbreviated) */
         .attendance-summary-container { background: #f8fafc; border-radius: 1rem; padding: 1.25rem; }
         body.dark .attendance-summary-container { background: #0f172a; }
         .attendance-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
@@ -367,43 +166,19 @@
         @media (max-width: 1024px) { .attendance-grid { grid-template-columns: 1fr; } .summary-cards { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 640px) { .summary-cards { grid-template-columns: 1fr; } .calendar-grid { grid-template-columns: repeat(2, 1fr); } }
 
-        /* ========== ADAPTIVE BACKGROUND LAYERS (Lottie + Gradient) ========== */
-        .adaptive-bg-gradient {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            transition: background 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            will-change: background;
-        }
-        .adaptive-lottie-layer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-        .adaptive-lottie-layer lottie-player {
-            width: 100%;
-            height: 100%;
-            opacity: 0.4;
-            transition: opacity 0.8s ease;
-        }
+        .adaptive-bg-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; transition: background 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1); will-change: background; }
+        .adaptive-lottie-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .adaptive-lottie-layer lottie-player { width: 100%; height: 100%; opacity: 0.4; transition: opacity 0.8s ease; }
         body.dark .adaptive-lottie-layer lottie-player { opacity: 0.3; }
         .app-container, .login-split { position: relative; z-index: 1; }
     </style>
 </head>
 <body>
 
-<!-- Adaptive Background Layers -->
 <div id="adaptiveBgGradient" class="adaptive-bg-gradient"></div>
 <div id="adaptiveLottieContainer" class="adaptive-lottie-layer"></div>
 
-<!-- ========== LOGIN SCREEN: 80/20 LAYOUT with VERTICAL DIVISION ========== -->
+<!-- LOGIN SCREEN 80/20 -->
 <div id="authScreen" class="login-split">
     <div class="branding-half" id="brandingHalf">
         <canvas id="rainCanvas"></canvas>
@@ -413,15 +188,12 @@
             <div class="person"></div>
         </div>
         <div class="branding-content">
-            <!-- 50% area: branding-image.png -->
             <div class="branding-image-wrapper">
                 <img src="branding-image.png" alt="EQUIPRIME Branding" class="branding-main-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 300 200%27%3E%3Crect width=%27300%27 height=%27200%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2750%27 font-size=%2720%27 text-anchor=%27middle%27 fill=%27white%27%3EBRAND%3C/text%3E%3C/svg%3E';">
             </div>
-            <!-- 10% area: welcome-logo.png -->
             <div class="welcome-logo-wrapper">
                 <img src="welcome logo.jpg" alt="EQUIPRIME Logo" class="branding-logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
             </div>
-            <!-- 40% area: text, icons, links, copyright -->
             <div class="branding-text-section">
                 <h1>Smart Choices.<br>Smarter Results.</h1>
                 <div class="branding-subtext">Empowering your workforce with streamlined HR management, accurate insights, and seamless collaboration.</div>
@@ -499,7 +271,7 @@
     </div>
 </div>
 
-<!-- ========== MAIN APP CONTAINER (full HRIS dashboard, same as original) ========== -->
+<!-- MAIN APP CONTAINER (identical to original but with payslip restriction) -->
 <div id="mainApp" class="hidden app-container">
     <div id="overlay" class="overlay" onclick="closeMobileSidebar()"></div>
     <div id="mobileSidebar" class="mobile-sidebar"><div class="flex justify-end mb-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x"></i></button></div><div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div><nav id="mobileNavMenu" class="space-y-2 flex-1"></nav><div class="mt-6 pt-4 border-t border-white/20"><div class="filter-section"><label class="filter-label">DEPARTMENT</label><select id="filterDepartment" class="filter-select" onchange="applyFilters()"><option value="all">All Departments</option><option value="Service and After-sales">Service and After-sales</option><option value="Sales">Sales</option><option value="Accounting and Finance">Accounting</option><option value="Marketing">Marketing</option><option value="HR">HR</option><option value="Warehouse">Warehouse</option><option value="Supply Chain Logistics & Purchasing">Supply Chain</option><option value="Admin Management">Admin Management</option><option value="Guard">Guard</option></select></div><div class="filter-section"><label class="filter-label">STATUS</label><select id="filterStatus" class="filter-select" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="on-leave">On Leave</option></select></div><div class="filter-section"><label class="filter-label">LEAVE TYPE</label><select id="filterLeaveType" class="filter-select" onchange="applyFilters()"><option value="all">All Leave Types</option><option value="Official Business">Official Business</option><option value="Vacation Leave">Vacation Leave</option><option value="Sick Leave">Sick Leave</option><option value="Birthday Leave">Birthday Leave</option><option value="Emergency Leave">Emergency Leave</option><option value="Offset">Offset</option></select></div><div class="pt-2"><label class="filter-label">LAST UPDATED</label><div class="text-white/80 text-xs flex items-center gap-2"><i data-feather="calendar" style="width:0.8rem;"></i><span id="lastUpdatedTime">Loading...</span></div></div></div><div class="pt-4 border-t border-white/20 mt-2"><button onclick="toggleNightMode()" class="w-full flex items-center gap-3 text-white/70 hover:text-white p-3 rounded-xl transition"><i data-feather="moon" id="nightModeIconMobile"></i> <span>Night Mode</span></button></div><div class="pt-2 border-t border-white/20 mt-2"><button onclick="logout()" class="w-full flex items-center gap-3 text-white/70 p-3 rounded-xl"><i data-feather="log-out"></i> Logout</button></div></div>
@@ -509,7 +281,7 @@
         <div class="mobile-header"><button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-[#004aad] text-white flex items-center justify-center text-xs font-bold" id="mobileUserInitials">HR</div><span id="mobileUserName" class="text-sm font-semibold text-slate-700">User</span></div></div>
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6"><div><h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Welcome Back, <span id="welcomeName">User</span></h2><p class="text-slate-500 text-sm mt-1" id="welcomeSubtitle"></p></div><div class="bg-yellow-50 text-yellow-700 px-3 py-1.5 rounded-full text-xs flex items-center gap-1"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div> Biometrics ready (demo mode)</div></div>
 
-        <!-- DASHBOARD TAB (abbreviated but fully functional) -->
+        <!-- DASHBOARD TAB -->
         <div id="dashboard-tab" class="tab-content">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div class="stat-card bg-white rounded-2xl p-5 shadow-sm"><div class="flex justify-between items-start"><div><p class="text-slate-500 text-sm">Total Employees</p><h3 class="text-3xl font-bold mt-2" id="totalEmployees">0</h3></div><div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center"><i data-feather="users" class="text-blue-600"></i></div></div></div>
@@ -541,7 +313,7 @@
         <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
 
         <!-- HR PAYSLIP MANAGEMENT -->
-        <div id="hr-payslip-tab" class="tab-content hidden"><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl"><div><label class="text-sm font-medium">Cut-off Period</label><select id="cutOffPeriod" class="w-full p-3 border rounded-xl"><option value="first">1st cut-off (27th-10th)</option><option value="second">2nd cut-off (11th-26th)</option></select></div><input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl" placeholder="Daily Rate"><input type="number" id="daysPresent" class="w-full p-3 border rounded-xl" placeholder="Days Present (this cut-off)"><input type="number" id="otherDeduction" value="0" step="0.01" class="w-full p-3 border rounded-xl" placeholder="Other Deduction (e.g., loan, advance)"><button onclick="generatePayslipAuto()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Generate Payslip (Auto-Compute)</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
+        <div id="hr-payslip-tab" class="tab-content hidden"><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl"><div><label class="text-sm font-medium">Cut-off Period</label><select id="cutOffPeriod" class="w-full p-3 border rounded-xl"><option value="first">1st cut-off (27th-10th)</option><option value="second">2nd cut-off (11th-26th)</option></select></div><input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl" placeholder="Daily Rate"><input type="number" id="daysPresent" class="w-full p-3 border rounded-xl" placeholder="Days Present (this cut-off)"><input type="number" id="otherDeduction" value="0" step="0.01" class="w-full p-3 border rounded-xl" placeholder="Other Deduction (e.g., loan, advance)"><button id="generatePayslipBtn" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Generate Payslip (Auto-Compute)</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
 
         <!-- GUARD WEEKLY SCHEDULE TAB -->
         <div id="hr-guard-schedule-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="calendar"></i> Guard Weekly Schedule Management</h2><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 bg-slate-50"><p class="text-sm font-semibold text-slate-700 mb-2">Select days and shift for this guard:</p><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Assign Weekly Schedule</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
@@ -554,7 +326,7 @@
     </div>
 </div>
 
-<!-- MODALS (unchanged) -->
+<!-- MODALS (same as original) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><div><label class="text-sm font-medium">Title</label><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl" placeholder="Announcement Title"></div><div><label class="text-sm font-medium">Content</label><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl" placeholder="Announcement details..."></textarea></div></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left">Vacation Leave</button></div></div></div>
@@ -618,8 +390,7 @@
             if (data.current_weather) {
                 const temp = Math.round(data.current_weather.temperature);
                 const weatherCode = data.current_weather.weathercode;
-                let condition = '';
-                let icon = 'cloud-rain';
+                let condition = '', icon = 'cloud-rain';
                 if (weatherCode === 0) { condition = 'Clear'; icon = 'sun'; }
                 else if (weatherCode === 1 || weatherCode === 2) { condition = 'Partly Cloudy'; icon = 'cloud'; }
                 else if (weatherCode === 3) { condition = 'Overcast'; icon = 'cloud'; }
@@ -630,16 +401,9 @@
                 else { condition = 'Variable'; icon = 'cloud'; }
                 document.getElementById('weatherText').innerHTML = `${condition} · ${temp}°C`;
                 const iconElem = document.querySelector('#liveWeatherWidget i');
-                if (iconElem) {
-                    iconElem.setAttribute('data-feather', icon);
-                    if (typeof feather !== 'undefined') feather.replace();
-                }
-            } else {
-                document.getElementById('weatherText').innerHTML = '🌧️ Rainy · 24°C';
-            }
-        } catch (error) {
-            document.getElementById('weatherText').innerHTML = '🌧️ Rainy · 24°C';
-        }
+                if (iconElem) { iconElem.setAttribute('data-feather', icon); if (typeof feather !== 'undefined') feather.replace(); }
+            } else { document.getElementById('weatherText').innerHTML = '🌧️ Rainy · 24°C'; }
+        } catch (error) { document.getElementById('weatherText').innerHTML = '🌧️ Rainy · 24°C'; }
     }
     fetchWeather();
     setInterval(fetchWeather, 30 * 60 * 1000);
@@ -649,7 +413,6 @@
         const bgDiv = document.getElementById('adaptiveBgGradient');
         const lottieContainer = document.getElementById('adaptiveLottieContainer');
         if (!bgDiv || !lottieContainer) return;
-
         function getThemeByDate() {
             const now = new Date();
             const month = now.getMonth() + 1;
@@ -663,7 +426,6 @@
             if (month >= 3 && month <= 5) return { gradient: "linear-gradient(135deg, #fbc2eb, #a6c1ee, #c8e0f4)", lottieUrl: "https://assets4.lottiefiles.com/packages/lf20_qwyj4h3r.json", fallbackUrl: "https://assets1.lottiefiles.com/packages/lf20_izfqixfd.json" };
             return { gradient: "linear-gradient(135deg, #ffd89b, #c7e9fb, #e0bb87)", lottieUrl: "", fallbackUrl: "" };
         }
-
         function loadLottie(url, fallback) {
             lottieContainer.innerHTML = '';
             if (!url && !fallback) return;
@@ -677,11 +439,8 @@
             player.style.height = '100%';
             player.style.opacity = '0.4';
             lottieContainer.appendChild(player);
-            if (url && fallback && url !== fallback) {
-                player.addEventListener('error', () => { if (lottieContainer.firstChild === player) loadLottie(fallback, null); });
-            }
+            if (url && fallback && url !== fallback) { player.addEventListener('error', () => { if (lottieContainer.firstChild === player) loadLottie(fallback, null); }); }
         }
-
         function applyAdaptiveTheme() {
             const theme = getThemeByDate();
             bgDiv.style.background = theme.gradient;
@@ -694,7 +453,7 @@
         window.addEventListener('focus', applyAdaptiveTheme);
     })();
 
-    // ========== FIREBASE & FULL HRIS SCRIPT (complete, fully functional) ==========
+    // ========== FIREBASE & FULL HRIS SCRIPT (with Payslip restriction by email) ==========
     const firebaseConfig = {
         apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
         authDomain: "equiprime-hr.firebaseapp.com",
@@ -711,6 +470,8 @@
     let allEmployees = [], allRequests = [], allAttendance = [], allPayslips = [], allAnnouncements = [], guardWeeklySchedules = [];
     let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
     const restrictedEmails = ["hr@equiprime.ph", "mod@equiprime.ph"];
+    // Authorized emails for payslip generation
+    const payslipAuthorizedEmails = ["hrpoly@equiprime.ph", "hrvince@equiprime.ph", "mod.dex@equiprime.ph", "mod.rom@equiprime.ph"];
 
     const departmentWorkingHours = {
         "Service and After-sales": { startHour:8, startMinute:0, endHour:17, endMinute:0, workDays:[1,2,3,4,5,6] },
@@ -735,7 +496,7 @@
             "Accounting and Finance": ["ana.liwanagan@equiprime.ph"],
             "Supply Chain Logistics & Purchasing": ["cris.molina@equiprime.ph"],
             "Admin Management": ["carlo.fruto@equiprime.ph"],
-            "HR": ["hrpoly@equiprime.ph"],
+            "HR": ["hr@equiprime.ph"],
             "Sales": ["carlo.fruto@equiprime.ph"],
             "Marketing": ["carlo.fruto@equiprime.ph"],
             "Warehouse": ["cris.molina@equiprime.ph"]
@@ -890,15 +651,21 @@
         }
         return { sss: Math.round(sss), philHealth: Math.round(philHealth), pagIbig, tax: Math.round(tax), totalDeductions: Math.round(sss+philHealth+pagIbig+tax) };
     }
+
+    // ========== MODIFIED: Payslip generation allowed only for specific emails ==========
     async function generatePayslipAuto() {
-        if (currentUserRole !== 'hr') { alert("Only HR can generate payslips."); return; }
+        if (!currentUser || !currentUser.email) { alert("You must be logged in."); return; }
+        if (!payslipAuthorizedEmails.includes(currentUser.email)) {
+            alert("❌ You are not authorized to generate payslips. Only specific HR/Moderator accounts can do this.");
+            return;
+        }
         const empId = document.getElementById('payslipEmployee').value;
         const month = document.getElementById('payslipMonth').value;
         const cutOff = document.getElementById('cutOffPeriod').value;
         const dailyRate = parseFloat(document.getElementById('dailyRate').value);
         const daysPresent = parseInt(document.getElementById('daysPresent').value);
         const otherDeduction = parseFloat(document.getElementById('otherDeduction').value) || 0;
-        if (!empId || !month || isNaN(daysPresent) || daysPresent <= 0) { alert("Fill all fields"); return; }
+        if (!empId || !month || isNaN(daysPresent) || daysPresent <= 0) { alert("Fill all fields: Employee, Month, Days Present"); return; }
         const employee = allEmployees.find(e => e.id === empId);
         if (!employee) { alert("Employee not found"); return; }
         const periodSalary = dailyRate * daysPresent;
@@ -917,6 +684,7 @@
         document.getElementById('daysPresent').value = '';
         document.getElementById('otherDeduction').value = '0';
     }
+
     function refreshHrPayslip() { const sel = document.getElementById('payslipEmployee'); if (sel) sel.innerHTML = '<option value="">Select Employee</option>' + allEmployees.map(e => `<option value="${e.id}">${e.name} - ${e.dept}</option>`).join(''); const hist = document.getElementById('payslipHistory'); if (hist) hist.innerHTML = allPayslips.slice().reverse().map(p => `<div class="bg-slate-50 rounded-xl p-4 border"><div class="flex justify-between items-start"><div><p class="font-bold">${p.employeeName}</p><p class="text-sm">${p.month} (${p.cutOff})</p><p class="text-sm">Days: ${p.daysPresent} | Rate: ₱${p.dailyRate}</p><p class="text-xs">Period salary: ₱${p.basicSalaryPeriod}</p><p class="text-xs">SSS: ₱${p.sss} | PhilHealth: ₱${p.philHealth} | Pag-IBIG: ₱${p.pagIbig} | Tax: ₱${p.withholdingTax}</p><p class="text-xs">Other Deduction: ₱${p.otherDeduction||0}</p></div><div class="text-right"><p class="font-bold text-green-600">Net pay: ₱${p.netPay.toLocaleString()}</p><p class="text-xs text-slate-400">Generated: ${p.date}</p></div></div></div>`).join('') || '<div class="text-center py-8">No payslips</div>'; }
     function refreshEmployeePayslip() { const my = allPayslips.filter(p => p.employeeEmail === currentUser?.email); document.getElementById('employeePayslipList').innerHTML = my.map(p => `<div class="bg-white rounded-xl p-4 shadow-sm border"><div class="flex justify-between items-start"><div><p class="font-bold">${p.month} (${p.cutOff})</p><p class="text-sm">Days: ${p.daysPresent} | Rate: ₱${p.dailyRate}</p><p class="text-sm">Basic: ₱${p.basicSalaryPeriod}</p><p class="text-xs">Deductions: SSS ₱${p.sss}, PhilHealth ₱${p.philHealth}, Pag-IBIG ₱${p.pagIbig}, Tax ₱${p.withholdingTax}, Other ₱${p.otherDeduction||0}</p></div><div class="text-right"><p class="font-bold text-green-600">Net: ₱${p.netPay.toLocaleString()}</p></div></div></div>`).join('') || '<div class="text-center py-8">No payslips yet</div>'; }
 
@@ -1276,6 +1044,7 @@
     document.getElementById('showSignupBtnMain').addEventListener('click', showSignup);
     document.getElementById('signupBtnMain').addEventListener('click', signupWithEmail);
     document.getElementById('showLoginBtnMain').addEventListener('click', showLogin);
+    document.getElementById('generatePayslipBtn').addEventListener('click', generatePayslipAuto);
 </script>
 </body>
 </html>
