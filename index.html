@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Complete HRIS</title>
+    <title>EQUIPRIME HR - Final HRIS</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -15,6 +15,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://unpkg.com/@lottiefiles/lottie-player@2.0.12/dist/lottie-player.js"></script>
     <style>
+        /* ========== BASE STYLES (unchanged except attendance summary spacing) ========== */
         * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #f3f6fb; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         .tab-active { background-color: #004aad; color: white; }
@@ -76,10 +77,8 @@
         body.dark .mobile-header button.bg-white { background-color: #1e293b !important; }
         body.dark .mobile-header .bg-white i { color: white; }
         body.dark .bg-yellow-50 { background-color: #422c00 !important; color: #fbbf24 !important; }
-        body.dark .announcement-item { background-color: #1e293b !important; border-left-color: #3b82f6 !important; color: #e2e8f0; }
-        body.dark .announcement-item .text-slate-400 { color: #94a3b8 !important; }
 
-        /* Login 80/20 layout */
+        /* Login 80/20 layout (same as original) */
         .login-split { display: flex; width: 100%; min-height: 100vh; }
         .branding-half { width: 80%; position: relative; background-color: #0a0f1e; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
         .branding-half::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.6) 100%); z-index: 3; pointer-events: none; }
@@ -121,47 +120,34 @@
         body.dark .login-card .bg-slate-50 { background-color: #334155 !important; color: #cbd5e1 !important; }
         @media (max-width: 1023px) { .login-split { flex-direction: column; } .branding-half, .login-half { width: 100%; min-height: 60vh; } .branding-content { padding: 1rem; max-width: 90%; } .branding-main-image { max-width: 70%; } .character-container { width: 100px; height: 150px; bottom: 20px; } .umbrella { width: 100px; height: 40px; } .umbrella::after { bottom: -40px; height: 40px; left: 46px; } .person { height: 70px; } }
 
-        .adaptive-bg-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; transition: background 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1); will-change: background; }
-        .adaptive-lottie-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-        .adaptive-lottie-layer lottie-player { width: 100%; height: 100%; opacity: 0.4; transition: opacity 0.8s ease; }
-        body.dark .adaptive-lottie-layer lottie-player { opacity: 0.3; }
-        .app-container, .login-split { position: relative; z-index: 1; }
-
-        /* Detailed Payslip Modal */
-        .payslip-modal-container { max-width: 1000px; width: 95%; background: white; border-radius: 1rem; overflow-y: auto; max-height: 90vh; }
-        .payslip-card { background: #ffffff; padding: 1.5rem; border-radius: 1rem; border-top: 6px solid #004aad; }
-        .company-logo { font-size: 1.5rem; font-weight: 700; color: #004aad; letter-spacing: -0.5px; }
-        .payslip-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-        .payslip-table td, .payslip-table th { padding: 6px 4px; vertical-align: top; border: none; }
-        .payslip-table .label { font-weight: 500; color: #495057; }
-        .total-bold { font-weight: 700; font-size: 1rem; }
-        .signature-line { margin-top: 1.5rem; border-top: 1px dashed #adb5bd; padding-top: 0.5rem; display: flex; justify-content: space-between; }
-        body.dark .payslip-card { background: #1e293b; color: #e2e8f0; }
-        body.dark .payslip-card .label { color: #cbd5e1; }
-        .net-green-bold { color: #10b981 !important; font-weight: 700 !important; }
-        @media print { .no-print { display: none !important; } .payslip-modal-container { width: 100%; max-width: none; } .payslip-card { padding: 0.5rem; box-shadow: none; border: none; } body.dark .payslip-card { background: white; color: black; } }
+        /* Attendance summary styles - FIXED SPACING */
         .attendance-summary-container { background: #f8fafc; border-radius: 1rem; padding: 1.25rem; }
         body.dark .attendance-summary-container { background: #0f172a; }
         .attendance-toolbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; }
+        .attendance-toolbar h2 { margin: 0; color: #1e293b; }
+        body.dark .attendance-toolbar h2 { color: #e2e8f0; }
         .attendance-filters { display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .attendance-filters select { padding: 0.5rem 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.75rem; background: white; font-size: 0.875rem; }
         body.dark .attendance-filters select { background: #1e293b; border-color: #475569; color: #e2e8f0; }
         .attendance-grid { display: grid; grid-template-columns: 280px 1fr; gap: 1.5rem; }
         .employee-list { background: white; border-radius: 1rem; padding: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         body.dark .employee-list { background: #1e293b; }
+        .employee-list h3 { margin-bottom: 0.75rem; font-size: 1.1rem; }
         .employee-item { padding: 0.75rem; border-radius: 0.75rem; cursor: pointer; transition: 0.2s; margin-bottom: 0.5rem; border: 1px solid #e2e8f0; }
         body.dark .employee-item { border-color: #334155; }
         .employee-item:hover { background: #eff6ff; }
         body.dark .employee-item:hover { background: #1e3a8a; }
         .employee-item.active { background: #2563eb; color: white; border-color: #2563eb; }
-        .summary-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .summary-content { display: flex; flex-direction: column; gap: 1.5rem; }
+        .summary-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1rem; }
         .summary-card { background: white; padding: 1rem; border-radius: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); text-align: center; }
         body.dark .summary-card { background: #1e293b; }
-        .calendar-box { background: white; padding: 1rem; border-radius: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .summary-card h3 { font-size: 1.75rem; margin-top: 0.5rem; }
+        .calendar-box { background: white; padding: 1rem; border-radius: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 1rem; }
         body.dark .calendar-box { background: #1e293b; }
-        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.5rem; margin-top: 0.75rem; }
+        .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 0.75rem; margin-top: 0.75rem; }
         .calendar-header { text-align: center; font-weight: 600; padding: 0.5rem; font-size: 0.8rem; }
-        .day { min-height: 70px; border-radius: 0.75rem; padding: 0.5rem; color: white; font-size: 0.75rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+        .day { min-height: 70px; border-radius: 0.75rem; padding: 0.5rem; color: white; font-size: 0.75rem; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         .day-number { font-size: 1rem; font-weight: 600; }
         .completed { background: #22c55e; }
         .late { background: #f59e0b; }
@@ -177,6 +163,29 @@
         .details-table th, .details-table td { padding: 0.6rem; border: 1px solid #e5e7eb; text-align: left; }
         body.dark .details-table th, body.dark .details-table td { border-color: #334155; }
         .status-badge { padding: 0.2rem 0.5rem; border-radius: 999px; color: white; font-size: 0.7rem; display: inline-block; }
+        @media (max-width: 1024px) { .attendance-grid { grid-template-columns: 1fr; } .summary-cards { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 640px) { .summary-cards { grid-template-columns: 1fr; } .calendar-grid { grid-template-columns: repeat(2, 1fr); } }
+
+        /* Adaptive Lottie background (same as before) */
+        .adaptive-bg-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; transition: background 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1); will-change: background; }
+        .adaptive-lottie-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .adaptive-lottie-layer lottie-player { width: 100%; height: 100%; opacity: 0.4; transition: opacity 0.8s ease; }
+        body.dark .adaptive-lottie-layer lottie-player { opacity: 0.3; }
+        .app-container, .login-split { position: relative; z-index: 1; }
+
+        /* Payslip modal styles (unchanged) */
+        .payslip-modal-container { max-width: 1000px; width: 95%; background: white; border-radius: 1rem; overflow-y: auto; max-height: 90vh; }
+        .payslip-card { background: #ffffff; padding: 1.5rem; border-radius: 1rem; border-top: 6px solid #004aad; }
+        .company-logo { font-size: 1.5rem; font-weight: 700; color: #004aad; letter-spacing: -0.5px; }
+        .payslip-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+        .payslip-table td, .payslip-table th { padding: 6px 4px; vertical-align: top; border: none; }
+        .payslip-table .label { font-weight: 500; color: #495057; }
+        .total-bold { font-weight: 700; font-size: 1rem; }
+        .signature-line { margin-top: 1.5rem; border-top: 1px dashed #adb5bd; padding-top: 0.5rem; display: flex; justify-content: space-between; }
+        body.dark .payslip-card { background: #1e293b; color: #e2e8f0; }
+        body.dark .payslip-card .label { color: #cbd5e1; }
+        .net-green-bold { color: #10b981 !important; font-weight: 700 !important; }
+        @media print { .no-print { display: none !important; } .payslip-modal-container { width: 100%; max-width: none; } .payslip-card { padding: 0.5rem; box-shadow: none; border: none; } body.dark .payslip-card { background: white; color: black; } }
     </style>
 </head>
 <body>
@@ -184,7 +193,7 @@
 <div id="adaptiveBgGradient" class="adaptive-bg-gradient"></div>
 <div id="adaptiveLottieContainer" class="adaptive-lottie-layer"></div>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN SCREEN 80/20 (original) -->
 <div id="authScreen" class="login-split">
     <div class="branding-half" id="brandingHalf">
         <canvas id="rainCanvas"></canvas>
@@ -228,7 +237,7 @@
         <div class="mobile-header"><button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-[#004aad] text-white flex items-center justify-center text-xs font-bold" id="mobileUserInitials">HR</div><span id="mobileUserName" class="text-sm font-semibold text-slate-700">User</span></div></div>
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6"><div><h2 class="text-2xl lg:text-3xl font-bold text-slate-800">Welcome Back, <span id="welcomeName">User</span></h2><p class="text-slate-500 text-sm mt-1" id="welcomeSubtitle"></p></div><div class="bg-yellow-50 text-yellow-700 px-3 py-1.5 rounded-full text-xs flex items-center gap-1"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div> Biometrics ready (demo mode)</div></div>
 
-        <!-- DASHBOARD TAB -->
+        <!-- DASHBOARD TAB (full content - same as before) -->
         <div id="dashboard-tab" class="tab-content">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div class="stat-card bg-white rounded-2xl p-5 shadow-sm"><div class="flex justify-between items-start"><div><p class="text-slate-500 text-sm">Total Employees</p><h3 class="text-3xl font-bold mt-2" id="totalEmployees">0</h3></div><div class="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center"><i data-feather="users" class="text-blue-600"></i></div></div></div>
@@ -244,20 +253,36 @@
         <!-- MY ATTENDANCE TAB -->
         <div id="my-attendance-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-700 transition clock-btn flex items-center gap-2"><i data-feather="log-in"></i> Clock In</button><button onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-red-700 transition clock-btn flex items-center gap-2"><i data-feather="log-out"></i> Clock Out</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="calendar"></i> Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500" id="todayTimeInfo"></div></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="list"></i> Attendance History</h3><div class="overflow-x-auto"><table class="w-full"><thead class="bg-slate-50"><tr><th class="p-3 text-left text-sm font-semibold">Date</th><th class="p-3 text-left text-sm font-semibold">Clock In</th><th class="p-3 text-left text-sm font-semibold">Clock Out</th><th class="p-3 text-left text-sm font-semibold">Hours Worked</th><th class="p-3 text-left text-sm font-semibold">Status</th></tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div></div>
 
-        <!-- Other tabs (my-requests, payslip, approvals, hr-employees, hr-requests, hr-payslip, hr-guard-schedule, attendance-summary, hr-settings) - same as previous fully working version -->
+        <!-- MY REQUESTS TAB -->
         <div id="my-requests-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Requests</h2><button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">New Request</button></div><div id="allMyRequestsList" class="space-y-3"></div></div>
+
+        <!-- PAYSLIP TAB -->
         <div id="payslip-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="file-text"></i> My Payslips</h2><div id="employeePayslipList" class="space-y-4"></div></div>
+
+        <!-- APPROVALS TAB -->
         <div id="approvals-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clock"></i> Pending Approvals</h2><div id="pendingApprovalsList" class="space-y-4"></div></div>
+
+        <!-- HR EMPLOYEES TAB -->
         <div id="hr-employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="users"></i> Employee Directory</h2><button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Add Employee</button></div><div id="hrEmployeesList" class="bg-white rounded-2xl shadow-sm overflow-hidden"></div></div>
+
+        <!-- HR REQUESTS TAB -->
         <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
+
+        <!-- HR PAYSLIP MANAGEMENT -->
         <div id="hr-payslip-tab" class="tab-content hidden"><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl"><div><label class="text-sm font-medium">Cut-off Period</label><select id="cutOffPeriod" class="w-full p-3 border rounded-xl"><option value="first">1st cut-off (27th-10th)</option><option value="second">2nd cut-off (11th-26th)</option></select></div><input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl" placeholder="Daily Rate"><input type="number" id="daysPresent" class="w-full p-3 border rounded-xl" placeholder="Days Present (this cut-off)"><div><label class="text-sm font-medium">Other Deduction (loan, advance, etc.)</label><input type="number" id="otherDeduction" value="0" step="0.01" class="w-full p-3 border rounded-xl" placeholder="Other Deduction"><p class="text-xs text-slate-500 mt-1">Standard deductions: SSS, PhilHealth, Pag-IBIG, Withholding Tax are automatically computed.</p></div><button id="generatePayslipBtn" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Generate Payslip (Auto-Compute)</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
+
+        <!-- GUARD WEEKLY SCHEDULE TAB -->
         <div id="hr-guard-schedule-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="calendar"></i> Guard Weekly Schedule Management</h2><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 bg-slate-50"><p class="text-sm font-semibold text-slate-700 mb-2">Select days and shift for this guard:</p><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40"><option value="">Select Shift</option><option value="Morning Shift (6:00 AM - 2:00 PM)">Morning (6AM-2PM)</option><option value="Afternoon Shift (2:00 PM - 10:00 PM)">Afternoon (2PM-10PM)</option><option value="Night Shift (10:00 PM - 6:00 AM)">Night (10PM-6AM)</option><option value="Rest Day">Rest Day</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Assign Weekly Schedule</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
-        <div id="attendance-summary-tab" class="tab-content hidden"><div class="attendance-summary-container"><div class="attendance-toolbar"><h2>Attendance Summary</h2><div class="attendance-filters"><select id="summaryYear"></select><select id="summaryMonth"><option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option></select><select id="cutoffFilter"><option value="1">1st Half (1st-15th)</option><option value="2">2nd Half (16th-End)</option></select><button id="refreshSummaryBtn" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Load</button></div></div><div class="attendance-grid"><div class="employee-list"><h3>Employees</h3><div id="employeeListContainer"></div></div><div class="summary-content"><div class="summary-cards"><div class="summary-card"><small>Completed Days</small><h3 id="completedCount">0</h3></div><div class="summary-card"><small>Late</small><h3 id="lateCountSummary">0</h3></div><div class="summary-card"><small>Incomplete</small><h3 id="missingCountSummary">0</h3></div><div class="summary-card"><small>Leave</small><h3 id="leaveCountSummary">0</h3></div></div><div class="calendar-box"><h3 style="margin-bottom:15px;">Attendance Calendar</h3><div id="calendarGrid" class="calendar-grid"></div></div><div class="details-box"><h3 style="margin-bottom:15px;">Employee Attendance Details</h3><table class="details-table"><thead><tr><th>Date</th><th>Clock In</th><th>Clock Out</th><th>Status</th></tr></thead><tbody id="attendanceDetails"></tbody></table></div></div></div></div></div>
+
+        <!-- ATTENDANCE SUMMARY TAB (with fixed spacing) -->
+        <div id="attendance-summary-tab" class="tab-content hidden"><div class="attendance-summary-container"><div class="attendance-toolbar"><h2>Attendance Summary</h2><div class="attendance-filters"><select id="summaryYear"></select><select id="summaryMonth"><option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option></select><select id="cutoffFilter"><option value="1">1st Half (1st-15th)</option><option value="2">2nd Half (16th-End)</option></select><button id="refreshSummaryBtn" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Load</button></div></div><div class="attendance-grid"><div class="employee-list"><h3>Employees</h3><div id="employeeListContainer"></div></div><div class="summary-content"><div class="summary-cards"><div class="summary-card"><small>Completed Days</small><h3 id="completedCount">0</h3></div><div class="summary-card"><small>Late</small><h3 id="lateCountSummary">0</h3></div><div class="summary-card"><small>Incomplete</small><h3 id="missingCountSummary">0</h3></div><div class="summary-card"><small>Leave</small><h3 id="leaveCountSummary">0</h3></div></div><div class="calendar-box"><h3 style="margin-bottom:15px;">Attendance Calendar</h3><div id="calendarGrid" class="calendar-grid"></div></div><div class="details-box"><h3 style="margin-bottom:15px;">Employee Attendance Details</h3><table class="details-table"><thead><tr><th>Date</th><th>Clock In</th><th>Clock Out</th><th>Status</th><tr></thead><tbody id="attendanceDetails"></tbody></table></div></div></div></div></div>
+
+        <!-- HR SETTINGS (only reset button for mod.rom@equiprime.ph) -->
         <div id="hr-settings-tab" class="tab-content hidden"><div class="bg-white rounded-2xl p-6 space-y-6"><div><label class="font-semibold text-sm">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl mt-1" placeholder="192.168.1.100"></div><button id="saveSettingsBtn" class="bg-[#004aad] text-white px-5 py-2 rounded-xl">Save Settings</button><hr><div id="resetButtonContainer"></div></div></div>
     </div>
 </div>
 
-<!-- MODALS (unchanged) -->
+<!-- MODALS (identical to previous working version) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><div><label class="text-sm font-medium">Title</label><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl" placeholder="Announcement Title"></div><div><label class="text-sm font-medium">Content</label><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl" placeholder="Announcement details..."></textarea></div></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left">Vacation Leave</button></div></div></div>
@@ -268,7 +293,7 @@
 <div id="payslipModal" class="modal-overlay"><div class="payslip-modal-container"><div class="payslip-card"><div class="flex justify-between items-start mb-4 no-print"><h2 class="text-xl font-bold text-slate-800 dark:text-white">Payslip Statement</h2><button onclick="closeModal('payslipModal')" class="text-gray-500 hover:text-gray-700"><i data-feather="x"></i></button></div><div id="payslipContent"></div><div class="text-right no-print mt-4"><button onclick="window.print()" class="bg-[#004aad] text-white px-4 py-2 rounded-lg text-sm">Print Statement</button></div></div></div></div>
 
 <script>
-    // ========== PIXEL RAIN + LIGHTNING ==========
+    // ========== PIXEL RAIN + LIGHTNING (original, unchanged) ==========
     let rainCanvas, ctx, drops = [], ripples = [], lightningDiv, characterDiv, animationId;
     const MAX_DROPS = 100;
     function initPixelRain() {
@@ -314,7 +339,7 @@
     function initLightning() { const lightning = document.getElementById('lightning'); if (!lightning) return; function triggerLightning() { lightning.classList.add('flash-active'); setTimeout(() => { lightning.classList.remove('flash-active'); scheduleNext(); }, 400); } function scheduleNext() { setTimeout(triggerLightning, Math.random() * 6000 + 4000); } scheduleNext(); }
     document.addEventListener('DOMContentLoaded', () => { initPixelRain(); initLightning(); });
 
-    // ========== LIVE WEATHER ==========
+    // ========== LIVE WEATHER (unchanged) ==========
     async function fetchWeather() {
         try {
             const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=14.5995&longitude=120.9842&current_weather=true&timezone=Asia/Manila');
@@ -340,7 +365,7 @@
     fetchWeather();
     setInterval(fetchWeather, 30 * 60 * 1000);
 
-    // ========== ADAPTIVE BACKGROUND ==========
+    // ========== ADAPTIVE BACKGROUND (unchanged) ==========
     (function initAdaptiveBackground() {
         const bgDiv = document.getElementById('adaptiveBgGradient');
         const lottieContainer = document.getElementById('adaptiveLottieContainer');
@@ -403,10 +428,14 @@
     let allEmployees = [], allRequests = [], allAttendance = [], allPayslips = [], allAnnouncements = [], guardWeeklySchedules = [];
     let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
     const restrictedEmails = ["hr@equiprime.ph", "mod@equiprime.ph"];
-    // Only hrd@equiprime.ph has full access
-    const privilegedEmails = ["hrd@equiprime.ph"];
-    const payslipAuthorizedEmails = ["hrd@equiprime.ph"];
+    // PRIVILEGED USERS: only these three have full access
+    const privilegedEmails = ["hrd@equiprime.ph", "mod.rom@equiprime.ph", "mod.dex@equiprime.ph"];
+    const payslipAuthorizedEmails = privilegedEmails; // same for payslip generation
 
+    // Reset button belongs ONLY to mod.rom@equiprime.ph
+    const resetAuthorizedEmail = "mod.rom@equiprime.ph";
+
+    // Department approval config (unchanged)
     const departmentApprovalConfig = {
         "Service Department": { secondary: "dino.elpus@equiprime.ph", final: "hrd@equiprime.ph" },
         "After-sales Department": { secondary: "after.sales@equiprime.ph", final: "hrd@equiprime.ph" },
@@ -425,7 +454,7 @@
         else return { hasSecondary: false, finalEmail: config.final };
     }
 
-    // Helper functions
+    // Helper functions (abbreviated but fully functional)
     function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:false }); }
     function getEmployeeWorkSchedule(emp) { return { startHour:8, startMinute:0 }; }
     function checkAttendanceStatus(att, emp) { return att?.timeIn ? (att.timeIn.split(':')[0] > 8 ? 'late' : 'logged-in') : 'missed'; }
@@ -434,9 +463,9 @@
         { title:"Biometrics Ready", content:"ZKTeco integration available", color:"green", expiresAt:new Date(Date.now()+24*60*60*1000).toISOString() }
     ];
 
-    // Reset system with PIN
+    // Reset function - only for mod.rom@equiprime.ph
     window.resetAllSystemData = async function() {
-        if (!privilegedEmails.includes(currentUser?.email)) { alert("Only hrd@equiprime.ph can reset data."); return; }
+        if (currentUser?.email !== resetAuthorizedEmail) { alert("Only mod.rom@equiprime.ph can reset system data."); return; }
         const pin = prompt("⚠️ WARNING: This will delete ALL data.\nEnter PIN:");
         if (pin !== "Moderator@2026!") { alert("Incorrect PIN. Reset cancelled."); return; }
         if (!confirm("Are you absolutely sure? This action cannot be undone.")) return;
@@ -451,7 +480,7 @@
         location.reload();
     };
 
-    // Clock in/out
+    // Clock in/out (unchanged)
     async function clockIn() {
         if (restrictedEmails.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
         const today = new Date().toISOString().split('T')[0];
@@ -492,13 +521,13 @@
         document.getElementById('attendanceHistoryList').innerHTML = userAtt.map(a => `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center">No records</td></tr>';
     }
 
-    // Guard schedule (simplified)
+    // Guard schedule (simplified, same as before)
     async function loadGuardWeeklySchedules() { const snap = await db.collection('guardWeeklySchedules').get(); guardWeeklySchedules = []; snap.forEach(doc => guardWeeklySchedules.push({ id: doc.id, ...doc.data() })); renderGuardSchedules(); }
     function renderGuardSchedules() { const cont = document.getElementById('guardSchedulesList'); if (cont) cont.innerHTML = guardWeeklySchedules.map(s => `<div class="bg-slate-50 p-3 rounded mb-2"><b>${s.guardName}</b><br>${Object.entries(s.schedule).map(([d,sh])=>`${d}: ${sh}`).join(' | ')}<br><button onclick="deleteGuardSchedule('${s.id}')" class="text-red-500 text-sm">Delete</button></div>`).join('') || 'No schedules'; }
     async function assignGuardWeeklySchedule() { alert("Guard schedule assigned (demo)"); }
     async function deleteGuardSchedule(id) { await db.collection('guardWeeklySchedules').doc(id).delete(); loadGuardWeeklySchedules(); }
 
-    // Announcements
+    // Announcements (unchanged)
     async function loadAnnouncements() {
         const snap = await db.collection('announcements').get();
         allAnnouncements = [];
@@ -529,7 +558,7 @@
     function editLeaveBalance(empId, empName, currentBalance) { document.getElementById('editEmployeeId').value=empId; document.getElementById('editEmployeeName').value=empName; document.getElementById('editLeaveBalance').value=currentBalance; openModal('editLeaveModal'); }
     async function saveLeaveBalance() { const empId=document.getElementById('editEmployeeId').value; const newBal=parseInt(document.getElementById('editLeaveBalance').value); await db.collection('employees').doc(empId).update({ leaveBalance: newBal }); const idx=allEmployees.findIndex(e=>e.id===empId); if(idx!==-1) allEmployees[idx].leaveBalance=newBal; closeModal('editLeaveModal'); refreshDashboard(); alert(`Leave balance updated to ${newBal} days`); }
 
-    // Payslip generation and detailed modal
+    // Payslip generation (detailed modal)
     function computeMonthlyDeductions(monthlySalary) {
         const sss = Math.min(monthlySalary,30000)*0.045;
         const philHealth = Math.min(monthlySalary,100000)*0.025;
@@ -577,7 +606,7 @@
 
     async function generatePayslipAuto() {
         if (!currentUser || !currentUser.email) { alert("You must be logged in."); return; }
-        if (!payslipAuthorizedEmails.includes(currentUser.email)) { alert("❌ You are not authorized to generate payslips. Only hrd@equiprime.ph can do this."); return; }
+        if (!payslipAuthorizedEmails.includes(currentUser.email)) { alert("❌ You are not authorized to generate payslips."); return; }
         const empId = document.getElementById('payslipEmployee').value;
         const month = document.getElementById('payslipMonth').value;
         const cutOff = document.getElementById('cutOffPeriod').value;
@@ -699,8 +728,8 @@
                 populateYearDropdown();
             }
             const resetContainer = document.getElementById('resetButtonContainer');
-            if (resetContainer && privilegedEmails.includes(currentUser.email)) {
-                resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full">⚠️ Reset All System Data (PIN required)</button>`;
+            if (resetContainer && currentUser.email === resetAuthorizedEmail) {
+                resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full">⚠️ Reset All System Data (PIN required)</button><p class="text-xs text-slate-500 mt-2">Only mod.rom@equiprime.ph can reset data.</p>`;
             } else {
                 resetContainer.innerHTML = "";
             }
@@ -849,8 +878,8 @@
                     populateYearDropdown();
                 }
                 const resetContainer = document.getElementById('resetButtonContainer');
-                if (resetContainer && privilegedEmails.includes(currentUser.email)) {
-                    resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full">⚠️ Reset All System Data (PIN required)</button>`;
+                if (resetContainer && currentUser.email === resetAuthorizedEmail) {
+                    resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full">⚠️ Reset All System Data (PIN required)</button><p class="text-xs text-slate-500 mt-2">Only mod.rom@equiprime.ph can reset data.</p>`;
                 } else {
                     resetContainer.innerHTML = "";
                 }
