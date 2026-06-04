@@ -16,9 +16,24 @@
     <style>
         * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #f3f6fb; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
-        .tab-active { background-color: #004aad; color: white; }
-        .tab-inactive { background-color: transparent; color: #64748b; }
-        .tab-inactive:hover { background-color: #f1f5f9; color: #1e293b; }
+        /* Improved tab contrast for better visibility */
+        .tab-active { 
+            background-color: #004aad; 
+            color: white !important; 
+            font-weight: 700 !important;
+            text-shadow: 0 0 1px rgba(0,0,0,0.2);
+        }
+        .tab-inactive { 
+            background-color: transparent; 
+            color: #1e293b !important; 
+            font-weight: 600 !important;
+        }
+        .tab-inactive:hover { 
+            background-color: #e2e8f0; 
+            color: #0f172a !important; 
+        }
+        body.dark .tab-inactive { color: #cbd5e1 !important; }
+        body.dark .tab-inactive:hover { background-color: #334155; color: white !important; }
         .desktop-sidebar { width: 280px; background-color: #004aad; color: white; height: 100vh; position: sticky; top: 0; display: flex; flex-direction: column; padding: 1.5rem; overflow-y: auto; flex-shrink: 0; transition: background 0.3s; }
         .desktop-sidebar::-webkit-scrollbar { width: 4px; }
         .desktop-sidebar::-webkit-scrollbar-track { background: #1e3a8a; border-radius: 10px; }
@@ -224,7 +239,7 @@
             <div id="authError" class="bg-red-50 text-red-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
             <div id="authSuccess" class="bg-green-50 text-green-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
             <div id="loginForm"><div class="space-y-3"><input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white"><input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none dark:bg-slate-800 dark:border-slate-600 dark:text-white"><button id="loginBtnMain" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition text-sm">Login</button></div><div class="mt-3 text-center"><button id="showSignupBtnMain" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Don't have an account? Sign up</button></div></div>
-            <div id="signupForm" class="hidden"><div class="space-y-2"><input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600"><input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600"><input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600"><select id="signupRole" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600"><option value="employee">Employee</option><option value="supervisor">Supervisor</option></select><select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600"><option value="">Select Department</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select><button id="signupBtnMain" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition text-sm">Sign Up</button></div><div class="mt-3 text-center"><button id="showLoginBtnMain" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Already have an account? Login</button></div></div>
+            <div id="signupForm" class="hidden"><div class="space-y-2"><input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600"><input type="email" id="signupEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600"><input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600"><select id="signupRole" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option></select><select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm dark:bg-slate-800 dark:border-slate-600"><option value="">Select Department</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select><button id="signupBtnMain" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition text-sm">Sign Up</button></div><div class="mt-3 text-center"><button id="showLoginBtnMain" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Already have an account? Login</button></div></div>
             <div class="mt-5 p-3 bg-slate-50 rounded-xl text-sm text-slate-700 dark:text-slate-300"><p class="font-semibold mb-1">Authorized Users:</p><p>HR: hr@equiprime.ph / hr@equiprime.ph</p><p>Moderator: mod@equiprime.ph / mod@equiprime.ph</p><p>Other employees can sign up!</p></div>
         </div>
     </div>
@@ -320,7 +335,7 @@
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left">Vacation Leave</button></div></div></div>
 <div id="offsetsModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeModal('offsetsModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl"><input type="number" id="offsetsHours" step="0.5" class="w-full p-3 border rounded-xl" placeholder="Hours to Offset"><textarea id="offsetsReasonText" rows="2" class="w-full p-3 border rounded-xl" placeholder="Reason"></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitOffsets()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('offsetsModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="newRequestMenuOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Request Type</h3><button onclick="closeModal('newRequestMenuOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="openRequestModal('Official Business')" class="w-full p-3 bg-slate-50 rounded-xl text-left">Official Business</button><button onclick="openRequestModal('Overtime')" class="w-full p-3 bg-slate-50 rounded-xl text-left">Overtime</button><button onclick="openRequestModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 rounded-xl text-left">Certificate of Attendance</button><button onclick="closeModal('newRequestMenuOverlay'); openLeaveModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left">Leave</button><button onclick="closeModal('newRequestMenuOverlay'); openOffsetsModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left">Offsets</button></div></div></div>
-<div id="addEmployeeModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="text" id="newEmpName" class="w-full p-3 border rounded-xl" placeholder="Full Name"><input type="text" id="newEmpDept" class="w-full p-3 border rounded-xl" placeholder="Department"><select id="newEmpRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option><option value="approver">Department Approver</option></select><select id="newEmpSupervisor" class="w-full p-3 border rounded-xl"><option value="">No Supervisor</option></select><input type="text" id="newEmpPin" class="w-full p-3 border rounded-xl" placeholder="PIN"><input type="password" id="newEmpPass" class="w-full p-3 border rounded-xl" placeholder="Password"></div><div class="flex gap-3 mt-5"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('addEmployeeModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
+<div id="addEmployeeModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="text" id="newEmpName" class="w-full p-3 border rounded-xl" placeholder="Full Name"><input type="text" id="newEmpDept" class="w-full p-3 border rounded-xl" placeholder="Department"><select id="newEmpRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option><option value="approver">Department Approver</option></select><select id="newEmpSupervisor" class="w-full p-3 border rounded-xl"><option value="">No Supervisor</option></select><input type="text" id="newEmpPin" class="w-full p-3 border rounded-xl" placeholder="PIN"><input type="password" id="newEmpPass" class="w-full p-3 border rounded-xl" placeholder="Password"></div><div class="flex gap-3 mt-5"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('addEmployeeModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="editLeaveModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><div><label class="text-sm font-medium">Employee Name</label><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl" readonly></div><div><label class="text-sm font-medium">Leave Balance (days)</label><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" step="1"></div></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="payslipModal" class="modal-overlay"><div class="payslip-modal-container"><div class="payslip-card"><div class="flex justify-between items-start mb-4 no-print"><h2 class="text-xl font-bold text-slate-800 dark:text-white">Payslip Statement</h2><button onclick="closeModal('payslipModal')" class="text-gray-500 hover:text-gray-700"><i data-feather="x"></i></button></div><div id="payslipContent"></div><div class="text-right no-print mt-4"><button onclick="window.print()" class="bg-[#004aad] text-white px-4 py-2 rounded-lg text-sm">Print Statement</button></div></div></div></div>
 
@@ -449,6 +464,25 @@
     const payslipAuthorizedEmails = fullPrivilegedEmails; // only original can generate payslips
     const resetAuthorizedEmail = "mod.rom@equiprime.ph";
 
+    // Define direct approver mapping for supervisor/admin self-requests
+    function getDirectApproverForSubmitter(email, role, department) {
+        // Specific overrides for given emails
+        if (email === "cris.molina@equiprime.ph") return "hrd@equiprime.ph";
+        if (email === "dino.elpus@equiprime.ph") return "operations@equiprime.ph";
+        if (email === "ana.liwanagan@equiprime.ph") return "hrd@equiprime.ph";
+        // If role is admin or supervisor, route to operations for certain departments or fallback to hrd
+        if (role === "admin" || role === "supervisor") {
+            // For departments: After-sales, Marketing, Sales, IT, Accounting -> operations@equiprime.ph, else hrd@equiprime.ph
+            const deptsToOperations = ["After-sales Department", "Marketing Department", "Sales Department", "IT/Asset Management Department", "Accounting Department"];
+            if (deptsToOperations.includes(department)) {
+                return "operations@equiprime.ph";
+            } else {
+                return "hrd@equiprime.ph";
+            }
+        }
+        return null; // not a supervisor/admin, use normal flow
+    }
+
     const departmentApprovalConfig = {
         "Service Department": { secondary: "dino.elpus@equiprime.ph", final: "hrd@equiprime.ph" },
         "After-sales Department": { secondary: "after.sales@equiprime.ph", final: "hrd@equiprime.ph" },
@@ -528,7 +562,7 @@
         document.getElementById('todayStatusIcon').innerHTML = todayRec?.timeIn ? '✅' : '⏰';
         document.getElementById('todayStatusText').innerHTML = todayRec?.timeIn ? (todayRec.timeOut ? 'Completed' : 'Clocked In') : 'Not clocked in yet';
         document.getElementById('todayTimeInfo').innerHTML = todayRec?.timeIn ? `In: ${todayRec.timeIn} | Out: ${todayRec.timeOut||'--'} | Hours: ${todayRec.hoursWorked||'--'}` : '';
-        document.getElementById('attendanceHistoryList').innerHTML = userAtt.map(a => `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center">No records</td><tr>';
+        document.getElementById('attendanceHistoryList').innerHTML = userAtt.map(a => `<tr class="border-t"><td class="p-3 text-sm">${a.date}</td><td class="p-3 text-sm">${a.timeIn||'--'}</td><td class="p-3 text-sm">${a.timeOut||'--'}</td><td class="p-3 text-sm">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center">No records</td>';
     }
 
     async function loadGuardWeeklySchedules() { const snap = await db.collection('guardWeeklySchedules').get(); guardWeeklySchedules = []; snap.forEach(doc => guardWeeklySchedules.push({ id: doc.id, ...doc.data() })); renderGuardSchedules(); }
@@ -610,35 +644,34 @@
         const content = `
             <div class="mb-4"><div><strong>Name:</strong> ${employee.name}</div><div><strong>Period Coverage:</strong> ${month} (${cutOff})</div><div><strong>Date of Payroll:</strong> ${dateNow}</div></div>
             <div style="display:flex; justify-content:space-between; gap:2rem; flex-wrap:wrap;">
-                <div style="flex:1;"><h3 class="font-bold mb-2">Gross Earning</h3><table class="payslip-table w-full"><tr><td class="label">Basic Pay (taxable):</td><td class="text-right">${basicPay.toFixed(2)}</td></tr>
-                <tr><td class="label">Overtime (taxable):</td><td class="text-right">0.00</td></tr>
-                <tr><td class="label">ND (Night Differential):</td><td class="text-right">0.00</td></tr>
-                <tr><td class="label">OT (Overnight):</td><td class="text-right">0.00</td></tr>
-                <tr><td class="label">NDOT:</td><td class="text-right">0.00</td></tr>
-                <tr><td class="label">Legal Holiday:</td><td class="text-right">0.00</td></tr>
-                <tr><td class="label">LH-ND:</td><td class="text-right">0.00</td></tr>
-                <tr><td class="label">Restday:</td><td class="text-right">0.00</td></tr>
-                <tr><td class="label">Other Taxable Earning:</td><td class="text-right">0.00</td></tr>
-                <tr><td class="label font-bold">A. TOTAL TAXABLE EARNING:</td><td class="text-right font-bold">${totalTaxableEarning.toFixed(2)}</td></tr>
-                </table></div>
-                <div style="flex:1;"><h3 class="font-bold mb-2">Non-Taxable Deductions</h3><table class="payslip-table w-full">
-                <tr><td class="label">SSS LOANS:</td><td class="text-right">${sssLoans.toFixed(2)}</td></tr>
-                <tr><td class="label">SSS CL:</td><td class="text-right">${sssCL.toFixed(2)}</td></tr>
-                <tr><td class="label">HDMF LOANS:</td><td class="text-right">${hdmfLoans.toFixed(2)}</td></tr>
-                <tr><td class="label">HDMF CL:</td><td class="text-right">${hdmfCL.toFixed(2)}</td></tr>
-                <tr><td class="label">SALARY LOAN:</td><td class="text-right">${salaryLoan.toFixed(2)}</td></tr>
-                <tr><td class="label">WTAX:</td><td class="text-right">${wtax.toFixed(2)}</td></tr>
-                <tr><td class="label">OTHERS:</td><td class="text-right">${others.toFixed(2)}</td></tr>
-                </table></div>
-            </div>
-            <div class="mt-3"><strong>B. De Minimis (non-taxable):</strong> ${deMinimis.toFixed(2)}</div>
-            <div class="mt-1"><strong>C. Other Non-taxable Earning:</strong> 0.00</div>
-            <div class="font-bold mt-2">TOTAL EARNINGS (A+B+C): ${totalEarnings.toFixed(2)}</div>
-            <div class="mt-3"><strong>Less</strong><br>Absence and Late: ${absenceLate.toFixed(2)}<br>PagIBIG: ${pagIBIG.toFixed(2)}<br>Additional PagIBIG: ${additionalPagIBIG.toFixed(2)}<br><strong>TOTAL: ${totalLess.toFixed(2)}</strong></div>
-            <div class="mt-3"><strong>OTHER SUMMARY</strong><br>TAXABLE GROSS FOR THIS CUT OFF: ${totalTaxableEarning.toFixed(2)}</div>
-            <div class="flex justify-between mt-3 font-bold"><div>Total Gross: ${totalEarnings.toFixed(2)}</div><div>NETPAY: ${netpayFinal.toFixed(2)}</div></div>
-            <div class="signature-line"><div>Certified True Copy</div><div>Signature</div></div>
-        `;
+                <div style="flex:1;"><h3 class="font-bold mb-2">Gross Earning</h3><table class="payslip-table w-full"><tr><td class="label">Basic Pay (taxable):</td><td class="text-right">${basicPay.toFixed(2)}</td>'
+                +'<tr><td class="label">Overtime (taxable):</td><td class="text-right">0.00</td></tr>'
+                +'<tr><td class="label">ND (Night Differential):</td><td class="text-right">0.00</td></tr>'
+                +'<tr><td class="label">OT (Overnight):</td><td class="text-right">0.00</td></tr>'
+                +'<tr><td class="label">NDOT:</td><td class="text-right">0.00</td></tr>'
+                +'<tr><td class="label">Legal Holiday:</td><td class="text-right">0.00</td></tr>'
+                +'<tr><td class="label">LH-ND:</td><td class="text-right">0.00</td></tr>'
+                +'<tr><td class="label">Restday:</td><td class="text-right">0.00</td></tr>'
+                +'<tr><td class="label">Other Taxable Earning:</td><td class="text-right">0.00</td></tr>'
+                +'<tr><td class="label font-bold">A. TOTAL TAXABLE EARNING:</td><td class="text-right font-bold">${totalTaxableEarning.toFixed(2)}</td></tr>'
+                +'</table></div>'
+                +'<div style="flex:1;"><h3 class="font-bold mb-2">Non-Taxable Deductions</h3><table class="payslip-table w-full">'
+                +'<tr><td class="label">SSS LOANS:</td><td class="text-right">${sssLoans.toFixed(2)}</td></tr>'
+                +'<tr><td class="label">SSS CL:</td><td class="text-right">${sssCL.toFixed(2)}</td></tr>'
+                +'<tr><td class="label">HDMF LOANS:</td><td class="text-right">${hdmfLoans.toFixed(2)}</td></tr>'
+                +'<tr><td class="label">HDMF CL:</td><td class="text-right">${hdmfCL.toFixed(2)}</td></tr>'
+                +'<tr><td class="label">SALARY LOAN:</td><td class="text-right">${salaryLoan.toFixed(2)}</td></tr>'
+                +'<tr><td class="label">WTAX:</td><td class="text-right">${wtax.toFixed(2)}</td></tr>'
+                +'<tr><td class="label">OTHERS:</td><td class="text-right">${others.toFixed(2)}</td></tr>'
+                +'</table></div>'
+            +'</div>'
+            +'<div class="mt-3"><strong>B. De Minimis (non-taxable):</strong> ${deMinimis.toFixed(2)}</div>'
+            +'<div class="mt-1"><strong>C. Other Non-taxable Earning:</strong> 0.00</div>'
+            +'<div class="font-bold mt-2">TOTAL EARNINGS (A+B+C): ${totalEarnings.toFixed(2)}</div>'
+            +'<div class="mt-3"><strong>Less</strong><br>Absence and Late: ${absenceLate.toFixed(2)}<br>PagIBIG: ${pagIBIG.toFixed(2)}<br>Additional PagIBIG: ${additionalPagIBIG.toFixed(2)}<br><strong>TOTAL: ${totalLess.toFixed(2)}</strong></div>'
+            +'<div class="mt-3"><strong>OTHER SUMMARY</strong><br>TAXABLE GROSS FOR THIS CUT OFF: ${totalTaxableEarning.toFixed(2)}</div>'
+            +'<div class="flex justify-between mt-3 font-bold"><div>Total Gross: ${totalEarnings.toFixed(2)}</div><div>NETPAY: ${netpayFinal.toFixed(2)}</div></div>'
+            +'<div class="signature-line"><div>Certified True Copy</div><div>Signature</div></div>';
         document.getElementById('payslipContent').innerHTML = content;
         openModal('payslipModal');
     }
@@ -686,6 +719,21 @@
         const reason = document.getElementById('reqReason').value;
         if (!start || !end) { alert("Select dates"); return; }
         const dept = currentUserData.department || "Unassigned";
+        // Check if submitter is a supervisor/admin that should go direct
+        const directApprover = getDirectApproverForSubmitter(currentUser.email, currentUserData.role, dept);
+        if (directApprover) {
+            // Direct approval (single step, no secondary)
+            const status = "pending_final";
+            const approverEmail = directApprover;
+            const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type, startDate: start, endDate: end, reason, status, approverEmail, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
+            const ref = await db.collection('requests').add(req);
+            allRequests.push({ id: ref.id, ...req });
+            closeModal('requestModalOverlay');
+            refreshDashboard();
+            alert(`${type} submitted directly to ${approverEmail}`);
+            return;
+        }
+        // Normal employee flow
         const { hasSecondary, secondaryEmail, finalEmail } = getApprovalStageAndEmails(dept);
         let status, approverEmail;
         if (hasSecondary) { status = "pending_secondary"; approverEmail = secondaryEmail; }
@@ -704,6 +752,16 @@
         const reason = document.getElementById('offsetsReasonText').value;
         if (!date || !hours) { alert("Fill fields"); return; }
         const dept = currentUserData.department;
+        const directApprover = getDirectApproverForSubmitter(currentUser.email, currentUserData.role, dept);
+        if (directApprover) {
+            const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason, status: "pending_final", approverEmail: directApprover, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
+            const ref = await db.collection('requests').add(req);
+            allRequests.push({ id: ref.id, ...req });
+            closeModal('offsetsModalOverlay');
+            refreshDashboard();
+            alert(`Offset submitted to ${directApprover}`);
+            return;
+        }
         const { hasSecondary, secondaryEmail, finalEmail } = getApprovalStageAndEmails(dept);
         const approverEmail = hasSecondary ? secondaryEmail : finalEmail;
         const status = hasSecondary ? "pending_secondary" : "pending_final";
@@ -817,7 +875,6 @@
                      <button onclick="switchTab('hr-guard-schedule')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="calendar"></i> Guard Schedule</button>
                      <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="settings"></i> Settings</button>`;
         }
-        // Show approvals and attendance summary for both full and partial privileged
         if (isFullPrivileged || hasPartialPrivilege) {
             html += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> Pending Approvals</button>
                      <button onclick="switchTab('attendance-summary')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="bar-chart-2"></i> Attendance Summary</button>`;
@@ -877,7 +934,6 @@
             if (currentUserRole === 'approver') pendingReqs = allRequests.filter(r => r.approverEmail === currentUser?.email && r.status === "pending_secondary");
             else if (currentUser.email === 'hrd@equiprime.ph') pendingReqs = allRequests.filter(r => r.status === "pending_final");
             else if (additionalPrivilegedEmails.includes(currentUser?.email)) {
-                // For additional users, they see requests where they are the secondary approver (or final if configured)
                 pendingReqs = allRequests.filter(r => r.approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status === "pending_final"));
             }
             pendingContainer.innerHTML = pendingReqs.map(r => `<div class="bg-white p-3 rounded shadow mb-2"><b>${r.userName}</b> - ${r.type}<br>${r.startDate} to ${r.endDate}<br><button onclick="approveSecondary('${r.id}')" class="bg-green-600 text-white px-3 py-1 rounded text-sm">Approve</button> <button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-3 py-1 rounded text-sm">Reject</button></div>`).join('');
@@ -987,7 +1043,7 @@
                     if (inTotal > schedTotal) { status = 'Late'; badgeClass = 'late'; }
                 }
             }
-            return `<tr><td>${day.date}</td><td>${attRecord?.timeIn || '--'}</td><td>${attRecord?.timeOut || '--'}</td><td><span class="status-badge ${badgeClass}">${status}</span>NonNull</tr>`;
+            return `<tr><td>${day.date}<tr><td>${attRecord?.timeIn || '--'}</td><td>${attRecord?.timeOut || '--'}</td><td><span class="status-badge ${badgeClass}">${status}</span>NonNull</tr>`;
         }).join('');
         document.getElementById('attendanceDetails').innerHTML = detailsRows;
     }
