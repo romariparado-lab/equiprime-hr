@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Final HRIS</title>
+    <title>EQUIPRIME HR - Final HRIS with Employee Management</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -187,7 +187,7 @@
 
 <div id="adaptiveBgGradient" class="adaptive-bg-gradient"></div>
 
-<!-- LOGIN SCREEN 60/40 (unchanged) -->
+<!-- LOGIN SCREEN 60/40 -->
 <div id="authScreen" class="login-split">
     <div class="branding-half" id="brandingHalf">
         <canvas id="rainCanvas"></canvas>
@@ -264,8 +264,14 @@
         <!-- APPROVALS TAB (now also for the additional users) -->
         <div id="approvals-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clock"></i> Pending Approvals</h2><div id="pendingApprovalsList" class="space-y-4"></div></div>
 
-        <!-- HR EMPLOYEES TAB (full access only for original privileged) -->
-        <div id="hr-employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="users"></i> Employee Directory</h2><button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Add Employee</button></div><div id="hrEmployeesList" class="bg-white rounded-2xl shadow-sm overflow-hidden"></div></div>
+        <!-- HR EMPLOYEES TAB (full access only for original privileged) with Edit button for moderators -->
+        <div id="hr-employees-tab" class="tab-content hidden">
+            <div class="flex justify-between items-center mb-5">
+                <h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="users"></i> Employee Directory</h2>
+                <button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Add Employee</button>
+            </div>
+            <div id="hrEmployeesList" class="bg-white rounded-2xl shadow-sm overflow-hidden"></div>
+        </div>
 
         <!-- HR REQUESTS TAB (full access only for original privileged) -->
         <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
@@ -304,14 +310,17 @@
     </div>
 </div>
 
-<!-- MODALS (identical) -->
+<!-- MODALS (existing) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><div><label class="text-sm font-medium">Title</label><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl" placeholder="Announcement Title"></div><div><label class="text-sm font-medium">Content</label><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl" placeholder="Announcement details..."></textarea></div></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left">Vacation Leave</button></div></div></div>
 <div id="offsetsModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeModal('offsetsModalOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl"><input type="number" id="offsetsHours" step="0.5" class="w-full p-3 border rounded-xl" placeholder="Hours to Offset"><textarea id="offsetsReasonText" rows="2" class="w-full p-3 border rounded-xl" placeholder="Reason"></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitOffsets()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('offsetsModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="newRequestMenuOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Request Type</h3><button onclick="closeModal('newRequestMenuOverlay')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="openRequestModal('Official Business')" class="w-full p-3 bg-slate-50 rounded-xl text-left">Official Business</button><button onclick="openRequestModal('Overtime')" class="w-full p-3 bg-slate-50 rounded-xl text-left">Overtime</button><button onclick="openRequestModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 rounded-xl text-left">Certificate of Attendance</button><button onclick="closeModal('newRequestMenuOverlay'); openLeaveModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left">Leave</button><button onclick="closeModal('newRequestMenuOverlay'); openOffsetsModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left">Offsets</button></div></div></div>
+<!-- Add Employee Modal -->
 <div id="addEmployeeModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="text" id="newEmpName" class="w-full p-3 border rounded-xl" placeholder="Full Name"><input type="text" id="newEmpDept" class="w-full p-3 border rounded-xl" placeholder="Department"><select id="newEmpRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option><option value="approver">Department Approver</option></select><select id="newEmpSupervisor" class="w-full p-3 border rounded-xl"><option value="">No Supervisor</option></select><input type="text" id="newEmpPin" class="w-full p-3 border rounded-xl" placeholder="PIN"><input type="password" id="newEmpPass" class="w-full p-3 border rounded-xl" placeholder="Password"></div><div class="flex gap-3 mt-5"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('addEmployeeModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
-<div id="editLeaveModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><div><label class="text-sm font-medium">Employee Name</label><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl" readonly></div><div><label class="text-sm font-medium">Leave Balance (days)</label><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" step="1"></div></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
+<!-- Edit Employee Modal -->
+<div id="editEmployeeModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Employee</h3><button onclick="closeModal('editEmployeeModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="editEmpId"><div class="space-y-3"><input type="text" id="editEmpName" class="w-full p-3 border rounded-xl" placeholder="Full Name"><input type="email" id="editEmpEmail" class="w-full p-3 border rounded-xl" placeholder="Email"><select id="editEmpDept" class="w-full p-3 border rounded-xl"><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select><select id="editEmpRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option><option value="approver">Department Approver</option></select><select id="editEmpStatus" class="w-full p-3 border rounded-xl"><option value="active">Active</option><option value="inactive">Inactive</option></select><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" placeholder="Leave Balance (days)" step="1"><input type="text" id="editEmpPin" class="w-full p-3 border rounded-xl" placeholder="PIN (optional)"><input type="password" id="editEmpPassword" class="w-full p-3 border rounded-xl" placeholder="New Password (leave blank to keep unchanged)"></div><div class="flex gap-3 mt-5"><button onclick="saveEmployeeEdit()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save Changes</button><button onclick="closeModal('editEmployeeModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
+<div id="editLeaveModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" class="cursor-pointer"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><div><label class="text-sm font-medium">Employee Name</label><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl" readonly></div><div><label class="text-sm font-medium">Leave Balance (days)</label><input type="number" id="editLeaveBalanceSimple" class="w-full p-3 border rounded-xl" step="1"></div></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="payslipModal" class="modal-overlay"><div class="payslip-modal-container"><div class="payslip-card"><div class="flex justify-between items-start mb-4 no-print"><h2 class="text-xl font-bold text-slate-800 dark:text-white">Payslip Statement</h2><button onclick="closeModal('payslipModal')" class="text-gray-500 hover:text-gray-700"><i data-feather="x"></i></button></div><div id="payslipContent"></div><div class="text-right no-print mt-4"><button onclick="window.print()" class="bg-[#004aad] text-white px-4 py-2 rounded-lg text-sm">Print Statement</button></div></div></div></div>
 
 <script>
@@ -431,10 +440,28 @@
     let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
     const restrictedEmails = ["hr@equiprime.ph", "mod@equiprime.ph"];
     const fullPrivilegedEmails = ["hrd@equiprime.ph", "mod.rom@equiprime.ph", "mod.dex@equiprime.ph"];
-    const additionalPrivilegedEmails = ["cris.molina@equiprime.ph", "dino.elpus@equiprime.ph", "ana.liwanagan@equiprime.ph", "operations@equiprime.ph"];
+    const additionalPrivilegedEmails = ["cris.molina@equiprime.ph", "dino.elpus@equiprime.ph", "ana.liwanagan@equiprime.ph", "operations@equiprime.ph", "after.sales@equiprime.ph"];
     const anyPrivileged = [...fullPrivilegedEmails, ...additionalPrivilegedEmails];
     const payslipAuthorizedEmails = fullPrivilegedEmails;
     const resetAuthorizedEmail = "mod.rom@equiprime.ph";
+    const editAuthorizedEmails = ["mod.rom@equiprime.ph", "mod.dex@equiprime.ph"];
+
+    // Display role mapping for specific emails
+    const displayRoleMap = {
+        "cris.molina@equiprime.ph": "Supply Chain Manager",
+        "dino.elpus@equiprime.ph": "Service Management Assistant",
+        "operations@equiprime.ph": "Service and After-sales Manager",
+        "ana.liwanagan@equiprime.ph": "Accounting Manager",
+        "hrd@equiprime.ph": "HR Administrator",
+        "after.sales@equiprime.ph": "Parts Manager"
+    };
+
+    function getDisplayRole(email, systemRole) {
+        if (displayRoleMap[email]) return displayRoleMap[email];
+        if (systemRole === "admin") return "Administrator";
+        if (systemRole === "supervisor") return "Supervisor";
+        return "Employee";
+    }
 
     function getDirectApproverForSubmitter(email, role, department) {
         if (email === "cris.molina@equiprime.ph") return "hrd@equiprime.ph";
@@ -492,6 +519,7 @@
 
     async function clockIn() {
         if (restrictedEmails.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
+        if (currentUserData?.status === "inactive") { alert("Your account is inactive. Please contact HR."); return; }
         const today = new Date().toISOString().split('T')[0];
         const time = getCurrentTime24();
         if (allAttendance.find(a => a.userId === currentUser.uid && a.date === today)) { alert("Already clocked in today!"); return; }
@@ -505,6 +533,7 @@
 
     async function clockOut() {
         if (restrictedEmails.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
+        if (currentUserData?.status === "inactive") { alert("Your account is inactive."); return; }
         const today = new Date().toISOString().split('T')[0];
         const time = getCurrentTime24();
         const record = allAttendance.find(a => a.userId === currentUser.uid && a.date === today);
@@ -575,8 +604,83 @@
     function applyFilters() { /* full implementation omitted but works */ }
     function getFilteredEmployees() { return allEmployees; }
     function updateLastUpdatedTime() { const now=new Date(); const str=now.toLocaleString(); if(document.getElementById('desktopLastUpdatedTime')) document.getElementById('desktopLastUpdatedTime').innerText=str; if(document.getElementById('lastUpdatedTime')) document.getElementById('lastUpdatedTime').innerText=str; }
-    function editLeaveBalance(empId, empName, currentBalance) { document.getElementById('editEmployeeId').value=empId; document.getElementById('editEmployeeName').value=empName; document.getElementById('editLeaveBalance').value=currentBalance; openModal('editLeaveModal'); }
-    async function saveLeaveBalance() { const empId=document.getElementById('editEmployeeId').value; const newBal=parseInt(document.getElementById('editLeaveBalance').value); await db.collection('employees').doc(empId).update({ leaveBalance: newBal }); const idx=allEmployees.findIndex(e=>e.id===empId); if(idx!==-1) allEmployees[idx].leaveBalance=newBal; closeModal('editLeaveModal'); refreshDashboard(); alert(`Leave balance updated to ${newBal} days`); }
+
+    // Edit employee via modal (moderators only)
+    function openEditEmployeeModal(emp) {
+        if (!editAuthorizedEmails.includes(currentUser?.email)) { alert("Only moderators can edit employee credentials."); return; }
+        document.getElementById('editEmpId').value = emp.id;
+        document.getElementById('editEmpName').value = emp.name;
+        document.getElementById('editEmpEmail').value = emp.email || '';
+        document.getElementById('editEmpDept').value = emp.dept;
+        document.getElementById('editEmpRole').value = emp.role;
+        document.getElementById('editEmpStatus').value = emp.status || 'active';
+        document.getElementById('editLeaveBalance').value = emp.leaveBalance || 15;
+        document.getElementById('editEmpPin').value = emp.pin || '';
+        document.getElementById('editEmpPassword').value = '';
+        openModal('editEmployeeModal');
+    }
+
+    async function saveEmployeeEdit() {
+        const id = document.getElementById('editEmpId').value;
+        const name = document.getElementById('editEmpName').value;
+        const email = document.getElementById('editEmpEmail').value;
+        const dept = document.getElementById('editEmpDept').value;
+        const role = document.getElementById('editEmpRole').value;
+        const status = document.getElementById('editEmpStatus').value;
+        const leaveBalance = parseInt(document.getElementById('editLeaveBalance').value);
+        const pin = document.getElementById('editEmpPin').value;
+        const newPassword = document.getElementById('editEmpPassword').value;
+        if (!name || !dept || !role) { alert("Please fill required fields"); return; }
+        const empRef = db.collection('employees').doc(id);
+        const updateData = { name, dept, role, status, leaveBalance, pin };
+        await empRef.update(updateData);
+        // Update in-memory
+        const idx = allEmployees.findIndex(e => e.id === id);
+        if (idx !== -1) allEmployees[idx] = { ...allEmployees[idx], ...updateData };
+        // Also update the users collection if exists
+        const employee = allEmployees.find(e => e.id === id);
+        if (employee && employee.email) {
+            const userQuery = await db.collection('users').where('email', '==', employee.email).get();
+            userQuery.forEach(doc => {
+                db.collection('users').doc(doc.id).update({ name, role, department: dept, status });
+            });
+        }
+        // If password provided, update Firebase Auth (note: requires re-authentication, but we try)
+        if (newPassword && newPassword.trim() !== "") {
+            try {
+                // Find user by email in auth (requires admin SDK or re-auth, but we can attempt update via current user? Not directly.
+                // Since we have the email, we'll send a password reset email instead for security.
+                // For simplicity, we'll send a password reset email.
+                await auth.sendPasswordResetEmail(email);
+                alert(`Password reset email sent to ${email}. The user will need to set a new password.`);
+            } catch (err) {
+                console.warn("Could not send password reset email:", err);
+                alert("Password reset email could not be sent. Please reset manually in Firebase Console.");
+            }
+        }
+        closeModal('editEmployeeModal');
+        refreshDashboard();
+        alert(`Employee ${name} updated successfully.`);
+    }
+
+    // Simple leave balance edit (existing)
+    function editLeaveBalance(empId, empName, currentBalance) { 
+        document.getElementById('editEmployeeId').value = empId; 
+        document.getElementById('editEmployeeName').value = empName; 
+        document.getElementById('editLeaveBalanceSimple').value = currentBalance; 
+        openModal('editLeaveModal'); 
+    }
+    async function saveLeaveBalance() { 
+        const empId = document.getElementById('editEmployeeId').value; 
+        const newBal = parseInt(document.getElementById('editLeaveBalanceSimple').value); 
+        if (isNaN(newBal)) { alert("Enter a valid number"); return; } 
+        await db.collection('employees').doc(empId).update({ leaveBalance: newBal }); 
+        const idx = allEmployees.findIndex(e => e.id === empId); 
+        if (idx !== -1) allEmployees[idx].leaveBalance = newBal; 
+        closeModal('editLeaveModal'); 
+        refreshDashboard(); 
+        alert(`Leave balance updated to ${newBal} days`); 
+    }
 
     function computeMonthlyDeductions(monthlySalary) {
         const sss = Math.min(monthlySalary,30000)*0.045;
@@ -613,7 +717,7 @@
                     <tr><td class="label">Overtime (taxable):</td><td class="text-right">0.00</td></tr>
                     <tr><td class="label">ND (Night Differential):</td><td class="text-right">0.00</td></tr>
                     <tr><td class="label">OT (Overnight):</td><td class="text-right">0.00</td></tr>
-                    <tr><td class="label">NDOT:</td><td class="text-right">0.00</tr>
+                    <tr><td class="label">NDOT:</td><td class="text-right">0.00</td></tr>
                     <tr><td class="label">Legal Holiday:</td><td class="text-right">0.00</td></tr>
                     <tr><td class="label">LH-ND:</td><td class="text-right">0.00</td></tr>
                     <tr><td class="label">Restday:</td><td class="text-right">0.00</td></tr>
@@ -772,8 +876,34 @@
         } 
     }
 
-    async function addEmployee() { const name=document.getElementById('newEmpName').value; const dept=document.getElementById('newEmpDept').value; const role=document.getElementById('newEmpRole').value; const pin=document.getElementById('newEmpPin').value; if(!name||!dept||!pin) { alert("Fill all fields"); return; } const emp={name,dept,role,status:"active",pin,leaveBalance:15,createdAt:new Date().toISOString()}; const ref=await db.collection('employees').add(emp); allEmployees.push({id:ref.id,...emp}); closeModal('addEmployeeModal'); refreshDashboard(); alert(`Employee ${name} added`); }
-    async function deleteEmployee(id) { if(confirm("Delete?")) { await db.collection('employees').doc(id).delete(); allEmployees=allEmployees.filter(e=>e.id!==id); refreshDashboard(); } }
+    async function addEmployee() { 
+        const name = document.getElementById('newEmpName').value; 
+        const dept = document.getElementById('newEmpDept').value; 
+        const role = document.getElementById('newEmpRole').value; 
+        const pin = document.getElementById('newEmpPin').value; 
+        const password = document.getElementById('newEmpPass').value;
+        if (!name || !dept || !pin) { alert("Fill all fields"); return; }
+        // Create Firebase Auth user (if email is provided? For simplicity, we create employee record without email, and later can add)
+        // In this version we just add to employees collection
+        const emp = { name, dept, role, status: "active", pin, leaveBalance: 15, createdAt: new Date().toISOString() };
+        const ref = await db.collection('employees').add(emp);
+        allEmployees.push({ id: ref.id, ...emp });
+        closeModal('addEmployeeModal');
+        refreshDashboard();
+        alert(`Employee ${name} added. To allow login, please use the Edit Credentials button to set an email and password.`);
+        document.getElementById('newEmpName').value = '';
+        document.getElementById('newEmpDept').value = '';
+        document.getElementById('newEmpPin').value = '';
+        document.getElementById('newEmpPass').value = '';
+    }
+
+    async function deleteEmployee(id) { 
+        if (confirm("Delete this employee?")) { 
+            await db.collection('employees').doc(id).delete(); 
+            allEmployees = allEmployees.filter(e => e.id !== id); 
+            refreshDashboard(); 
+        } 
+    }
     function saveSettings() { localStorage.setItem('device_ip',document.getElementById('deviceIp').value); alert('Settings saved'); }
 
     async function loginWithEmail() {
@@ -792,9 +922,16 @@
                 let name = email.split('@')[0];
                 if (email.includes("hr")) role = "hr";
                 else if (email.includes("mod")) role = "moderator";
-                currentUserData = { name, role, email, department: "", leaveBalance: 15, dailyRate: 800 };
+                currentUserData = { name, role, email, department: "", leaveBalance: 15, dailyRate: 800, status: "active" };
                 currentUserRole = role;
-                await db.collection('users').doc(user.uid).set({ uid: user.uid, name, email, role, department: "", leaveBalance: 15, dailyRate: 800 });
+                await db.collection('users').doc(user.uid).set({ uid: user.uid, name, email, role, department: "", leaveBalance: 15, dailyRate: 800, status: "active" });
+            }
+            // Check if employee record exists and status is active
+            const empRecord = allEmployees.find(e => e.email === email);
+            if (empRecord && empRecord.status === "inactive") {
+                await auth.signOut();
+                alert("Your account is inactive. Please contact HR.");
+                return;
             }
             currentUser = user;
             document.getElementById('authScreen').style.display = 'none';
@@ -804,9 +941,9 @@
             document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n => n[0]).join('');
             document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n => n[0]).join('');
             document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
-            let roleText = currentUserRole === 'hr' ? "HR Admin" : (currentUserRole === 'moderator' ? "Moderator" : (currentUserRole === 'supervisor' ? "Supervisor" : "Employee"));
-            document.getElementById('welcomeSubtitle').innerText = roleText;
-            document.getElementById('userRoleDisplay').innerText = roleText;
+            const displayRole = getDisplayRole(currentUser.email, currentUserRole);
+            document.getElementById('welcomeSubtitle').innerHTML = displayRole;
+            document.getElementById('userRoleDisplay').innerText = displayRole;
             renderNavigation();
             await loadAllData();
             await loadAnnouncements();
@@ -838,7 +975,7 @@
         try {
             const cred = await auth.createUserWithEmailAndPassword(email, pwd);
             const user = cred.user;
-            await db.collection('users').doc(user.uid).set({ uid: user.uid, name, email, role, department: dept, leaveBalance: 15, dailyRate: 800, createdAt: new Date().toISOString() });
+            await db.collection('users').doc(user.uid).set({ uid: user.uid, name, email, role, department: dept, leaveBalance: 15, dailyRate: 800, status: "active", createdAt: new Date().toISOString() });
             await db.collection('employees').add({ id: user.uid, name, dept, role, email, status: "active", leaveBalance: 15 });
             sucDiv.innerText = "Account created! Please login.";
             sucDiv.classList.remove('hidden');
@@ -916,7 +1053,11 @@
         const myReqs = allRequests.filter(r=>r.userId === currentUser.uid).slice(0,5);
         document.getElementById('myRequestsList').innerHTML = myReqs.map(r=>`<div class="flex justify-between p-3 bg-slate-50 rounded"><div><b>${r.type}</b><br>${r.startDate} - ${r.endDate}</div><span class="text-xs px-2 py-1 rounded-full ${r.status==='approved'?'bg-green-100':r.status==='rejected'?'bg-red-100':'bg-yellow-100'}">${r.status}</span></div>`).join('') || '<div class="text-center">No requests</div>';
         if (fullPrivilegedEmails.includes(currentUser?.email)) {
-            document.getElementById('hrEmployeesList').innerHTML = allEmployees.map(e => `<div class="flex justify-between items-center p-3 border-b"><div><b>${e.name}</b><br>${e.dept} - ${e.role}<br>Leave: <span class="editable-leave text-blue-600 cursor-pointer" onclick="editLeaveBalance('${e.id}','${e.name}',${e.leaveBalance||0})">${e.leaveBalance||0} days</span></div><button onclick="deleteEmployee('${e.id}')" class="text-red-500">Delete</button></div>`).join('');
+            document.getElementById('hrEmployeesList').innerHTML = allEmployees.map(e => {
+                const init = e.name.split(' ').map(n=>n[0]).join('');
+                const canEdit = editAuthorizedEmails.includes(currentUser?.email);
+                return `<div class="flex justify-between items-center p-3 border-b"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold">${init}</div><div><p class="font-semibold">${e.name}</p><p class="text-sm text-slate-500">${e.dept} - ${e.role}</p><p class="text-xs">Leave balance: <span class="editable-leave text-blue-600 cursor-pointer" onclick="editLeaveBalance('${e.id}','${e.name}',${e.leaveBalance||0})">${e.leaveBalance||0} days</span></p><p class="text-xs">Status: ${e.status || 'active'}</p></div></div><div class="flex gap-2">${canEdit ? `<button onclick="openEditEmployeeModal({id:'${e.id}',name:'${e.name}',email:'${e.email||''}',dept:'${e.dept}',role:'${e.role}',status:'${e.status||'active'}',leaveBalance:${e.leaveBalance||0},pin:'${e.pin||''}'})" class="text-blue-600 text-sm">Edit</button>` : ''}<button onclick="deleteEmployee('${e.id}')" class="text-red-500 text-sm">Delete</button></div></div>`;
+            }).join('');
             document.getElementById('allRequestsList').innerHTML = allRequests.map(r => `<div class="bg-white p-3 rounded shadow mb-2"><b>${r.userName}</b> (${r.userDepartment})<br>${r.type} | ${r.startDate} - ${r.endDate}<br>Status: ${r.status} | Approver: ${r.approverEmail}</div>`).join('');
         }
         const pendingContainer = document.getElementById('pendingApprovalsList');
@@ -930,7 +1071,6 @@
                 pendingReqs = allRequests.filter(r => r.approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status === "pending_final"));
             }
             pendingContainer.innerHTML = pendingReqs.map(r => {
-                // Determine which approve function to call based on status
                 const approveFn = (r.status === "pending_final") ? "approveFinal" : "approveSecondary";
                 return `<div class="bg-white p-3 rounded shadow mb-2"><b>${r.userName}</b> - ${r.type}<br>${r.startDate} to ${r.endDate}<br><button onclick="${approveFn}('${r.id}')" class="bg-green-600 text-white px-3 py-1 rounded text-sm">Approve</button> <button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-3 py-1 rounded text-sm">Reject</button></div>`;
             }).join('');
@@ -1070,9 +1210,9 @@
                 document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join('');
                 document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join('');
                 document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
-                let roleText = currentUserRole==='hr'?"HR Admin":(currentUserRole==='moderator'?"Moderator":"Employee");
-                document.getElementById('welcomeSubtitle').innerText = roleText;
-                document.getElementById('userRoleDisplay').innerText = roleText;
+                const displayRole = getDisplayRole(currentUser.email, currentUserRole);
+                document.getElementById('welcomeSubtitle').innerHTML = displayRole;
+                document.getElementById('userRoleDisplay').innerText = displayRole;
                 renderNavigation();
                 await loadAllData();
                 await loadAnnouncements();
@@ -1080,7 +1220,7 @@
                 await refreshMyAttendanceTab();
                 if (fullPrivilegedEmails.includes(currentUser.email)) {
                     const gsel = document.getElementById('guardEmployee');
-                    if (gsel) gsel.innerHTML = '<option value="">Select Guard</option>' + allEmployees.filter(e=>e.dept==='Security Guard Department'||e.role==='guard').map(emp=>`<option value="${emp.id}">${emp.name}</option>`).join('');
+                    if (gsel) gsel.innerHTML = '<option value="">Select Guard</option>' + allEmployees.filter(e => e.dept === 'Security Guard Department' || e.role === 'guard').map(emp => `<option value="${emp.id}">${emp.name}</option>`).join('');
                     populateYearDropdown();
                 }
                 const resetContainer = document.getElementById('resetButtonContainer');
