@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Complete HRIS</title>
+    <title>EQUIPRIME HR - Dynamic Approver HRIS</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -147,7 +147,7 @@
             <div class="welcome-logo-wrapper"><img src="welcome logo.jpg" class="branding-logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';"></div>
             <div class="branding-text-section">
                 <h1>Smart Choices.<br>Smarter Results.</h1>
-                <div class="branding-subtext">Empowering your workforce with streamlined HR management.</div>
+                <div class="branding-subtext">Dynamic approval workflow – no hardcoded emails.</div>
                 <div class="weather-widget" id="liveWeatherWidget"><i data-feather="cloud-rain"></i><span id="weatherText">Loading...</span></div>
                 <div class="social-icons"><a href="#"><i data-feather="facebook"></i></a><a href="#"><i data-feather="instagram"></i></a><a href="#"><i data-feather="globe"></i></a></div>
                 <div class="footer-links"><a href="#">Privacy Policy</a><span>•</span><a href="#">Contact</a></div>
@@ -161,8 +161,8 @@
             <div id="authError" class="bg-red-50 text-red-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
             <div id="authSuccess" class="bg-green-50 text-green-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
             <div id="loginForm"><div class="space-y-3"><input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none dark:bg-slate-800 dark:border-slate-600"><input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm focus:ring-2 focus:ring-[#004aad] outline-none dark:bg-slate-800 dark:border-slate-600"><button id="loginBtnMain" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Login</button></div><div class="mt-3 text-center"><button id="showSignupBtnMain" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Don't have an account? Sign up</button></div></div>
-            <div id="signupForm" class="hidden"><div class="space-y-2"><input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm"><input type="email" id="signupEmail" placeholder="Email" class="w-full p-3 border rounded-xl text-sm"><input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm"><select id="signupRole" class="w-full p-3 border rounded-xl text-sm"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option></select><select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm"><option value="">Select Department</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select><button id="signupBtnMain" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Sign Up</button></div><div class="mt-3 text-center"><button id="showLoginBtnMain" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Already have an account? Login</button></div></div>
-            <div class="mt-5 p-3 bg-slate-50 rounded-xl text-sm"><p class="font-semibold mb-1">Authorized Users:</p><p>HR: hr@equiprime.ph / hr@equiprime.ph</p><p>Moderator: mod@equiprime.ph / mod@equiprime.ph</p><p>Others can sign up</p></div>
+            <div id="signupForm" class="hidden"><div class="space-y-2"><input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm"><input type="email" id="signupEmail" placeholder="Email" class="w-full p-3 border rounded-xl text-sm"><input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm"><select id="signupRole" class="w-full p-3 border rounded-xl text-sm"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option></select><select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm"><option value="">Select Department</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select><button id="signupBtnMain" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Sign Up</button></div><div class="mt-3 text-center"><button id="showLoginBtnMain" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Already have an account? Login</button></div></div>
+            <div class="mt-5 p-3 bg-slate-50 rounded-xl text-sm"><p class="font-semibold mb-1">Authorized Users:</p><p>HR: hr@equiprime.ph / hr@equiprime.ph</p><p>Admins/Managers are auto‑granted approval rights per department.</p></div>
         </div>
     </div>
 </div>
@@ -170,8 +170,8 @@
 <!-- MAIN APP -->
 <div id="mainApp" class="hidden app-container">
     <div id="overlay" class="overlay" onclick="closeMobileSidebar()"></div>
-    <div id="mobileSidebar" class="mobile-sidebar"><div class="flex justify-end mb-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x"></i></button></div><div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div><nav id="mobileNavMenu" class="space-y-2 flex-1"></nav><div class="mt-6 pt-4 border-t border-white/20"><div class="filter-section"><label class="filter-label">DEPARTMENT</label><select id="mobileFilterDepartment" class="filter-select" onchange="applyFilters()"><option value="all">All Departments</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select></div><div class="filter-section"><label class="filter-label">STATUS</label><select id="mobileFilterStatus" class="filter-select" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="on-leave">On Leave</option></select></div><div class="filter-section"><label class="filter-label">LEAVE TYPE</label><select id="mobileFilterLeaveType" class="filter-select" onchange="applyFilters()"><option value="all">All Leave Types</option><option value="Official Business">Official Business</option><option value="Vacation Leave">Vacation Leave</option><option value="Sick Leave">Sick Leave</option><option value="Birthday Leave">Birthday Leave</option><option value="Emergency Leave">Emergency Leave</option><option value="Offset">Offset</option></select></div><div class="pt-2"><label class="filter-label">LAST UPDATED</label><div class="text-white/80 text-xs flex items-center gap-2"><i data-feather="calendar"></i><span id="mobileLastUpdatedTime">Loading...</span></div></div></div><div class="pt-4 border-t border-white/20 mt-2"><button onclick="toggleNightMode()" class="w-full flex items-center gap-3 text-white/70 hover:text-white p-3 rounded-xl"><i data-feather="moon"></i> Night Mode</button></div><div class="pt-2 border-t border-white/20 mt-2"><button onclick="logout()" class="w-full flex items-center gap-3 text-white/70 p-3 rounded-xl"><i data-feather="log-out"></i> Logout</button></div></div>
-    <div class="desktop-sidebar"><div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p></div><nav id="desktopNavMenu" class="space-y-2 flex-1"></nav><div class="mt-6 pt-4 border-t border-white/20"><div class="filter-section"><label class="filter-label">DEPARTMENT</label><select id="desktopFilterDepartment" class="filter-select" onchange="applyFilters()"><option value="all">All Departments</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select></div><div class="filter-section"><label class="filter-label">STATUS</label><select id="desktopFilterStatus" class="filter-select" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="on-leave">On Leave</option></select></div><div class="filter-section"><label class="filter-label">LEAVE TYPE</label><select id="desktopFilterLeaveType" class="filter-select" onchange="applyFilters()"><option value="all">All Leave Types</option><option value="Official Business">Official Business</option><option value="Vacation Leave">Vacation Leave</option><option value="Sick Leave">Sick Leave</option><option value="Birthday Leave">Birthday Leave</option><option value="Emergency Leave">Emergency Leave</option><option value="Offset">Offset</option></select></div><div class="pt-2"><label class="filter-label">LAST UPDATED</label><div class="text-white/80 text-xs flex items-center gap-2"><i data-feather="calendar"></i><span id="desktopLastUpdatedTime">Loading...</span></div></div></div><div class="mt-4 pt-4 border-t border-white/20"><button onclick="toggleNightMode()" class="w-full flex items-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="moon"></i> Night Mode</button></div><div class="mt-auto pt-8"><div class="bg-white/10 rounded-2xl p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div><button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="log-out"></i> Logout</button></div></div></div>
+    <div id="mobileSidebar" class="mobile-sidebar"><div class="flex justify-end mb-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x"></i></button></div><div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div><nav id="mobileNavMenu" class="space-y-2 flex-1"></nav><div class="mt-6 pt-4 border-t border-white/20"><div class="filter-section"><label class="filter-label">DEPARTMENT</label><select id="mobileFilterDepartment" class="filter-select" onchange="applyFilters()"><option value="all">All Departments</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select></div><div class="filter-section"><label class="filter-label">STATUS</label><select id="mobileFilterStatus" class="filter-select" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option><option value="terminated">Terminated</option></select></div><div class="filter-section"><label class="filter-label">LEAVE TYPE</label><select id="mobileFilterLeaveType" class="filter-select" onchange="applyFilters()"><option value="all">All Leave Types</option><option value="Official Business">Official Business</option><option value="Vacation Leave">Vacation Leave</option><option value="Sick Leave">Sick Leave</option><option value="Birthday Leave">Birthday Leave</option><option value="Emergency Leave">Emergency Leave</option><option value="Offset">Offset</option></select></div><div class="pt-2"><label class="filter-label">LAST UPDATED</label><div class="text-white/80 text-xs flex items-center gap-2"><i data-feather="calendar"></i><span id="mobileLastUpdatedTime">Loading...</span></div></div></div><div class="pt-4 border-t border-white/20 mt-2"><button onclick="toggleNightMode()" class="w-full flex items-center gap-3 text-white/70 hover:text-white p-3 rounded-xl"><i data-feather="moon"></i> Night Mode</button></div><div class="pt-2 border-t border-white/20 mt-2"><button onclick="logout()" class="w-full flex items-center gap-3 text-white/70 p-3 rounded-xl"><i data-feather="log-out"></i> Logout</button></div></div>
+    <div class="desktop-sidebar"><div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p></div><nav id="desktopNavMenu" class="space-y-2 flex-1"></nav><div class="mt-6 pt-4 border-t border-white/20"><div class="filter-section"><label class="filter-label">DEPARTMENT</label><select id="desktopFilterDepartment" class="filter-select" onchange="applyFilters()"><option value="all">All Departments</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select></div><div class="filter-section"><label class="filter-label">STATUS</label><select id="desktopFilterStatus" class="filter-select" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option><option value="terminated">Terminated</option></select></div><div class="filter-section"><label class="filter-label">LEAVE TYPE</label><select id="desktopFilterLeaveType" class="filter-select" onchange="applyFilters()"><option value="all">All Leave Types</option><option value="Official Business">Official Business</option><option value="Vacation Leave">Vacation Leave</option><option value="Sick Leave">Sick Leave</option><option value="Birthday Leave">Birthday Leave</option><option value="Emergency Leave">Emergency Leave</option><option value="Offset">Offset</option></select></div><div class="pt-2"><label class="filter-label">LAST UPDATED</label><div class="text-white/80 text-xs flex items-center gap-2"><i data-feather="calendar"></i><span id="desktopLastUpdatedTime">Loading...</span></div></div></div><div class="mt-4 pt-4 border-t border-white/20"><button onclick="toggleNightMode()" class="w-full flex items-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="moon"></i> Night Mode</button></div><div class="mt-auto pt-8"><div class="bg-white/10 rounded-2xl p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div><button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="log-out"></i> Logout</button></div></div></div>
 
     <div class="main-content">
         <div class="mobile-header"><button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-[#004aad] text-white flex items-center justify-center text-xs font-bold" id="mobileUserInitials">HR</div><span id="mobileUserName" class="text-sm font-semibold text-slate-700">User</span></div></div>
@@ -189,7 +189,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="space-y-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold flex items-center gap-2"><i data-feather="file-text"></i> My Recent Requests</h3><button onclick="openNewRequestMenu()" class="text-[#004aad] text-sm font-medium flex items-center gap-1 hover:underline"><i data-feather="plus-circle"></i> New Request</button></div><div id="myRequestsList" class="space-y-3 max-h-80 overflow-y-auto"></div><button onclick="switchTab('my-requests')" class="mt-4 w-full bg-slate-100 text-slate-700 py-2.5 rounded-xl text-sm">View All My Requests</button></div></div><div class="space-y-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="users"></i> Employee Login Status</h3><div class="space-y-4"><div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-green-500 rounded-full"></div><h4 class="font-semibold">Logged In Today</h4><span id="loggedInCount"></span></div><div id="loggedInList" class="space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-red-500 rounded-full"></div><h4 class="font-semibold">Missed Log In</h4><span id="missedCount"></span></div><div id="missedList" class="space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-orange-500 rounded-full"></div><h4 class="font-semibold">Late</h4><span id="lateCountDashboard"></span></div><div id="lateList" class="space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-yellow-500 rounded-full"></div><h4 class="font-semibold">On Leave</h4><span id="onLeaveCount"></span></div><div id="onLeaveList" class="space-y-2 max-h-40 overflow-y-auto"></div></div></div></div>
                 <div class="bg-white rounded-2xl p-6 shadow-sm"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold flex items-center gap-2"><i data-feather="bell"></i> Announcements</h3><div id="announcementAddButton"></div></div><div id="announcementsList" class="space-y-3"></div></div>
             </div></div>
-            <div class="mt-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="git-branch"></i> Approval Flow</h3><div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-sm"><div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Employee submits</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Secondary Approver</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> Final Approver (hrd@equiprime.ph)</div></div></div></div>
+            <div class="mt-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="git-branch"></i> Approval Flow</h3><div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-sm"><div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Employee submits</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Secondary Approver (dept admin/manager)</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> Final Approver (hrd@equiprime.ph)</div></div></div></div>
         </div>
 
         <!-- MY ATTENDANCE -->
@@ -211,7 +211,7 @@
         <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="clipboard"></i> All Employee Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
 
         <!-- HR PAYSLIP MGMT -->
-        <div id="hr-payslip-tab" class="tab-content hidden"><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl"><select id="cutOffPeriod" class="w-full p-3 border rounded-xl"><option value="first">1st cut-off (1st-15th)</option><option value="second">2nd cut-off (16th-31st)</option></select><input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl" placeholder="Daily Rate"><input type="number" id="daysPresent" class="w-full p-3 border rounded-xl" placeholder="Days Present"><input type="number" id="overtimePay" value="0" step="0.01" class="w-full p-3 border rounded-xl" placeholder="Overtime Pay"><input type="number" id="otherEarnings" value="0" step="0.01" class="w-full p-3 border rounded-xl" placeholder="Other Earnings (allowances)"><input type="number" id="otherDeduction" value="0" step="0.01" class="w-full p-3 border rounded-xl" placeholder="Other Deduction (loan etc)"><button id="generatePayslipBtn" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Generate Payslip</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
+        <div id="hr-payslip-tab" class="tab-content hidden"><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl"><select id="cutOffPeriod" class="w-full p-3 border rounded-xl"><option value="first">1st cut-off (1st-15th)</option><option value="second">2nd cut-off (16th-31st)</option></select><input type="number" id="dailyRate" value="850" class="w-full p-3 border rounded-xl" placeholder="Daily Rate"><input type="number" id="daysPresent" class="w-full p-3 border rounded-xl" placeholder="Days Present"><input type="number" id="overtimePay" value="0" step="0.01" class="w-full p-3 border rounded-xl" placeholder="Overtime Pay"><input type="number" id="otherEarnings" value="0" step="0.01" class="w-full p-3 border rounded-xl" placeholder="Other Earnings"><input type="number" id="otherDeduction" value="0" step="0.01" class="w-full p-3 border rounded-xl" placeholder="Other Deduction"><button id="generatePayslipBtn" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Generate Payslip</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
 
         <!-- GUARD SCHEDULE -->
         <div id="hr-guard-schedule-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2"><i data-feather="calendar"></i> Guard Weekly Schedule Management</h2><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border rounded-xl"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 bg-slate-50"><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Assign Weekly Schedule</button></div></div><div class="bg-white rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
@@ -224,19 +224,19 @@
     </div>
 </div>
 
-<!-- MODALS -->
+<!-- MODALS (same as before) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')"><i data-feather="x"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl" placeholder="Title"><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl" placeholder="Content"></textarea></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl" placeholder="Reason"></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 rounded-xl text-left">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 rounded-xl text-left">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 rounded-xl text-left">Vacation Leave</button></div></div></div>
 <div id="offsetsModalOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeModal('offsetsModalOverlay')"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl"><input type="number" id="offsetsHours" step="0.5" class="w-full p-3 border rounded-xl" placeholder="Hours to Offset"><textarea id="offsetsReasonText" rows="2" class="w-full p-3 border rounded-xl" placeholder="Reason"></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitOffsets()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('offsetsModalOverlay')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="newRequestMenuOverlay" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Request Type</h3><button onclick="closeModal('newRequestMenuOverlay')"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="openRequestModal('Official Business')" class="w-full p-3 bg-slate-50 rounded-xl text-left">Official Business</button><button onclick="openRequestModal('Overtime')" class="w-full p-3 bg-slate-50 rounded-xl text-left">Overtime</button><button onclick="openRequestModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 rounded-xl text-left">Certificate of Attendance</button><button onclick="closeModal('newRequestMenuOverlay'); openLeaveModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left">Leave</button><button onclick="closeModal('newRequestMenuOverlay'); openOffsetsModal()" class="w-full p-3 bg-slate-50 rounded-xl text-left">Offsets</button></div></div></div>
-<div id="addEmployeeModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="text" id="newEmpName" class="w-full p-3 border rounded-xl" placeholder="Full Name"><input type="email" id="newEmpEmail" class="w-full p-3 border rounded-xl" placeholder="Email Address (for login)"><input type="text" id="newEmpDept" class="w-full p-3 border rounded-xl" placeholder="Department"><select id="newEmpRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option><option value="approver">Department Approver</option></select><input type="text" id="newEmpPin" class="w-full p-3 border rounded-xl" placeholder="PIN (for clocking)"><input type="password" id="newEmpPass" class="w-full p-3 border rounded-xl" placeholder="Password"></div><div class="flex gap-3 mt-5"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('addEmployeeModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
-<div id="editEmployeeModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Employee</h3><button onclick="closeModal('editEmployeeModal')"><i data-feather="x"></i></button></div><input type="hidden" id="editEmpId"><div class="space-y-3"><input type="text" id="editEmpName" class="w-full p-3 border rounded-xl"><input type="email" id="editEmpEmail" class="w-full p-3 border rounded-xl"><select id="editEmpDept" class="w-full p-3 border rounded-xl"><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select><select id="editEmpRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option><option value="approver">Department Approver</option></select><select id="editEmpStatus" class="w-full p-3 border rounded-xl"><option value="active">Active</option><option value="inactive">Inactive</option></select><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" placeholder="Leave Balance"><input type="text" id="editEmpPin" class="w-full p-3 border rounded-xl" placeholder="PIN"><input type="password" id="editEmpPassword" class="w-full p-3 border rounded-xl" placeholder="New Password (optional)"></div><div class="flex gap-3 mt-5"><button onclick="saveEmployeeEdit()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save Changes</button><button onclick="closeModal('editEmployeeModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
+<div id="addEmployeeModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="text" id="newEmpName" class="w-full p-3 border rounded-xl" placeholder="Full Name"><input type="email" id="newEmpEmail" class="w-full p-3 border rounded-xl" placeholder="Email Address"><input type="text" id="newEmpDept" class="w-full p-3 border rounded-xl" placeholder="Department"><select id="newEmpRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option><option value="approver">Department Approver</option></select><input type="text" id="newEmpPin" class="w-full p-3 border rounded-xl" placeholder="PIN"><input type="password" id="newEmpPass" class="w-full p-3 border rounded-xl" placeholder="Password"></div><div class="flex gap-3 mt-5"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('addEmployeeModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
+<div id="editEmployeeModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Employee</h3><button onclick="closeModal('editEmployeeModal')"><i data-feather="x"></i></button></div><input type="hidden" id="editEmpId"><div class="space-y-3"><input type="text" id="editEmpName" class="w-full p-3 border rounded-xl"><input type="email" id="editEmpEmail" class="w-full p-3 border rounded-xl"><select id="editEmpDept" class="w-full p-3 border rounded-xl"><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select><select id="editEmpRole" class="w-full p-3 border rounded-xl"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option><option value="approver">Department Approver</option></select><select id="editEmpStatus" class="w-full p-3 border rounded-xl"><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option><option value="terminated">Terminated</option><option value="retired">Retired</option></select><input type="number" id="editLeaveBalance" class="w-full p-3 border rounded-xl" placeholder="Leave Balance"><input type="text" id="editEmpPin" class="w-full p-3 border rounded-xl" placeholder="PIN"><input type="password" id="editEmpPassword" class="w-full p-3 border rounded-xl" placeholder="New Password (optional)"></div><div class="flex gap-3 mt-5"><button onclick="saveEmployeeEdit()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save Changes</button><button onclick="closeModal('editEmployeeModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="editLeaveModal" class="modal-overlay"><div class="modal-container"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl" readonly><input type="number" id="editLeaveBalanceSimple" class="w-full p-3 border rounded-xl" step="1"></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 <div id="payslipModal" class="modal-overlay"><div class="payslip-modal-container"><div class="payslip-card"><div class="flex justify-between items-start mb-4 no-print"><h2 class="text-xl font-bold">Payslip Statement</h2><button onclick="closeModal('payslipModal')"><i data-feather="x"></i></button></div><div id="payslipContent"></div><div class="text-right no-print mt-4"><button onclick="window.print()" class="bg-[#004aad] text-white px-4 py-2 rounded-lg text-sm">Print Statement</button></div></div></div></div>
 
 <script>
-// ---------- FIREBASE ----------
+// -------------------- FIREBASE --------------------
 const firebaseConfig = {
     apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
     authDomain: "equiprime-hr.firebaseapp.com",
@@ -249,86 +249,91 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// ---------- GLOBALS ----------
+// -------------------- GLOBALS --------------------
 let currentUser = null, currentUserData = null, currentUserRole = null;
 let allEmployees = [], allRequests = [], allAttendance = [], allPayslips = [], allAnnouncements = [], guardWeeklySchedules = [];
 let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
 
 const fullPrivilegedEmails = ["hrd@equiprime.ph", "mod.rom@equiprime.ph", "mod.dex@equiprime.ph"];
-const additionalPrivilegedEmails = ["cris.molina@equiprime.ph", "dino.elpus@equiprime.ph", "ana.liwanagan@equiprime.ph", "operations@equiprime.ph", "after.sales@equiprime.ph"];
-const anyPrivileged = [...fullPrivilegedEmails, ...additionalPrivilegedEmails];
-const payslipAuthorizedEmails = fullPrivilegedEmails;
 const resetAuthorizedEmail = "mod.rom@equiprime.ph";
 const editAuthorizedEmails = ["mod.rom@equiprime.ph", "mod.dex@equiprime.ph"];
 
-const displayRoleMap = {
-    "cris.molina@equiprime.ph": "Supply Chain Manager",
-    "dino.elpus@equiprime.ph": "Service Management Assistant",
-    "operations@equiprime.ph": "Service and After-sales Manager",
-    "ana.liwanagan@equiprime.ph": "Accounting Manager",
-    "hrd@equiprime.ph": "HR Administrator",
-    "after.sales@equiprime.ph": "Parts Manager"
-};
-
-function getDisplayRole(email, systemRole) {
-    if (displayRoleMap[email]) return displayRoleMap[email];
-    if (systemRole === "admin") return "Administrator";
-    if (systemRole === "supervisor") return "Supervisor";
-    return "Employee";
+// -------------------- HELPER: GRANT / REVOKE APPROVER PERMISSIONS (DYNAMIC) --------------------
+async function grantApproverPermissions(employeeId, role, department) {
+    const approverRoles = ['admin', 'supervisor', 'manager'];
+    if (!approverRoles.includes(role)) return;
+    const deptRef = db.collection('departmentApprovers').doc(department);
+    const doc = await deptRef.get();
+    if (doc.exists) {
+        const current = doc.data().secondaryApprovers || [];
+        if (!current.includes(employeeId)) {
+            await deptRef.update({ secondaryApprovers: firebase.firestore.FieldValue.arrayUnion(employeeId) });
+        }
+    } else {
+        await deptRef.set({
+            secondaryApprovers: [employeeId],
+            finalApprover: "hrd@equiprime.ph"  // system‑wide final approver
+        });
+    }
 }
 
-const departmentApprovalConfig = {
-    "Service Department": { secondary: "dino.elpus@equiprime.ph", final: "hrd@equiprime.ph" },
-    "After-sales Department": { secondary: "after.sales@equiprime.ph", final: "hrd@equiprime.ph" },
-    "Supply Chain Department": { secondary: "cris.molina@equiprime.ph", final: "hrd@equiprime.ph" },
-    "Accounting Department": { secondary: "ana.liwanagan@equiprime.ph", final: "hrd@equiprime.ph" },
-    "HR Department": { final: "hrd@equiprime.ph" },
-    "Marketing Department": { final: "hrd@equiprime.ph" },
-    "Sales Department": { final: "hrd@equiprime.ph" },
-    "IT/Asset Management Department": { final: "hrd@equiprime.ph" },
-    "Security Guard Department": { final: "hrd@equiprime.ph" }
-};
-
-function getApprovalStageAndEmails(dept) {
-    const config = departmentApprovalConfig[dept] || { final: "hrd@equiprime.ph" };
-    if (config.secondary) return { hasSecondary: true, secondaryEmail: config.secondary, finalEmail: config.final };
-    return { hasSecondary: false, finalEmail: config.final };
+async function revokeApproverPermissions(employeeId, department) {
+    const deptRef = db.collection('departmentApprovers').doc(department);
+    const doc = await deptRef.get();
+    if (doc.exists) {
+        await deptRef.update({
+            secondaryApprovers: firebase.firestore.FieldValue.arrayRemove(employeeId)
+        });
+    }
 }
 
-function getDirectApproverForSubmitter(email, role, department) {
-    if (email === "cris.molina@equiprime.ph") return "hrd@equiprime.ph";
-    if (email === "dino.elpus@equiprime.ph") return "operations@equiprime.ph";
-    if (email === "ana.liwanagan@equiprime.ph") return "hrd@equiprime.ph";
-    if (role === "admin" || role === "supervisor") {
-        const deptsToOperations = ["After-sales Department", "Marketing Department", "Sales Department", "IT/Asset Management Department", "Accounting Department"];
-        if (deptsToOperations.includes(department)) return "operations@equiprime.ph";
-        else return "hrd@equiprime.ph";
+// Called when an employee's status changes to inactive/resigned/terminated/retired
+async function handleEmployeeStatusChange(employeeId, oldStatus, newStatus, department) {
+    const inactiveStatuses = ['inactive', 'resigned', 'terminated', 'retired'];
+    const wasActive = oldStatus === 'active';
+    const isNowInactive = inactiveStatuses.includes(newStatus);
+    if (wasActive && isNowInactive) {
+        await revokeApproverPermissions(employeeId, department);
+    } else if (!wasActive && newStatus === 'active') {
+        // If reactivated, re‑grant if role is approver
+        const emp = allEmployees.find(e => e.id === employeeId);
+        if (emp && ['admin','supervisor','manager'].includes(emp.role)) {
+            await grantApproverPermissions(employeeId, emp.role, emp.dept);
+        }
+    }
+}
+
+// -------------------- GET APPROVER EMAILS DYNAMICALLY --------------------
+async function getApproverForDepartment(department, stage) {
+    const deptDoc = await db.collection('departmentApprovers').doc(department).get();
+    if (!deptDoc.exists) return { email: "hrd@equiprime.ph", isFallback: true };
+    const data = deptDoc.data();
+    if (stage === 'secondary') {
+        const secondaryIds = data.secondaryApprovers || [];
+        // Find first active secondary approver
+        for (let id of secondaryIds) {
+            const empDoc = await db.collection('employees').doc(id).get();
+            if (empDoc.exists && empDoc.data().status === 'active') {
+                return { email: empDoc.data().email, isFallback: false };
+            }
+        }
+        // fallback to final approver
+        return { email: data.finalApprover || "hrd@equiprime.ph", isFallback: true };
+    } else { // final
+        return { email: data.finalApprover || "hrd@equiprime.ph", isFallback: false };
+    }
+}
+
+// For direct approver (used for specific roles)
+async function getDirectApproverForSubmitter(userEmail, role, department) {
+    if (role === "admin" || role === "supervisor" || role === "manager") {
+        // For depts that need operations manager first, we can implement logic but simpler: send to final.
+        return { email: "hrd@equiprime.ph", isDirect: true };
     }
     return null;
 }
 
-function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:false }); }
-
-// ---------- HELPER: EMPLOYEE WORK SCHEDULE (from guard schedule or default) ----------
-async function getEmployeeWorkSchedule(empId) {
-    if (!empId) return { startHour: 8, startMinute: 0 };
-    const schedules = guardWeeklySchedules.filter(s => s.employeeId === empId);
-    if (schedules.length === 0) return { startHour: 8, startMinute: 0 };
-    const today = new Date().getDay(); // 0=Sun..6=Sat
-    const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    const dayName = dayNames[today];
-    for (let s of schedules) {
-        if (s.schedule[dayName] && s.schedule[dayName] !== 'Off/Rest') {
-            const shift = s.schedule[dayName];
-            if (shift.includes('Morning')) return { startHour: 6, startMinute: 0 };
-            if (shift.includes('Afternoon')) return { startHour: 14, startMinute: 0 };
-            if (shift.includes('Night')) return { startHour: 22, startMinute: 0 };
-        }
-    }
-    return { startHour: 8, startMinute: 0 };
-}
-
-// ---------- DATA LOADING ----------
+// -------------------- DATA LOADING --------------------
 async function loadAllData() {
     const empSnap = await db.collection('employees').get();
     allEmployees = empSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -354,7 +359,7 @@ async function loadGuardSelect() {
     if (sel) sel.innerHTML = '<option value="">Select Guard</option>' + allEmployees.filter(e => e.dept === 'Security Guard Department' || e.role === 'guard').map(e => `<option value="${e.id}">${e.name}</option>`).join('');
 }
 
-// ---------- FILTERS (FIXED) ----------
+// -------------------- FILTERS --------------------
 function applyFilters() {
     const deptFilter = document.getElementById('desktopFilterDepartment')?.value || document.getElementById('mobileFilterDepartment')?.value || 'all';
     const statusFilter = document.getElementById('desktopFilterStatus')?.value || document.getElementById('mobileFilterStatus')?.value || 'all';
@@ -367,14 +372,10 @@ function getFilteredEmployees() {
     let filtered = [...allEmployees];
     if (currentFilter.department !== 'all') filtered = filtered.filter(e => e.dept === currentFilter.department);
     if (currentFilter.status !== 'all') filtered = filtered.filter(e => e.status === currentFilter.status);
-    if (currentFilter.leaveType !== 'all') {
-        // For leave type filter, we need to check if employee has any approved leave of that type overlapping current date? Simplified: just filter by leaveBalance or leave requests? Not perfect but shows concept.
-        // Instead, we filter based on if they have an approved leave today (for demo). We'll just return all for now.
-    }
     return filtered;
 }
 
-// ---------- ATTENDANCE SUMMARY (FIXED CALENDAR) ----------
+// -------------------- ATTENDANCE SUMMARY (unchanged, working) --------------------
 function populateYearDropdown() {
     const yearSelect = document.getElementById('summaryYear');
     if (!yearSelect) return;
@@ -409,7 +410,7 @@ async function loadEmployeeCalendar(employeeId) {
     const year = parseInt(document.getElementById('summaryYear').value);
     const month = parseInt(document.getElementById('summaryMonth').value);
     const firstDay = new Date(year, month, 1);
-    const startDayOfWeek = firstDay.getDay(); // 0=Sun
+    const startDayOfWeek = firstDay.getDay();
     const daysInMonth = new Date(year, month+1, 0).getDate();
     const daysArray = [];
     for (let i = 0; i < startDayOfWeek; i++) daysArray.push(null);
@@ -419,7 +420,7 @@ async function loadEmployeeCalendar(employeeId) {
     const emp = allEmployees.find(e => e.id === employeeId);
     let completed=0, late=0, incomplete=0, leave=0;
     const calendarHTML = daysArray.map(day => {
-        if (!day) return `<div class="day bg-gray-200 dark:bg-gray-700" style="background:#e2e8f0;"></div>`;
+        if (!day) return `<div class="day bg-gray-200 dark:bg-gray-700"></div>`;
         let statusClass = '', statusText = '';
         const isLeave = empLeaves.some(l => new Date(l.startDate) <= new Date(day.date) && new Date(l.endDate) >= new Date(day.date));
         if (isLeave) { statusClass = 'leave'; statusText = 'Leave'; leave++; }
@@ -428,11 +429,9 @@ async function loadEmployeeCalendar(employeeId) {
             if (attRecord && attRecord.timeIn && attRecord.timeOut) { statusClass = 'completed'; statusText = 'Completed'; completed++; }
             else if (attRecord && attRecord.timeIn && !attRecord.timeOut) { statusClass = 'incomplete'; statusText = 'Incomplete'; incomplete++; }
             else { statusClass = 'incomplete'; statusText = 'No record'; incomplete++; }
-            // Late detection (simplified, using default 8am)
             if (attRecord && attRecord.timeIn) {
                 const [inH,inM] = attRecord.timeIn.split(':').map(Number);
-                const inTotal = inH*60+inM;
-                if (inTotal > 8*60) { statusClass = 'late'; statusText = 'Late'; completed--; late++; incomplete--; }
+                if (inH*60+inM > 8*60) { statusClass = 'late'; statusText = 'Late'; completed--; late++; incomplete--; }
             }
         }
         return `<div class="day ${statusClass}"><div class="day-number">${day.dayNum}</div><div>${statusText}</div></div>`;
@@ -460,12 +459,12 @@ async function loadEmployeeCalendar(employeeId) {
     document.getElementById('attendanceDetails').innerHTML = detailsRows;
 }
 
-// ---------- CLOCK IN/OUT ----------
+// -------------------- CLOCK IN/OUT --------------------
 async function clockIn() {
     if (fullPrivilegedEmails.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
-    if (currentUserData?.status === "inactive") { alert("Account inactive."); return; }
+    if (currentUserData?.status !== "active") { alert("Account inactive."); return; }
     const today = new Date().toISOString().split('T')[0];
-    const time = getCurrentTime24();
+    const time = new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:false });
     if (allAttendance.find(a => a.userId === currentUser.uid && a.date === today)) { alert("Already clocked in today!"); return; }
     const newAtt = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: currentUserData.department, date: today, timeIn: time, timeOut: null, status: "Present", createdAt: new Date().toISOString() };
     const docRef = await db.collection('attendance').add(newAtt);
@@ -477,9 +476,9 @@ async function clockIn() {
 
 async function clockOut() {
     if (fullPrivilegedEmails.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
-    if (currentUserData?.status === "inactive") { alert("Account inactive."); return; }
+    if (currentUserData?.status !== "active") { alert("Account inactive."); return; }
     const today = new Date().toISOString().split('T')[0];
-    const time = getCurrentTime24();
+    const time = new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:false });
     const record = allAttendance.find(a => a.userId === currentUser.uid && a.date === today);
     if (!record || !record.timeIn) { alert("Clock in first!"); return; }
     if (record.timeOut) { alert("Already clocked out!"); return; }
@@ -504,7 +503,7 @@ function refreshMyAttendanceTab() {
     document.getElementById('attendanceHistoryList').innerHTML = historyHtml || '<tr><td colspan="5" class="p-4 text-center">No records</td></tr>';
 }
 
-// ---------- ANNOUNCEMENTS ----------
+// -------------------- ANNOUNCEMENTS (unchanged) --------------------
 async function loadAnnouncements() {
     const snap = await db.collection('announcements').get();
     allAnnouncements = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -532,25 +531,8 @@ function renderAnnouncements() {
 }
 
 function escapeHtml(str) { const d=document.createElement('div'); d.textContent=str; return d.innerHTML; }
-
-function editAnnouncement(id,title,content) {
-    document.getElementById('announcementId').value = id;
-    document.getElementById('announcementTitle').value = title;
-    document.getElementById('announcementContent').value = content;
-    document.getElementById('announcementModalTitle').innerText = 'Edit Announcement';
-    document.getElementById('deleteAnnouncementBtn').style.display = 'block';
-    openModal('announcementModal');
-}
-
-function addNewAnnouncement() {
-    document.getElementById('announcementId').value = '';
-    document.getElementById('announcementTitle').value = '';
-    document.getElementById('announcementContent').value = '';
-    document.getElementById('announcementModalTitle').innerText = 'Add Announcement';
-    document.getElementById('deleteAnnouncementBtn').style.display = 'none';
-    openModal('announcementModal');
-}
-
+function editAnnouncement(id,title,content) { document.getElementById('announcementId').value = id; document.getElementById('announcementTitle').value = title; document.getElementById('announcementContent').value = content; document.getElementById('announcementModalTitle').innerText = 'Edit Announcement'; document.getElementById('deleteAnnouncementBtn').style.display = 'block'; openModal('announcementModal'); }
+function addNewAnnouncement() { document.getElementById('announcementId').value = ''; document.getElementById('announcementTitle').value = ''; document.getElementById('announcementContent').value = ''; document.getElementById('announcementModalTitle').innerText = 'Add Announcement'; document.getElementById('deleteAnnouncementBtn').style.display = 'none'; openModal('announcementModal'); }
 async function saveAnnouncement() {
     const id = document.getElementById('announcementId').value;
     const title = document.getElementById('announcementTitle').value;
@@ -569,7 +551,6 @@ async function saveAnnouncement() {
     renderAnnouncements();
     alert("Announcement saved");
 }
-
 async function deleteAnnouncement() {
     const id = document.getElementById('announcementId').value;
     if (!id) return;
@@ -581,7 +562,7 @@ async function deleteAnnouncement() {
     }
 }
 
-// ---------- GUARD SCHEDULE (FULLY FUNCTIONAL) ----------
+// -------------------- GUARD SCHEDULE --------------------
 async function assignGuardWeeklySchedule() {
     const empId = document.getElementById('guardEmployee').value;
     if (!empId) { alert("Select a guard."); return; }
@@ -605,7 +586,6 @@ async function assignGuardWeeklySchedule() {
     guardWeeklySchedules.push({ id: docRef.id, ...newSchedule });
     renderGuardSchedules();
     alert("Schedule assigned.");
-    // Clear checkboxes
     days.forEach(day => document.getElementById(`day${day}`).checked = false);
     document.getElementById('guardEmployee').value = '';
 }
@@ -624,7 +604,7 @@ async function deleteGuardSchedule(id) {
     }
 }
 
-// ---------- REQUESTS & APPROVALS ----------
+// -------------------- REQUESTS & APPROVALS (DYNAMIC) --------------------
 async function submitRequest() {
     const type = document.getElementById('requestTypeValue').value;
     const start = document.getElementById('reqStartDate').value;
@@ -633,19 +613,26 @@ async function submitRequest() {
     if (!start || !end) { alert("Select dates"); return; }
     if (new Date(start) > new Date(end)) { alert("End date must be after start date"); return; }
     const dept = currentUserData.department;
-    const directApprover = getDirectApproverForSubmitter(currentUser.email, currentUserData.role, dept);
-    if (directApprover) {
-        const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type, startDate: start, endDate: end, reason, status: "pending_final", approverEmail: directApprover, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
+    const direct = await getDirectApproverForSubmitter(currentUser.email, currentUserData.role, dept);
+    if (direct) {
+        const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type, startDate: start, endDate: end, reason, status: "pending_final", approverEmail: direct.email, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
         const ref = await db.collection('requests').add(req);
         allRequests.push({ id: ref.id, ...req });
         closeModal('requestModalOverlay');
         refreshDashboard();
-        alert(`Request submitted directly to ${directApprover}`);
+        alert(`Request submitted directly to ${direct.email}`);
         return;
     }
-    const { hasSecondary, secondaryEmail, finalEmail } = getApprovalStageAndEmails(dept);
-    const approverEmail = hasSecondary ? secondaryEmail : finalEmail;
-    const status = hasSecondary ? "pending_secondary" : "pending_final";
+    const secondary = await getApproverForDepartment(dept, 'secondary');
+    const final = await getApproverForDepartment(dept, 'final');
+    let status, approverEmail;
+    if (secondary.email !== final.email && !secondary.isFallback) {
+        status = "pending_secondary";
+        approverEmail = secondary.email;
+    } else {
+        status = "pending_final";
+        approverEmail = final.email;
+    }
     const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type, startDate: start, endDate: end, reason, status, approverEmail, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
     const ref = await db.collection('requests').add(req);
     allRequests.push({ id: ref.id, ...req });
@@ -660,19 +647,20 @@ async function submitOffsets() {
     const reason = document.getElementById('offsetsReasonText').value;
     if (!date || !hours) { alert("Fill required fields"); return; }
     const dept = currentUserData.department;
-    const directApprover = getDirectApproverForSubmitter(currentUser.email, currentUserData.role, dept);
-    if (directApprover) {
-        const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason, status: "pending_final", approverEmail: directApprover, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
+    const direct = await getDirectApproverForSubmitter(currentUser.email, currentUserData.role, dept);
+    if (direct) {
+        const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason, status: "pending_final", approverEmail: direct.email, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
         const ref = await db.collection('requests').add(req);
         allRequests.push({ id: ref.id, ...req });
         closeModal('offsetsModalOverlay');
         refreshDashboard();
-        alert(`Offset request submitted to ${directApprover}`);
+        alert(`Offset request submitted to ${direct.email}`);
         return;
     }
-    const { hasSecondary, secondaryEmail, finalEmail } = getApprovalStageAndEmails(dept);
-    const approverEmail = hasSecondary ? secondaryEmail : finalEmail;
-    const status = hasSecondary ? "pending_secondary" : "pending_final";
+    const secondary = await getApproverForDepartment(dept, 'secondary');
+    const final = await getApproverForDepartment(dept, 'final');
+    const approverEmail = (secondary.email !== final.email && !secondary.isFallback) ? secondary.email : final.email;
+    const status = (secondary.email !== final.email && !secondary.isFallback) ? "pending_secondary" : "pending_final";
     const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason, status, approverEmail, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
     const ref = await db.collection('requests').add(req);
     allRequests.push({ id: ref.id, ...req });
@@ -683,12 +671,14 @@ async function submitOffsets() {
 
 async function approveSecondary(id) {
     const r = allRequests.find(r => r.id === id);
-    if (r && r.status === "pending_secondary" && r.approverEmail === currentUser.email) {
-        const { finalEmail } = getApprovalStageAndEmails(r.userDepartment);
-        await db.collection('requests').doc(id).update({ status: "pending_final", approverEmail: finalEmail, secondaryApproved: true });
-        r.status = "pending_final"; r.approverEmail = finalEmail; r.secondaryApproved = true;
+    if (!r) return;
+    // Check if current user is the approver (by email) and status is pending_secondary
+    if (r.status === "pending_secondary" && r.approverEmail === currentUser.email) {
+        const finalApprover = await getApproverForDepartment(r.userDepartment, 'final');
+        await db.collection('requests').doc(id).update({ status: "pending_final", approverEmail: finalApprover.email, secondaryApproved: true });
+        r.status = "pending_final"; r.approverEmail = finalApprover.email; r.secondaryApproved = true;
         refreshDashboard();
-        alert(`Request forwarded to final approver (${finalEmail}).`);
+        alert(`Request forwarded to final approver (${finalApprover.email}).`);
     } else alert("Not authorized or request already processed.");
 }
 
@@ -712,7 +702,7 @@ async function rejectRequest(id) {
     } else alert("Cannot reject.");
 }
 
-// ---------- EMPLOYEE MANAGEMENT ----------
+// -------------------- EMPLOYEE MANAGEMENT --------------------
 async function addEmployee() {
     const name = document.getElementById('newEmpName').value;
     const email = document.getElementById('newEmpEmail').value;
@@ -728,6 +718,8 @@ async function addEmployee() {
         await db.collection('employees').doc(uid).set(empData);
         await db.collection('users').doc(uid).set({ uid, name, email, role, department: dept, leaveBalance: 15, status: "active" });
         allEmployees.push({ id: uid, ...empData });
+        // Grant approver permissions automatically if role is admin/supervisor/manager
+        await grantApproverPermissions(uid, role, dept);
         closeModal('addEmployeeModal');
         refreshDashboard();
         alert(`Employee ${name} added with login credentials.`);
@@ -759,19 +751,27 @@ async function saveEmployeeEdit() {
     const email = document.getElementById('editEmpEmail').value;
     const dept = document.getElementById('editEmpDept').value;
     const role = document.getElementById('editEmpRole').value;
-    const status = document.getElementById('editEmpStatus').value;
+    const newStatus = document.getElementById('editEmpStatus').value;
     const leaveBalance = parseInt(document.getElementById('editLeaveBalance').value);
     const pin = document.getElementById('editEmpPin').value;
     const newPassword = document.getElementById('editEmpPassword').value;
     if (!name || !dept || !role) { alert("Fill required fields"); return; }
+    const oldEmp = allEmployees.find(e => e.id === id);
+    const oldStatus = oldEmp ? oldEmp.status : 'active';
     const empRef = db.collection('employees').doc(id);
-    const updateData = { name, email, dept, role, status, leaveBalance, pin };
+    const updateData = { name, email, dept, role, status: newStatus, leaveBalance, pin };
     await empRef.update(updateData);
     const idx = allEmployees.findIndex(e => e.id === id);
     if (idx !== -1) allEmployees[idx] = { ...allEmployees[idx], ...updateData };
+    // Handle approver permissions based on status change
+    if (oldStatus !== newStatus) {
+        await handleEmployeeStatusChange(id, oldStatus, newStatus, dept);
+    } else if (['admin','supervisor','manager'].includes(role) && newStatus === 'active') {
+        await grantApproverPermissions(id, role, dept);
+    }
     // Update users collection
     const userQuery = await db.collection('users').where('email', '==', email).get();
-    userQuery.forEach(doc => db.collection('users').doc(doc.id).update({ name, role, department: dept, status }));
+    userQuery.forEach(doc => db.collection('users').doc(doc.id).update({ name, role, department: dept, status: newStatus }));
     if (newPassword && newPassword.trim() !== "") {
         try { await auth.sendPasswordResetEmail(email); alert(`Password reset email sent to ${email}.`); } catch (err) { alert("Could not send reset email."); }
     }
@@ -782,7 +782,9 @@ async function saveEmployeeEdit() {
 
 async function deleteEmployee(id) {
     if (confirm("Delete employee? This will also delete their attendance, requests, payslips.")) {
-        // Delete subcollections (simplified)
+        // Remove from departmentApprovers first
+        const emp = allEmployees.find(e => e.id === id);
+        if (emp) await revokeApproverPermissions(id, emp.dept);
         await db.collection('employees').doc(id).delete();
         allEmployees = allEmployees.filter(e => e.id !== id);
         refreshDashboard();
@@ -809,7 +811,7 @@ async function saveLeaveBalance() {
     alert(`Leave balance updated to ${newBal} days`);
 }
 
-// ---------- PAYSLIP ----------
+// -------------------- PAYSLIP (unchanged) --------------------
 function computeMonthlyDeductions(monthlySalary) {
     const sss = Math.min(monthlySalary,30000)*0.045;
     const philHealth = Math.min(monthlySalary,100000)*0.025;
@@ -827,7 +829,7 @@ function computeMonthlyDeductions(monthlySalary) {
 }
 
 async function generatePayslipAuto() {
-    if (!currentUser || !payslipAuthorizedEmails.includes(currentUser.email)) { alert("Not authorized."); return; }
+    if (!currentUser || !fullPrivilegedEmails.includes(currentUser.email)) { alert("Not authorized."); return; }
     const empId = document.getElementById('payslipEmployee').value;
     const month = document.getElementById('payslipMonth').value;
     const cutOff = document.getElementById('cutOffPeriod').value;
@@ -855,20 +857,7 @@ async function generatePayslipAuto() {
 }
 
 function showModernPayslip(employee, data) {
-    const content = `
-        <div><strong>Name:</strong> ${employee.name}</div>
-        <div><strong>Period:</strong> ${data.month} (${data.cutOff})</div>
-        <div><strong>Basic Pay:</strong> ₱${data.basicSalaryPeriod}</div>
-        <div><strong>Overtime Pay:</strong> ₱${data.overtimePay}</div>
-        <div><strong>Other Earnings:</strong> ₱${data.otherEarnings}</div>
-        <div><strong>SSS:</strong> ₱${data.sss}</div>
-        <div><strong>PhilHealth:</strong> ₱${data.philHealth}</div>
-        <div><strong>Pag-IBIG:</strong> ₱${data.pagIbig}</div>
-        <div><strong>Withholding Tax:</strong> ₱${data.withholdingTax}</div>
-        <div><strong>Other Deductions:</strong> ₱${data.otherDeduction}</div>
-        <div class="net-green-bold mt-2">NET PAY: ₱${data.netPay}</div>
-        <div class="signature-line mt-4"><div>Certified True Copy</div><div>Signature</div></div>
-    `;
+    const content = `<div><strong>Name:</strong> ${employee.name}</div><div><strong>Period:</strong> ${data.month} (${data.cutOff})</div><div><strong>Basic Pay:</strong> ₱${data.basicSalaryPeriod}</div><div><strong>Overtime Pay:</strong> ₱${data.overtimePay}</div><div><strong>Other Earnings:</strong> ₱${data.otherEarnings}</div><div><strong>SSS:</strong> ₱${data.sss}</div><div><strong>PhilHealth:</strong> ₱${data.philHealth}</div><div><strong>Pag-IBIG:</strong> ₱${data.pagIbig}</div><div><strong>Withholding Tax:</strong> ₱${data.withholdingTax}</div><div><strong>Other Deductions:</strong> ₱${data.otherDeduction}</div><div class="net-green-bold mt-2">NET PAY: ₱${data.netPay}</div><div class="signature-line mt-4"><div>Certified True Copy</div><div>Signature</div></div>`;
     document.getElementById('payslipContent').innerHTML = content;
     openModal('payslipModal');
 }
@@ -885,7 +874,7 @@ function refreshEmployeePayslip() {
     document.getElementById('employeePayslipList').innerHTML = my.map(p => `<div class="bg-white p-3 rounded shadow">${p.month} (${p.cutOff})<br><span class="net-green-bold">Net: ₱${p.netPay}</span></div>`).join('') || 'No payslips';
 }
 
-// ---------- DASHBOARD & UI ----------
+// -------------------- DASHBOARD & UI --------------------
 function refreshDashboard() {
     const filtered = getFilteredEmployees();
     document.getElementById('totalEmployees').innerText = filtered.length;
@@ -899,7 +888,7 @@ function refreshDashboard() {
     let pendingCount = 0;
     if (currentUserRole === 'approver') pendingCount = allRequests.filter(r => r.approverEmail === currentUser?.email && r.status === "pending_secondary").length;
     else if (currentUser.email === 'hrd@equiprime.ph') pendingCount = allRequests.filter(r => r.status === "pending_final").length;
-    else if (additionalPrivilegedEmails.includes(currentUser.email)) pendingCount = allRequests.filter(r => r.approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status === "pending_final")).length;
+    else if (fullPrivilegedEmails.includes(currentUser.email) || additionalPrivilegedEmails?.includes(currentUser.email)) pendingCount = allRequests.filter(r => r.approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status === "pending_final")).length;
     document.getElementById('pendingApprovals').innerText = pendingCount;
     document.getElementById('myLeaveBalance').innerText = currentUserData?.leaveBalance || 15;
     const myReqs = allRequests.filter(r=>r.userId === currentUser.uid).slice(0,5);
@@ -916,7 +905,7 @@ function refreshDashboard() {
         let pendingReqs = [];
         if (currentUserRole === 'approver') pendingReqs = allRequests.filter(r => r.approverEmail === currentUser?.email && r.status === "pending_secondary");
         else if (currentUser.email === 'hrd@equiprime.ph') pendingReqs = allRequests.filter(r => r.status === "pending_final");
-        else if (additionalPrivilegedEmails.includes(currentUser?.email)) pendingReqs = allRequests.filter(r => r.approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status === "pending_final"));
+        else if (fullPrivilegedEmails.includes(currentUser.email) || additionalPrivilegedEmails?.includes(currentUser.email)) pendingReqs = allRequests.filter(r => r.approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status === "pending_final"));
         pendingContainer.innerHTML = pendingReqs.map(r => {
             const approveFn = (r.status === "pending_final") ? "approveFinal" : "approveSecondary";
             return `<div class="bg-white p-3 rounded shadow mb-2"><b>${r.userName}</b> - ${r.type}<br>${r.startDate} to ${r.endDate}<br><button onclick="${approveFn}('${r.id}')" class="bg-green-600 text-white px-3 py-1 rounded text-sm">Approve</button> <button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-3 py-1 rounded text-sm">Reject</button></div>`;
@@ -933,7 +922,7 @@ function updateLastUpdatedTime() {
 
 function renderNavigation() {
     const isFull = fullPrivilegedEmails.includes(currentUser?.email);
-    const hasPartial = additionalPrivilegedEmails.includes(currentUser?.email);
+    const hasPartial = additionalPrivilegedEmails?.includes(currentUser?.email) || false;
     let html = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="home"></i> Dashboard</button>
                 <button onclick="switchTab('my-attendance')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> My Attendance</button>`;
     if (isFull) {
@@ -956,7 +945,7 @@ function renderNavigation() {
 
 function switchTab(tabName) {
     const isFull = fullPrivilegedEmails.includes(currentUser?.email);
-    const hasPartial = additionalPrivilegedEmails.includes(currentUser?.email);
+    const hasPartial = additionalPrivilegedEmails?.includes(currentUser?.email) || false;
     const allowed = ['dashboard','my-attendance'];
     if (isFull) allowed.push('my-requests','payslip','hr-employees','hr-requests','hr-payslip','hr-guard-schedule','hr-settings','approvals','attendance-summary');
     if (hasPartial) allowed.push('approvals','attendance-summary');
@@ -970,7 +959,7 @@ function switchTab(tabName) {
     closeMobileSidebar();
 }
 
-// ---------- AUTH ----------
+// -------------------- AUTH --------------------
 async function loginWithEmail() {
     const email = document.getElementById('loginEmail').value;
     const pwd = document.getElementById('loginPassword').value;
@@ -981,14 +970,14 @@ async function loginWithEmail() {
         const doc = await db.collection('employees').doc(user.uid).get();
         if (doc.exists) {
             currentUserData = doc.data();
-            if (currentUserData.status === "inactive") { await auth.signOut(); alert("Account inactive. Contact HR."); return; }
+            if (currentUserData.status !== "active") { await auth.signOut(); alert("Account inactive/terminated. Contact HR."); return; }
             currentUserRole = currentUserData.role;
         } else {
-            // fallback: check users collection
+            // fallback: users collection
             const userDoc = await db.collection('users').where('email', '==', email).get();
             if (!userDoc.empty) {
                 currentUserData = userDoc.docs[0].data();
-                if (currentUserData.status === "inactive") { await auth.signOut(); alert("Account inactive."); return; }
+                if (currentUserData.status !== "active") { await auth.signOut(); alert("Account inactive."); return; }
                 currentUserRole = currentUserData.role;
             } else { await auth.signOut(); alert("Employee record not found."); return; }
         }
@@ -1000,7 +989,7 @@ async function loginWithEmail() {
         document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join('');
         document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join('');
         document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
-        const displayRole = getDisplayRole(currentUser.email, currentUserRole);
+        const displayRole = currentUserRole === 'admin' ? 'Administrator' : (currentUserRole === 'supervisor' ? 'Supervisor' : (currentUserRole === 'manager' ? 'Manager' : 'Employee'));
         document.getElementById('welcomeSubtitle').innerHTML = displayRole;
         document.getElementById('userRoleDisplay').innerText = displayRole;
         renderNavigation();
@@ -1029,6 +1018,9 @@ async function signupWithEmail() {
         const empData = { name, email, dept, role, status: "active", pin: "0000", leaveBalance: 15, createdAt: new Date().toISOString() };
         await db.collection('employees').doc(uid).set(empData);
         await db.collection('users').doc(uid).set({ uid, name, email, role, department: dept, leaveBalance: 15, status: "active" });
+        allEmployees.push({ id: uid, ...empData });
+        // Auto‑grant approver permissions if role is admin, supervisor, or manager
+        await grantApproverPermissions(uid, role, dept);
         sucDiv.innerText = "Account created! Please login.";
         sucDiv.classList.remove('hidden');
         showLogin();
@@ -1058,7 +1050,7 @@ window.resetAllSystemData = async function() {
     const pin = prompt("Enter reset PIN:");
     if (pin !== "Moderator@2026!") { alert("Incorrect PIN."); return; }
     if (!confirm("Delete ALL data? This is permanent.")) return;
-    const collections = ['employees','attendance','requests','payslips','announcements','guardWeeklySchedules','users'];
+    const collections = ['employees','attendance','requests','payslips','announcements','guardWeeklySchedules','users','departmentApprovers'];
     for (const col of collections) {
         const snap = await db.collection(col).get();
         const batch = db.batch();
@@ -1069,7 +1061,7 @@ window.resetAllSystemData = async function() {
     location.reload();
 };
 
-// ---------- WEATHER & PIXEL RAIN ----------
+// -------------------- WEATHER & PIXEL RAIN (cosmetic) --------------------
 async function fetchWeather() {
     try {
         const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=14.5995&longitude=120.9842&current_weather=true&timezone=Asia/Manila');
@@ -1092,7 +1084,6 @@ async function fetchWeather() {
 fetchWeather();
 setInterval(fetchWeather, 30*60*1000);
 
-// Pixel Rain & Lightning
 let rainCanvas, ctx, drops = [], ripples = [], animationId;
 function initPixelRain() {
     const container = document.querySelector('.branding-half');
@@ -1135,7 +1126,7 @@ function initLightning() {
 }
 document.addEventListener('DOMContentLoaded', () => { initPixelRain(); initLightning(); if(localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark'); });
 
-// ---------- EVENT LISTENERS ----------
+// -------------------- EVENT LISTENERS --------------------
 document.getElementById('loginBtnMain').addEventListener('click', loginWithEmail);
 document.getElementById('showSignupBtnMain').addEventListener('click', showSignup);
 document.getElementById('signupBtnMain').addEventListener('click', signupWithEmail);
@@ -1150,7 +1141,7 @@ auth.onAuthStateChanged(async (user) => {
         const doc = await db.collection('employees').doc(user.uid).get();
         if (doc.exists) {
             currentUserData = doc.data();
-            if (currentUserData.status === "inactive") { await auth.signOut(); alert("Account inactive. Please contact HR."); location.reload(); return; }
+            if (currentUserData.status !== "active") { await auth.signOut(); alert("Account inactive/terminated. Contact HR."); location.reload(); return; }
             currentUserRole = currentUserData.role;
             currentUser = user;
             document.getElementById('authScreen').style.display = 'none';
@@ -1160,7 +1151,7 @@ auth.onAuthStateChanged(async (user) => {
             document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join('');
             document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join('');
             document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
-            const displayRole = getDisplayRole(currentUser.email, currentUserRole);
+            const displayRole = currentUserRole === 'admin' ? 'Administrator' : (currentUserRole === 'supervisor' ? 'Supervisor' : (currentUserRole === 'manager' ? 'Manager' : 'Employee'));
             document.getElementById('welcomeSubtitle').innerHTML = displayRole;
             document.getElementById('userRoleDisplay').innerText = displayRole;
             renderNavigation();
