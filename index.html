@@ -7,6 +7,7 @@
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    <!-- Tailwind CSS is fine for development; the warning about production can be ignored -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -18,7 +19,7 @@
         body { background: #f3f6fb; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         .desktop-sidebar { width: 300px; background-color: #011F7B; color: white; height: 100vh; position: sticky; top: 0; display: flex; flex-direction: column; padding: 1.5rem; overflow-y: auto; flex-shrink: 0; }
         .desktop-sidebar nav { display: flex; flex-direction: column; gap: 0.25rem; }
-        .desktop-sidebar nav button, .mobile-sidebar nav button { padding: 0.6rem 0.75rem !important; }
+        .desktop-sidebar nav button, .mobile-sidebar nav button { padding: 0.6rem 0.75rem !important; text-align: left; }
         .tab-active { background-color: #011F7B; color: white !important; font-weight: 700 !important; }
         .tab-inactive { background-color: transparent; color: #0f172a !important; font-weight: 600 !important; }
         .tab-inactive:hover { background-color: #FFBA09 !important; color: #0f172a !important; }
@@ -66,7 +67,7 @@
         body.dark .desktop-sidebar, body.dark .mobile-sidebar { background-color: #011F7B !important; }
         body.dark .attendance-summary-container { background: #0f172a; }
         body.dark .summary-card, body.dark .employee-list, body.dark .calendar-box, body.dark .details-box { background: #1e293b; }
-        /* Light mode text color fixes */
+        /* Light mode text fixes */
         .text-slate-800 { color: #0f172a !important; }
         body.dark .text-slate-800 { color: #f1f5f9 !important; }
         .welcome-heading { color: #0f172a; font-weight: 800; }
@@ -145,6 +146,8 @@
         body.dark .search-bar { background: #1e293b; border-color: #334155; color: white; }
         .filter-dropdown { border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 0.5rem 0.75rem; background: white; }
         body.dark .filter-dropdown { background: #1e293b; border-color: #334155; color: white; }
+        /* Adjust submenu items */
+        .submenu-item { padding-left: 2rem !important; font-size: 0.875rem; }
     </style>
 </head>
 <body>
@@ -957,8 +960,8 @@ function renderNavigation() {
                 <div class="relative">
                     <button onclick="toggleEmployeesSubmenu()" class="tab-inactive w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl"><span class="flex items-center gap-3"><i data-feather="users"></i> Employees</span><i data-feather="chevron-down" id="employeesChevron" class="w-4 h-4 transition-transform"></i></button>
                     <div id="employeesSubmenu" class="ml-6 mt-1 hidden flex-col gap-1">
-                        <button onclick="switchTab('employee-directory')" class="tab-inactive w-full text-left pl-9 py-2 rounded-lg text-sm">Employee Directory</button>
-                        <button onclick="switchTab('create-employee')" class="tab-inactive w-full text-left pl-9 py-2 rounded-lg text-sm">Create Employee</button>
+                        <button onclick="switchTab('employee-directory')" class="tab-inactive w-full text-left pl-9 py-2 rounded-lg text-sm submenu-item">Employee Directory</button>
+                        <button onclick="switchTab('create-employee')" class="tab-inactive w-full text-left pl-9 py-2 rounded-lg text-sm submenu-item">Create Employee</button>
                     </div>
                 </div>
                 <button onclick="switchTab('my-attendance')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> My Attendance</button>
