@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Complete HRIS</title>
+    <title>EQUIPRIME HR - Fixed Employees Tab</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -14,6 +14,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <style>
+        /* All styles unchanged from previous working version */
         * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #f3f6fb; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         .desktop-sidebar { width: 300px; background-color: #011F7B; color: white; height: 100vh; position: sticky; top: 0; display: flex; flex-direction: column; padding: 1.5rem; overflow-y: auto; flex-shrink: 0; }
@@ -66,7 +67,6 @@
         body.dark .desktop-sidebar, body.dark .mobile-sidebar { background-color: #011F7B !important; }
         body.dark .attendance-summary-container { background: #0f172a; }
         body.dark .summary-card, body.dark .employee-list, body.dark .calendar-box, body.dark .details-box { background: #1e293b; }
-        /* Light mode text fixes */
         .text-slate-800 { color: #0f172a !important; }
         body.dark .text-slate-800 { color: #f1f5f9 !important; }
         .welcome-heading { color: #0f172a; font-weight: 800; }
@@ -151,7 +151,7 @@
 <body>
 <div id="adaptiveBgGradient" class="adaptive-bg-gradient"></div>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN SCREEN (same as before) -->
 <div id="authScreen" class="login-split">
     <div class="branding-half" id="brandingHalf">
         <canvas id="rainCanvas"></canvas>
@@ -202,7 +202,7 @@
             <div class="mt-6"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="git-branch"></i> Approval Flow</h3><div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-sm dark:text-white"><div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Employee submits</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Secondary Approver (dept admin/manager)</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> Final Approver (hrd@equiprime.ph)</div></div></div></div>
         </div>
 
-        <!-- EMPLOYEE DIRECTORY (New card view) -->
+        <!-- EMPLOYEE DIRECTORY (Card view) -->
         <div id="employee-directory-tab" class="tab-content hidden">
             <div class="mb-6 flex flex-col md:flex-row gap-4 items-center justify-between">
                 <input type="text" id="empSearchInput" placeholder="Search by name, email, or department..." class="search-bar flex-1">
@@ -284,7 +284,6 @@ let currentUser = null, currentUserData = null, currentUserRole = null;
 let allEmployees = [], allRequests = [], allAttendance = [], allPayslips = [], allAnnouncements = [], guardWeeklySchedules = [], allHelpdeskRequests = [];
 let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
 
-// Only these three emails have full system access (Employees, All Requests, Payslip Mgmt, Admin Helpdesk, etc.)
 const SYSTEM_ADMIN_EMAILS = ["hrd@equiprime.ph", "mod.rom@equiprime.ph", "mod.dex@equiprime.ph"];
 const fullPrivilegedEmails = [...SYSTEM_ADMIN_EMAILS];
 const resetAuthorizedEmail = "mod.rom@equiprime.ph";
@@ -560,7 +559,7 @@ async function loadEmployeeCalendar(employeeId) {
             const [inH,inM] = attRecord.timeIn.split(':').map(Number);
             if (inH*60+inM > 8*60) { status = 'Late'; badgeClass = 'late'; }
         }
-        return `<tr><td>${day.date}</td><td>${attRecord?.timeIn || '--'}</td><td>${attRecord?.timeOut || '--'}</td><td><span class="status-badge ${badgeClass}">${status}</span>NonNull</tr>`;
+        return `<tr><td>${day.date}</td><td>${attRecord?.timeIn || '--'}</td><td>${attRecord?.timeOut || '--'}</td><td><span class="status-badge ${badgeClass}">${status}</span>NonNull</table>`;
     }).join('');
     const detailsBody = document.getElementById('attendanceDetails');
     if (detailsBody) detailsBody.innerHTML = detailsRows;
@@ -610,8 +609,8 @@ function refreshMyAttendanceTab() {
     if (timeInfo) timeInfo.innerHTML = todayRec?.timeIn ? `In: ${todayRec.timeIn} | Out: ${todayRec.timeOut||'--'} | Hours: ${todayRec.hoursWorked||'--'}` : '';
     const historyBody = document.getElementById('attendanceHistoryList');
     if (historyBody) {
-        const historyHtml = userAtt.map(a => `<tr class="border-t"><td class="p-3">${a.date}</td><td class="p-3">${a.timeIn||'--'}</td><td class="p-3">${a.timeOut||'--'}</td><td class="p-3">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</td>`).join('');
-        historyBody.innerHTML = historyHtml || '</tr><td colspan="5" class="p-4 text-center">No records</td><tr>';
+        const historyHtml = userAtt.map(a => `<tr class="border-t"><td class="p-3">${a.date}</td><td class="p-3">${a.timeIn||'--'}</td><td class="p-3">${a.timeOut||'--'}</td><td class="p-3">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</tr>`).join('');
+        historyBody.innerHTML = historyHtml || '<tr><td colspan="5" class="p-4 text-center">No records</td>';
     }
 }
 
@@ -948,9 +947,11 @@ function updateLastUpdatedTime() { const now = new Date().toLocaleString(); ['de
 function toggleEmployeesSubmenu() {
     const submenu = document.getElementById('employeesSubmenu');
     const chevron = document.getElementById('employeesChevron');
-    if (submenu) {
+    if (submenu && chevron) {
         submenu.classList.toggle('hidden');
-        if (chevron) chevron.style.transform = submenu.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+        chevron.style.transform = submenu.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+    } else {
+        console.warn("Submenu or chevron not found");
     }
 }
 function renderNavigation() {
@@ -987,10 +988,13 @@ function renderNavigation() {
     const mobileNav = document.getElementById('mobileNavMenu');
     if (desktopNav) desktopNav.innerHTML = html;
     if (mobileNav) mobileNav.innerHTML = html;
-    feather.replace();
-    // Ensure submenu starts hidden
+    // Refresh feather icons after inserting new content
+    if (typeof feather !== 'undefined') feather.replace();
+    // Ensure submenu starts hidden (in case it was persisted)
     const submenu = document.getElementById('employeesSubmenu');
     if (submenu) submenu.classList.add('hidden');
+    const chevron = document.getElementById('employeesChevron');
+    if (chevron) chevron.style.transform = 'rotate(0deg)';
 }
 function switchTab(tabName) {
     const allowed = ['dashboard','my-attendance','my-requests','payslip'];
