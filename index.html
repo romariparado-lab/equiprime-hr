@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Enhanced Employee Directory</title>
+    <title>EQUIPRIME HR - Employee Directory & Helpdesk</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -229,8 +229,8 @@
             </div>
         </div>
 
-        <!-- Other existing tabs (unchanged) -->
-        <div id="my-attendance-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-700 transition clock-btn flex items-center gap-2"><i data-feather="log-in"></i> Clock In</button><button onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-red-700 transition clock-btn flex items-center gap-2"><i data-feather="log-out"></i> Clock Out</button></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="calendar"></i> Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-slate-700"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold dark:text-white" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500 dark:text-slate-400" id="todayTimeInfo"></div></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="list"></i> Attendance History</h3><div class="overflow-x-auto"><table class="w-full"><thead class="bg-slate-50 dark:bg-slate-700"><tr><th class="p-3 text-left text-sm font-semibold dark:text-white">Date</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Clock In</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Clock Out</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Hours Worked</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Status</th></tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div></div>
+        <!-- MY ATTENDANCE TAB -->
+        <div id="my-attendance-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-700 transition clock-btn flex items-center gap-2"><i data-feather="log-in"></i> Clock In</button><button onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-red-700 transition clock-btn flex items-center gap-2"><i data-feather="log-out"></i> Clock Out</button></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="calendar"></i> Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-slate-700"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold dark:text-white" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500 dark:text-slate-400" id="todayTimeInfo"></div></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="list"></i> Attendance History</h3><div class="overflow-x-auto"><table class="w-full"><thead class="bg-slate-50 dark:bg-slate-700"><tr><th class="p-3 text-left text-sm font-semibold dark:text-white">Date</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Clock In</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Clock Out</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Hours Worked</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Status</th></table></thead><tbody id="attendanceHistoryList"></tbody></table></div></div></div>
         <div id="my-requests-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="file-text"></i> My Request</h2><button onclick="openNewRequestMenu()" class="bg-[#011F7B] text-white px-4 py-2 rounded-xl text-sm">New Request</button></div><div id="allMyRequestsList" class="space-y-3"></div></div>
         <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="clipboard"></i> All Request</h2><div id="allRequestsList" class="space-y-4"></div></div>
         <div id="attendance-summary-tab" class="tab-content hidden"><div class="attendance-summary-container"><div class="attendance-toolbar flex justify-between items-center flex-wrap gap-4 mb-4"><h2 class="dark:text-white">Attendance Summary</h2><div class="flex gap-2"><select id="summaryYear" class="dark:bg-slate-700 dark:text-white border dark:border-slate-600 rounded-lg"></select><select id="summaryMonth" class="dark:bg-slate-700 dark:text-white border dark:border-slate-600 rounded-lg"><option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option></select><button id="refreshSummaryBtn" class="bg-[#011F7B] text-white px-4 py-2 rounded-xl text-sm">Load</button></div></div><div class="attendance-grid"><div class="employee-list"><h3 class="dark:text-white">Employees</h3><div id="employeeListContainer"></div></div><div class="summary-content"><div class="summary-cards"><div class="summary-card"><small class="dark:text-slate-300">Completed Days</small><h3 id="completedCount" class="dark:text-white">0</h3></div><div class="summary-card"><small class="dark:text-slate-300">Late</small><h3 id="lateCountSummary" class="dark:text-white">0</h3></div><div class="summary-card"><small class="dark:text-slate-300">Incomplete</small><h3 id="missingCountSummary" class="dark:text-white">0</h3></div><div class="summary-card"><small class="dark:text-slate-300">Leave</small><h3 id="leaveCountSummary" class="dark:text-white">0</h3></div></div><div class="calendar-box"><h3 class="mb-4 dark:text-white">Attendance Calendar</h3><div id="calendarGrid" class="calendar-grid"></div></div><div class="details-box"><h3 class="mb-4 dark:text-white">Employee Attendance Details</h3><table class="details-table"><thead><tr><th class="dark:text-white">Date</th><th class="dark:text-white">Clock In</th><th class="dark:text-white">Clock Out</th><th class="dark:text-white">Status</th></tr></thead><tbody id="attendanceDetails"></tbody></table></div></div></div></div></div>
@@ -244,7 +244,7 @@
     </div>
 </div>
 
-<!-- MODALS (all existing) -->
+<!-- MODALS (unchanged) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')"><i data-feather="x" class="dark:text-white"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><input type="text" id="announcementTitle" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Title"><textarea id="announcementContent" rows="3" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Content"></textarea></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1 dark:text-white">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')"><i data-feather="x" class="dark:text-white"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><input type="date" id="reqEndDate" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><textarea id="reqReason" rows="3" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1 dark:text-white">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')"><i data-feather="x" class="dark:text-white"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 dark:bg-red-900/30 rounded-xl text-left dark:text-white">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 dark:bg-orange-900/30 rounded-xl text-left dark:text-white">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-left dark:text-white">Vacation Leave</button></div></div></div>
@@ -368,7 +368,7 @@ async function loadAllData() {
     refreshDashboard();
     refreshHelpdesk();
     updateLastUpdatedTime();
-    renderEmployeeDirectory();
+    if (document.getElementById('employeeCardsContainer')) renderEmployeeDirectory();
 }
 
 function getRegularEmployees() { return allEmployees.filter(e => !isSystemAdmin(e.email)); }
@@ -393,13 +393,16 @@ function renderEmployeeDirectory() {
     const container = document.getElementById('employeeCardsContainer');
     if (!container) return;
     let employees = [...allEmployees.filter(e => !isSystemAdmin(e.email))];
-    const searchTerm = document.getElementById('empSearchInput')?.value.toLowerCase() || '';
+    const searchInput = document.getElementById('empSearchInput');
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
     if (searchTerm) employees = employees.filter(e => e.name.toLowerCase().includes(searchTerm) || (e.email && e.email.toLowerCase().includes(searchTerm)) || (e.dept && e.dept.toLowerCase().includes(searchTerm)));
-    const sortBy = document.getElementById('sortBySelect')?.value || 'name';
+    const sortSelect = document.getElementById('sortBySelect');
+    const sortBy = sortSelect ? sortSelect.value : 'name';
     if (sortBy === 'name') employees.sort((a,b) => a.name.localeCompare(b.name));
     else if (sortBy === 'department') employees.sort((a,b) => (a.dept || '').localeCompare(b.dept || ''));
     else if (sortBy === 'date') employees.sort((a,b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
-    const designation = document.getElementById('designationFilter')?.value || 'all';
+    const designationFilter = document.getElementById('designationFilter');
+    const designation = designationFilter ? designationFilter.value : 'all';
     if (designation !== 'all') employees = employees.filter(e => e.role === designation);
     
     container.innerHTML = employees.map(emp => {
@@ -548,7 +551,8 @@ async function loadEmployeeCalendar(employeeId) {
         }
         return `<tr><td>${day.date}</td><td>${attRecord?.timeIn || '--'}</td><td>${attRecord?.timeOut || '--'}</td><td><span class="status-badge ${badgeClass}">${status}</span>NonNull</tr>`;
     }).join('');
-    document.getElementById('attendanceDetails').innerHTML = detailsRows;
+    const detailsBody = document.getElementById('attendanceDetails');
+    if (detailsBody) detailsBody.innerHTML = detailsRows;
 }
 
 // ==================== CLOCK IN/OUT ====================
@@ -587,11 +591,17 @@ function refreshMyAttendanceTab() {
     const today = new Date().toISOString().split('T')[0];
     const userAtt = allAttendance.filter(a => a.userId === currentUser?.uid).sort((a,b)=>b.date.localeCompare(a.date));
     const todayRec = userAtt.find(a=>a.date===today);
-    document.getElementById('todayStatusIcon').innerHTML = todayRec?.timeIn ? '✅' : '⏰';
-    document.getElementById('todayStatusText').innerHTML = todayRec?.timeIn ? (todayRec.timeOut ? 'Completed' : 'Clocked In') : 'Not clocked in yet';
-    document.getElementById('todayTimeInfo').innerHTML = todayRec?.timeIn ? `In: ${todayRec.timeIn} | Out: ${todayRec.timeOut||'--'} | Hours: ${todayRec.hoursWorked||'--'}` : '';
-    const historyHtml = userAtt.map(a => `<tr class="border-t"><td class="p-3">${a.date}</td><td class="p-3">${a.timeIn||'--'}<tr><td class="p-3">${a.timeOut||'--'}</td><td class="p-3">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</tr>`).join('');
-    document.getElementById('attendanceHistoryList').innerHTML = historyHtml || '<tr><td colspan="5" class="p-4 text-center">No records</tr>';
+    const statusIcon = document.getElementById('todayStatusIcon');
+    const statusText = document.getElementById('todayStatusText');
+    const timeInfo = document.getElementById('todayTimeInfo');
+    if (statusIcon) statusIcon.innerHTML = todayRec?.timeIn ? '✅' : '⏰';
+    if (statusText) statusText.innerHTML = todayRec?.timeIn ? (todayRec.timeOut ? 'Completed' : 'Clocked In') : 'Not clocked in yet';
+    if (timeInfo) timeInfo.innerHTML = todayRec?.timeIn ? `In: ${todayRec.timeIn} | Out: ${todayRec.timeOut||'--'} | Hours: ${todayRec.hoursWorked||'--'}` : '';
+    const historyBody = document.getElementById('attendanceHistoryList');
+    if (historyBody) {
+        const historyHtml = userAtt.map(a => `<tr class="border-t"><td class="p-3">${a.date}</td><td class="p-3">${a.timeIn||'--'}</td><td class="p-3">${a.timeOut||'--'}</td><td class="p-3">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</tr>`).join('');
+        historyBody.innerHTML = historyHtml || '<tr><td colspan="5" class="p-4 text-center">No records</td>';
+    }
 }
 
 // ==================== ANNOUNCEMENTS ====================
@@ -777,7 +787,7 @@ async function generatePayslipAuto() {
     openModal('payslipModal');
 }
 function refreshHrPayslip() { const sel = document.getElementById('payslipEmployee'); if (sel) sel.innerHTML = '<option value="">Select Employee</option>' + allEmployees.filter(e => !isSystemAdmin(e.email)).map(e => `<option value="${e.id}">${e.name} - ${e.dept}</option>`).join(''); const hist = document.getElementById('payslipHistory'); if (hist) hist.innerHTML = allPayslips.slice().reverse().map(p => `<div class="bg-slate-50 dark:bg-slate-700 p-3 rounded mb-2"><b class="dark:text-white">${p.employeeName}</b> - ${p.month} (${p.cutOff})<br><span class="net-green-bold">Net: ₱${p.netPay}</span></div>`).join('') || '<div class="dark:text-white">No payslips</div>'; }
-function refreshEmployeePayslip() { const my = allPayslips.filter(p => p.employeeEmail === currentUser?.email); document.getElementById('employeePayslipList').innerHTML = my.map(p => `<div class="bg-white dark:bg-slate-800 p-3 rounded shadow dark:text-white">${p.month} (${p.cutOff})<br><span class="net-green-bold">Net: ₱${p.netPay}</span></div>`).join('') || '<div class="dark:text-white">No payslips</div>'; }
+function refreshEmployeePayslip() { const my = allPayslips.filter(p => p.employeeEmail === currentUser?.email); const container = document.getElementById('employeePayslipList'); if (container) container.innerHTML = my.map(p => `<div class="bg-white dark:bg-slate-800 p-3 rounded shadow dark:text-white">${p.month} (${p.cutOff})<br><span class="net-green-bold">Net: ₱${p.netPay}</span></div>`).join('') || '<div class="dark:text-white">No payslips</div>'; }
 
 // ==================== HELPDESK ====================
 async function submitHelpdeskRequest() {
@@ -855,23 +865,36 @@ async function updateHelpdeskRequest(requestId) {
 // ==================== DASHBOARD & UI ====================
 function refreshDashboard() {
     const filtered = getFilteredEmployees();
-    document.getElementById('totalEmployees').innerText = filtered.length;
+    const totalEl = document.getElementById('totalEmployees');
+    if (totalEl) totalEl.innerText = filtered.length;
     const today = new Date().toISOString().split('T')[0];
     let deptAtt = 0;
     if (currentFilter.department !== 'all') { const names = filtered.map(e=>e.name); deptAtt = allAttendance.filter(a=>a.date===today && names.includes(a.userName)).length; } else deptAtt = allAttendance.filter(a=>a.date===today).length;
-    document.getElementById('deptAttendance').innerText = deptAtt;
+    const deptAttEl = document.getElementById('deptAttendance');
+    if (deptAttEl) deptAttEl.innerText = deptAtt;
     let pendingCount = 0;
     if (currentUserRole === 'approver') pendingCount = allRequests.filter(r => r.approverEmail === currentUser?.email && r.status === "pending_secondary").length;
     else if (currentUser.email === 'hrd@equiprime.ph') pendingCount = allRequests.filter(r => r.status === "pending_final").length;
     else if (fullPrivilegedEmails.includes(currentUser.email)) pendingCount = allRequests.filter(r => r.approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status === "pending_final")).length;
-    document.getElementById('pendingApprovals').innerText = pendingCount;
-    document.getElementById('myLeaveBalance').innerText = currentUserData?.leaveBalance || 15;
+    const pendingEl = document.getElementById('pendingApprovals');
+    if (pendingEl) pendingEl.innerText = pendingCount;
+    const leaveBalanceEl = document.getElementById('myLeaveBalance');
+    if (leaveBalanceEl) leaveBalanceEl.innerText = currentUserData?.leaveBalance || 15;
     const myReqs = allRequests.filter(r=>r.userId === currentUser.uid).slice(0,5);
-    document.getElementById('myRequestsList').innerHTML = myReqs.map(r=>`<div class="flex justify-between p-3 bg-slate-50 dark:bg-slate-700 rounded"><div><b class="dark:text-white">${r.type}</b><br><span class="dark:text-white">${r.startDate} - ${r.endDate}</span></div><span class="text-xs px-2 py-1 rounded-full ${r.status==='approved'?'bg-green-100':r.status==='rejected'?'bg-red-100':'bg-yellow-100'}">${r.status}</span></div>`).join('') || '<div class="text-center dark:text-white">No requests</div>';
+    const myRequestsList = document.getElementById('myRequestsList');
+    if (myRequestsList) {
+        myRequestsList.innerHTML = myReqs.map(r=>`<div class="flex justify-between p-3 bg-slate-50 dark:bg-slate-700 rounded"><div><b class="dark:text-white">${r.type}</b><br><span class="dark:text-white">${r.startDate} - ${r.endDate}</span></div><span class="text-xs px-2 py-1 rounded-full ${r.status==='approved'?'bg-green-100':r.status==='rejected'?'bg-red-100':'bg-yellow-100'}">${r.status}</span></div>`).join('') || '<div class="text-center dark:text-white">No requests</div>';
+    }
     if (fullPrivilegedEmails.includes(currentUser?.email)) {
         const regularEmps = allEmployees.filter(e => !isSystemAdmin(e.email));
-        document.getElementById('hrEmployeesList').innerHTML = regularEmps.map(e => { const canEdit = editAuthorizedEmails.includes(currentUser?.email); return `<div class="flex justify-between items-center p-3 border-b dark:border-slate-600"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-600 flex items-center justify-center text-xs font-bold dark:text-white">${e.name.split(' ').map(n=>n[0]).join('')}</div><div><p class="font-semibold dark:text-white">${e.name}</p><p class="text-sm text-slate-500 dark:text-slate-400">${e.dept} - ${e.role}</p><p class="text-xs dark:text-white">Leave balance: <span class="editable-leave text-blue-600 cursor-pointer" onclick="editLeaveBalance('${e.id}','${e.name}',${e.leaveBalance||0})">${e.leaveBalance||0} days</span></p><p class="text-xs dark:text-white">Status: ${e.status || 'active'}</p></div></div><div class="flex gap-2">${canEdit ? `<button onclick="openEditEmployeeModal({id:'${e.id}',name:'${e.name}',email:'${e.email||''}',dept:'${e.dept}',role:'${e.role}',status:'${e.status||'active'}',leaveBalance:${e.leaveBalance||0},pin:'${e.pin||''}'})" class="text-blue-600 text-sm">Edit</button>` : ''}<button onclick="deleteEmployee('${e.id}')" class="text-red-500 text-sm">Delete</button></div></div>`; }).join('');
-        document.getElementById('allRequestsList').innerHTML = allRequests.map(r => `<div class="bg-white dark:bg-slate-700 p-3 rounded shadow mb-2"><b class="dark:text-white">${r.userName}</b> (${r.userDepartment})<br><span class="dark:text-white">${r.type} | ${r.startDate} - ${r.endDate}<br>Status: ${r.status} | Approver: ${r.approverEmail}</span></div>`).join('');
+        const hrEmployeesList = document.getElementById('hrEmployeesList');
+        if (hrEmployeesList) {
+            hrEmployeesList.innerHTML = regularEmps.map(e => { const canEdit = editAuthorizedEmails.includes(currentUser?.email); return `<div class="flex justify-between items-center p-3 border-b dark:border-slate-600"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-600 flex items-center justify-center text-xs font-bold dark:text-white">${e.name.split(' ').map(n=>n[0]).join('')}</div><div><p class="font-semibold dark:text-white">${e.name}</p><p class="text-sm text-slate-500 dark:text-slate-400">${e.dept} - ${e.role}</p><p class="text-xs dark:text-white">Leave balance: <span class="editable-leave text-blue-600 cursor-pointer" onclick="editLeaveBalance('${e.id}','${e.name}',${e.leaveBalance||0})">${e.leaveBalance||0} days</span></p><p class="text-xs dark:text-white">Status: ${e.status || 'active'}</p></div></div><div class="flex gap-2">${canEdit ? `<button onclick="openEditEmployeeModal({id:'${e.id}',name:'${e.name}',email:'${e.email||''}',dept:'${e.dept}',role:'${e.role}',status:'${e.status||'active'}',leaveBalance:${e.leaveBalance||0},pin:'${e.pin||''}'})" class="text-blue-600 text-sm">Edit</button>` : ''}<button onclick="deleteEmployee('${e.id}')" class="text-red-500 text-sm">Delete</button></div></div>`; }).join('');
+        }
+        const allRequestsList = document.getElementById('allRequestsList');
+        if (allRequestsList) {
+            allRequestsList.innerHTML = allRequests.map(r => `<div class="bg-white dark:bg-slate-700 p-3 rounded shadow mb-2"><b class="dark:text-white">${r.userName}</b> (${r.userDepartment})<br><span class="dark:text-white">${r.type} | ${r.startDate} - ${r.endDate}<br>Status: ${r.status} | Approver: ${r.approverEmail}</span></div>`).join('');
+        }
     }
     const pendingContainer = document.getElementById('pendingApprovalsList');
     if (pendingContainer) {
@@ -892,18 +915,25 @@ function refreshDashboard() {
     const onLeaveEmps = filtered.filter(e => {
         return allRequests.some(r => r.userId === e.id && r.status === 'approved' && new Date(r.startDate) <= new Date(today) && new Date(r.endDate) >= new Date(today) && (r.type === 'Sick Leave' || r.type === 'Vacation Leave' || r.type === 'Emergency Leave' || r.type === 'Official Business'));
     });
-    document.getElementById('loggedInCount').innerText = `(${loggedInEmps.length})`;
-    document.getElementById('loggedInList').innerHTML = loggedInEmps.map(a => `<div class="text-sm">${a.userName} - ${a.timeIn}</div>`).join('');
-    document.getElementById('missedCount').innerText = `(${missedEmps.length})`;
-    document.getElementById('missedList').innerHTML = missedEmps.map(e => `<div class="text-sm">${e.name}</div>`).join('');
-    document.getElementById('lateCountDashboard').innerText = `(${lateEmps.length})`;
-    document.getElementById('lateList').innerHTML = lateEmps.map(a => `<div class="text-sm">${a.userName} - ${a.timeIn}</div>`).join('');
-    document.getElementById('onLeaveCount').innerText = `(${onLeaveEmps.length})`;
-    document.getElementById('onLeaveList').innerHTML = onLeaveEmps.map(e => `<div class="text-sm">${e.name}</div>`).join('');
+    const loggedInCountSpan = document.getElementById('loggedInCount');
+    if (loggedInCountSpan) loggedInCountSpan.innerText = `(${loggedInEmps.length})`;
+    const loggedInListDiv = document.getElementById('loggedInList');
+    if (loggedInListDiv) loggedInListDiv.innerHTML = loggedInEmps.map(a => `<div class="text-sm">${a.userName} - ${a.timeIn}</div>`).join('');
+    const missedCountSpan = document.getElementById('missedCount');
+    if (missedCountSpan) missedCountSpan.innerText = `(${missedEmps.length})`;
+    const missedListDiv = document.getElementById('missedList');
+    if (missedListDiv) missedListDiv.innerHTML = missedEmps.map(e => `<div class="text-sm">${e.name}</div>`).join('');
+    const lateCountSpan = document.getElementById('lateCountDashboard');
+    if (lateCountSpan) lateCountSpan.innerText = `(${lateEmps.length})`;
+    const lateListDiv = document.getElementById('lateList');
+    if (lateListDiv) lateListDiv.innerHTML = lateEmps.map(a => `<div class="text-sm">${a.userName} - ${a.timeIn}</div>`).join('');
+    const onLeaveCountSpan = document.getElementById('onLeaveCount');
+    if (onLeaveCountSpan) onLeaveCountSpan.innerText = `(${onLeaveEmps.length})`;
+    const onLeaveListDiv = document.getElementById('onLeaveList');
+    if (onLeaveListDiv) onLeaveListDiv.innerHTML = onLeaveEmps.map(e => `<div class="text-sm">${e.name}</div>`).join('');
     feather.replace();
 }
-function updateLastUpdatedTime() { const now = new Date().toLocaleString(); ['desktopLastUpdatedTime', 'mobileLastUpdatedTime'].forEach(id => { if(document.getElementById(id)) document.getElementById(id).innerText = now; }); }
-
+function updateLastUpdatedTime() { const now = new Date().toLocaleString(); ['desktopLastUpdatedTime', 'mobileLastUpdatedTime'].forEach(id => { const el = document.getElementById(id); if (el) el.innerText = now; }); }
 function toggleEmployeesSubmenu() {
     const submenu = document.getElementById('employeesSubmenu');
     const chevron = document.getElementById('employeesChevron');
@@ -940,8 +970,10 @@ function renderNavigation() {
             html += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> Pending Approval</button>`;
         }
     }
-    document.getElementById('desktopNavMenu').innerHTML = html;
-    document.getElementById('mobileNavMenu').innerHTML = html;
+    const desktopNav = document.getElementById('desktopNavMenu');
+    const mobileNav = document.getElementById('mobileNavMenu');
+    if (desktopNav) desktopNav.innerHTML = html;
+    if (mobileNav) mobileNav.innerHTML = html;
     feather.replace();
     const submenu = document.getElementById('employeesSubmenu');
     if (submenu) submenu.classList.add('hidden');
@@ -962,7 +994,7 @@ function switchTab(tabName) {
     if (tabName === 'my-attendance') refreshMyAttendanceTab();
     if (tabName === 'attendance-summary') { populateYearDropdown(); loadEmployeeListForSummary(); }
     if (tabName === 'helpdesk' || tabName === 'admin-helpdesk') refreshHelpdesk();
-    if (tabName === 'employee-directory') { renderEmployeeDirectory(); document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString(); }
+    if (tabName === 'employee-directory') { renderEmployeeDirectory(); const dateDisplay = document.getElementById('currentDateDisplay'); if (dateDisplay) dateDisplay.innerText = new Date().toLocaleDateString(); }
     closeMobileSidebar();
 }
 function applyFilters() {
@@ -972,17 +1004,17 @@ function applyFilters() {
     currentFilter = { department: deptFilter, status: statusFilter, leaveType: leaveFilter };
     refreshDashboard();
 }
-function openModal(id) { document.getElementById(id).classList.add('active'); }
-function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+function openModal(id) { const modal = document.getElementById(id); if (modal) modal.classList.add('active'); }
+function closeModal(id) { const modal = document.getElementById(id); if (modal) modal.classList.remove('active'); }
 function openNewRequestMenu() { openModal('newRequestMenuOverlay'); }
 function openLeaveModal() { closeModal('newRequestMenuOverlay'); openModal('leaveModalOverlay'); }
 function openOffsetsModal() { closeModal('newRequestMenuOverlay'); openModal('offsetsModalOverlay'); }
 function showAddEmployeeModal() { openModal('addEmployeeModal'); }
-function openRequestModal(type) { closeModal('newRequestMenuOverlay'); document.getElementById('requestModalTitle').innerHTML=`Submit ${type}`; document.getElementById('requestTypeValue').value=type; document.getElementById('reqStartDate').value=''; document.getElementById('reqEndDate').value=''; document.getElementById('reqReason').value=''; openModal('requestModalOverlay'); }
+function openRequestModal(type) { closeModal('newRequestMenuOverlay'); const titleSpan = document.getElementById('requestModalTitle'); if (titleSpan) titleSpan.innerHTML = `Submit ${type}`; document.getElementById('requestTypeValue').value = type; document.getElementById('reqStartDate').value = ''; document.getElementById('reqEndDate').value = ''; document.getElementById('reqReason').value = ''; openModal('requestModalOverlay'); }
 function selectLeaveType(type) { closeModal('leaveModalOverlay'); openRequestModal(type); }
 function toggleNightMode() { document.body.classList.toggle('dark'); localStorage.setItem('nightMode', document.body.classList.contains('dark') ? 'enabled' : 'disabled'); feather.replace(); }
-function openMobileSidebar() { document.getElementById('mobileSidebar').classList.add('open'); document.getElementById('overlay').classList.add('active'); document.body.classList.add('no-scroll'); }
-function closeMobileSidebar() { document.getElementById('mobileSidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); document.body.classList.remove('no-scroll'); }
+function openMobileSidebar() { const sidebar = document.getElementById('mobileSidebar'); const overlay = document.getElementById('overlay'); if (sidebar) sidebar.classList.add('open'); if (overlay) overlay.classList.add('active'); document.body.classList.add('no-scroll'); }
+function closeMobileSidebar() { const sidebar = document.getElementById('mobileSidebar'); const overlay = document.getElementById('overlay'); if (sidebar) sidebar.classList.remove('open'); if (overlay) overlay.classList.remove('active'); document.body.classList.remove('no-scroll'); }
 function saveSettings() { localStorage.setItem('device_ip', document.getElementById('deviceIp').value); alert('Settings saved'); }
 window.resetAllSystemData = async function() { if (currentUser?.email !== resetAuthorizedEmail) { alert("Only mod.rom@equiprime.ph can reset."); return; } const pin = prompt("Enter reset PIN:"); if (pin !== "Moderator@2026!") { alert("Incorrect PIN."); return; } if (!confirm("Delete ALL data?")) return; const collections = ['employees','attendance','requests','payslips','announcements','guardWeeklySchedules','users','departmentApprovers','employeeSupportRequests']; for (const col of collections) { const snap = await db.collection(col).get(); const batch = db.batch(); snap.docs.forEach(doc => batch.delete(doc.ref)); await batch.commit(); } alert("All data reset. Reloading..."); location.reload(); };
 
@@ -1029,11 +1061,11 @@ async function loginWithEmail() {
         const resetContainer = document.getElementById('resetButtonContainer'); if (resetContainer && currentUser.email === resetAuthorizedEmail) resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full">⚠️ Reset All System Data (PIN required)</button>`; else resetContainer.innerHTML = "";
         attachDirectoryEventListeners();
         switchTab('dashboard');
-    } catch (e) { errDiv.innerText = e.message; errDiv.classList.remove('hidden'); }
+    } catch (e) { if (errDiv) { errDiv.innerText = e.message; errDiv.classList.remove('hidden'); } }
 }
 async function signupWithEmail() {
     const name = document.getElementById('signupName').value, email = document.getElementById('signupEmail').value, pwd = document.getElementById('signupPassword').value, role = document.getElementById('signupRole').value, dept = document.getElementById('signupDepartment').value, errDiv = document.getElementById('authError'), sucDiv = document.getElementById('authSuccess');
-    if (!name || !email || !pwd || !dept) { errDiv.innerText = "Fill all fields"; errDiv.classList.remove('hidden'); return; }
+    if (!name || !email || !pwd || !dept) { if (errDiv) { errDiv.innerText = "Fill all fields"; errDiv.classList.remove('hidden'); } return; }
     try {
         const cred = await auth.createUserWithEmailAndPassword(email, pwd);
         const uid = cred.user.uid;
@@ -1041,12 +1073,13 @@ async function signupWithEmail() {
         await db.collection('employees').doc(uid).set(empData); await db.collection('users').doc(uid).set({ uid, name, email, role, department: dept, leaveBalance: 15, status: "active", phone: "N/A" });
         allEmployees.push({ id: uid, ...empData });
         await grantApproverPermissions(uid, role, dept);
-        sucDiv.innerText = "Account created! Please login."; sucDiv.classList.remove('hidden'); showLogin();
-    } catch (e) { errDiv.innerText = e.message; errDiv.classList.remove('hidden'); }
+        if (sucDiv) { sucDiv.innerText = "Account created! Please login."; sucDiv.classList.remove('hidden'); }
+        showLogin();
+    } catch (e) { if (errDiv) { errDiv.innerText = e.message; errDiv.classList.remove('hidden'); } }
 }
 async function logout() { await auth.signOut(); location.reload(); }
-function showSignup() { document.getElementById('loginForm').classList.add('hidden'); document.getElementById('signupForm').classList.remove('hidden'); document.getElementById('authError').classList.add('hidden'); }
-function showLogin() { document.getElementById('signupForm').classList.add('hidden'); document.getElementById('loginForm').classList.remove('hidden'); document.getElementById('authError').classList.add('hidden'); }
+function showSignup() { document.getElementById('loginForm').classList.add('hidden'); document.getElementById('signupForm').classList.remove('hidden'); const errDiv = document.getElementById('authError'); if (errDiv) errDiv.classList.add('hidden'); }
+function showLogin() { document.getElementById('signupForm').classList.add('hidden'); document.getElementById('loginForm').classList.remove('hidden'); const errDiv = document.getElementById('authError'); if (errDiv) errDiv.classList.add('hidden'); }
 auth.onAuthStateChanged(async (user) => {
     if (user) {
         await ensureSystemAdminRecord(user);
