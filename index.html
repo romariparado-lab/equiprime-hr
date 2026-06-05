@@ -7,7 +7,6 @@
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
-    <!-- Tailwind CSS is fine for development; the warning about production can be ignored -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -146,7 +145,6 @@
         body.dark .search-bar { background: #1e293b; border-color: #334155; color: white; }
         .filter-dropdown { border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 0.5rem 0.75rem; background: white; }
         body.dark .filter-dropdown { background: #1e293b; border-color: #334155; color: white; }
-        /* Adjust submenu items */
         .submenu-item { padding-left: 2rem !important; font-size: 0.875rem; }
     </style>
 </head>
@@ -612,7 +610,7 @@ function refreshMyAttendanceTab() {
     const historyBody = document.getElementById('attendanceHistoryList');
     if (historyBody) {
         const historyHtml = userAtt.map(a => `<tr class="border-t"><td class="p-3">${a.date}</td><td class="p-3">${a.timeIn||'--'}</td><td class="p-3">${a.timeOut||'--'}</td><td class="p-3">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</tr>`).join('');
-        historyBody.innerHTML = historyHtml || '<tr><td colspan="5" class="p-4 text-center">No records</td>';
+        historyBody.innerHTML = historyHtml || '<tr><td colspan="5" class="p-4 text-center">No records<tr>';
     }
 }
 
