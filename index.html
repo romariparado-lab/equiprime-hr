@@ -66,7 +66,6 @@
         body.dark .desktop-sidebar, body.dark .mobile-sidebar { background-color: #011F7B !important; }
         body.dark .attendance-summary-container { background: #0f172a; }
         body.dark .summary-card, body.dark .employee-list, body.dark .calendar-box, body.dark .details-box { background: #1e293b; }
-        /* Light mode text contrast fixes */
         .text-slate-800 { color: #0f172a !important; }
         body.dark .text-slate-800 { color: #f1f5f9 !important; }
         .welcome-heading { color: #0f172a; font-weight: 800; }
@@ -184,7 +183,7 @@
             <div class="mt-6"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="git-branch"></i> Approval Flow</h3><div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-sm dark:text-white"><div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Employee submits</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Secondary Approver (dept admin/manager)</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> Final Approver (hrd@equiprime.ph)</div></div></div></div>
         </div>
 
-        <!-- MY ATTENDANCE TAB (enhanced history) -->
+        <!-- MY ATTENDANCE TAB -->
         <div id="my-attendance-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-700 transition clock-btn flex items-center gap-2"><i data-feather="log-in"></i> Clock In</button><button onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-red-700 transition clock-btn flex items-center gap-2"><i data-feather="log-out"></i> Clock Out</button></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="calendar"></i> Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-slate-700"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold dark:text-white" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500 dark:text-slate-400" id="todayTimeInfo"></div></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="list"></i> Attendance History (All records)</h3><div class="overflow-x-auto"><table class="w-full"><thead class="bg-slate-50 dark:bg-slate-700"><tr><th class="p-3 text-left text-sm font-semibold dark:text-white">Date</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Clock In</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Clock Out</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Hours Worked</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Status</th></tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div></div>
         <div id="my-requests-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="file-text"></i> My Request</h2><button onclick="openNewRequestMenu()" class="bg-[#011F7B] text-white px-4 py-2 rounded-xl text-sm">New Request</button></div><div id="allMyRequestsList" class="space-y-3"></div></div>
         <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="clipboard"></i> All Request</h2><div id="allRequestsList" class="space-y-4"></div></div>
@@ -199,7 +198,7 @@
     </div>
 </div>
 
-<!-- MODALS (unchanged, but all present) -->
+<!-- MODALS (unchanged) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')"><i data-feather="x" class="dark:text-white"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><input type="text" id="announcementTitle" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Title"><textarea id="announcementContent" rows="3" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Content"></textarea></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1 dark:text-white">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')"><i data-feather="x" class="dark:text-white"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><input type="date" id="reqEndDate" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><textarea id="reqReason" rows="3" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1 dark:text-white">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')"><i data-feather="x" class="dark:text-white"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 dark:bg-red-900/30 rounded-xl text-left dark:text-white">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 dark:bg-orange-900/30 rounded-xl text-left dark:text-white">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-left dark:text-white">Vacation Leave</button></div></div></div>
@@ -342,7 +341,7 @@ async function loadGuardSelect() {
     if (sel) sel.innerHTML = '<option value="">Select Guard</option>' + allEmployees.filter(e => (e.dept === 'Security Guard Department' || e.role === 'guard') && !isSystemAdmin(e.email)).map(e => `<option value="${e.id}">${e.name}</option>`).join('');
 }
 
-// ==================== ATTENDANCE SUMMARY (unchanged) ====================
+// ==================== ATTENDANCE SUMMARY ====================
 function populateYearDropdown() {
     const yearSelect = document.getElementById('summaryYear');
     if (!yearSelect) return;
@@ -419,13 +418,13 @@ async function loadEmployeeCalendar(employeeId) {
             const [inH,inM] = attRecord.timeIn.split(':').map(Number);
             if (inH*60+inM > 8*60) { status = 'Late'; badgeClass = 'late'; }
         }
-        return `<tr><td>${day.date}</td><td>${attRecord?.timeIn || '--'}</td><td>${attRecord?.timeOut || '--'}</td><td><span class="status-badge ${badgeClass}">${status}</span>NonNull</tr>`;
+        return `<tr><td>${day.date}</td><td>${attRecord?.timeIn || '--'}</td><td>${attRecord?.timeOut || '--'}</td><td><span class="status-badge ${badgeClass}">${status}</span></td></tr>`;
     }).join('');
     const detailsBody = document.getElementById('attendanceDetails');
     if (detailsBody) detailsBody.innerHTML = detailsRows;
 }
 
-// ==================== CLOCK IN/OUT (fixed) ====================
+// ==================== CLOCK IN/OUT ====================
 function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:false }); }
 async function clockIn() {
     if (SYSTEM_ADMIN_EMAILS.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
@@ -535,7 +534,7 @@ function renderGuardSchedules() {
 }
 async function deleteGuardSchedule(id) { if (confirm("Delete this schedule?")) { await db.collection('guardWeeklySchedules').doc(id).delete(); guardWeeklySchedules = guardWeeklySchedules.filter(s => s.id !== id); renderGuardSchedules(); } }
 
-// ==================== REQUESTS & APPROVALS (fixed undefined department) ====================
+// ==================== REQUESTS & APPROVALS ====================
 async function submitRequest() {
     const type = document.getElementById('requestTypeValue').value, start = document.getElementById('reqStartDate').value, end = document.getElementById('reqEndDate').value, reason = document.getElementById('reqReason').value;
     if (!start || !end) { alert("Select dates"); return; }
@@ -732,7 +731,16 @@ async function updateHelpdeskRequest(requestId) {
     alert("Request updated.");
 }
 
-// ==================== DASHBOARD & UI (no Employees tab) ====================
+// ==================== DASHBOARD & UI ====================
+function formatDateForDisplay(dateStr) {
+    if (!dateStr) return '';
+    try {
+        const d = new Date(dateStr);
+        if (isNaN(d.getTime())) return dateStr;
+        return d.toISOString().split('T')[0];
+    } catch(e) { return dateStr; }
+}
+
 function refreshDashboard() {
     const filtered = getFilteredEmployees();
     const totalEl = document.getElementById('totalEmployees');
@@ -750,10 +758,12 @@ function refreshDashboard() {
     if (pendingEl) pendingEl.innerText = pendingCount;
     const leaveBalanceEl = document.getElementById('myLeaveBalance');
     if (leaveBalanceEl) leaveBalanceEl.innerText = currentUserData?.leaveBalance || 15;
-    const myReqs = allRequests.filter(r=>r.userId === currentUser.uid).slice(0,5);
+    
+    // FIX: Recent requests - clean display, no malformed entries
+    const myReqs = allRequests.filter(r=>r.userId === currentUser.uid).sort((a,b)=>new Date(b.createdAt) - new Date(a.createdAt)).slice(0,5);
     const myRequestsList = document.getElementById('myRequestsList');
     if (myRequestsList) {
-        myRequestsList.innerHTML = myReqs.map(r=>`<div class="flex justify-between p-3 bg-slate-50 dark:bg-slate-700 rounded"><div><b class="dark:text-white">${r.type}</b><br><span class="dark:text-white">${r.startDate} - ${r.endDate}</span></div><span class="text-xs px-2 py-1 rounded-full ${r.status==='approved'?'bg-green-100':r.status==='rejected'?'bg-red-100':'bg-yellow-100'}">${r.status}</span></div>`).join('') || '<div class="text-center dark:text-white">No requests</div>';
+        myRequestsList.innerHTML = myReqs.map(r=>`<div class="flex justify-between p-3 bg-slate-50 dark:bg-slate-700 rounded"><div><b class="dark:text-white">${escapeHtml(r.type)}</b><br><span class="dark:text-white">${formatDateForDisplay(r.startDate)} - ${formatDateForDisplay(r.endDate)}</span></div><span class="text-xs px-2 py-1 rounded-full ${r.status==='approved'?'bg-green-100':r.status==='rejected'?'bg-red-100':'bg-yellow-100'}">${r.status}</span></div>`).join('') || '<div class="text-center dark:text-white">No requests</div>';
     }
     if (fullPrivilegedEmails.includes(currentUser?.email)) {
         const regularEmps = allEmployees.filter(e => !isSystemAdmin(e.email));
@@ -763,7 +773,7 @@ function refreshDashboard() {
         }
         const allRequestsList = document.getElementById('allRequestsList');
         if (allRequestsList) {
-            allRequestsList.innerHTML = allRequests.map(r => `<div class="bg-white dark:bg-slate-700 p-3 rounded shadow mb-2"><b class="dark:text-white">${r.userName}</b> (${r.userDepartment})<br><span class="dark:text-white">${r.type} | ${r.startDate} - ${r.endDate}<br>Status: ${r.status} | Approver: ${r.approverEmail}</span></div>`).join('');
+            allRequestsList.innerHTML = allRequests.map(r => `<div class="bg-white dark:bg-slate-700 p-3 rounded shadow mb-2"><b class="dark:text-white">${r.userName}</b> (${r.userDepartment})<br><span class="dark:text-white">${r.type} | ${formatDateForDisplay(r.startDate)} - ${formatDateForDisplay(r.endDate)}<br>Status: ${r.status} | Approver: ${r.approverEmail}</span></div>`).join('');
         }
     }
     const pendingContainer = document.getElementById('pendingApprovalsList');
@@ -772,9 +782,9 @@ function refreshDashboard() {
         if (currentUserRole === 'approver') pendingReqs = allRequests.filter(r => r.approverEmail === currentUser?.email && r.status === "pending_secondary");
         else if (currentUser.email === 'hrd@equiprime.ph') pendingReqs = allRequests.filter(r => r.status === "pending_final");
         else if (fullPrivilegedEmails.includes(currentUser.email)) pendingReqs = allRequests.filter(r => r.approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status === "pending_final"));
-        pendingContainer.innerHTML = pendingReqs.map(r => { const approveFn = (r.status === "pending_final") ? "approveFinal" : "approveSecondary"; return `<div class="bg-white dark:bg-slate-700 p-3 rounded shadow mb-2"><b class="dark:text-white">${r.userName}</b> - ${r.type}<br><span class="dark:text-white">${r.startDate} to ${r.endDate}</span><br><button onclick="${approveFn}('${r.id}')" class="bg-green-600 text-white px-3 py-1 rounded text-sm">Approve</button> <button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-3 py-1 rounded text-sm">Reject</button></div>`; }).join('');
+        pendingContainer.innerHTML = pendingReqs.map(r => { const approveFn = (r.status === "pending_final") ? "approveFinal" : "approveSecondary"; return `<div class="bg-white dark:bg-slate-700 p-3 rounded shadow mb-2"><b class="dark:text-white">${r.userName}</b> - ${r.type}<br><span class="dark:text-white">${formatDateForDisplay(r.startDate)} to ${formatDateForDisplay(r.endDate)}</span><br><button onclick="${approveFn}('${r.id}')" class="bg-green-600 text-white px-3 py-1 rounded text-sm">Approve</button> <button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-3 py-1 rounded text-sm">Reject</button></div>`; }).join('');
     }
-    // Update login status lists
+    // Login status lists - no extra [Edit] text
     const filteredEmployeeIds = new Set(filtered.map(e => e.id));
     const loggedInEmps = allAttendance.filter(a => a.date === today && a.timeIn && filteredEmployeeIds.has(a.userId));
     const missedEmps = filtered.filter(e => !allAttendance.some(a => a.date === today && a.userId === e.id));
