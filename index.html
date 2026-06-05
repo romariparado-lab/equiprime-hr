@@ -116,7 +116,6 @@
         .status-resolved { color: #10b981; font-weight: 600; }
         .status-pending { color: #f59e0b; font-weight: 600; }
         .status-inprogress { color: #3b82f6; font-weight: 600; }
-        /* Employee card styles */
         .employee-card { background: white; border-radius: 1rem; padding: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); transition: 0.2s; }
         body.dark .employee-card { background: #1e293b; }
         .employee-card:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
@@ -180,7 +179,6 @@
 
         <!-- DASHBOARD TAB -->
         <div id="dashboard-tab" class="tab-content">
-            <!-- Same as before, unchanged -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div class="stat-card"><div><p class="text-slate-500 dark:text-slate-400 text-sm">Total Employees</p><h3 class="text-3xl font-bold mt-2 dark:text-white" id="totalEmployees">0</h3></div><div class="stat-card-icon"><i data-feather="users" class="text-blue-600 dark:text-blue-400"></i></div></div>
                 <div class="stat-card"><div><p class="text-slate-500 dark:text-slate-400 text-sm">Department Attendance</p><h3 class="text-3xl font-bold mt-2 dark:text-white" id="deptAttendance">0</h3></div><div class="stat-card-icon"><i data-feather="user-check" class="text-green-600 dark:text-green-400"></i></div></div>
@@ -246,7 +244,7 @@
     </div>
 </div>
 
-<!-- MODALS (unchanged) -->
+<!-- MODALS (all existing) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')"><i data-feather="x" class="dark:text-white"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><input type="text" id="announcementTitle" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Title"><textarea id="announcementContent" rows="3" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Content"></textarea></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1 dark:text-white">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')"><i data-feather="x" class="dark:text-white"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><input type="date" id="reqEndDate" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><textarea id="reqReason" rows="3" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1 dark:text-white">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')"><i data-feather="x" class="dark:text-white"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 dark:bg-red-900/30 rounded-xl text-left dark:text-white">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 dark:bg-orange-900/30 rounded-xl text-left dark:text-white">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-left dark:text-white">Vacation Leave</button></div></div></div>
@@ -258,7 +256,7 @@
 <div id="payslipModal" class="modal-overlay"><div class="payslip-modal-container dark:bg-slate-800"><div class="payslip-card dark:bg-slate-800 dark:text-white"><div class="flex justify-between items-start mb-4 no-print"><h2 class="text-xl font-bold">Payslip Statement</h2><button onclick="closeModal('payslipModal')"><i data-feather="x" class="dark:text-white"></i></button></div><div id="payslipContent"></div><div class="text-right no-print mt-4"><button onclick="window.print()" class="bg-[#011F7B] text-white px-4 py-2 rounded-lg text-sm">Print Statement</button></div></div></div></div>
 
 <script>
-// ==================== FIREBASE CONFIG ====================
+// ==================== FIREBASE ====================
 const firebaseConfig = {
     apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
     authDomain: "equiprime-hr.firebaseapp.com",
@@ -284,7 +282,7 @@ const editAuthorizedEmails = ["mod.rom@equiprime.ph", "mod.dex@equiprime.ph"];
 function isSystemAdmin(email) { return SYSTEM_ADMIN_EMAILS.includes(email); }
 
 // ==================== AUTO-CREATE SYSTEM ADMIN RECORDS ====================
-async function ensureSystemAdminRecord(user) { /* same as before, unchanged */ 
+async function ensureSystemAdminRecord(user) {
     const email = user.email;
     if (!SYSTEM_ADMIN_EMAILS.includes(email)) return false;
     const docRef = db.collection('employees').doc(user.uid);
@@ -305,10 +303,48 @@ async function ensureSystemAdminRecord(user) { /* same as before, unchanged */
     }
 }
 
-async function grantApproverPermissions(employeeId, role, department) { /* unchanged */ }
-async function revokeApproverPermissions(employeeId, department) { /* unchanged */ }
-async function getApproverForDepartment(department, stage) { /* unchanged */ }
-async function getDirectApproverForSubmitter(userEmail, role, department) { /* unchanged */ }
+async function grantApproverPermissions(employeeId, role, department) {
+    const approverRoles = ['admin', 'supervisor', 'manager', 'hr', 'moderator'];
+    if (!approverRoles.includes(role)) return;
+    const deptRef = db.collection('departmentApprovers').doc(department);
+    const doc = await deptRef.get();
+    if (doc.exists) {
+        const current = doc.data().secondaryApprovers || [];
+        if (!current.includes(employeeId)) await deptRef.update({ secondaryApprovers: firebase.firestore.FieldValue.arrayUnion(employeeId) });
+    } else {
+        await deptRef.set({ secondaryApprovers: [employeeId], finalApprover: "hrd@equiprime.ph" });
+    }
+}
+
+async function revokeApproverPermissions(employeeId, department) {
+    const emp = allEmployees.find(e => e.id === employeeId);
+    if (emp && SYSTEM_ADMIN_EMAILS.includes(emp.email)) return;
+    const deptRef = db.collection('departmentApprovers').doc(department);
+    const doc = await deptRef.get();
+    if (doc.exists) await deptRef.update({ secondaryApprovers: firebase.firestore.FieldValue.arrayRemove(employeeId) });
+}
+
+async function getApproverForDepartment(department, stage) {
+    const deptDoc = await db.collection('departmentApprovers').doc(department).get();
+    if (!deptDoc.exists) return { email: "hrd@equiprime.ph", isFallback: true };
+    const data = deptDoc.data();
+    if (stage === 'secondary') {
+        const secondaryIds = data.secondaryApprovers || [];
+        for (let id of secondaryIds) {
+            const empDoc = await db.collection('employees').doc(id).get();
+            if (empDoc.exists && empDoc.data().status === 'active') return { email: empDoc.data().email, isFallback: false };
+        }
+        return { email: data.finalApprover || "hrd@equiprime.ph", isFallback: true };
+    } else {
+        return { email: data.finalApprover || "hrd@equiprime.ph", isFallback: false };
+    }
+}
+
+async function getDirectApproverForSubmitter(userEmail, role, department) {
+    if (SYSTEM_ADMIN_EMAILS.includes(userEmail)) return { email: "hrd@equiprime.ph", isDirect: true };
+    if (role === "admin" || role === "supervisor" || role === "manager") return { email: "hrd@equiprime.ph", isDirect: true };
+    return null;
+}
 
 // ==================== DATA LOADING ====================
 async function loadAllData() {
@@ -332,30 +368,37 @@ async function loadAllData() {
     refreshDashboard();
     refreshHelpdesk();
     updateLastUpdatedTime();
-    renderEmployeeDirectory(); // Render new employee cards
+    renderEmployeeDirectory();
 }
 
 function getRegularEmployees() { return allEmployees.filter(e => !isSystemAdmin(e.email)); }
-function getFilteredEmployees() { /* unchanged */ return getRegularEmployees(); } // Placeholder for filters
+function getFilteredEmployees() {
+    let filtered = getRegularEmployees();
+    if (currentFilter.department !== 'all') filtered = filtered.filter(e => e.dept === currentFilter.department);
+    if (currentFilter.status !== 'all') filtered = filtered.filter(e => e.status === currentFilter.status);
+    if (currentFilter.leaveType !== 'all') {
+        const today = new Date().toISOString().split('T')[0];
+        filtered = filtered.filter(emp => allRequests.some(r => r.userId === emp.id && r.status === 'approved' && r.type === currentFilter.leaveType && new Date(r.startDate) <= new Date(today) && new Date(r.endDate) >= new Date(today)));
+    }
+    return filtered;
+}
 
-async function loadGuardSelect() { /* unchanged */ }
+async function loadGuardSelect() {
+    const sel = document.getElementById('guardEmployee');
+    if (sel) sel.innerHTML = '<option value="">Select Guard</option>' + allEmployees.filter(e => (e.dept === 'Security Guard Department' || e.role === 'guard') && !isSystemAdmin(e.email)).map(e => `<option value="${e.id}">${e.name}</option>`).join('');
+}
 
-// ==================== EMPLOYEE DIRECTORY FUNCTIONS ====================
+// ==================== EMPLOYEE DIRECTORY ====================
 function renderEmployeeDirectory() {
     const container = document.getElementById('employeeCardsContainer');
     if (!container) return;
     let employees = [...allEmployees.filter(e => !isSystemAdmin(e.email))];
-    // Search
     const searchTerm = document.getElementById('empSearchInput')?.value.toLowerCase() || '';
-    if (searchTerm) {
-        employees = employees.filter(e => e.name.toLowerCase().includes(searchTerm) || (e.email && e.email.toLowerCase().includes(searchTerm)) || (e.dept && e.dept.toLowerCase().includes(searchTerm)));
-    }
-    // Sort
+    if (searchTerm) employees = employees.filter(e => e.name.toLowerCase().includes(searchTerm) || (e.email && e.email.toLowerCase().includes(searchTerm)) || (e.dept && e.dept.toLowerCase().includes(searchTerm)));
     const sortBy = document.getElementById('sortBySelect')?.value || 'name';
     if (sortBy === 'name') employees.sort((a,b) => a.name.localeCompare(b.name));
     else if (sortBy === 'department') employees.sort((a,b) => (a.dept || '').localeCompare(b.dept || ''));
     else if (sortBy === 'date') employees.sort((a,b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
-    // Designation filter
     const designation = document.getElementById('designationFilter')?.value || 'all';
     if (designation !== 'all') employees = employees.filter(e => e.role === designation);
     
@@ -394,7 +437,7 @@ function openEditEmployeeModalFromDirectory(empId) {
     if (emp) openEditEmployeeModal(emp);
 }
 function viewEmployeeDetails(empId) {
-    alert(`Employee details view for ID: ${empId} – will be implemented as needed.`);
+    alert(`Employee details view for ID: ${empId} – detailed view can be implemented later.`);
 }
 async function addEmployeeFromCreate() {
     const name = document.getElementById('newEmpNameCreate').value;
@@ -426,13 +469,451 @@ async function addEmployeeFromCreate() {
     } catch (err) { alert("Error: " + err.message); }
 }
 
-// ==================== OTHER EXISTING FUNCTIONS (clock, attendance, requests, etc.) ====================
-// (All unchanged, only added directory and create employee functions above)
+// ==================== ATTENDANCE SUMMARY ====================
+function populateYearDropdown() {
+    const yearSelect = document.getElementById('summaryYear');
+    if (!yearSelect) return;
+    const currentYear = new Date().getFullYear();
+    yearSelect.innerHTML = '';
+    for (let y = currentYear-2; y <= currentYear+1; y++) {
+        const option = document.createElement('option');
+        option.value = y;
+        option.textContent = y;
+        if (y === currentYear) option.selected = true;
+        yearSelect.appendChild(option);
+    }
+}
+async function loadEmployeeListForSummary() {
+    if (!allEmployees.length) await loadAllData();
+    const container = document.getElementById('employeeListContainer');
+    if (!container) return;
+    const regularEmps = allEmployees.filter(e => !isSystemAdmin(e.email));
+    container.innerHTML = regularEmps.map(emp => `<div class="employee-item" data-id="${emp.id}" data-name="${emp.name}">${emp.name}</div>`).join('');
+    document.querySelectorAll('.employee-item').forEach(el => {
+        el.addEventListener('click', () => {
+            document.querySelectorAll('.employee-item').forEach(item => item.classList.remove('active'));
+            el.classList.add('active');
+            loadEmployeeCalendar(el.dataset.id);
+        });
+    });
+    const first = document.querySelector('.employee-item');
+    if (first) { first.classList.add('active'); loadEmployeeCalendar(first.dataset.id); }
+}
+async function loadEmployeeCalendar(employeeId) {
+    const year = parseInt(document.getElementById('summaryYear').value);
+    const month = parseInt(document.getElementById('summaryMonth').value);
+    const firstDay = new Date(year, month, 1);
+    const startDayOfWeek = firstDay.getDay();
+    const daysInMonth = new Date(year, month+1, 0).getDate();
+    const daysArray = [];
+    for (let i = 0; i < startDayOfWeek; i++) daysArray.push(null);
+    for (let d = 1; d <= daysInMonth; d++) daysArray.push({ date: `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`, dayNum: d });
+    const empAttendance = allAttendance.filter(a => a.userId === employeeId);
+    const empLeaves = allRequests.filter(r => r.userId === employeeId && r.status === 'approved' && (r.type === 'Sick Leave' || r.type === 'Vacation Leave' || r.type === 'Emergency Leave' || r.type === 'Official Business'));
+    let completed=0, late=0, incomplete=0, leave=0;
+    const calendarHTML = daysArray.map(day => {
+        if (!day) return `<div class="day bg-gray-200 dark:bg-gray-700"></div>`;
+        let statusClass = '', statusText = '';
+        const isLeave = empLeaves.some(l => new Date(l.startDate) <= new Date(day.date) && new Date(l.endDate) >= new Date(day.date));
+        if (isLeave) { statusClass = 'leave'; statusText = 'Leave'; leave++; }
+        else {
+            const attRecord = empAttendance.find(a => a.date === day.date);
+            if (attRecord && attRecord.timeIn && attRecord.timeOut) { statusClass = 'completed'; statusText = 'Completed'; completed++; }
+            else if (attRecord && attRecord.timeIn && !attRecord.timeOut) { statusClass = 'incomplete'; statusText = 'Incomplete'; incomplete++; }
+            else { statusClass = 'incomplete'; statusText = 'No record'; incomplete++; }
+            if (attRecord && attRecord.timeIn) {
+                const [inH,inM] = attRecord.timeIn.split(':').map(Number);
+                if (inH*60+inM > 8*60) { statusClass = 'late'; statusText = 'Late'; completed--; late++; incomplete--; }
+            }
+        }
+        return `<div class="day ${statusClass}"><div class="day-number">${day.dayNum}</div><div>${statusText}</div></div>`;
+    }).join('');
+    const calendarGrid = document.getElementById('calendarGrid');
+    if (calendarGrid) calendarGrid.innerHTML = `<div class="calendar-header">Sun</div><div class="calendar-header">Mon</div><div class="calendar-header">Tue</div><div class="calendar-header">Wed</div><div class="calendar-header">Thu</div><div class="calendar-header">Fri</div><div class="calendar-header">Sat</div>` + calendarHTML;
+    document.getElementById('completedCount').innerText = completed;
+    document.getElementById('lateCountSummary').innerText = late;
+    document.getElementById('missingCountSummary').innerText = incomplete;
+    document.getElementById('leaveCountSummary').innerText = leave;
+    const detailsRows = daysArray.filter(d => d).map(day => {
+        const attRecord = empAttendance.find(a => a.date === day.date);
+        const isLeave = empLeaves.some(l => new Date(l.startDate) <= new Date(day.date) && new Date(l.endDate) >= new Date(day.date));
+        let status = '', badgeClass = '';
+        if (isLeave) { status = 'Leave'; badgeClass = 'leave'; }
+        else if (attRecord && attRecord.timeIn && attRecord.timeOut) { status = 'Completed'; badgeClass = 'completed'; }
+        else if (attRecord && attRecord.timeIn && !attRecord.timeOut) { status = 'Incomplete'; badgeClass = 'incomplete'; }
+        else { status = 'No record'; badgeClass = 'incomplete'; }
+        if (attRecord && attRecord.timeIn && !isLeave) {
+            const [inH,inM] = attRecord.timeIn.split(':').map(Number);
+            if (inH*60+inM > 8*60) { status = 'Late'; badgeClass = 'late'; }
+        }
+        return `<tr><td>${day.date}</td><td>${attRecord?.timeIn || '--'}</td><td>${attRecord?.timeOut || '--'}</td><td><span class="status-badge ${badgeClass}">${status}</span>NonNull</tr>`;
+    }).join('');
+    document.getElementById('attendanceDetails').innerHTML = detailsRows;
+}
 
-// ==================== RENDER NAVIGATION WITH COLLAPSIBLE EMPLOYEES SECTION ====================
+// ==================== CLOCK IN/OUT ====================
+function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:false }); }
+async function clockIn() {
+    if (SYSTEM_ADMIN_EMAILS.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
+    if (currentUserData?.status !== "active") { alert("Account inactive."); return; }
+    const today = new Date().toISOString().split('T')[0];
+    const time = getCurrentTime24();
+    if (allAttendance.find(a => a.userId === currentUser.uid && a.date === today)) { alert("Already clocked in today!"); return; }
+    const newAtt = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: currentUserData.department, date: today, timeIn: time, timeOut: null, status: "Present", createdAt: new Date().toISOString() };
+    const docRef = await db.collection('attendance').add(newAtt);
+    allAttendance.push({ id: docRef.id, ...newAtt });
+    alert(`Clocked in at ${time}`);
+    refreshMyAttendanceTab();
+    refreshDashboard();
+}
+async function clockOut() {
+    if (SYSTEM_ADMIN_EMAILS.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
+    if (currentUserData?.status !== "active") { alert("Account inactive."); return; }
+    const today = new Date().toISOString().split('T')[0];
+    const time = getCurrentTime24();
+    const record = allAttendance.find(a => a.userId === currentUser.uid && a.date === today);
+    if (!record || !record.timeIn) { alert("Clock in first!"); return; }
+    if (record.timeOut) { alert("Already clocked out!"); return; }
+    const timeInDate = new Date(`${today}T${record.timeIn}:00`);
+    const timeOutDate = new Date(`${today}T${time}:00`);
+    const hours = ((timeOutDate - timeInDate) / (1000*60*60)).toFixed(2);
+    await db.collection('attendance').doc(record.id).update({ timeOut: time, hoursWorked: hours });
+    record.timeOut = time; record.hoursWorked = hours;
+    alert(`Clocked out at ${time} | Hours: ${hours}`);
+    refreshMyAttendanceTab();
+    refreshDashboard();
+}
+function refreshMyAttendanceTab() {
+    const today = new Date().toISOString().split('T')[0];
+    const userAtt = allAttendance.filter(a => a.userId === currentUser?.uid).sort((a,b)=>b.date.localeCompare(a.date));
+    const todayRec = userAtt.find(a=>a.date===today);
+    document.getElementById('todayStatusIcon').innerHTML = todayRec?.timeIn ? '✅' : '⏰';
+    document.getElementById('todayStatusText').innerHTML = todayRec?.timeIn ? (todayRec.timeOut ? 'Completed' : 'Clocked In') : 'Not clocked in yet';
+    document.getElementById('todayTimeInfo').innerHTML = todayRec?.timeIn ? `In: ${todayRec.timeIn} | Out: ${todayRec.timeOut||'--'} | Hours: ${todayRec.hoursWorked||'--'}` : '';
+    const historyHtml = userAtt.map(a => `<tr class="border-t"><td class="p-3">${a.date}</td><td class="p-3">${a.timeIn||'--'}<tr><td class="p-3">${a.timeOut||'--'}</td><td class="p-3">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</tr>`).join('');
+    document.getElementById('attendanceHistoryList').innerHTML = historyHtml || '<tr><td colspan="5" class="p-4 text-center">No records</tr>';
+}
+
+// ==================== ANNOUNCEMENTS ====================
+async function loadAnnouncements() {
+    const snap = await db.collection('announcements').get();
+    allAnnouncements = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    if (allAnnouncements.length === 0) {
+        const defaults = [{ title:"System Live", content:"EQUIPRIME HR is now operational", color:"blue", expiresAt:new Date(Date.now()+24*60*60*1000).toISOString() },
+            { title:"Biometrics Ready", content:"ZKTeco integration available", color:"green", expiresAt:new Date(Date.now()+24*60*60*1000).toISOString() }];
+        for (const ann of defaults) { const ref = await db.collection('announcements').add(ann); allAnnouncements.push({ id: ref.id, ...ann }); }
+    }
+    renderAnnouncements();
+}
+function renderAnnouncements() {
+    const cont = document.getElementById('announcementsList');
+    if (!cont) return;
+    const canEdit = fullPrivilegedEmails.includes(currentUser?.email);
+    const addBtn = document.getElementById('announcementAddButton');
+    if (addBtn) addBtn.innerHTML = canEdit ? `<button onclick="addNewAnnouncement()" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-1"><i data-feather="plus"></i> Add Announcement</button>` : '';
+    cont.innerHTML = allAnnouncements.map(a => `<div class="announcement-item p-4 rounded-xl ${a.color==='blue'?'bg-blue-50 border-l-4 border-blue-500':'bg-green-50 border-l-4 border-green-500'}"><div class="flex justify-between"><div><h4 class="font-bold">${escapeHtml(a.title)}</h4><p class="text-sm">${escapeHtml(a.content)}</p><p class="text-xs text-slate-400">Expires: ${new Date(a.expiresAt).toLocaleDateString()}</p></div>${canEdit ? `<button onclick="editAnnouncement('${a.id}','${escapeHtml(a.title)}','${escapeHtml(a.content)}')" class="text-blue-600 text-sm">Edit</button>` : ''}</div></div>`).join('');
+    feather.replace();
+}
+function escapeHtml(str) { const d=document.createElement('div'); d.textContent=str; return d.innerHTML; }
+function editAnnouncement(id,title,content) { document.getElementById('announcementId').value = id; document.getElementById('announcementTitle').value = title; document.getElementById('announcementContent').value = content; document.getElementById('announcementModalTitle').innerText = 'Edit Announcement'; document.getElementById('deleteAnnouncementBtn').style.display = 'block'; openModal('announcementModal'); }
+function addNewAnnouncement() { document.getElementById('announcementId').value = ''; document.getElementById('announcementTitle').value = ''; document.getElementById('announcementContent').value = ''; document.getElementById('announcementModalTitle').innerText = 'Add Announcement'; document.getElementById('deleteAnnouncementBtn').style.display = 'none'; openModal('announcementModal'); }
+async function saveAnnouncement() {
+    const id = document.getElementById('announcementId').value, title = document.getElementById('announcementTitle').value, content = document.getElementById('announcementContent').value, expiresAt = new Date(Date.now()+24*60*60*1000).toISOString();
+    if (!title||!content) { alert("Fill all fields"); return; }
+    if (id) { await db.collection('announcements').doc(id).update({ title, content, expiresAt }); const idx = allAnnouncements.findIndex(a=>a.id===id); if(idx!==-1) allAnnouncements[idx]={...allAnnouncements[idx], title, content, expiresAt }; } else { const ref = await db.collection('announcements').add({ title, content, color:'blue', expiresAt }); allAnnouncements.push({ id: ref.id, title, content, color:'blue', expiresAt }); }
+    closeModal('announcementModal'); renderAnnouncements(); alert("Announcement saved");
+}
+async function deleteAnnouncement() { const id = document.getElementById('announcementId').value; if (!id) return; if (confirm("Delete announcement?")) { await db.collection('announcements').doc(id).delete(); allAnnouncements = allAnnouncements.filter(a=>a.id!==id); closeModal('announcementModal'); renderAnnouncements(); } }
+
+// ==================== GUARD SCHEDULE ====================
+async function assignGuardWeeklySchedule() {
+    const empId = document.getElementById('guardEmployee').value;
+    if (!empId) { alert("Select a guard."); return; }
+    const employee = allEmployees.find(e => e.id === empId);
+    if (!employee) return;
+    const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+    const schedule = {};
+    for (let day of days) {
+        const cb = document.getElementById(`day${day}`);
+        const shift = document.getElementById(`shift${day}`).value;
+        if (cb.checked && shift) schedule[day] = shift;
+        else if (!cb.checked) schedule[day] = "Off/Rest";
+        else schedule[day] = shift;
+    }
+    const newSchedule = { employeeId: empId, guardName: employee.name, schedule, createdAt: new Date().toISOString() };
+    const docRef = await db.collection('guardWeeklySchedules').add(newSchedule);
+    guardWeeklySchedules.push({ id: docRef.id, ...newSchedule });
+    renderGuardSchedules();
+    alert("Schedule assigned.");
+    days.forEach(day => document.getElementById(`day${day}`).checked = false);
+    document.getElementById('guardEmployee').value = '';
+}
+function renderGuardSchedules() {
+    const cont = document.getElementById('guardSchedulesList');
+    if (cont) cont.innerHTML = guardWeeklySchedules.map(s => `<div class="bg-slate-50 dark:bg-slate-700 p-3 rounded mb-2"><b class="dark:text-white">${s.guardName}</b><br class="dark:text-white"><span class="dark:text-white">${Object.entries(s.schedule).map(([d,sh])=>`${d}: ${sh}`).join(' | ')}</span><br><button onclick="deleteGuardSchedule('${s.id}')" class="text-red-500 text-sm">Delete</button></div>`).join('') || '<div class="dark:text-white">No schedules</div>';
+}
+async function deleteGuardSchedule(id) { if (confirm("Delete this schedule?")) { await db.collection('guardWeeklySchedules').doc(id).delete(); guardWeeklySchedules = guardWeeklySchedules.filter(s => s.id !== id); renderGuardSchedules(); } }
+
+// ==================== REQUESTS & APPROVALS ====================
+async function submitRequest() {
+    const type = document.getElementById('requestTypeValue').value, start = document.getElementById('reqStartDate').value, end = document.getElementById('reqEndDate').value, reason = document.getElementById('reqReason').value;
+    if (!start || !end) { alert("Select dates"); return; }
+    if (new Date(start) > new Date(end)) { alert("End date must be after start date"); return; }
+    const dept = currentUserData.department;
+    const direct = await getDirectApproverForSubmitter(currentUser.email, currentUserData.role, dept);
+    if (direct) {
+        const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type, startDate: start, endDate: end, reason, status: "pending_final", approverEmail: direct.email, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
+        const ref = await db.collection('requests').add(req);
+        allRequests.push({ id: ref.id, ...req });
+        closeModal('requestModalOverlay');
+        refreshDashboard();
+        alert(`Request submitted directly to ${direct.email}`);
+        return;
+    }
+    const secondary = await getApproverForDepartment(dept, 'secondary'), final = await getApproverForDepartment(dept, 'final');
+    let status, approverEmail;
+    if (secondary.email !== final.email && !secondary.isFallback) { status = "pending_secondary"; approverEmail = secondary.email; } else { status = "pending_final"; approverEmail = final.email; }
+    const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type, startDate: start, endDate: end, reason, status, approverEmail, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
+    const ref = await db.collection('requests').add(req);
+    allRequests.push({ id: ref.id, ...req });
+    closeModal('requestModalOverlay');
+    refreshDashboard();
+    alert(`Request submitted to ${approverEmail}`);
+}
+async function submitOffsets() {
+    const date = document.getElementById('offsetsDate').value, hours = document.getElementById('offsetsHours').value, reason = document.getElementById('offsetsReasonText').value;
+    if (!date || !hours) { alert("Fill required fields"); return; }
+    const dept = currentUserData.department;
+    const direct = await getDirectApproverForSubmitter(currentUser.email, currentUserData.role, dept);
+    if (direct) {
+        const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason, status: "pending_final", approverEmail: direct.email, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
+        const ref = await db.collection('requests').add(req);
+        allRequests.push({ id: ref.id, ...req });
+        closeModal('offsetsModalOverlay');
+        refreshDashboard();
+        alert(`Offset request submitted to ${direct.email}`);
+        return;
+    }
+    const secondary = await getApproverForDepartment(dept, 'secondary'), final = await getApproverForDepartment(dept, 'final');
+    const approverEmail = (secondary.email !== final.email && !secondary.isFallback) ? secondary.email : final.email;
+    const status = (secondary.email !== final.email && !secondary.isFallback) ? "pending_secondary" : "pending_final";
+    const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason, status, approverEmail, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
+    const ref = await db.collection('requests').add(req);
+    allRequests.push({ id: ref.id, ...req });
+    closeModal('offsetsModalOverlay');
+    refreshDashboard();
+    alert("Offset request submitted");
+}
+async function approveSecondary(id) { const r = allRequests.find(r => r.id === id); if (r && r.status === "pending_secondary" && r.approverEmail === currentUser.email) { const final = await getApproverForDepartment(r.userDepartment, 'final'); await db.collection('requests').doc(id).update({ status: "pending_final", approverEmail: final.email, secondaryApproved: true }); r.status = "pending_final"; r.approverEmail = final.email; r.secondaryApproved = true; refreshDashboard(); alert(`Request forwarded to final approver (${final.email}).`); } else alert("Not authorized."); }
+async function approveFinal(id) { const r = allRequests.find(r => r.id === id); if (r && r.status === "pending_final" && r.approverEmail === currentUser.email) { await db.collection('requests').doc(id).update({ status: "approved", finalApproved: true }); r.status = "approved"; r.finalApproved = true; refreshDashboard(); alert("Request fully approved."); } else alert("Not authorized."); }
+async function rejectRequest(id) { const r = allRequests.find(r => r.id === id); if (r && (r.status === "pending_secondary" || r.status === "pending_final")) { await db.collection('requests').doc(id).update({ status: "rejected" }); r.status = "rejected"; refreshDashboard(); alert("Request rejected."); } else alert("Cannot reject."); }
+
+// ==================== EMPLOYEE MANAGEMENT ====================
+async function addEmployee() {
+    const name = document.getElementById('newEmpName').value, email = document.getElementById('newEmpEmail').value, dept = document.getElementById('newEmpDept').value, role = document.getElementById('newEmpRole').value, pin = document.getElementById('newEmpPin').value, password = document.getElementById('newEmpPass').value;
+    if (!name || !email || !dept || !pin || !password) { alert("Please fill all fields"); return; }
+    try {
+        const userCred = await auth.createUserWithEmailAndPassword(email, password);
+        const uid = userCred.user.uid;
+        const empData = { name, email, dept, role, status: "active", pin, leaveBalance: 15, phone: "N/A", createdAt: new Date().toISOString() };
+        await db.collection('employees').doc(uid).set(empData);
+        await db.collection('users').doc(uid).set({ uid, name, email, role, department: dept, leaveBalance: 15, status: "active", phone: "N/A" });
+        allEmployees.push({ id: uid, ...empData });
+        await grantApproverPermissions(uid, role, dept);
+        closeModal('addEmployeeModal');
+        refreshDashboard();
+        renderEmployeeDirectory();
+        alert(`Employee ${name} added.`);
+        document.getElementById('newEmpName').value = ''; document.getElementById('newEmpEmail').value = ''; document.getElementById('newEmpDept').value = ''; document.getElementById('newEmpPin').value = ''; document.getElementById('newEmpPass').value = '';
+    } catch (err) { alert("Error: " + err.message); }
+}
+function openEditEmployeeModal(emp) {
+    if (!editAuthorizedEmails.includes(currentUser?.email)) { alert("Only moderators can edit."); return; }
+    if (SYSTEM_ADMIN_EMAILS.includes(emp.email) && currentUser?.email !== resetAuthorizedEmail) { alert("System admin accounts cannot be edited by non‑mod.rom users."); return; }
+    document.getElementById('editEmpId').value = emp.id; document.getElementById('editEmpName').value = emp.name; document.getElementById('editEmpEmail').value = emp.email || ''; document.getElementById('editEmpPhone').value = emp.phone || ''; document.getElementById('editEmpDept').value = emp.dept; document.getElementById('editEmpRole').value = emp.role; document.getElementById('editEmpStatus').value = emp.status || 'active'; document.getElementById('editLeaveBalance').value = emp.leaveBalance || 15; document.getElementById('editEmpPin').value = emp.pin || ''; document.getElementById('editEmpPassword').value = '';
+    const statusSelect = document.getElementById('editEmpStatus');
+    if (SYSTEM_ADMIN_EMAILS.includes(emp.email)) { statusSelect.disabled = true; statusSelect.value = 'active'; } else { statusSelect.disabled = false; }
+    openModal('editEmployeeModal');
+}
+async function saveEmployeeEdit() {
+    const id = document.getElementById('editEmpId').value, name = document.getElementById('editEmpName').value, email = document.getElementById('editEmpEmail').value, phone = document.getElementById('editEmpPhone').value, dept = document.getElementById('editEmpDept').value, role = document.getElementById('editEmpRole').value, newStatus = document.getElementById('editEmpStatus').value, leaveBalance = parseInt(document.getElementById('editLeaveBalance').value), pin = document.getElementById('editEmpPin').value, newPassword = document.getElementById('editEmpPassword').value;
+    if (SYSTEM_ADMIN_EMAILS.includes(email) && newStatus !== 'active') { alert("System admin accounts cannot be deactivated."); return; }
+    if (!name || !dept || !role) { alert("Fill required fields"); return; }
+    const oldEmp = allEmployees.find(e => e.id === id), oldStatus = oldEmp ? oldEmp.status : 'active';
+    const empRef = db.collection('employees').doc(id);
+    await empRef.update({ name, email, dept, role, status: newStatus, leaveBalance, pin, phone });
+    const idx = allEmployees.findIndex(e => e.id === id); if (idx !== -1) allEmployees[idx] = { ...allEmployees[idx], name, email, dept, role, status: newStatus, leaveBalance, pin, phone };
+    if (oldStatus !== newStatus && !SYSTEM_ADMIN_EMAILS.includes(email)) {
+        if (newStatus === 'active') await grantApproverPermissions(id, role, dept);
+        else await revokeApproverPermissions(id, dept);
+    }
+    const userQuery = await db.collection('users').where('email', '==', email).get(); userQuery.forEach(doc => db.collection('users').doc(doc.id).update({ name, role, department: dept, status: newStatus, phone }));
+    if (newPassword && newPassword.trim() !== "") { try { await auth.sendPasswordResetEmail(email); alert(`Password reset email sent to ${email}.`); } catch (err) { alert("Could not send reset email."); } }
+    closeModal('editEmployeeModal'); refreshDashboard(); renderEmployeeDirectory(); alert("Employee updated.");
+}
+async function deleteEmployee(id) { if (confirm("Delete employee?")) { const emp = allEmployees.find(e => e.id === id); if (emp && !SYSTEM_ADMIN_EMAILS.includes(emp.email)) { await revokeApproverPermissions(id, emp.dept); await db.collection('employees').doc(id).delete(); allEmployees = allEmployees.filter(e => e.id !== id); refreshDashboard(); renderEmployeeDirectory(); alert("Deleted."); } else { alert("Cannot delete system admin."); } } }
+function editLeaveBalance(empId, empName, currentBalance) { document.getElementById('editEmployeeId').value = empId; document.getElementById('editEmployeeName').value = empName; document.getElementById('editLeaveBalanceSimple').value = currentBalance; openModal('editLeaveModal'); }
+async function saveLeaveBalance() { const empId = document.getElementById('editEmployeeId').value, newBal = parseInt(document.getElementById('editLeaveBalanceSimple').value); if (isNaN(newBal)) { alert("Enter valid number"); return; } await db.collection('employees').doc(empId).update({ leaveBalance: newBal }); const idx = allEmployees.findIndex(e => e.id === empId); if (idx !== -1) allEmployees[idx].leaveBalance = newBal; closeModal('editLeaveModal'); refreshDashboard(); renderEmployeeDirectory(); alert(`Leave balance updated to ${newBal} days`); }
+
+// ==================== PAYSLIP ====================
+function computeMonthlyDeductions(monthlySalary) {
+    const sss = Math.min(monthlySalary,30000)*0.045, philHealth = Math.min(monthlySalary,100000)*0.025, pagIbig = monthlySalary>10000 ? 200 : 100;
+    let taxableIncome = monthlySalary - (sss+philHealth+pagIbig), tax = 0;
+    if (taxableIncome > 20833) { if (taxableIncome <= 33333) tax = (taxableIncome-20833)*0.15; else if (taxableIncome <= 66667) tax = (33333-20833)*0.15 + (taxableIncome-33333)*0.20; else if (taxableIncome <= 166667) tax = (33333-20833)*0.15 + (66667-33333)*0.20 + (taxableIncome-66667)*0.25; else if (taxableIncome <= 666667) tax = (33333-20833)*0.15 + (66667-33333)*0.20 + (166667-66667)*0.25 + (taxableIncome-166667)*0.30; else tax = (33333-20833)*0.15 + (66667-33333)*0.20 + (166667-66667)*0.25 + (666667-166667)*0.30 + (taxableIncome-666667)*0.35; }
+    return { sss: Math.round(sss), philHealth: Math.round(philHealth), pagIbig, tax: Math.round(tax) };
+}
+async function generatePayslipAuto() {
+    if (!currentUser || !fullPrivilegedEmails.includes(currentUser.email)) { alert("Not authorized."); return; }
+    const empId = document.getElementById('payslipEmployee').value, month = document.getElementById('payslipMonth').value, cutOff = document.getElementById('cutOffPeriod').value, dailyRate = parseFloat(document.getElementById('dailyRate').value), daysPresent = parseInt(document.getElementById('daysPresent').value), overtimePay = parseFloat(document.getElementById('overtimePay').value) || 0, otherEarnings = parseFloat(document.getElementById('otherEarnings').value) || 0, otherDeduction = parseFloat(document.getElementById('otherDeduction').value) || 0;
+    if (!empId || !month || isNaN(daysPresent) || daysPresent <= 0) { alert("Fill required fields"); return; }
+    const employee = allEmployees.find(e => e.id === empId); if (!employee) return;
+    const periodSalary = dailyRate * daysPresent, monthlySalary = periodSalary * 2, ded = computeMonthlyDeductions(monthlySalary), halfSss = Math.round(ded.sss/2), halfPhil = Math.round(ded.philHealth/2), halfPag = Math.round(ded.pagIbig/2), halfTax = Math.round(ded.tax/2), totalEarnings = periodSalary + overtimePay + otherEarnings, totalDeductions = halfSss + halfPhil + halfPag + halfTax + otherDeduction, netPay = totalEarnings - totalDeductions, cutOffLabel = cutOff === 'first' ? '1st cut-off (1st-15th)' : '2nd cut-off (16th-31st)';
+    const newPayslip = { employeeId: empId, employeeName: employee.name, employeeEmail: employee.email, month, cutOff: cutOffLabel, dailyRate, daysPresent, basicSalaryPeriod: periodSalary, overtimePay, otherEarnings, sss: halfSss, philHealth: halfPhil, pagIbig: halfPag, withholdingTax: halfTax, otherDeduction, totalDeductions, netPay, date: new Date().toLocaleDateString() };
+    const docRef = await db.collection('payslips').add(newPayslip);
+    allPayslips.push({ id: docRef.id, ...newPayslip });
+    refreshHrPayslip();
+    const content = `<div><strong>Name:</strong> ${employee.name}</div><div><strong>Period:</strong> ${month} (${cutOffLabel})</div><div><strong>Basic Pay:</strong> ₱${periodSalary}</div><div><strong>Overtime:</strong> ₱${overtimePay}</div><div><strong>Other Earnings:</strong> ₱${otherEarnings}</div><div><strong>SSS:</strong> ₱${halfSss}</div><div><strong>PhilHealth:</strong> ₱${halfPhil}</div><div><strong>Pag-IBIG:</strong> ₱${halfPag}</div><div><strong>Withholding Tax:</strong> ₱${halfTax}</div><div><strong>Other Deductions:</strong> ₱${otherDeduction}</div><div class="net-green-bold mt-2">NET PAY: ₱${netPay}</div><div class="signature-line mt-4"><div>Certified True Copy</div><div>Signature</div></div>`;
+    document.getElementById('payslipContent').innerHTML = content;
+    openModal('payslipModal');
+}
+function refreshHrPayslip() { const sel = document.getElementById('payslipEmployee'); if (sel) sel.innerHTML = '<option value="">Select Employee</option>' + allEmployees.filter(e => !isSystemAdmin(e.email)).map(e => `<option value="${e.id}">${e.name} - ${e.dept}</option>`).join(''); const hist = document.getElementById('payslipHistory'); if (hist) hist.innerHTML = allPayslips.slice().reverse().map(p => `<div class="bg-slate-50 dark:bg-slate-700 p-3 rounded mb-2"><b class="dark:text-white">${p.employeeName}</b> - ${p.month} (${p.cutOff})<br><span class="net-green-bold">Net: ₱${p.netPay}</span></div>`).join('') || '<div class="dark:text-white">No payslips</div>'; }
+function refreshEmployeePayslip() { const my = allPayslips.filter(p => p.employeeEmail === currentUser?.email); document.getElementById('employeePayslipList').innerHTML = my.map(p => `<div class="bg-white dark:bg-slate-800 p-3 rounded shadow dark:text-white">${p.month} (${p.cutOff})<br><span class="net-green-bold">Net: ₱${p.netPay}</span></div>`).join('') || '<div class="dark:text-white">No payslips</div>'; }
+
+// ==================== HELPDESK ====================
+async function submitHelpdeskRequest() {
+    const type = document.getElementById('helpdeskType').value;
+    const message = document.getElementById('helpdeskMessage').value;
+    if (!message) { alert("Please enter your request details."); return; }
+    const request = {
+        userId: currentUser.uid,
+        userName: currentUserData.name,
+        userEmail: currentUser.email,
+        type: type,
+        message: message,
+        status: "pending",
+        createdAt: new Date().toISOString()
+    };
+    const docRef = await db.collection('employeeSupportRequests').add(request);
+    allHelpdeskRequests.push({ id: docRef.id, ...request });
+    document.getElementById('helpdeskMessage').value = '';
+    refreshHelpdesk();
+    alert("Your request has been submitted to HR/Moderators.");
+}
+async function refreshHelpdesk() {
+    if (!currentUser) return;
+    const myRequests = allHelpdeskRequests.filter(r => r.userId === currentUser.uid);
+    const myContainer = document.getElementById('myHelpdeskRequests');
+    if (myContainer) {
+        myContainer.innerHTML = myRequests.map(r => `
+            <div class="helpdesk-card">
+                <div class="flex justify-between items-start">
+                    <div><strong class="dark:text-white">${r.type}</strong><br><span class="text-sm text-slate-500 dark:text-slate-400">${new Date(r.createdAt).toLocaleString()}</span></div>
+                    <span class="status-${r.status === 'resolved' ? 'resolved' : (r.status === 'in-progress' ? 'inprogress' : 'pending')}">${r.status === 'resolved' ? '✓ Resolved' : (r.status === 'in-progress' ? '⏳ In Progress' : '⏱ Pending')}</span>
+                </div>
+                <p class="mt-2 dark:text-white">${escapeHtml(r.message)}</p>
+                ${r.response ? `<div class="mt-2 text-sm bg-gray-50 dark:bg-slate-700 p-2 rounded"><strong>Response:</strong> ${escapeHtml(r.response)}</div>` : ''}
+            </div>
+        `).join('') || '<div class="text-center dark:text-white">No requests submitted yet.</div>';
+    }
+    if (fullPrivilegedEmails.includes(currentUser.email)) {
+        const adminContainer = document.getElementById('adminHelpdeskList');
+        if (adminContainer) {
+            const pendingReqs = allHelpdeskRequests.filter(r => r.status !== 'resolved');
+            adminContainer.innerHTML = pendingReqs.map(r => `
+                <div class="helpdesk-card">
+                    <div class="flex justify-between items-start flex-wrap gap-2">
+                        <div><strong class="dark:text-white">${r.userName}</strong> (${r.userEmail})<br><strong>${r.type}</strong><br><span class="text-sm text-slate-500 dark:text-slate-400">${new Date(r.createdAt).toLocaleString()}</span></div>
+                        <select id="statusSelect_${r.id}" class="p-2 border rounded-lg text-sm dark:bg-slate-700 dark:text-white">
+                            <option value="pending" ${r.status === 'pending' ? 'selected' : ''}>Pending</option>
+                            <option value="in-progress" ${r.status === 'in-progress' ? 'selected' : ''}>In Progress</option>
+                            <option value="resolved" ${r.status === 'resolved' ? 'selected' : ''}>Resolved</option>
+                        </select>
+                    </div>
+                    <p class="mt-2 dark:text-white">${escapeHtml(r.message)}</p>
+                    <div class="mt-3 flex gap-2">
+                        <textarea id="response_${r.id}" rows="2" class="flex-1 p-2 border rounded-lg dark:bg-slate-700 dark:text-white" placeholder="Response to employee...">${r.response || ''}</textarea>
+                        <button onclick="updateHelpdeskRequest('${r.id}')" class="bg-blue-600 text-white px-4 py-2 rounded-lg">Update</button>
+                    </div>
+                </div>
+            `).join('') || '<div class="text-center dark:text-white">No pending requests.</div>';
+        }
+    }
+}
+async function updateHelpdeskRequest(requestId) {
+    const statusSelect = document.getElementById(`statusSelect_${requestId}`);
+    const responseTextarea = document.getElementById(`response_${requestId}`);
+    if (!statusSelect || !responseTextarea) return;
+    const newStatus = statusSelect.value;
+    const response = responseTextarea.value;
+    await db.collection('employeeSupportRequests').doc(requestId).update({ status: newStatus, response: response, updatedAt: new Date().toISOString() });
+    const idx = allHelpdeskRequests.findIndex(r => r.id === requestId);
+    if (idx !== -1) { allHelpdeskRequests[idx].status = newStatus; allHelpdeskRequests[idx].response = response; }
+    refreshHelpdesk();
+    alert("Request updated.");
+}
+
+// ==================== DASHBOARD & UI ====================
+function refreshDashboard() {
+    const filtered = getFilteredEmployees();
+    document.getElementById('totalEmployees').innerText = filtered.length;
+    const today = new Date().toISOString().split('T')[0];
+    let deptAtt = 0;
+    if (currentFilter.department !== 'all') { const names = filtered.map(e=>e.name); deptAtt = allAttendance.filter(a=>a.date===today && names.includes(a.userName)).length; } else deptAtt = allAttendance.filter(a=>a.date===today).length;
+    document.getElementById('deptAttendance').innerText = deptAtt;
+    let pendingCount = 0;
+    if (currentUserRole === 'approver') pendingCount = allRequests.filter(r => r.approverEmail === currentUser?.email && r.status === "pending_secondary").length;
+    else if (currentUser.email === 'hrd@equiprime.ph') pendingCount = allRequests.filter(r => r.status === "pending_final").length;
+    else if (fullPrivilegedEmails.includes(currentUser.email)) pendingCount = allRequests.filter(r => r.approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status === "pending_final")).length;
+    document.getElementById('pendingApprovals').innerText = pendingCount;
+    document.getElementById('myLeaveBalance').innerText = currentUserData?.leaveBalance || 15;
+    const myReqs = allRequests.filter(r=>r.userId === currentUser.uid).slice(0,5);
+    document.getElementById('myRequestsList').innerHTML = myReqs.map(r=>`<div class="flex justify-between p-3 bg-slate-50 dark:bg-slate-700 rounded"><div><b class="dark:text-white">${r.type}</b><br><span class="dark:text-white">${r.startDate} - ${r.endDate}</span></div><span class="text-xs px-2 py-1 rounded-full ${r.status==='approved'?'bg-green-100':r.status==='rejected'?'bg-red-100':'bg-yellow-100'}">${r.status}</span></div>`).join('') || '<div class="text-center dark:text-white">No requests</div>';
+    if (fullPrivilegedEmails.includes(currentUser?.email)) {
+        const regularEmps = allEmployees.filter(e => !isSystemAdmin(e.email));
+        document.getElementById('hrEmployeesList').innerHTML = regularEmps.map(e => { const canEdit = editAuthorizedEmails.includes(currentUser?.email); return `<div class="flex justify-between items-center p-3 border-b dark:border-slate-600"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-600 flex items-center justify-center text-xs font-bold dark:text-white">${e.name.split(' ').map(n=>n[0]).join('')}</div><div><p class="font-semibold dark:text-white">${e.name}</p><p class="text-sm text-slate-500 dark:text-slate-400">${e.dept} - ${e.role}</p><p class="text-xs dark:text-white">Leave balance: <span class="editable-leave text-blue-600 cursor-pointer" onclick="editLeaveBalance('${e.id}','${e.name}',${e.leaveBalance||0})">${e.leaveBalance||0} days</span></p><p class="text-xs dark:text-white">Status: ${e.status || 'active'}</p></div></div><div class="flex gap-2">${canEdit ? `<button onclick="openEditEmployeeModal({id:'${e.id}',name:'${e.name}',email:'${e.email||''}',dept:'${e.dept}',role:'${e.role}',status:'${e.status||'active'}',leaveBalance:${e.leaveBalance||0},pin:'${e.pin||''}'})" class="text-blue-600 text-sm">Edit</button>` : ''}<button onclick="deleteEmployee('${e.id}')" class="text-red-500 text-sm">Delete</button></div></div>`; }).join('');
+        document.getElementById('allRequestsList').innerHTML = allRequests.map(r => `<div class="bg-white dark:bg-slate-700 p-3 rounded shadow mb-2"><b class="dark:text-white">${r.userName}</b> (${r.userDepartment})<br><span class="dark:text-white">${r.type} | ${r.startDate} - ${r.endDate}<br>Status: ${r.status} | Approver: ${r.approverEmail}</span></div>`).join('');
+    }
+    const pendingContainer = document.getElementById('pendingApprovalsList');
+    if (pendingContainer) {
+        let pendingReqs = [];
+        if (currentUserRole === 'approver') pendingReqs = allRequests.filter(r => r.approverEmail === currentUser?.email && r.status === "pending_secondary");
+        else if (currentUser.email === 'hrd@equiprime.ph') pendingReqs = allRequests.filter(r => r.status === "pending_final");
+        else if (fullPrivilegedEmails.includes(currentUser.email)) pendingReqs = allRequests.filter(r => r.approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status === "pending_final"));
+        pendingContainer.innerHTML = pendingReqs.map(r => { const approveFn = (r.status === "pending_final") ? "approveFinal" : "approveSecondary"; return `<div class="bg-white dark:bg-slate-700 p-3 rounded shadow mb-2"><b class="dark:text-white">${r.userName}</b> - ${r.type}<br><span class="dark:text-white">${r.startDate} to ${r.endDate}</span><br><button onclick="${approveFn}('${r.id}')" class="bg-green-600 text-white px-3 py-1 rounded text-sm">Approve</button> <button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-3 py-1 rounded text-sm">Reject</button></div>`; }).join('');
+    }
+    // Update login status lists
+    const filteredEmployeeIds = new Set(filtered.map(e => e.id));
+    const loggedInEmps = allAttendance.filter(a => a.date === today && a.timeIn && filteredEmployeeIds.has(a.userId));
+    const missedEmps = filtered.filter(e => !allAttendance.some(a => a.date === today && a.userId === e.id));
+    const lateEmps = loggedInEmps.filter(a => {
+        const [inH,inM] = a.timeIn.split(':').map(Number);
+        return (inH*60+inM) > (8*60);
+    });
+    const onLeaveEmps = filtered.filter(e => {
+        return allRequests.some(r => r.userId === e.id && r.status === 'approved' && new Date(r.startDate) <= new Date(today) && new Date(r.endDate) >= new Date(today) && (r.type === 'Sick Leave' || r.type === 'Vacation Leave' || r.type === 'Emergency Leave' || r.type === 'Official Business'));
+    });
+    document.getElementById('loggedInCount').innerText = `(${loggedInEmps.length})`;
+    document.getElementById('loggedInList').innerHTML = loggedInEmps.map(a => `<div class="text-sm">${a.userName} - ${a.timeIn}</div>`).join('');
+    document.getElementById('missedCount').innerText = `(${missedEmps.length})`;
+    document.getElementById('missedList').innerHTML = missedEmps.map(e => `<div class="text-sm">${e.name}</div>`).join('');
+    document.getElementById('lateCountDashboard').innerText = `(${lateEmps.length})`;
+    document.getElementById('lateList').innerHTML = lateEmps.map(a => `<div class="text-sm">${a.userName} - ${a.timeIn}</div>`).join('');
+    document.getElementById('onLeaveCount').innerText = `(${onLeaveEmps.length})`;
+    document.getElementById('onLeaveList').innerHTML = onLeaveEmps.map(e => `<div class="text-sm">${e.name}</div>`).join('');
+    feather.replace();
+}
+function updateLastUpdatedTime() { const now = new Date().toLocaleString(); ['desktopLastUpdatedTime', 'mobileLastUpdatedTime'].forEach(id => { if(document.getElementById(id)) document.getElementById(id).innerText = now; }); }
+
+function toggleEmployeesSubmenu() {
+    const submenu = document.getElementById('employeesSubmenu');
+    const chevron = document.getElementById('employeesChevron');
+    if (submenu) {
+        submenu.classList.toggle('hidden');
+        if (chevron) chevron.style.transform = submenu.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+}
 function renderNavigation() {
     const isFull = fullPrivilegedEmails.includes(currentUser?.email);
-    // Build main navigation with collapsible Employees section
     let html = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="home"></i> Dashboard</button>
                 <div class="relative">
                     <button onclick="toggleEmployeesSubmenu()" class="tab-inactive w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl"><span class="flex items-center gap-3"><i data-feather="users"></i> Employees</span><i data-feather="chevron-down" id="employeesChevron" class="w-4 h-4 transition-transform"></i></button>
@@ -462,19 +943,9 @@ function renderNavigation() {
     document.getElementById('desktopNavMenu').innerHTML = html;
     document.getElementById('mobileNavMenu').innerHTML = html;
     feather.replace();
-    // Ensure submenu is closed initially
     const submenu = document.getElementById('employeesSubmenu');
     if (submenu) submenu.classList.add('hidden');
 }
-function toggleEmployeesSubmenu() {
-    const submenu = document.getElementById('employeesSubmenu');
-    const chevron = document.getElementById('employeesChevron');
-    if (submenu) {
-        submenu.classList.toggle('hidden');
-        if (chevron) chevron.style.transform = submenu.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
-    }
-}
-// Update switchTab to handle new tabs
 function switchTab(tabName) {
     const allowed = ['dashboard','my-attendance','my-requests','payslip','employee-directory','create-employee'];
     if (fullPrivilegedEmails.includes(currentUser?.email)) allowed.push('hr-requests','attendance-summary','approvals','hr-guard-schedule','hr-payslip','admin-helpdesk','hr-settings');
@@ -494,23 +965,26 @@ function switchTab(tabName) {
     if (tabName === 'employee-directory') { renderEmployeeDirectory(); document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString(); }
     closeMobileSidebar();
 }
-// Add event listeners for search and filters after loading
-function attachDirectoryEventListeners() {
-    const searchInput = document.getElementById('empSearchInput');
-    const sortSelect = document.getElementById('sortBySelect');
-    const designationSelect = document.getElementById('designationFilter');
-    if (searchInput) searchInput.addEventListener('input', () => renderEmployeeDirectory());
-    if (sortSelect) sortSelect.addEventListener('change', () => renderEmployeeDirectory());
-    if (designationSelect) designationSelect.addEventListener('change', () => renderEmployeeDirectory());
+function applyFilters() {
+    const deptFilter = document.getElementById('desktopFilterDepartment')?.value || document.getElementById('mobileFilterDepartment')?.value || 'all';
+    const statusFilter = document.getElementById('desktopFilterStatus')?.value || document.getElementById('mobileFilterStatus')?.value || 'all';
+    const leaveFilter = document.getElementById('desktopFilterLeaveType')?.value || document.getElementById('mobileFilterLeaveType')?.value || 'all';
+    currentFilter = { department: deptFilter, status: statusFilter, leaveType: leaveFilter };
+    refreshDashboard();
 }
-// Override loadAllData to also call renderEmployeeDirectory and attach listeners
-const originalLoadAllData = loadAllData;
-loadAllData = async function() {
-    await originalLoadAllData();
-    renderEmployeeDirectory();
-    attachDirectoryEventListeners();
-    if (document.getElementById('currentDateDisplay')) document.getElementById('currentDateDisplay').innerText = new Date().toLocaleDateString();
-};
+function openModal(id) { document.getElementById(id).classList.add('active'); }
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+function openNewRequestMenu() { openModal('newRequestMenuOverlay'); }
+function openLeaveModal() { closeModal('newRequestMenuOverlay'); openModal('leaveModalOverlay'); }
+function openOffsetsModal() { closeModal('newRequestMenuOverlay'); openModal('offsetsModalOverlay'); }
+function showAddEmployeeModal() { openModal('addEmployeeModal'); }
+function openRequestModal(type) { closeModal('newRequestMenuOverlay'); document.getElementById('requestModalTitle').innerHTML=`Submit ${type}`; document.getElementById('requestTypeValue').value=type; document.getElementById('reqStartDate').value=''; document.getElementById('reqEndDate').value=''; document.getElementById('reqReason').value=''; openModal('requestModalOverlay'); }
+function selectLeaveType(type) { closeModal('leaveModalOverlay'); openRequestModal(type); }
+function toggleNightMode() { document.body.classList.toggle('dark'); localStorage.setItem('nightMode', document.body.classList.contains('dark') ? 'enabled' : 'disabled'); feather.replace(); }
+function openMobileSidebar() { document.getElementById('mobileSidebar').classList.add('open'); document.getElementById('overlay').classList.add('active'); document.body.classList.add('no-scroll'); }
+function closeMobileSidebar() { document.getElementById('mobileSidebar').classList.remove('open'); document.getElementById('overlay').classList.remove('active'); document.body.classList.remove('no-scroll'); }
+function saveSettings() { localStorage.setItem('device_ip', document.getElementById('deviceIp').value); alert('Settings saved'); }
+window.resetAllSystemData = async function() { if (currentUser?.email !== resetAuthorizedEmail) { alert("Only mod.rom@equiprime.ph can reset."); return; } const pin = prompt("Enter reset PIN:"); if (pin !== "Moderator@2026!") { alert("Incorrect PIN."); return; } if (!confirm("Delete ALL data?")) return; const collections = ['employees','attendance','requests','payslips','announcements','guardWeeklySchedules','users','departmentApprovers','employeeSupportRequests']; for (const col of collections) { const snap = await db.collection(col).get(); const batch = db.batch(); snap.docs.forEach(doc => batch.delete(doc.ref)); await batch.commit(); } alert("All data reset. Reloading..."); location.reload(); };
 
 // ==================== WEATHER & RAIN ====================
 async function fetchWeather() { try { const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=14.5995&longitude=120.9842&current_weather=true&timezone=Asia/Manila'); const data = await res.json(); if (data.current_weather) { const temp = Math.round(data.current_weather.temperature); const code = data.current_weather.weathercode; let condition = 'Rainy', icon = 'cloud-rain'; if (code === 0) { condition = 'Clear'; icon = 'sun'; } else if (code === 1 || code === 2) { condition = 'Partly Cloudy'; icon = 'cloud'; } else if (code === 3) { condition = 'Overcast'; icon = 'cloud'; } else if (code >= 51 && code <= 67) { condition = 'Drizzle/Rain'; icon = 'cloud-rain'; } else if (code >= 80 && code <= 99) { condition = 'Rain/Thunder'; icon = 'cloud-lightning'; } document.getElementById('weatherText').innerHTML = `${condition} · ${temp}°C`; const iconElem = document.querySelector('#liveWeatherWidget i'); if (iconElem) { iconElem.setAttribute('data-feather', icon); feather.replace(); } } else throw new Error(); } catch(e) { document.getElementById('weatherText').innerHTML = '🌧️ Rainy · 24°C'; } }
@@ -527,67 +1001,69 @@ document.getElementById('generatePayslipBtn').addEventListener('click', generate
 document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
 document.getElementById('refreshSummaryBtn').addEventListener('click', () => loadEmployeeListForSummary());
 setInterval(updateLastUpdatedTime, 60000);
+function attachDirectoryEventListeners() {
+    const searchInput = document.getElementById('empSearchInput');
+    const sortSelect = document.getElementById('sortBySelect');
+    const designationSelect = document.getElementById('designationFilter');
+    if (searchInput) searchInput.addEventListener('input', () => renderEmployeeDirectory());
+    if (sortSelect) sortSelect.addEventListener('change', () => renderEmployeeDirectory());
+    if (designationSelect) designationSelect.addEventListener('change', () => renderEmployeeDirectory());
+}
+window.attachDirectoryEventListeners = attachDirectoryEventListeners;
 
-// Include all other existing functions (clockIn, clockOut, submitRequest, etc.) from previous version
-// For brevity, they are assumed to be present exactly as before. The final code includes them all.
-// (The actual final output will contain the full implementation of all missing functions.)
-
-// Placeholders for functions not yet defined in this snippet but present in the original (they will be included fully)
-function loginWithEmail() {}
-function signupWithEmail() {}
-function showSignup() {}
-function showLogin() {}
-function logout() {}
-function openModal(id) {}
-function closeModal(id) {}
-function openNewRequestMenu() {}
-function openLeaveModal() {}
-function openOffsetsModal() {}
-function showAddEmployeeModal() {}
-function openRequestModal(type) {}
-function selectLeaveType(type) {}
-function toggleNightMode() {}
-function openMobileSidebar() {}
-function closeMobileSidebar() {}
-function saveSettings() {}
-function updateLastUpdatedTime() {}
-function applyFilters() {}
-function refreshDashboard() {}
-function refreshMyAttendanceTab() {}
-function clockIn() {}
-function clockOut() {}
-function submitRequest() {}
-function submitOffsets() {}
-function approveSecondary(id) {}
-function approveFinal(id) {}
-function rejectRequest(id) {}
-function assignGuardWeeklySchedule() {}
-function renderGuardSchedules() {}
-function deleteGuardSchedule(id) {}
-function loadAnnouncements() {}
-function renderAnnouncements() {}
-function saveAnnouncement() {}
-function deleteAnnouncement() {}
-function editAnnouncement(id,title,content) {}
-function addNewAnnouncement() {}
-function generatePayslipAuto() {}
-function refreshHrPayslip() {}
-function refreshEmployeePayslip() {}
-function submitHelpdeskRequest() {}
-function refreshHelpdesk() {}
-function updateHelpdeskRequest(id) {}
-function computeMonthlyDeductions(monthlySalary) {}
-function populateYearDropdown() {}
-function loadEmployeeListForSummary() {}
-function loadEmployeeCalendar(employeeId) {}
-function editLeaveBalance(empId, empName, currentBalance) {}
-function saveLeaveBalance() {}
-function openEditEmployeeModal(emp) {}
-function saveEmployeeEdit() {}
-function addEmployee() {}
-function deleteEmployee(id) {}
-function resetAllSystemData() {}
-window.resetAllSystemData = resetAllSystemData;
+async function loginWithEmail() {
+    const email = document.getElementById('loginEmail').value, pwd = document.getElementById('loginPassword').value, errDiv = document.getElementById('authError');
+    try {
+        const cred = await auth.signInWithEmailAndPassword(email, pwd);
+        const user = cred.user;
+        await ensureSystemAdminRecord(user);
+        const doc = await db.collection('employees').doc(user.uid).get();
+        if (doc.exists) { currentUserData = doc.data(); if (currentUserData.status !== "active" && !SYSTEM_ADMIN_EMAILS.includes(email)) { await auth.signOut(); alert("Account inactive."); return; } currentUserRole = currentUserData.role; } else { await auth.signOut(); alert("Employee record not found."); return; }
+        currentUser = user;
+        document.getElementById('authScreen').style.display = 'none'; document.getElementById('mainApp').classList.remove('hidden');
+        document.getElementById('welcomeName').innerText = currentUserData.name.split(' ')[0]; document.getElementById('userName').innerText = currentUserData.name; document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join(''); document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join(''); document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
+        const displayRole = currentUserRole === 'admin' ? 'Administrator' : (currentUserRole === 'supervisor' ? 'Supervisor' : (currentUserRole === 'manager' ? 'Manager' : (currentUserRole === 'hr' ? 'HR Admin' : 'Employee')));
+        document.getElementById('welcomeSubtitle').innerHTML = displayRole; document.getElementById('userRoleDisplay').innerText = displayRole;
+        renderNavigation(); await loadAllData(); await loadAnnouncements(); await refreshMyAttendanceTab();
+        if (fullPrivilegedEmails.includes(currentUser.email)) populateYearDropdown();
+        const resetContainer = document.getElementById('resetButtonContainer'); if (resetContainer && currentUser.email === resetAuthorizedEmail) resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full">⚠️ Reset All System Data (PIN required)</button>`; else resetContainer.innerHTML = "";
+        attachDirectoryEventListeners();
+        switchTab('dashboard');
+    } catch (e) { errDiv.innerText = e.message; errDiv.classList.remove('hidden'); }
+}
+async function signupWithEmail() {
+    const name = document.getElementById('signupName').value, email = document.getElementById('signupEmail').value, pwd = document.getElementById('signupPassword').value, role = document.getElementById('signupRole').value, dept = document.getElementById('signupDepartment').value, errDiv = document.getElementById('authError'), sucDiv = document.getElementById('authSuccess');
+    if (!name || !email || !pwd || !dept) { errDiv.innerText = "Fill all fields"; errDiv.classList.remove('hidden'); return; }
+    try {
+        const cred = await auth.createUserWithEmailAndPassword(email, pwd);
+        const uid = cred.user.uid;
+        const empData = { name, email, dept, role, status: "active", pin: "0000", leaveBalance: 15, phone: "N/A", createdAt: new Date().toISOString() };
+        await db.collection('employees').doc(uid).set(empData); await db.collection('users').doc(uid).set({ uid, name, email, role, department: dept, leaveBalance: 15, status: "active", phone: "N/A" });
+        allEmployees.push({ id: uid, ...empData });
+        await grantApproverPermissions(uid, role, dept);
+        sucDiv.innerText = "Account created! Please login."; sucDiv.classList.remove('hidden'); showLogin();
+    } catch (e) { errDiv.innerText = e.message; errDiv.classList.remove('hidden'); }
+}
+async function logout() { await auth.signOut(); location.reload(); }
+function showSignup() { document.getElementById('loginForm').classList.add('hidden'); document.getElementById('signupForm').classList.remove('hidden'); document.getElementById('authError').classList.add('hidden'); }
+function showLogin() { document.getElementById('signupForm').classList.add('hidden'); document.getElementById('loginForm').classList.remove('hidden'); document.getElementById('authError').classList.add('hidden'); }
+auth.onAuthStateChanged(async (user) => {
+    if (user) {
+        await ensureSystemAdminRecord(user);
+        const doc = await db.collection('employees').doc(user.uid).get();
+        if (doc.exists) { currentUserData = doc.data(); if (currentUserData.status !== "active" && !SYSTEM_ADMIN_EMAILS.includes(user.email)) { await auth.signOut(); alert("Account inactive."); location.reload(); return; } currentUserRole = currentUserData.role; currentUser = user;
+            document.getElementById('authScreen').style.display = 'none'; document.getElementById('mainApp').classList.remove('hidden');
+            document.getElementById('welcomeName').innerText = currentUserData.name.split(' ')[0]; document.getElementById('userName').innerText = currentUserData.name; document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join(''); document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join(''); document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
+            const displayRole = currentUserRole === 'admin' ? 'Administrator' : (currentUserRole === 'supervisor' ? 'Supervisor' : (currentUserRole === 'manager' ? 'Manager' : (currentUserRole === 'hr' ? 'HR Admin' : 'Employee')));
+            document.getElementById('welcomeSubtitle').innerHTML = displayRole; document.getElementById('userRoleDisplay').innerText = displayRole;
+            renderNavigation(); await loadAllData(); await loadAnnouncements(); await refreshMyAttendanceTab();
+            if (fullPrivilegedEmails.includes(currentUser.email)) populateYearDropdown();
+            const resetContainer = document.getElementById('resetButtonContainer'); if (resetContainer && currentUser.email === resetAuthorizedEmail) resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full">⚠️ Reset All System Data (PIN required)</button>`; else resetContainer.innerHTML = "";
+            attachDirectoryEventListeners();
+            switchTab('dashboard');
+        } else { await auth.signOut(); location.reload(); }
+    } else { document.getElementById('authScreen').style.display = 'flex'; document.getElementById('mainApp').classList.add('hidden'); }
+});
 </script>
 </body>
 </html>
