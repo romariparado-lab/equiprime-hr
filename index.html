@@ -172,7 +172,7 @@
             <div id="authSuccess" class="bg-green-50 text-green-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
             <div id="loginForm"><div class="space-y-3"><input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm"><input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm"><button id="loginBtnMain" class="w-full bg-[#011F7B] text-white py-3 rounded-xl font-semibold hover:bg-[#002a9e] transition">Login</button></div><div class="mt-3 text-center"><button id="showSignupBtnMain" class="text-[#011F7B] dark:text-blue-400 text-sm hover:underline">Don't have an account? Sign up</button></div></div>
             <div id="signupForm" class="hidden"><div class="space-y-2"><input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm"><input type="email" id="signupEmail" placeholder="Email" class="w-full p-3 border rounded-xl text-sm"><input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm"><select id="signupRole" class="w-full p-3 border rounded-xl text-sm"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option></select><select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm"><option value="">Select Department</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select><button id="signupBtnMain" class="w-full bg-[#011F7B] text-white py-3 rounded-xl font-semibold hover:bg-[#002a9e] transition">Sign Up</button></div><div class="mt-3 text-center"><button id="showLoginBtnMain" class="text-[#011F7B] dark:text-blue-400 text-sm hover:underline">Already have an account? Login</button></div></div>
-            <div class="mt-5 p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-sm"><p class="font-semibold mb-1 dark:text-white">Authorized Users:</p><p class="dark:text-white">HR: hr@equiprime.ph / hr@equiprime.ph</p><p class="dark:text-white">Moderators: mod.rom / mod.dex (always active)</p></div>
+            <div class="mt-5 p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-sm"><p class="font-semibold mb-1 dark:text-white">Authorized Users:</p><p class="dark:text-white">HR Director: hrd@equiprime.ph | Moderators: mod.rom, mod.dex</p></div>
         </div>
     </div>
 </div>
@@ -284,6 +284,7 @@ let currentUser = null, currentUserData = null, currentUserRole = null;
 let allEmployees = [], allRequests = [], allAttendance = [], allPayslips = [], allAnnouncements = [], guardWeeklySchedules = [], allHelpdeskRequests = [];
 let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
 
+// Only these three emails have full system access (Employees, All Requests, Payslip Mgmt, Admin Helpdesk, etc.)
 const SYSTEM_ADMIN_EMAILS = ["hrd@equiprime.ph", "mod.rom@equiprime.ph", "mod.dex@equiprime.ph"];
 const fullPrivilegedEmails = [...SYSTEM_ADMIN_EMAILS];
 const resetAuthorizedEmail = "mod.rom@equiprime.ph";
@@ -609,8 +610,8 @@ function refreshMyAttendanceTab() {
     if (timeInfo) timeInfo.innerHTML = todayRec?.timeIn ? `In: ${todayRec.timeIn} | Out: ${todayRec.timeOut||'--'} | Hours: ${todayRec.hoursWorked||'--'}` : '';
     const historyBody = document.getElementById('attendanceHistoryList');
     if (historyBody) {
-        const historyHtml = userAtt.map(a => `<tr class="border-t"><td class="p-3">${a.date}</td><td class="p-3">${a.timeIn||'--'}</td><td class="p-3">${a.timeOut||'--'}</td><td class="p-3">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</tr>`).join('');
-        historyBody.innerHTML = historyHtml || '<tr><td colspan="5" class="p-4 text-center">No records<tr>';
+        const historyHtml = userAtt.map(a => `<tr class="border-t"><td class="p-3">${a.date}</td><td class="p-3">${a.timeIn||'--'}</td><td class="p-3">${a.timeOut||'--'}</td><td class="p-3">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</td>`).join('');
+        historyBody.innerHTML = historyHtml || '</tr><td colspan="5" class="p-4 text-center">No records</td><tr>';
     }
 }
 
@@ -954,18 +955,18 @@ function toggleEmployeesSubmenu() {
 }
 function renderNavigation() {
     const isFull = fullPrivilegedEmails.includes(currentUser?.email);
-    let html = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="home"></i> Dashboard</button>
-                <div class="relative">
+    let html = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="home"></i> Dashboard</button>`;
+    if (isFull) {
+        html += `<div class="relative">
                     <button onclick="toggleEmployeesSubmenu()" class="tab-inactive w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl"><span class="flex items-center gap-3"><i data-feather="users"></i> Employees</span><i data-feather="chevron-down" id="employeesChevron" class="w-4 h-4 transition-transform"></i></button>
                     <div id="employeesSubmenu" class="ml-6 mt-1 hidden flex-col gap-1">
                         <button onclick="switchTab('employee-directory')" class="tab-inactive w-full text-left pl-9 py-2 rounded-lg text-sm submenu-item">Employee Directory</button>
                         <button onclick="switchTab('create-employee')" class="tab-inactive w-full text-left pl-9 py-2 rounded-lg text-sm submenu-item">Create Employee</button>
                     </div>
-                </div>
-                <button onclick="switchTab('my-attendance')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> My Attendance</button>
-                <button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Request</button>`;
-    if (isFull) {
-        html += `<button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clipboard"></i> All Request</button>
+                </div>`;
+        html += `<button onclick="switchTab('my-attendance')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> My Attendance</button>
+                 <button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Request</button>
+                 <button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clipboard"></i> All Request</button>
                  <button onclick="switchTab('attendance-summary')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="bar-chart-2"></i> Attendance Summary</button>
                  <button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> Pending Approval</button>
                  <button onclick="switchTab('hr-guard-schedule')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="calendar"></i> Guard Schedule</button>
@@ -974,7 +975,9 @@ function renderNavigation() {
                  <button onclick="switchTab('admin-helpdesk')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="shield"></i> Admin Helpdesk</button>
                  <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="settings"></i> Settings</button>`;
     } else {
-        html += `<button onclick="switchTab('payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Payslip</button>
+        html += `<button onclick="switchTab('my-attendance')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> My Attendance</button>
+                 <button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Request</button>
+                 <button onclick="switchTab('payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Payslip</button>
                  <button onclick="switchTab('helpdesk')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="help-circle"></i> HR Helpdesk</button>`;
         if (currentUserRole === 'approver' || currentUserRole === 'supervisor' || currentUserRole === 'manager') {
             html += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> Pending Approval</button>`;
@@ -985,12 +988,13 @@ function renderNavigation() {
     if (desktopNav) desktopNav.innerHTML = html;
     if (mobileNav) mobileNav.innerHTML = html;
     feather.replace();
+    // Ensure submenu starts hidden
     const submenu = document.getElementById('employeesSubmenu');
     if (submenu) submenu.classList.add('hidden');
 }
 function switchTab(tabName) {
-    const allowed = ['dashboard','my-attendance','my-requests','payslip','employee-directory','create-employee'];
-    if (fullPrivilegedEmails.includes(currentUser?.email)) allowed.push('hr-requests','attendance-summary','approvals','hr-guard-schedule','hr-payslip','admin-helpdesk','hr-settings');
+    const allowed = ['dashboard','my-attendance','my-requests','payslip'];
+    if (fullPrivilegedEmails.includes(currentUser?.email)) allowed.push('employee-directory','create-employee','hr-requests','attendance-summary','approvals','hr-guard-schedule','hr-payslip','admin-helpdesk','hr-settings');
     else {
         allowed.push('helpdesk');
         if (currentUserRole === 'approver' || currentUserRole === 'supervisor' || currentUserRole === 'manager') allowed.push('approvals');
