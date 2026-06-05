@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Admin Hidden + Helpdesk</title>
+    <title>EQUIPRIME HR - Your HRIS</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -21,8 +21,11 @@
         .tab-inactive:hover { background-color: #e2e8f0; color: #0f172a !important; }
         body.dark .tab-inactive { color: #e2e8f0 !important; }
         body.dark .tab-inactive:hover { background-color: #334155; color: white !important; }
-        .desktop-sidebar { width: 280px; background-color: #004aad; color: white; height: 100vh; position: sticky; top: 0; display: flex; flex-direction: column; padding: 1.5rem; overflow-y: auto; flex-shrink: 0; }
-        .mobile-sidebar { position: fixed; top: 0; left: 0; width: 80%; max-width: 280px; height: 100%; z-index: 1000; background-color: #004aad; color: white; transform: translateX(-100%); transition: transform 0.3s ease; display: flex; flex-direction: column; padding: 1.25rem; overflow-y: auto; }
+        .desktop-sidebar { width: 320px; background-color: #004aad; color: white; height: 100vh; position: sticky; top: 0; display: flex; flex-direction: column; padding: 1.5rem; overflow-y: auto; flex-shrink: 0; }
+        .desktop-sidebar::-webkit-scrollbar { width: 4px; }
+        .desktop-sidebar::-webkit-scrollbar-track { background: #1e3a8a; border-radius: 10px; }
+        .desktop-sidebar::-webkit-scrollbar-thumb { background: #60a5fa; border-radius: 10px; }
+        .mobile-sidebar { position: fixed; top: 0; left: 0; width: 80%; max-width: 320px; height: 100%; z-index: 1000; background-color: #004aad; color: white; transform: translateX(-100%); transition: transform 0.3s ease; display: flex; flex-direction: column; padding: 1.25rem; overflow-y: auto; }
         .mobile-sidebar.open { transform: translateX(0); }
         .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; }
         .overlay.active { opacity: 1; visibility: visible; }
@@ -170,37 +173,40 @@
             <div class="mt-6"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="git-branch"></i> Approval Flow</h3><div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-sm dark:text-white"><div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Employee submits</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Secondary Approver (dept admin/manager)</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> Final Approver (hrd@equiprime.ph)</div></div></div></div>
         </div>
 
+        <!-- EMPLOYEES TAB -->
+        <div id="hr-employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="users"></i> Employees</h2><button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Add Employee</button></div><div id="hrEmployeesList" class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm overflow-hidden"></div></div>
+
         <!-- MY ATTENDANCE TAB -->
         <div id="my-attendance-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-700 transition clock-btn flex items-center gap-2"><i data-feather="log-in"></i> Clock In</button><button onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-red-700 transition clock-btn flex items-center gap-2"><i data-feather="log-out"></i> Clock Out</button></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="calendar"></i> Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-slate-700"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold dark:text-white" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500 dark:text-slate-400" id="todayTimeInfo"></div></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="list"></i> Attendance History</h3><div class="overflow-x-auto"><table class="w-full"><thead class="bg-slate-50 dark:bg-slate-700"><tr><th class="p-3 text-left text-sm font-semibold dark:text-white">Date</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Clock In</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Clock Out</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Hours Worked</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Status</th></tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div></div>
 
-        <!-- MY REQUESTS TAB -->
-        <div id="my-requests-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="file-text"></i> My Requests</h2><button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">New Request</button></div><div id="allMyRequestsList" class="space-y-3"></div></div>
+        <!-- MY REQUEST TAB -->
+        <div id="my-requests-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="file-text"></i> My Request</h2><button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">New Request</button></div><div id="allMyRequestsList" class="space-y-3"></div></div>
 
-        <!-- MY PAYSLIP TAB -->
-        <div id="payslip-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="file-text"></i> My Payslip</h2><div id="employeePayslipList" class="space-y-4"></div></div>
-
-        <!-- PENDING APPROVALS TAB -->
-        <div id="approvals-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="clock"></i> Pending Approvals</h2><div id="pendingApprovalsList" class="space-y-4"></div></div>
-
-        <!-- ALL REQUESTS TAB (HR) -->
-        <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="clipboard"></i> All Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
-
-        <!-- EMPLOYEES TAB (hides system admins) -->
-        <div id="hr-employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="users"></i> Employees</h2><button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Add Employee</button></div><div id="hrEmployeesList" class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm overflow-hidden"></div></div>
-
-        <!-- GUARD SCHEDULE TAB -->
-        <div id="hr-guard-schedule-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="calendar"></i> Guard Weekly Schedule Management</h2><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border dark:border-slate-600 rounded-xl p-4 bg-slate-50 dark:bg-slate-700"><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1 dark:text-white">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1 dark:text-white">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1 dark:text-white">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1 dark:text-white">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1 dark:text-white">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1 dark:text-white">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1 dark:text-white">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Assign Weekly Schedule</button></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
+        <!-- ALL REQUEST TAB (HR) -->
+        <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="clipboard"></i> All Request</h2><div id="allRequestsList" class="space-y-4"></div></div>
 
         <!-- ATTENDANCE SUMMARY TAB -->
         <div id="attendance-summary-tab" class="tab-content hidden"><div class="attendance-summary-container"><div class="attendance-toolbar flex justify-between items-center flex-wrap gap-4 mb-4"><h2 class="dark:text-white">Attendance Summary</h2><div class="flex gap-2"><select id="summaryYear" class="dark:bg-slate-700 dark:text-white border dark:border-slate-600 rounded-lg"></select><select id="summaryMonth" class="dark:bg-slate-700 dark:text-white border dark:border-slate-600 rounded-lg"><option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option></select><button id="refreshSummaryBtn" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Load</button></div></div><div class="attendance-grid"><div class="employee-list"><h3 class="dark:text-white">Employees</h3><div id="employeeListContainer"></div></div><div class="summary-content"><div class="summary-cards"><div class="summary-card"><small class="dark:text-slate-300">Completed Days</small><h3 id="completedCount" class="dark:text-white">0</h3></div><div class="summary-card"><small class="dark:text-slate-300">Late</small><h3 id="lateCountSummary" class="dark:text-white">0</h3></div><div class="summary-card"><small class="dark:text-slate-300">Incomplete</small><h3 id="missingCountSummary" class="dark:text-white">0</h3></div><div class="summary-card"><small class="dark:text-slate-300">Leave</small><h3 id="leaveCountSummary" class="dark:text-white">0</h3></div></div><div class="calendar-box"><h3 class="mb-4 dark:text-white">Attendance Calendar</h3><div id="calendarGrid" class="calendar-grid"></div></div><div class="details-box"><h3 class="mb-4 dark:text-white">Employee Attendance Details</h3><table class="details-table"><thead><tr><th class="dark:text-white">Date</th><th class="dark:text-white">Clock In</th><th class="dark:text-white">Clock Out</th><th class="dark:text-white">Status</th></tr></thead><tbody id="attendanceDetails"></tbody></table></div></div></div></div></div>
 
+        <!-- PENDING APPROVAL TAB -->
+        <div id="approvals-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="clock"></i> Pending Approval</h2><div id="pendingApprovalsList" class="space-y-4"></div></div>
+
+        <!-- GUARD SCHEDULE TAB -->
+        <div id="hr-guard-schedule-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="calendar"></i> Guard Schedule</h2><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border dark:border-slate-600 rounded-xl p-4 bg-slate-50 dark:bg-slate-700"><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1 dark:text-white">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1 dark:text-white">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1 dark:text-white">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1 dark:text-white">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1 dark:text-white">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1 dark:text-white">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1 dark:text-white">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Assign Weekly Schedule</button></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
+
+        <!-- MY PAYSLIP TAB -->
+        <div id="payslip-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="file-text"></i> My Payslip</h2><div id="employeePayslipList" class="space-y-4"></div></div>
+
         <!-- PAYSLIP MANAGEMENT TAB -->
-        <div id="hr-payslip-tab" class="tab-content hidden"><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><select id="cutOffPeriod" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><option value="first">1st cut-off (1st-15th)</option><option value="second">2nd cut-off (16th-31st)</option></select><input type="number" id="dailyRate" value="850" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Daily Rate"><input type="number" id="daysPresent" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Days Present"><input type="number" id="overtimePay" value="0" step="0.01" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Overtime Pay"><input type="number" id="otherEarnings" value="0" step="0.01" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Other Earnings"><input type="number" id="otherDeduction" value="0" step="0.01" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Other Deduction"><button id="generatePayslipBtn" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Generate Payslip</button></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
+        <div id="hr-payslip-tab" class="tab-content hidden"><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Payroll Month"><select id="cutOffPeriod" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><option value="first">1st cut-off (1st-15th)</option><option value="second">2nd cut-off (16th-31st)</option></select><input type="number" id="dailyRate" value="850" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Daily Rate (₱)"><input type="number" id="daysPresent" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Days Present (this cut‑off)"><input type="number" id="overtimePay" value="0" step="0.01" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Overtime Pay (₱)"><input type="number" id="otherEarnings" value="0" step="0.01" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Other Earnings / Allowances (₱)"><input type="number" id="otherDeduction" value="0" step="0.01" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Other Deductions (loan, advance, etc.)"><button id="generatePayslipBtn" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Generate Payslip</button></div><p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Standard deductions (SSS, PhilHealth, Pag-IBIG, withholding tax) are auto‑computed.</p></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
+
+        <!-- ADMIN HELPDESK TAB -->
+        <div id="admin-helpdesk-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="shield"></i> Admin Helpdesk – Employee Requests</h2><div id="adminHelpdeskList" class="space-y-4"></div></div>
 
         <!-- SETTINGS TAB -->
         <div id="hr-settings-tab" class="tab-content hidden"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 space-y-6"><div><label class="font-semibold text-sm dark:text-white">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border dark:border-slate-600 rounded-xl mt-1 dark:bg-slate-700 dark:text-white" placeholder="192.168.1.100"></div><button id="saveSettingsBtn" class="bg-[#004aad] text-white px-5 py-2 rounded-xl">Save Settings</button><hr class="dark:border-slate-600"><div id="resetButtonContainer"></div></div></div>
 
-        <!-- HR HELPDESK (Employee requests) - visible to regular employees -->
+        <!-- HR HELPDESK (for regular employees) -->
         <div id="helpdesk-tab" class="tab-content hidden">
             <h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="help-circle"></i> HR Helpdesk</h2>
             <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm mb-6">
@@ -222,16 +228,10 @@
                 <div id="myHelpdeskRequests" class="space-y-3 max-h-96 overflow-y-auto"></div>
             </div>
         </div>
-
-        <!-- ADMIN HELPDESK (visible only to HR/Moderators) -->
-        <div id="admin-helpdesk-tab" class="tab-content hidden">
-            <h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="shield"></i> Admin Helpdesk – Employee Requests</h2>
-            <div id="adminHelpdeskList" class="space-y-4"></div>
-        </div>
     </div>
 </div>
 
-<!-- MODALS (all necessary) -->
+<!-- MODALS -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')"><i data-feather="x" class="dark:text-white"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><input type="text" id="announcementTitle" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Title"><textarea id="announcementContent" rows="3" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Content"></textarea></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1 dark:text-white">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')"><i data-feather="x" class="dark:text-white"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><input type="date" id="reqEndDate" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><textarea id="reqReason" rows="3" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1 dark:text-white">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')"><i data-feather="x" class="dark:text-white"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 dark:bg-red-900/30 rounded-xl text-left dark:text-white">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 dark:bg-orange-900/30 rounded-xl text-left dark:text-white">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-left dark:text-white">Vacation Leave</button></div></div></div>
@@ -243,7 +243,7 @@
 <div id="payslipModal" class="modal-overlay"><div class="payslip-modal-container dark:bg-slate-800"><div class="payslip-card dark:bg-slate-800 dark:text-white"><div class="flex justify-between items-start mb-4 no-print"><h2 class="text-xl font-bold">Payslip Statement</h2><button onclick="closeModal('payslipModal')"><i data-feather="x" class="dark:text-white"></i></button></div><div id="payslipContent"></div><div class="text-right no-print mt-4"><button onclick="window.print()" class="bg-[#004aad] text-white px-4 py-2 rounded-lg text-sm">Print Statement</button></div></div></div></div>
 
 <script>
-// -------------------- FIREBASE & GLOBALS --------------------
+// ==================== FIREBASE CONFIG ====================
 const firebaseConfig = {
     apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
     authDomain: "equiprime-hr.firebaseapp.com",
@@ -256,6 +256,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
+// ==================== GLOBALS ====================
 let currentUser = null, currentUserData = null, currentUserRole = null;
 let allEmployees = [], allRequests = [], allAttendance = [], allPayslips = [], allAnnouncements = [], guardWeeklySchedules = [], allHelpdeskRequests = [];
 let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
@@ -267,7 +268,7 @@ const editAuthorizedEmails = ["mod.rom@equiprime.ph", "mod.dex@equiprime.ph"];
 
 function isSystemAdmin(email) { return SYSTEM_ADMIN_EMAILS.includes(email); }
 
-// -------------------- AUTO-CREATE SYSTEM ADMIN RECORDS --------------------
+// ==================== AUTO-CREATE SYSTEM ADMIN RECORDS ====================
 async function ensureSystemAdminRecord(user) {
     const email = user.email;
     if (!SYSTEM_ADMIN_EMAILS.includes(email)) return false;
@@ -332,7 +333,7 @@ async function getDirectApproverForSubmitter(userEmail, role, department) {
     return null;
 }
 
-// -------------------- DATA LOADING (filter out system admins from regular views) --------------------
+// ==================== DATA LOADING ====================
 async function loadAllData() {
     const empSnap = await db.collection('employees').get();
     allEmployees = empSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -369,7 +370,7 @@ async function loadGuardSelect() {
     if (sel) sel.innerHTML = '<option value="">Select Guard</option>' + allEmployees.filter(e => (e.dept === 'Security Guard Department' || e.role === 'guard') && !isSystemAdmin(e.email)).map(e => `<option value="${e.id}">${e.name}</option>`).join('');
 }
 
-// -------------------- ATTENDANCE SUMMARY (exclude admins) --------------------
+// ==================== ATTENDANCE SUMMARY ====================
 function populateYearDropdown() {
     const yearSelect = document.getElementById('summaryYear');
     if (!yearSelect) return;
@@ -453,7 +454,7 @@ async function loadEmployeeCalendar(employeeId) {
     document.getElementById('attendanceDetails').innerHTML = detailsRows;
 }
 
-// -------------------- CLOCK IN/OUT (unchanged, admins cannot clock) --------------------
+// ==================== CLOCK IN/OUT ====================
 function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:false }); }
 async function clockIn() {
     if (SYSTEM_ADMIN_EMAILS.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
@@ -492,11 +493,11 @@ function refreshMyAttendanceTab() {
     document.getElementById('todayStatusIcon').innerHTML = todayRec?.timeIn ? '✅' : '⏰';
     document.getElementById('todayStatusText').innerHTML = todayRec?.timeIn ? (todayRec.timeOut ? 'Completed' : 'Clocked In') : 'Not clocked in yet';
     document.getElementById('todayTimeInfo').innerHTML = todayRec?.timeIn ? `In: ${todayRec.timeIn} | Out: ${todayRec.timeOut||'--'} | Hours: ${todayRec.hoursWorked||'--'}` : '';
-    const historyHtml = userAtt.map(a => `<tr class="border-t"><td class="p-3">${a.date}</td><td class="p-3">${a.timeIn||'--'}</td><td class="p-3">${a.timeOut||'--'}</td><td class="p-3">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span></td></tr>`).join('');
+    const historyHtml = userAtt.map(a => `<tr class="border-t"><td class="p-3">${a.date}</td><td class="p-3">${a.timeIn||'--'}</td><td class="p-3">${a.timeOut||'--'}</td><td class="p-3">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span>NonNull</tr>`).join('');
     document.getElementById('attendanceHistoryList').innerHTML = historyHtml || '<tr><td colspan="5" class="p-4 text-center">No records</td></tr>';
 }
 
-// -------------------- ANNOUNCEMENTS --------------------
+// ==================== ANNOUNCEMENTS ====================
 async function loadAnnouncements() {
     const snap = await db.collection('announcements').get();
     allAnnouncements = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -527,7 +528,7 @@ async function saveAnnouncement() {
 }
 async function deleteAnnouncement() { const id = document.getElementById('announcementId').value; if (!id) return; if (confirm("Delete announcement?")) { await db.collection('announcements').doc(id).delete(); allAnnouncements = allAnnouncements.filter(a=>a.id!==id); closeModal('announcementModal'); renderAnnouncements(); } }
 
-// -------------------- GUARD SCHEDULE --------------------
+// ==================== GUARD SCHEDULE ====================
 async function assignGuardWeeklySchedule() {
     const empId = document.getElementById('guardEmployee').value;
     if (!empId) { alert("Select a guard."); return; }
@@ -556,7 +557,7 @@ function renderGuardSchedules() {
 }
 async function deleteGuardSchedule(id) { if (confirm("Delete this schedule?")) { await db.collection('guardWeeklySchedules').doc(id).delete(); guardWeeklySchedules = guardWeeklySchedules.filter(s => s.id !== id); renderGuardSchedules(); } }
 
-// -------------------- REQUESTS & APPROVALS --------------------
+// ==================== REQUESTS & APPROVALS ====================
 async function submitRequest() {
     const type = document.getElementById('requestTypeValue').value, start = document.getElementById('reqStartDate').value, end = document.getElementById('reqEndDate').value, reason = document.getElementById('reqReason').value;
     if (!start || !end) { alert("Select dates"); return; }
@@ -610,7 +611,7 @@ async function approveSecondary(id) { const r = allRequests.find(r => r.id === i
 async function approveFinal(id) { const r = allRequests.find(r => r.id === id); if (r && r.status === "pending_final" && r.approverEmail === currentUser.email) { await db.collection('requests').doc(id).update({ status: "approved", finalApproved: true }); r.status = "approved"; r.finalApproved = true; refreshDashboard(); alert("Request fully approved."); } else alert("Not authorized."); }
 async function rejectRequest(id) { const r = allRequests.find(r => r.id === id); if (r && (r.status === "pending_secondary" || r.status === "pending_final")) { await db.collection('requests').doc(id).update({ status: "rejected" }); r.status = "rejected"; refreshDashboard(); alert("Request rejected."); } else alert("Cannot reject."); }
 
-// -------------------- EMPLOYEE MANAGEMENT --------------------
+// ==================== EMPLOYEE MANAGEMENT ====================
 async function addEmployee() {
     const name = document.getElementById('newEmpName').value, email = document.getElementById('newEmpEmail').value, dept = document.getElementById('newEmpDept').value, role = document.getElementById('newEmpRole').value, pin = document.getElementById('newEmpPin').value, password = document.getElementById('newEmpPass').value;
     if (!name || !email || !dept || !pin || !password) { alert("Please fill all fields"); return; }
@@ -656,7 +657,7 @@ async function deleteEmployee(id) { if (confirm("Delete employee?")) { const emp
 function editLeaveBalance(empId, empName, currentBalance) { document.getElementById('editEmployeeId').value = empId; document.getElementById('editEmployeeName').value = empName; document.getElementById('editLeaveBalanceSimple').value = currentBalance; openModal('editLeaveModal'); }
 async function saveLeaveBalance() { const empId = document.getElementById('editEmployeeId').value, newBal = parseInt(document.getElementById('editLeaveBalanceSimple').value); if (isNaN(newBal)) { alert("Enter valid number"); return; } await db.collection('employees').doc(empId).update({ leaveBalance: newBal }); const idx = allEmployees.findIndex(e => e.id === empId); if (idx !== -1) allEmployees[idx].leaveBalance = newBal; closeModal('editLeaveModal'); refreshDashboard(); alert(`Leave balance updated to ${newBal} days`); }
 
-// -------------------- PAYSLIP --------------------
+// ==================== PAYSLIP ====================
 function computeMonthlyDeductions(monthlySalary) {
     const sss = Math.min(monthlySalary,30000)*0.045, philHealth = Math.min(monthlySalary,100000)*0.025, pagIbig = monthlySalary>10000 ? 200 : 100;
     let taxableIncome = monthlySalary - (sss+philHealth+pagIbig), tax = 0;
@@ -680,7 +681,7 @@ async function generatePayslipAuto() {
 function refreshHrPayslip() { const sel = document.getElementById('payslipEmployee'); if (sel) sel.innerHTML = '<option value="">Select Employee</option>' + allEmployees.filter(e => !isSystemAdmin(e.email)).map(e => `<option value="${e.id}">${e.name} - ${e.dept}</option>`).join(''); const hist = document.getElementById('payslipHistory'); if (hist) hist.innerHTML = allPayslips.slice().reverse().map(p => `<div class="bg-slate-50 dark:bg-slate-700 p-3 rounded mb-2"><b class="dark:text-white">${p.employeeName}</b> - ${p.month} (${p.cutOff})<br><span class="net-green-bold">Net: ₱${p.netPay}</span></div>`).join('') || '<div class="dark:text-white">No payslips</div>'; }
 function refreshEmployeePayslip() { const my = allPayslips.filter(p => p.employeeEmail === currentUser?.email); document.getElementById('employeePayslipList').innerHTML = my.map(p => `<div class="bg-white dark:bg-slate-800 p-3 rounded shadow dark:text-white">${p.month} (${p.cutOff})<br><span class="net-green-bold">Net: ₱${p.netPay}</span></div>`).join('') || '<div class="dark:text-white">No payslips</div>'; }
 
-// -------------------- HELPDESK FUNCTIONS --------------------
+// ==================== HELPDESK ====================
 async function submitHelpdeskRequest() {
     const type = document.getElementById('helpdeskType').value;
     const message = document.getElementById('helpdeskMessage').value;
@@ -753,7 +754,7 @@ async function updateHelpdeskRequest(requestId) {
     alert("Request updated.");
 }
 
-// -------------------- DASHBOARD & UI --------------------
+// ==================== DASHBOARD & UI ====================
 function refreshDashboard() {
     const filtered = getFilteredEmployees();
     document.getElementById('totalEmployees').innerText = filtered.length;
@@ -788,31 +789,30 @@ function updateLastUpdatedTime() { const now = new Date().toLocaleString(); ['de
 function renderNavigation() {
     const isFull = fullPrivilegedEmails.includes(currentUser?.email);
     let html = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="home"></i> Dashboard</button>
-                <button onclick="switchTab('my-attendance')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> My Attendance</button>`;
+                <button onclick="switchTab('hr-employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="users"></i> Employees</button>
+                <button onclick="switchTab('my-attendance')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> My Attendance</button>
+                <button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Request</button>`;
     if (isFull) {
-        html += `<button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Requests</button>
-                 <button onclick="switchTab('payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Payslip</button>
-                 <button onclick="switchTab('hr-employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="users"></i> Employees</button>
-                 <button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clipboard"></i> All Requests</button>
-                 <button onclick="switchTab('hr-payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> Payslip Management</button>
+        html += `<button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clipboard"></i> All Request</button>
+                 <button onclick="switchTab('attendance-summary')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="bar-chart-2"></i> Attendance Summary</button>
+                 <button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> Pending Approval</button>
                  <button onclick="switchTab('hr-guard-schedule')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="calendar"></i> Guard Schedule</button>
-                 <button onclick="switchTab('admin-helpdesk')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="shield"></i> Admin Helpdesk</button>
-                 <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="settings"></i> Settings</button>
-                 <button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> Pending Approvals</button>
-                 <button onclick="switchTab('attendance-summary')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="bar-chart-2"></i> Attendance Summary</button>`;
-    } else {
-        html += `<button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Requests</button>
                  <button onclick="switchTab('payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Payslip</button>
+                 <button onclick="switchTab('hr-payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> Payslip Management</button>
+                 <button onclick="switchTab('admin-helpdesk')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="shield"></i> Admin Helpdesk</button>
+                 <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="settings"></i> Settings</button>`;
+    } else {
+        html += `<button onclick="switchTab('payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i> My Payslip</button>
                  <button onclick="switchTab('helpdesk')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="help-circle"></i> HR Helpdesk</button>`;
         if (currentUserRole === 'approver' || currentUserRole === 'supervisor' || currentUserRole === 'manager') {
-            html += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> Pending Approvals</button>`;
+            html += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i> Pending Approval</button>`;
         }
     }
     document.getElementById('desktopNavMenu').innerHTML = html; document.getElementById('mobileNavMenu').innerHTML = html; feather.replace();
 }
 function switchTab(tabName) {
-    const allowed = ['dashboard','my-attendance','my-requests','payslip'];
-    if (fullPrivilegedEmails.includes(currentUser?.email)) allowed.push('hr-employees','hr-requests','hr-payslip','hr-guard-schedule','hr-settings','approvals','attendance-summary','admin-helpdesk');
+    const allowed = ['dashboard','hr-employees','my-attendance','my-requests','payslip'];
+    if (fullPrivilegedEmails.includes(currentUser?.email)) allowed.push('hr-requests','attendance-summary','approvals','hr-guard-schedule','hr-payslip','admin-helpdesk','hr-settings');
     else {
         allowed.push('helpdesk');
         if (currentUserRole === 'approver' || currentUserRole === 'supervisor' || currentUserRole === 'manager') allowed.push('approvals');
@@ -842,13 +842,13 @@ function closeMobileSidebar() { document.getElementById('mobileSidebar').classLi
 function saveSettings() { localStorage.setItem('device_ip', document.getElementById('deviceIp').value); alert('Settings saved'); }
 window.resetAllSystemData = async function() { if (currentUser?.email !== resetAuthorizedEmail) { alert("Only mod.rom@equiprime.ph can reset."); return; } const pin = prompt("Enter reset PIN:"); if (pin !== "Moderator@2026!") { alert("Incorrect PIN."); return; } if (!confirm("Delete ALL data?")) return; const collections = ['employees','attendance','requests','payslips','announcements','guardWeeklySchedules','users','departmentApprovers','employeeSupportRequests']; for (const col of collections) { const snap = await db.collection(col).get(); const batch = db.batch(); snap.docs.forEach(doc => batch.delete(doc.ref)); await batch.commit(); } alert("All data reset. Reloading..."); location.reload(); };
 
-// -------------------- WEATHER & RAIN --------------------
+// ==================== WEATHER & RAIN ====================
 async function fetchWeather() { try { const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=14.5995&longitude=120.9842&current_weather=true&timezone=Asia/Manila'); const data = await res.json(); if (data.current_weather) { const temp = Math.round(data.current_weather.temperature); const code = data.current_weather.weathercode; let condition = 'Rainy', icon = 'cloud-rain'; if (code === 0) { condition = 'Clear'; icon = 'sun'; } else if (code === 1 || code === 2) { condition = 'Partly Cloudy'; icon = 'cloud'; } else if (code === 3) { condition = 'Overcast'; icon = 'cloud'; } else if (code >= 51 && code <= 67) { condition = 'Drizzle/Rain'; icon = 'cloud-rain'; } else if (code >= 80 && code <= 99) { condition = 'Rain/Thunder'; icon = 'cloud-lightning'; } document.getElementById('weatherText').innerHTML = `${condition} · ${temp}°C`; const iconElem = document.querySelector('#liveWeatherWidget i'); if (iconElem) { iconElem.setAttribute('data-feather', icon); feather.replace(); } } else throw new Error(); } catch(e) { document.getElementById('weatherText').innerHTML = '🌧️ Rainy · 24°C'; } }
 fetchWeather(); setInterval(fetchWeather, 30*60*1000);
 let rainCanvas, ctx, drops = [], animId; function initRain() { const container = document.querySelector('.branding-half'); if (!container) return; rainCanvas = document.getElementById('rainCanvas'); if (!rainCanvas) return; function resizeAndReset() { const rect = container.getBoundingClientRect(); rainCanvas.width = rect.width; rainCanvas.height = rect.height; rainCanvas.style.width = rect.width + 'px'; rainCanvas.style.height = rect.height + 'px'; drops = []; const count = Math.floor(100 * (rainCanvas.width / 1920)); for (let i = 0; i < count; i++) drops.push({ x: Math.random() * rainCanvas.width, y: Math.random() * rainCanvas.height, length: Math.random() * 12 + 8, speed: Math.random() * 8 + 6, opacity: Math.random() * 0.4 + 0.2 }); } function drawRain() { if (!rainCanvas || !ctx) return; ctx.clearRect(0, 0, rainCanvas.width, rainCanvas.height); ctx.lineWidth = 2; ctx.lineCap = 'round'; for (let i=0; i<drops.length; i++) { let p = drops[i]; ctx.beginPath(); ctx.strokeStyle = `rgba(165,195,245,${p.opacity})`; ctx.moveTo(p.x, p.y); ctx.lineTo(p.x+1, p.y+p.length); ctx.stroke(); p.y += p.speed; if (p.y > rainCanvas.height) { p.y = -p.length; p.x = Math.random() * rainCanvas.width; } } animId = requestAnimationFrame(drawRain); } ctx = rainCanvas.getContext('2d'); window.addEventListener('resize', resizeAndReset); resizeAndReset(); drawRain(); }
 document.addEventListener('DOMContentLoaded', () => { initRain(); if(localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark'); });
 
-// -------------------- EVENT LISTENERS & AUTH --------------------
+// ==================== EVENT LISTENERS & AUTH ====================
 document.getElementById('loginBtnMain').addEventListener('click', loginWithEmail);
 document.getElementById('showSignupBtnMain').addEventListener('click', showSignup);
 document.getElementById('signupBtnMain').addEventListener('click', signupWithEmail);
