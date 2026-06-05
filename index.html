@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Complete HRIS</title>
+    <title>EQUIPRIME HR - Balanced Branding & Fixed Contrast</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -16,11 +16,15 @@
     <style>
         * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #f3f6fb; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
+        
+        /* Tab styles - improved light mode contrast */
         .tab-active { background-color: #004aad; color: white !important; font-weight: 700 !important; }
-        .tab-inactive { background-color: transparent; color: #1e293b !important; font-weight: 600 !important; }
+        .tab-inactive { background-color: transparent; color: #0f172a !important; font-weight: 600 !important; }
         .tab-inactive:hover { background-color: #e2e8f0; color: #0f172a !important; }
-        body.dark .tab-inactive { color: #cbd5e1 !important; }
+        body.dark .tab-inactive { color: #e2e8f0 !important; }
         body.dark .tab-inactive:hover { background-color: #334155; color: white !important; }
+        
+        /* Sidebar styles */
         .desktop-sidebar { width: 280px; background-color: #004aad; color: white; height: 100vh; position: sticky; top: 0; display: flex; flex-direction: column; padding: 1.5rem; overflow-y: auto; flex-shrink: 0; }
         .mobile-sidebar { position: fixed; top: 0; left: 0; width: 80%; max-width: 280px; height: 100%; z-index: 1000; background-color: #004aad; color: white; transform: translateX(-100%); transition: transform 0.3s ease; display: flex; flex-direction: column; padding: 1.25rem; overflow-y: auto; }
         .mobile-sidebar.open { transform: translateX(0); }
@@ -32,58 +36,81 @@
         .main-content { flex: 1; overflow-y: auto; padding: 1.5rem; }
         @media (max-width: 1023px) { .desktop-sidebar { display: none; } .mobile-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; } .main-content { padding: 1rem; } }
         @media (min-width: 1024px) { .mobile-header, .mobile-sidebar, .overlay { display: none; } }
+        
+        /* Modal */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10000; align-items: center; justify-content: center; }
         .modal-overlay.active { display: flex; }
         .modal-container { background: white; border-radius: 1rem; padding: 1.5rem; width: 90%; max-width: 28rem; max-height: 90vh; overflow-y: auto; }
         .feather { width: 1.25rem; height: 1.25rem; stroke: currentColor; stroke-width: 2; fill: none; }
+        
+        /* Stat cards */
         .stat-card { transition: all 0.25s ease; cursor: pointer; background: white; border-radius: 1.5rem; padding: 1.25rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
         body.dark .stat-card { background: #1e293b; }
         .stat-card:hover { transform: translateY(-3px); box-shadow: 0 20px 25px -12px rgba(0,0,0,0.1); }
+        .stat-card-icon { width: 48px; height: 48px; background: #eef2ff; border-radius: 1rem; display: flex; align-items: center; justify-content: center; }
+        body.dark .stat-card-icon { background: #334155; }
+        
+        /* Filters */
         .filter-select { background-color: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 0.75rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; width: 100%; cursor: pointer; }
         .filter-select option { background-color: #004aad; color: white; }
         .filter-section { border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.75rem; margin-bottom: 0.75rem; }
         .filter-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.6); margin-bottom: 0.25rem; display: block; }
+        
+        /* Guard schedule */
         .day-checkbox { width: 18px; height: 18px; cursor: pointer; }
         .schedule-day { display: flex; align-items: center; gap: 12px; padding: 8px; border-bottom: 1px solid #e2e8f0; flex-wrap: wrap; }
         body.dark .schedule-day { border-color: #334155; }
         .schedule-day select { width: 160px; }
         .editable-leave { cursor: pointer; color: #004aad; }
+        
+        /* Dark mode overrides for better visibility */
         body.dark { background: #0f172a; color: #e2e8f0; }
         body.dark .bg-white, body.dark .bg-slate-50, body.dark .bg-gray-50, body.dark .bg-slate-100, body.dark .stat-card,
         body.dark .modal-container, body.dark .bg-white.rounded-2xl, body.dark .bg-slate-50.rounded-xl,
         body.dark .bg-white.shadow-sm, body.dark .announcement-item {
             background-color: #1e293b !important;
-            color: #cbd5e1;
+            color: #e2e8f0;
         }
         body.dark .text-slate-700, body.dark .text-slate-800, body.dark .text-slate-600, body.dark .text-slate-500,
-        body.dark .text-gray-700, body.dark .text-gray-600 { color: #cbd5e1 !important; }
+        body.dark .text-gray-700, body.dark .text-gray-600 { color: #e2e8f0 !important; }
         body.dark .border, body.dark .border-slate-200, body.dark .border-gray-200 { border-color: #334155 !important; }
         body.dark .filter-select { background-color: #1e293b; border-color: #475569; color: white; }
         body.dark .desktop-sidebar, body.dark .mobile-sidebar { background-color: #0f172a !important; }
         body.dark .attendance-summary-container { background: #0f172a; }
         body.dark .summary-card, body.dark .employee-list, body.dark .calendar-box, body.dark .details-box { background: #1e293b; }
-        .adaptive-bg-gradient { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; transition: background 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+        
+        /* Light mode heading contrast fix */
+        .text-slate-800 { color: #0f172a !important; }
+        body.dark .text-slate-800 { color: #f1f5f9 !important; }
+        .welcome-heading { color: #0f172a; font-weight: 800; }
+        body.dark .welcome-heading { color: #f1f5f9; }
+        
+        /* Login / Branding area - balanced layout */
         .login-split { display: flex; width: 100%; min-height: 100vh; }
-        .branding-half { width: 60%; position: relative; background: linear-gradient(135deg, #0b2b44, #001c3d); overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; }
+        .branding-half { width: 60%; position: relative; background: linear-gradient(135deg, #0b2b44, #001c3d); overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 2rem; }
         .login-half { width: 40%; background: white; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
         body.dark .login-half { background: #1e293b; }
         .branding-half canvas { display: block; position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
-        .branding-content { position: relative; z-index: 5; width: 100%; max-width: 550px; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: space-between; text-align: center; background: rgba(0,0,0,0.2); border-radius: 48px; padding: 1.5rem; }
-        .branding-content a { pointer-events: auto; }
-        .branding-main-image { max-width: 85%; max-height: 85%; object-fit: contain; border-radius: 24px; box-shadow: 0 20px 30px -12px rgba(0,0,0,0.4); border: 2px solid rgba(255,255,255,0.2); }
-        .branding-logo { max-height: 60px; max-width: 80%; object-fit: contain; }
-        .branding-text-section h1 { font-size: 3.5rem; font-weight: 900; margin: 0; letter-spacing: -0.02em; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); line-height: 1.2; }
-        .branding-subtext { font-size: 0.9rem; opacity: 0.95; max-width: 320px; margin: 0 auto; }
-        .weather-widget { background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); border-radius: 999px; padding: 0.4rem 1rem; display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; font-weight: 500; margin-top: 0.25rem; }
-        .social-icons { display: flex; gap: 1.25rem; justify-content: center; margin-top: 0.25rem; }
+        .branding-content { position: relative; z-index: 5; width: 100%; max-width: 550px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; text-align: center; background: rgba(0,0,0,0.2); border-radius: 48px; padding: 2rem; backdrop-filter: blur(4px); }
+        .branding-image-wrapper { width: 100%; display: flex; justify-content: center; }
+        .branding-main-image { max-width: 80%; max-height: 200px; object-fit: contain; border-radius: 24px; box-shadow: 0 20px 30px -12px rgba(0,0,0,0.4); border: 2px solid rgba(255,255,255,0.2); }
+        .welcome-logo-wrapper { margin-top: 0.5rem; }
+        .branding-logo { max-height: 50px; max-width: 80%; object-fit: contain; }
+        .branding-text-section { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; }
+        .branding-text-section h1 { font-size: 3rem; font-weight: 900; margin: 0; letter-spacing: -0.02em; color: white; text-shadow: 0 2px 10px rgba(0,0,0,0.5); line-height: 1.2; }
+        .branding-subtext { font-size: 1rem; opacity: 0.95; max-width: 320px; margin: 0 auto; color: white; }
+        .weather-widget { background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); border-radius: 999px; padding: 0.4rem 1rem; display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; font-weight: 500; color: white; }
+        .social-icons { display: flex; gap: 1.25rem; justify-content: center; margin-top: 0.5rem; }
         .social-icons a { color: white; background: rgba(255,255,255,0.15); padding: 8px; border-radius: 50%; display: inline-flex; transition: 0.2s; }
         .social-icons a:hover { background: rgba(255,255,255,0.3); transform: translateY(-2px); }
-        .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; font-size: 0.75rem; margin-top: 0.25rem; }
+        .footer-links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; font-size: 0.75rem; margin-top: 0.5rem; }
         .footer-links a { color: rgba(255,255,255,0.9); transition: 0.2s; }
-        .copyright { font-size: 0.7rem; opacity: 0.8; margin-top: 0.25rem; }
+        .copyright { font-size: 0.7rem; opacity: 0.8; margin-top: 0.5rem; color: white; }
         .login-card { width: 100%; max-width: 360px; }
         .login-card h1 { color: #004aad !important; }
         body.dark .login-card h1 { color: white !important; }
+        
+        /* Attendance summary */
         .attendance-summary-container { background: #f8fafc; border-radius: 1rem; padding: 1.25rem; }
         .attendance-grid { display: grid; grid-template-columns: 280px 1fr; gap: 1.5rem; }
         .employee-list { background: white; border-radius: 1rem; padding: 1rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
@@ -103,63 +130,150 @@
         .details-table th, .details-table td { padding: 0.6rem; border: 1px solid #e5e7eb; text-align: left; }
         .status-badge { padding: 0.2rem 0.5rem; border-radius: 999px; color: white; font-size: 0.7rem; display: inline-block; }
         @media (max-width: 1024px) { .attendance-grid { grid-template-columns: 1fr; } .summary-cards { grid-template-columns: repeat(2, 1fr); } }
+        
+        /* Payslip modal */
         .payslip-modal-container { max-width: 1000px; width: 95%; background: white; border-radius: 1rem; overflow-y: auto; max-height: 90vh; }
         .payslip-card { background: #ffffff; padding: 1.5rem; border-radius: 1rem; border-top: 6px solid #004aad; }
         .net-green-bold { color: #10b981 !important; font-weight: 700 !important; }
         @media print { .no-print { display: none; } }
-        .stat-card-icon { width: 48px; height: 48px; background: #eef2ff; border-radius: 1rem; display: flex; align-items: center; justify-content: center; }
-        body.dark .stat-card-icon { background: #334155; }
+        
+        /* Additional light mode fixes */
+        .dark\:text-white { color: inherit; }
+        body.dark .dark\:text-white { color: white; }
+        .text-slate-500, .text-slate-400, .text-slate-600 { color: #475569; }
+        body.dark .text-slate-500, body.dark .text-slate-400, body.dark .text-slate-600 { color: #cbd5e1; }
     </style>
 </head>
 <body>
 <div id="adaptiveBgGradient" class="adaptive-bg-gradient"></div>
 
-<!-- LOGIN SCREEN (60/40) -->
+<!-- LOGIN SCREEN (balanced branding area) -->
 <div id="authScreen" class="login-split">
     <div class="branding-half" id="brandingHalf">
         <canvas id="rainCanvas"></canvas>
         <div class="branding-content">
-            <div class="branding-image-wrapper"><img src="branding-image.png" alt="EQUIPRIME" class="branding-main-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 300 200%27%3E%3Crect width=%27300%27 height=%27200%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2750%27 fill=%27white%27%3EBRAND%3C/text%3E%3C/svg%3E';"></div>
-            <div class="welcome-logo-wrapper"><img src="welcome logo.jpg" class="branding-logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';"></div>
+            <div class="branding-image-wrapper">
+                <img src="branding-image.png" alt="EQUIPRIME" class="branding-main-image" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 300 200%27%3E%3Crect width=%27300%27 height=%27200%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2750%27 fill=%27white%27%3EBRAND%3C/text%3E%3C/svg%3E';">
+            </div>
             <div class="branding-text-section">
                 <h1>Smart Choices.<br>Smarter Results.</h1>
                 <div class="branding-subtext">Empowering your workforce with streamlined HR management.</div>
-                <div class="weather-widget" id="liveWeatherWidget"><i data-feather="cloud-rain"></i><span id="weatherText">Loading...</span></div>
-                <div class="social-icons"><a href="#"><i data-feather="facebook"></i></a><a href="#"><i data-feather="instagram"></i></a><a href="#"><i data-feather="globe"></i></a></div>
-                <div class="footer-links"><a href="#">Privacy Policy</a><span>•</span><a href="#">Contact</a></div>
-                <div class="copyright">© 2026 EQUIPRIME</div>
             </div>
+            <div class="welcome-logo-wrapper">
+                <img src="welcome logo.jpg" class="branding-logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E';">
+            </div>
+            <div class="weather-widget" id="liveWeatherWidget"><i data-feather="cloud-rain"></i><span id="weatherText">Loading...</span></div>
+            <div class="social-icons">
+                <a href="#"><i data-feather="facebook"></i></a>
+                <a href="#"><i data-feather="instagram"></i></a>
+                <a href="#"><i data-feather="globe"></i></a>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a><span>•</span><a href="#">Contact</a>
+            </div>
+            <div class="copyright">© 2026 EQUIPRIME</div>
         </div>
     </div>
     <div class="login-half">
         <div class="login-card">
-            <div class="text-center mb-5"><img src="logo.png" class="h-12 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';"><h1 class="text-2xl font-extrabold mt-2">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-500 dark:text-slate-400 text-sm">smart choices · smarter results</p></div>
+            <div class="text-center mb-5">
+                <img src="logo.png" class="h-12 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E';">
+                <h1 class="text-2xl font-extrabold mt-2">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1>
+                <p class="text-slate-500 dark:text-slate-400 text-sm">smart choices · smarter results</p>
+            </div>
             <div id="authError" class="bg-red-50 text-red-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
             <div id="authSuccess" class="bg-green-50 text-green-600 p-2 rounded-lg text-sm mb-3 hidden"></div>
-            <div id="loginForm"><div class="space-y-3"><input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm"><input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm"><button id="loginBtnMain" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Login</button></div><div class="mt-3 text-center"><button id="showSignupBtnMain" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Don't have an account? Sign up</button></div></div>
-            <div id="signupForm" class="hidden"><div class="space-y-2"><input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm"><input type="email" id="signupEmail" placeholder="Email" class="w-full p-3 border rounded-xl text-sm"><input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm"><select id="signupRole" class="w-full p-3 border rounded-xl text-sm"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option></select><select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm"><option value="">Select Department</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select><button id="signupBtnMain" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Sign Up</button></div><div class="mt-3 text-center"><button id="showLoginBtnMain" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Already have an account? Login</button></div></div>
-            <div class="mt-5 p-3 bg-slate-50 rounded-xl text-sm"><p class="font-semibold mb-1">Authorized Users:</p><p>HR: hr@equiprime.ph / hr@equiprime.ph</p><p>Moderators: mod.rom / mod.dex (always active)</p></div>
+            <div id="loginForm">
+                <div class="space-y-3">
+                    <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl text-sm">
+                    <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm">
+                    <button id="loginBtnMain" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Login</button>
+                </div>
+                <div class="mt-3 text-center">
+                    <button id="showSignupBtnMain" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Don't have an account? Sign up</button>
+                </div>
+            </div>
+            <div id="signupForm" class="hidden">
+                <div class="space-y-2">
+                    <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl text-sm">
+                    <input type="email" id="signupEmail" placeholder="Email" class="w-full p-3 border rounded-xl text-sm">
+                    <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl text-sm">
+                    <select id="signupRole" class="w-full p-3 border rounded-xl text-sm">
+                        <option value="employee">Employee</option>
+                        <option value="supervisor">Supervisor</option>
+                        <option value="admin">Admin</option>
+                        <option value="manager">Manager</option>
+                    </select>
+                    <select id="signupDepartment" class="w-full p-3 border rounded-xl text-sm">
+                        <option value="">Select Department</option>
+                        <option value="Service Department">Service Department</option>
+                        <option value="After-sales Department">After-sales Department</option>
+                        <option value="Supply Chain Department">Supply Chain Department</option>
+                        <option value="HR Department">HR Department</option>
+                        <option value="Marketing Department">Marketing Department</option>
+                        <option value="Sales Department">Sales Department</option>
+                        <option value="IT/Asset Management Department">IT/Asset Management Department</option>
+                        <option value="Security Guard Department">Security Guard Department</option>
+                        <option value="Accounting Department">Accounting Department</option>
+                    </select>
+                    <button id="signupBtnMain" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold hover:bg-[#003a8a] transition">Sign Up</button>
+                </div>
+                <div class="mt-3 text-center">
+                    <button id="showLoginBtnMain" class="text-[#004aad] dark:text-blue-400 text-sm hover:underline">Already have an account? Login</button>
+                </div>
+            </div>
+            <div class="mt-5 p-3 bg-slate-50 dark:bg-slate-800 rounded-xl text-sm">
+                <p class="font-semibold mb-1 dark:text-white">Authorized Users:</p>
+                <p class="dark:text-white">HR: hr@equiprime.ph / hr@equiprime.ph</p>
+                <p class="dark:text-white">Moderators: mod.rom / mod.dex (always active)</p>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- MAIN APP (full structure) -->
+<!-- MAIN APP (full structure - same as before but with fixed contrast) -->
 <div id="mainApp" class="hidden app-container">
     <div id="overlay" class="overlay" onclick="closeMobileSidebar()"></div>
-    <div id="mobileSidebar" class="mobile-sidebar"><div class="flex justify-end mb-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x"></i></button></div><div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div><nav id="mobileNavMenu" class="space-y-2 flex-1"></nav><div class="mt-6 pt-4 border-t border-white/20"><div class="filter-section"><label class="filter-label">DEPARTMENT</label><select id="mobileFilterDepartment" class="filter-select" onchange="applyFilters()"><option value="all">All Departments</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select></div><div class="filter-section"><label class="filter-label">STATUS</label><select id="mobileFilterStatus" class="filter-select" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option><option value="terminated">Terminated</option></select></div><div class="filter-section"><label class="filter-label">LEAVE TYPE</label><select id="mobileFilterLeaveType" class="filter-select" onchange="applyFilters()"><option value="all">All Leave Types</option><option value="Official Business">Official Business</option><option value="Vacation Leave">Vacation Leave</option><option value="Sick Leave">Sick Leave</option><option value="Birthday Leave">Birthday Leave</option><option value="Emergency Leave">Emergency Leave</option><option value="Offset">Offset</option></select></div><div class="pt-2"><label class="filter-label">LAST UPDATED</label><div class="text-white/80 text-xs flex items-center gap-2"><i data-feather="calendar"></i><span id="mobileLastUpdatedTime">Loading...</span></div></div></div><div class="pt-4 border-t border-white/20 mt-2"><button onclick="toggleNightMode()" class="w-full flex items-center gap-3 text-white/70 hover:text-white p-3 rounded-xl"><i data-feather="moon"></i> Night Mode</button></div><div class="pt-2 border-t border-white/20 mt-2"><button onclick="logout()" class="w-full flex items-center gap-3 text-white/70 p-3 rounded-xl"><i data-feather="log-out"></i> Logout</button></div></div>
-    <div class="desktop-sidebar"><div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p></div><nav id="desktopNavMenu" class="space-y-2 flex-1"></nav><div class="mt-6 pt-4 border-t border-white/20"><div class="filter-section"><label class="filter-label">DEPARTMENT</label><select id="desktopFilterDepartment" class="filter-select" onchange="applyFilters()"><option value="all">All Departments</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select></div><div class="filter-section"><label class="filter-label">STATUS</label><select id="desktopFilterStatus" class="filter-select" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option><option value="terminated">Terminated</option></select></div><div class="filter-section"><label class="filter-label">LEAVE TYPE</label><select id="desktopFilterLeaveType" class="filter-select" onchange="applyFilters()"><option value="all">All Leave Types</option><option value="Official Business">Official Business</option><option value="Vacation Leave">Vacation Leave</option><option value="Sick Leave">Sick Leave</option><option value="Birthday Leave">Birthday Leave</option><option value="Emergency Leave">Emergency Leave</option><option value="Offset">Offset</option></select></div><div class="pt-2"><label class="filter-label">LAST UPDATED</label><div class="text-white/80 text-xs flex items-center gap-2"><i data-feather="calendar"></i><span id="desktopLastUpdatedTime">Loading...</span></div></div></div><div class="mt-4 pt-4 border-t border-white/20"><button onclick="toggleNightMode()" class="w-full flex items-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="moon"></i> Night Mode</button></div><div class="mt-auto pt-8"><div class="bg-white/10 rounded-2xl p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div><button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="log-out"></i> Logout</button></div></div></div>
+    <div id="mobileSidebar" class="mobile-sidebar">
+        <div class="flex justify-end mb-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x"></i></button></div>
+        <div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div>
+        <nav id="mobileNavMenu" class="space-y-2 flex-1"></nav>
+        <div class="mt-6 pt-4 border-t border-white/20">
+            <div class="filter-section"><label class="filter-label">DEPARTMENT</label><select id="mobileFilterDepartment" class="filter-select" onchange="applyFilters()"><option value="all">All Departments</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select></div>
+            <div class="filter-section"><label class="filter-label">STATUS</label><select id="mobileFilterStatus" class="filter-select" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option><option value="terminated">Terminated</option></select></div>
+            <div class="filter-section"><label class="filter-label">LEAVE TYPE</label><select id="mobileFilterLeaveType" class="filter-select" onchange="applyFilters()"><option value="all">All Leave Types</option><option value="Official Business">Official Business</option><option value="Vacation Leave">Vacation Leave</option><option value="Sick Leave">Sick Leave</option><option value="Birthday Leave">Birthday Leave</option><option value="Emergency Leave">Emergency Leave</option><option value="Offset">Offset</option></select></div>
+            <div class="pt-2"><label class="filter-label">LAST UPDATED</label><div class="text-white/80 text-xs flex items-center gap-2"><i data-feather="calendar"></i><span id="mobileLastUpdatedTime">Loading...</span></div></div>
+        </div>
+        <div class="pt-4 border-t border-white/20 mt-2"><button onclick="toggleNightMode()" class="w-full flex items-center gap-3 text-white/70 hover:text-white p-3 rounded-xl"><i data-feather="moon"></i> Night Mode</button></div>
+        <div class="pt-2 border-t border-white/20 mt-2"><button onclick="logout()" class="w-full flex items-center gap-3 text-white/70 p-3 rounded-xl"><i data-feather="log-out"></i> Logout</button></div>
+    </div>
+    <div class="desktop-sidebar">
+        <div class="mb-8"><h1 class="text-2xl font-bold">EQUIPRIME<span class="text-[#f4df17]">HR</span></h1><p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p></div>
+        <nav id="desktopNavMenu" class="space-y-2 flex-1"></nav>
+        <div class="mt-6 pt-4 border-t border-white/20">
+            <div class="filter-section"><label class="filter-label">DEPARTMENT</label><select id="desktopFilterDepartment" class="filter-select" onchange="applyFilters()"><option value="all">All Departments</option><option value="Service Department">Service Department</option><option value="After-sales Department">After-sales Department</option><option value="Supply Chain Department">Supply Chain Department</option><option value="HR Department">HR Department</option><option value="Marketing Department">Marketing Department</option><option value="Sales Department">Sales Department</option><option value="IT/Asset Management Department">IT/Asset Management Department</option><option value="Security Guard Department">Security Guard Department</option><option value="Accounting Department">Accounting Department</option></select></div>
+            <div class="filter-section"><label class="filter-label">STATUS</label><select id="desktopFilterStatus" class="filter-select" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option><option value="terminated">Terminated</option></select></div>
+            <div class="filter-section"><label class="filter-label">LEAVE TYPE</label><select id="desktopFilterLeaveType" class="filter-select" onchange="applyFilters()"><option value="all">All Leave Types</option><option value="Official Business">Official Business</option><option value="Vacation Leave">Vacation Leave</option><option value="Sick Leave">Sick Leave</option><option value="Birthday Leave">Birthday Leave</option><option value="Emergency Leave">Emergency Leave</option><option value="Offset">Offset</option></select></div>
+            <div class="pt-2"><label class="filter-label">LAST UPDATED</label><div class="text-white/80 text-xs flex items-center gap-2"><i data-feather="calendar"></i><span id="desktopLastUpdatedTime">Loading...</span></div></div>
+        </div>
+        <div class="mt-4 pt-4 border-t border-white/20"><button onclick="toggleNightMode()" class="w-full flex items-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="moon"></i> Night Mode</button></div>
+        <div class="mt-auto pt-8"><div class="bg-white/10 rounded-2xl p-4"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-[#f4df17] text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div><button onclick="logout()" class="mt-4 w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm"><i data-feather="log-out"></i> Logout</button></div></div>
+    </div>
 
     <div class="main-content">
         <div class="mobile-header"><button onclick="openMobileSidebar()" class="bg-white p-2 rounded-xl shadow-sm"><i data-feather="menu" class="text-slate-700"></i></button><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-[#004aad] text-white flex items-center justify-center text-xs font-bold" id="mobileUserInitials">HR</div><span id="mobileUserName" class="text-sm font-semibold text-slate-700">User</span></div></div>
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6"><div><h2 class="text-2xl lg:text-3xl font-bold text-slate-800 dark:text-white">Welcome Back, <span id="welcomeName">User</span></h2><p class="text-slate-500 dark:text-slate-400 text-sm mt-1" id="welcomeSubtitle"></p></div><div class="bg-yellow-50 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-200 px-3 py-1.5 rounded-full text-xs flex items-center gap-1"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div> Biometrics ready (demo mode)</div></div>
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+            <div><h2 class="text-2xl lg:text-3xl font-bold welcome-heading">Welcome Back, <span id="welcomeName">User</span></h2><p class="text-slate-500 dark:text-slate-400 text-sm mt-1" id="welcomeSubtitle"></p></div>
+            <div class="bg-yellow-50 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-200 px-3 py-1.5 rounded-full text-xs flex items-center gap-1"><div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div> Biometrics ready (demo mode)</div>
+        </div>
 
-        <!-- DASHBOARD -->
+        <!-- DASHBOARD TAB -->
         <div id="dashboard-tab" class="tab-content">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <div class="stat-card"><div><p class="text-slate-500 dark:text-slate-400 text-sm">Total Employees</p><h3 class="text-3xl font-bold mt-2" id="totalEmployees">0</h3></div><div class="stat-card-icon"><i data-feather="users" class="text-blue-600 dark:text-blue-400"></i></div></div>
-                <div class="stat-card"><div><p class="text-slate-500 dark:text-slate-400 text-sm">Department Attendance</p><h3 class="text-3xl font-bold mt-2" id="deptAttendance">0</h3></div><div class="stat-card-icon"><i data-feather="user-check" class="text-green-600 dark:text-green-400"></i></div></div>
-                <div class="stat-card"><div><p class="text-slate-500 dark:text-slate-400 text-sm">Pending Approvals</p><h3 class="text-3xl font-bold mt-2" id="pendingApprovals">0</h3></div><div class="stat-card-icon"><i data-feather="clock" class="text-orange-600 dark:text-orange-400"></i></div></div>
-                <div class="stat-card"><div><p class="text-slate-500 dark:text-slate-400 text-sm">Leave Balance</p><h3 class="text-2xl font-bold mt-2" id="myLeaveBalance">15</h3></div><div class="stat-card-icon"><i data-feather="calendar" class="text-purple-600 dark:text-purple-400"></i></div></div>
+                <div class="stat-card"><div><p class="text-slate-500 dark:text-slate-400 text-sm">Total Employees</p><h3 class="text-3xl font-bold mt-2 dark:text-white" id="totalEmployees">0</h3></div><div class="stat-card-icon"><i data-feather="users" class="text-blue-600 dark:text-blue-400"></i></div></div>
+                <div class="stat-card"><div><p class="text-slate-500 dark:text-slate-400 text-sm">Department Attendance</p><h3 class="text-3xl font-bold mt-2 dark:text-white" id="deptAttendance">0</h3></div><div class="stat-card-icon"><i data-feather="user-check" class="text-green-600 dark:text-green-400"></i></div></div>
+                <div class="stat-card"><div><p class="text-slate-500 dark:text-slate-400 text-sm">Pending Approvals</p><h3 class="text-3xl font-bold mt-2 dark:text-white" id="pendingApprovals">0</h3></div><div class="stat-card-icon"><i data-feather="clock" class="text-orange-600 dark:text-orange-400"></i></div></div>
+                <div class="stat-card"><div><p class="text-slate-500 dark:text-slate-400 text-sm">Leave Balance</p><h3 class="text-2xl font-bold mt-2 dark:text-white" id="myLeaveBalance">15</h3></div><div class="stat-card-icon"><i data-feather="calendar" class="text-purple-600 dark:text-purple-400"></i></div></div>
             </div>
             <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="file-text"></i> Quick Filing Options</h3><div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4"><button onclick="openRequestModal('Official Business')" class="flex flex-col items-center p-4 bg-slate-50 dark:bg-slate-700 rounded-xl hover:bg-blue-50 dark:hover:bg-slate-600 transition"><i data-feather="briefcase" class="text-blue-600 dark:text-blue-400 mb-2"></i><span class="text-sm font-medium dark:text-white">Official Business</span></button><button onclick="openRequestModal('Overtime')" class="flex flex-col items-center p-4 bg-slate-50 dark:bg-slate-700 rounded-xl hover:bg-orange-50 dark:hover:bg-slate-600"><i data-feather="clock" class="text-orange-600 dark:text-orange-400 mb-2"></i><span class="text-sm font-medium dark:text-white">Overtime</span></button><button onclick="openRequestModal('Certificate of Attendance')" class="flex flex-col items-center p-4 bg-slate-50 dark:bg-slate-700 rounded-xl hover:bg-green-50 dark:hover:bg-slate-600"><i data-feather="file" class="text-green-600 dark:text-green-400 mb-2"></i><span class="text-sm font-medium dark:text-white">Certificate</span></button><button onclick="openLeaveModal()" class="flex flex-col items-center p-4 bg-slate-50 dark:bg-slate-700 rounded-xl hover:bg-purple-50 dark:hover:bg-slate-600"><i data-feather="calendar" class="text-purple-600 dark:text-purple-400 mb-2"></i><span class="text-sm font-medium dark:text-white">Leave</span></button><button onclick="openOffsetsModal()" class="flex flex-col items-center p-4 bg-slate-50 dark:bg-slate-700 rounded-xl hover:bg-teal-50 dark:hover:bg-slate-600"><i data-feather="clock" class="text-teal-600 dark:text-teal-400 mb-2"></i><span class="text-sm font-medium dark:text-white">Offsets</span></button></div></div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="space-y-6"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="file-text"></i> My Recent Requests</h3><button onclick="openNewRequestMenu()" class="text-[#004aad] dark:text-blue-400 text-sm font-medium flex items-center gap-1 hover:underline"><i data-feather="plus-circle"></i> New Request</button></div><div id="myRequestsList" class="space-y-3 max-h-80 overflow-y-auto"></div><button onclick="switchTab('my-requests')" class="mt-4 w-full bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-white py-2.5 rounded-xl text-sm">View All My Requests</button></div></div><div class="space-y-6"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="users"></i> Employee Login Status</h3><div class="space-y-4"><div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-green-500 rounded-full"></div><h4 class="font-semibold dark:text-white">Logged In Today</h4><span id="loggedInCount" class="dark:text-white"></span></div><div id="loggedInList" class="space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-red-500 rounded-full"></div><h4 class="font-semibold dark:text-white">Missed Log In</h4><span id="missedCount" class="dark:text-white"></span></div><div id="missedList" class="space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-orange-500 rounded-full"></div><h4 class="font-semibold dark:text-white">Late</h4><span id="lateCountDashboard" class="dark:text-white"></span></div><div id="lateList" class="space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2 mb-3"><div class="w-3 h-3 bg-yellow-500 rounded-full"></div><h4 class="font-semibold dark:text-white">On Leave</h4><span id="onLeaveCount" class="dark:text-white"></span></div><div id="onLeaveList" class="space-y-2 max-h-40 overflow-y-auto"></div></div></div></div>
@@ -168,39 +282,39 @@
             <div class="mt-6"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="git-branch"></i> Approval Flow</h3><div class="grid grid-cols-1 sm:grid-cols-4 gap-4 text-sm dark:text-white"><div class="flex items-center gap-2"><span class="w-2 h-2 bg-yellow-500 rounded-full"></span> Employee submits</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-blue-500 rounded-full"></span> Secondary Approver (dept admin/manager)</div><div class="flex items-center gap-2"><span class="w-2 h-2 bg-green-500 rounded-full"></span> Final Approver (hrd@equiprime.ph)</div></div></div></div>
         </div>
 
-        <!-- MY ATTENDANCE -->
+        <!-- MY ATTENDANCE TAB -->
         <div id="my-attendance-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-green-700 transition clock-btn flex items-center gap-2"><i data-feather="log-in"></i> Clock In</button><button onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold hover:bg-red-700 transition clock-btn flex items-center gap-2"><i data-feather="log-out"></i> Clock Out</button></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="calendar"></i> Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-slate-700"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold dark:text-white" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500 dark:text-slate-400" id="todayTimeInfo"></div></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 flex items-center gap-2 dark:text-white"><i data-feather="list"></i> Attendance History</h3><div class="overflow-x-auto"><table class="w-full"><thead class="bg-slate-50 dark:bg-slate-700"><tr><th class="p-3 text-left text-sm font-semibold dark:text-white">Date</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Clock In</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Clock Out</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Hours Worked</th><th class="p-3 text-left text-sm font-semibold dark:text-white">Status</th></tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div></div>
 
-        <!-- MY REQUESTS -->
+        <!-- MY REQUESTS TAB -->
         <div id="my-requests-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="file-text"></i> My Requests</h2><button onclick="openNewRequestMenu()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">New Request</button></div><div id="allMyRequestsList" class="space-y-3"></div></div>
 
-        <!-- MY PAYSLIP -->
+        <!-- MY PAYSLIP TAB -->
         <div id="payslip-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="file-text"></i> My Payslip</h2><div id="employeePayslipList" class="space-y-4"></div></div>
 
-        <!-- PENDING APPROVALS -->
+        <!-- PENDING APPROVALS TAB -->
         <div id="approvals-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="clock"></i> Pending Approvals</h2><div id="pendingApprovalsList" class="space-y-4"></div></div>
 
-        <!-- ALL REQUESTS (HR) -->
+        <!-- ALL REQUESTS TAB (HR) -->
         <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="clipboard"></i> All Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
 
-        <!-- EMPLOYEES -->
+        <!-- EMPLOYEES TAB -->
         <div id="hr-employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold flex items-center gap-2 dark:text-white"><i data-feather="users"></i> Employees</h2><button onclick="showAddEmployeeModal()" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Add Employee</button></div><div id="hrEmployeesList" class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm overflow-hidden"></div></div>
 
-        <!-- GUARD SCHEDULE -->
+        <!-- GUARD SCHEDULE TAB -->
         <div id="hr-guard-schedule-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="calendar"></i> Guard Weekly Schedule Management</h2><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">Assign Weekly Rotational Schedule</h3><div class="space-y-4"><select id="guardEmployee" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><option value="">Select Guard</option></select><div id="weeklyScheduleContainer" class="space-y-2 border dark:border-slate-600 rounded-xl p-4 bg-slate-50 dark:bg-slate-700"><div class="schedule-day"><input type="checkbox" id="dayMonday" class="day-checkbox"> <label for="dayMonday" class="flex-1 dark:text-white">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayTuesday" class="day-checkbox"> <label for="dayTuesday" class="flex-1 dark:text-white">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayWednesday" class="day-checkbox"> <label for="dayWednesday" class="flex-1 dark:text-white">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayThursday" class="day-checkbox"> <label for="dayThursday" class="flex-1 dark:text-white">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="dayFriday" class="day-checkbox"> <label for="dayFriday" class="flex-1 dark:text-white">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="daySaturday" class="day-checkbox"> <label for="daySaturday" class="flex-1 dark:text-white">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div><div class="schedule-day"><input type="checkbox" id="daySunday" class="day-checkbox"> <label for="daySunday" class="flex-1 dark:text-white">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg text-sm w-40 dark:bg-slate-600 dark:text-white"><option value="">Off/Rest</option><option value="Morning (6AM-2PM)">Morning (6AM-2PM)</option><option value="Afternoon (2PM-10PM)">Afternoon (2PM-10PM)</option><option value="Night (10PM-6AM)">Night (10PM-6AM)</option></select></div></div><button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Assign Weekly Schedule</button></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">Assigned Guard Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
 
-        <!-- ATTENDANCE SUMMARY -->
+        <!-- ATTENDANCE SUMMARY TAB -->
         <div id="attendance-summary-tab" class="tab-content hidden"><div class="attendance-summary-container"><div class="attendance-toolbar flex justify-between items-center flex-wrap gap-4 mb-4"><h2 class="dark:text-white">Attendance Summary</h2><div class="flex gap-2"><select id="summaryYear" class="dark:bg-slate-700 dark:text-white border dark:border-slate-600 rounded-lg"></select><select id="summaryMonth" class="dark:bg-slate-700 dark:text-white border dark:border-slate-600 rounded-lg"><option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option></select><button id="refreshSummaryBtn" class="bg-[#004aad] text-white px-4 py-2 rounded-xl text-sm">Load</button></div></div><div class="attendance-grid"><div class="employee-list"><h3 class="dark:text-white">Employees</h3><div id="employeeListContainer"></div></div><div class="summary-content"><div class="summary-cards"><div class="summary-card"><small class="dark:text-slate-300">Completed Days</small><h3 id="completedCount" class="dark:text-white">0</h3></div><div class="summary-card"><small class="dark:text-slate-300">Late</small><h3 id="lateCountSummary" class="dark:text-white">0</h3></div><div class="summary-card"><small class="dark:text-slate-300">Incomplete</small><h3 id="missingCountSummary" class="dark:text-white">0</h3></div><div class="summary-card"><small class="dark:text-slate-300">Leave</small><h3 id="leaveCountSummary" class="dark:text-white">0</h3></div></div><div class="calendar-box"><h3 class="mb-4 dark:text-white">Attendance Calendar</h3><div id="calendarGrid" class="calendar-grid"></div></div><div class="details-box"><h3 class="mb-4 dark:text-white">Employee Attendance Details</h3><table class="details-table"><thead><tr><th class="dark:text-white">Date</th><th class="dark:text-white">Clock In</th><th class="dark:text-white">Clock Out</th><th class="dark:text-white">Status</th></tr></thead><tbody id="attendanceDetails"></tbody></table></div></div></div></div></div>
 
-        <!-- PAYSLIP MANAGEMENT -->
+        <!-- PAYSLIP MANAGEMENT TAB -->
         <div id="hr-payslip-tab" class="tab-content hidden"><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><select id="cutOffPeriod" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><option value="first">1st cut-off (1st-15th)</option><option value="second">2nd cut-off (16th-31st)</option></select><input type="number" id="dailyRate" value="850" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Daily Rate"><input type="number" id="daysPresent" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Days Present"><input type="number" id="overtimePay" value="0" step="0.01" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Overtime Pay"><input type="number" id="otherEarnings" value="0" step="0.01" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Other Earnings"><input type="number" id="otherDeduction" value="0" step="0.01" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Other Deduction"><button id="generatePayslipBtn" class="w-full bg-[#004aad] text-white py-3 rounded-xl font-semibold">Generate Payslip</button></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
 
-        <!-- SETTINGS -->
+        <!-- SETTINGS TAB -->
         <div id="hr-settings-tab" class="tab-content hidden"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 space-y-6"><div><label class="font-semibold text-sm dark:text-white">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border dark:border-slate-600 rounded-xl mt-1 dark:bg-slate-700 dark:text-white" placeholder="192.168.1.100"></div><button id="saveSettingsBtn" class="bg-[#004aad] text-white px-5 py-2 rounded-xl">Save Settings</button><hr class="dark:border-slate-600"><div id="resetButtonContainer"></div></div></div>
     </div>
 </div>
 
-<!-- MODALS (same as working version, but shortened for brevity - all modals are present in final code) -->
+<!-- MODALS (all modals remain unchanged but with dark mode support) -->
 <div id="announcementModal" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')"><i data-feather="x" class="dark:text-white"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><input type="text" id="announcementTitle" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Title"><textarea id="announcementContent" rows="3" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Content"></textarea></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1 dark:text-white">Cancel</button></div></div></div>
 <div id="requestModalOverlay" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')"><i data-feather="x" class="dark:text-white"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><input type="date" id="reqEndDate" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><textarea id="reqReason" rows="3" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1 dark:text-white">Cancel</button></div></div></div>
 <div id="leaveModalOverlay" class="modal-overlay"><div class="modal-container dark:bg-slate-800"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')"><i data-feather="x" class="dark:text-white"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 dark:bg-red-900/30 rounded-xl text-left dark:text-white">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 dark:bg-orange-900/30 rounded-xl text-left dark:text-white">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-left dark:text-white">Vacation Leave</button></div></div></div>
@@ -212,7 +326,7 @@
 <div id="payslipModal" class="modal-overlay"><div class="payslip-modal-container dark:bg-slate-800"><div class="payslip-card dark:bg-slate-800 dark:text-white"><div class="flex justify-between items-start mb-4 no-print"><h2 class="text-xl font-bold">Payslip Statement</h2><button onclick="closeModal('payslipModal')"><i data-feather="x" class="dark:text-white"></i></button></div><div id="payslipContent"></div><div class="text-right no-print mt-4"><button onclick="window.print()" class="bg-[#004aad] text-white px-4 py-2 rounded-lg text-sm">Print Statement</button></div></div></div></div>
 
 <script>
-// -------------------- FIREBASE --------------------
+// -------------------- FIREBASE & GLOBALS (same as previous fully working version) --------------------
 const firebaseConfig = {
     apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
     authDomain: "equiprime-hr.firebaseapp.com",
@@ -225,7 +339,6 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// -------------------- GLOBALS --------------------
 let currentUser = null, currentUserData = null, currentUserRole = null;
 let allEmployees = [], allRequests = [], allAttendance = [], allPayslips = [], allAnnouncements = [], guardWeeklySchedules = [];
 let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
@@ -234,7 +347,6 @@ const fullPrivilegedEmails = [...SYSTEM_ADMIN_EMAILS];
 const resetAuthorizedEmail = "mod.rom@equiprime.ph";
 const editAuthorizedEmails = ["mod.rom@equiprime.ph", "mod.dex@equiprime.ph"];
 
-// -------------------- AUTO-CREATE SYSTEM ADMIN RECORDS --------------------
 async function ensureSystemAdminRecord(user) {
     const email = user.email;
     if (!SYSTEM_ADMIN_EMAILS.includes(email)) return false;
@@ -251,9 +363,7 @@ async function ensureSystemAdminRecord(user) {
         await grantApproverPermissions(user.uid, role, "HR Department");
         return true;
     } else {
-        if (doc.data().status !== 'active') {
-            await docRef.update({ status: 'active' });
-        }
+        if (doc.data().status !== 'active') await docRef.update({ status: 'active' });
         return true;
     }
 }
@@ -265,9 +375,7 @@ async function grantApproverPermissions(employeeId, role, department) {
     const doc = await deptRef.get();
     if (doc.exists) {
         const current = doc.data().secondaryApprovers || [];
-        if (!current.includes(employeeId)) {
-            await deptRef.update({ secondaryApprovers: firebase.firestore.FieldValue.arrayUnion(employeeId) });
-        }
+        if (!current.includes(employeeId)) await deptRef.update({ secondaryApprovers: firebase.firestore.FieldValue.arrayUnion(employeeId) });
     } else {
         await deptRef.set({ secondaryApprovers: [employeeId], finalApprover: "hrd@equiprime.ph" });
     }
@@ -278,9 +386,7 @@ async function revokeApproverPermissions(employeeId, department) {
     if (emp && SYSTEM_ADMIN_EMAILS.includes(emp.email)) return;
     const deptRef = db.collection('departmentApprovers').doc(department);
     const doc = await deptRef.get();
-    if (doc.exists) {
-        await deptRef.update({ secondaryApprovers: firebase.firestore.FieldValue.arrayRemove(employeeId) });
-    }
+    if (doc.exists) await deptRef.update({ secondaryApprovers: firebase.firestore.FieldValue.arrayRemove(employeeId) });
 }
 
 async function getApproverForDepartment(department, stage) {
@@ -291,9 +397,7 @@ async function getApproverForDepartment(department, stage) {
         const secondaryIds = data.secondaryApprovers || [];
         for (let id of secondaryIds) {
             const empDoc = await db.collection('employees').doc(id).get();
-            if (empDoc.exists && empDoc.data().status === 'active') {
-                return { email: empDoc.data().email, isFallback: false };
-            }
+            if (empDoc.exists && empDoc.data().status === 'active') return { email: empDoc.data().email, isFallback: false };
         }
         return { email: data.finalApprover || "hrd@equiprime.ph", isFallback: true };
     } else {
@@ -303,13 +407,10 @@ async function getApproverForDepartment(department, stage) {
 
 async function getDirectApproverForSubmitter(userEmail, role, department) {
     if (SYSTEM_ADMIN_EMAILS.includes(userEmail)) return { email: "hrd@equiprime.ph", isDirect: true };
-    if (role === "admin" || role === "supervisor" || role === "manager") {
-        return { email: "hrd@equiprime.ph", isDirect: true };
-    }
+    if (role === "admin" || role === "supervisor" || role === "manager") return { email: "hrd@equiprime.ph", isDirect: true };
     return null;
 }
 
-// -------------------- DATA LOADING --------------------
 async function loadAllData() {
     const empSnap = await db.collection('employees').get();
     allEmployees = empSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -350,7 +451,6 @@ function getFilteredEmployees() {
     return filtered;
 }
 
-// -------------------- ATTENDANCE SUMMARY --------------------
 function populateYearDropdown() {
     const yearSelect = document.getElementById('summaryYear');
     if (!yearSelect) return;
@@ -428,12 +528,11 @@ async function loadEmployeeCalendar(employeeId) {
             const [inH,inM] = attRecord.timeIn.split(':').map(Number);
             if (inH*60+inM > 8*60) { status = 'Late'; badgeClass = 'late'; }
         }
-        return `<tr><td>${day.date}</td><td>${attRecord?.timeIn || '--'}</td><td>${attRecord?.timeOut || '--'}</td><td><span class="status-badge ${badgeClass}">${status}</span></td></tr>`;
+        return `<tr><td>${day.date}</td><td>${attRecord?.timeIn || '--'}</td><td>${attRecord?.timeOut || '--'}</td><td><span class="status-badge ${badgeClass}">${status}</span>NonNull</tr>`;
     }).join('');
     document.getElementById('attendanceDetails').innerHTML = detailsRows;
 }
 
-// -------------------- CLOCK IN/OUT --------------------
 function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:false }); }
 async function clockIn() {
     if (SYSTEM_ADMIN_EMAILS.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
@@ -472,11 +571,10 @@ function refreshMyAttendanceTab() {
     document.getElementById('todayStatusIcon').innerHTML = todayRec?.timeIn ? '✅' : '⏰';
     document.getElementById('todayStatusText').innerHTML = todayRec?.timeIn ? (todayRec.timeOut ? 'Completed' : 'Clocked In') : 'Not clocked in yet';
     document.getElementById('todayTimeInfo').innerHTML = todayRec?.timeIn ? `In: ${todayRec.timeIn} | Out: ${todayRec.timeOut||'--'} | Hours: ${todayRec.hoursWorked||'--'}` : '';
-    const historyHtml = userAtt.map(a => `<tr class="border-t"><td class="p-3">${a.date}</td><td class="p-3">${a.timeIn||'--'}</td><td class="p-3">${a.timeOut||'--'}</td><td class="p-3">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span></td></table>`).join('');
+    const historyHtml = userAtt.map(a => `<tr class="border-t"><td class="p-3">${a.date}</td><td class="p-3">${a.timeIn||'--'}</td><td class="p-3">${a.timeOut||'--'}</td><td class="p-3">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100':'bg-yellow-100'}">${a.timeOut?'Complete':'In Progress'}</span></td></tr>`).join('');
     document.getElementById('attendanceHistoryList').innerHTML = historyHtml || '<tr><td colspan="5" class="p-4 text-center">No records</td></tr>';
 }
 
-// -------------------- ANNOUNCEMENTS --------------------
 async function loadAnnouncements() {
     const snap = await db.collection('announcements').get();
     allAnnouncements = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -507,7 +605,6 @@ async function saveAnnouncement() {
 }
 async function deleteAnnouncement() { const id = document.getElementById('announcementId').value; if (!id) return; if (confirm("Delete announcement?")) { await db.collection('announcements').doc(id).delete(); allAnnouncements = allAnnouncements.filter(a=>a.id!==id); closeModal('announcementModal'); renderAnnouncements(); } }
 
-// -------------------- GUARD SCHEDULE --------------------
 async function assignGuardWeeklySchedule() {
     const empId = document.getElementById('guardEmployee').value;
     if (!empId) { alert("Select a guard."); return; }
@@ -536,7 +633,6 @@ function renderGuardSchedules() {
 }
 async function deleteGuardSchedule(id) { if (confirm("Delete this schedule?")) { await db.collection('guardWeeklySchedules').doc(id).delete(); guardWeeklySchedules = guardWeeklySchedules.filter(s => s.id !== id); renderGuardSchedules(); } }
 
-// -------------------- REQUESTS & APPROVALS --------------------
 async function submitRequest() {
     const type = document.getElementById('requestTypeValue').value, start = document.getElementById('reqStartDate').value, end = document.getElementById('reqEndDate').value, reason = document.getElementById('reqReason').value;
     if (!start || !end) { alert("Select dates"); return; }
@@ -590,7 +686,6 @@ async function approveSecondary(id) { const r = allRequests.find(r => r.id === i
 async function approveFinal(id) { const r = allRequests.find(r => r.id === id); if (r && r.status === "pending_final" && r.approverEmail === currentUser.email) { await db.collection('requests').doc(id).update({ status: "approved", finalApproved: true }); r.status = "approved"; r.finalApproved = true; refreshDashboard(); alert("Request fully approved."); } else alert("Not authorized."); }
 async function rejectRequest(id) { const r = allRequests.find(r => r.id === id); if (r && (r.status === "pending_secondary" || r.status === "pending_final")) { await db.collection('requests').doc(id).update({ status: "rejected" }); r.status = "rejected"; refreshDashboard(); alert("Request rejected."); } else alert("Cannot reject."); }
 
-// -------------------- EMPLOYEE MANAGEMENT --------------------
 async function addEmployee() {
     const name = document.getElementById('newEmpName').value, email = document.getElementById('newEmpEmail').value, dept = document.getElementById('newEmpDept').value, role = document.getElementById('newEmpRole').value, pin = document.getElementById('newEmpPin').value, password = document.getElementById('newEmpPass').value;
     if (!name || !email || !dept || !pin || !password) { alert("Please fill all fields"); return; }
@@ -636,7 +731,6 @@ async function deleteEmployee(id) { if (confirm("Delete employee?")) { const emp
 function editLeaveBalance(empId, empName, currentBalance) { document.getElementById('editEmployeeId').value = empId; document.getElementById('editEmployeeName').value = empName; document.getElementById('editLeaveBalanceSimple').value = currentBalance; openModal('editLeaveModal'); }
 async function saveLeaveBalance() { const empId = document.getElementById('editEmployeeId').value, newBal = parseInt(document.getElementById('editLeaveBalanceSimple').value); if (isNaN(newBal)) { alert("Enter valid number"); return; } await db.collection('employees').doc(empId).update({ leaveBalance: newBal }); const idx = allEmployees.findIndex(e => e.id === empId); if (idx !== -1) allEmployees[idx].leaveBalance = newBal; closeModal('editLeaveModal'); refreshDashboard(); alert(`Leave balance updated to ${newBal} days`); }
 
-// -------------------- PAYSLIP --------------------
 function computeMonthlyDeductions(monthlySalary) {
     const sss = Math.min(monthlySalary,30000)*0.045, philHealth = Math.min(monthlySalary,100000)*0.025, pagIbig = monthlySalary>10000 ? 200 : 100;
     let taxableIncome = monthlySalary - (sss+philHealth+pagIbig), tax = 0;
@@ -660,7 +754,6 @@ async function generatePayslipAuto() {
 function refreshHrPayslip() { const sel = document.getElementById('payslipEmployee'); if (sel) sel.innerHTML = '<option value="">Select Employee</option>' + allEmployees.map(e => `<option value="${e.id}">${e.name} - ${e.dept}</option>`).join(''); const hist = document.getElementById('payslipHistory'); if (hist) hist.innerHTML = allPayslips.slice().reverse().map(p => `<div class="bg-slate-50 dark:bg-slate-700 p-3 rounded mb-2"><b class="dark:text-white">${p.employeeName}</b> - ${p.month} (${p.cutOff})<br><span class="net-green-bold">Net: ₱${p.netPay}</span></div>`).join('') || '<div class="dark:text-white">No payslips</div>'; }
 function refreshEmployeePayslip() { const my = allPayslips.filter(p => p.employeeEmail === currentUser?.email); document.getElementById('employeePayslipList').innerHTML = my.map(p => `<div class="bg-white dark:bg-slate-800 p-3 rounded shadow dark:text-white">${p.month} (${p.cutOff})<br><span class="net-green-bold">Net: ₱${p.netPay}</span></div>`).join('') || '<div class="dark:text-white">No payslips</div>'; }
 
-// -------------------- DASHBOARD & UI --------------------
 function refreshDashboard() {
     const filtered = getFilteredEmployees();
     document.getElementById('totalEmployees').innerText = filtered.length;
@@ -727,13 +820,11 @@ function closeMobileSidebar() { document.getElementById('mobileSidebar').classLi
 function saveSettings() { localStorage.setItem('device_ip', document.getElementById('deviceIp').value); alert('Settings saved'); }
 window.resetAllSystemData = async function() { if (currentUser?.email !== resetAuthorizedEmail) { alert("Only mod.rom@equiprime.ph can reset."); return; } const pin = prompt("Enter reset PIN:"); if (pin !== "Moderator@2026!") { alert("Incorrect PIN."); return; } if (!confirm("Delete ALL data?")) return; const collections = ['employees','attendance','requests','payslips','announcements','guardWeeklySchedules','users','departmentApprovers']; for (const col of collections) { const snap = await db.collection(col).get(); const batch = db.batch(); snap.docs.forEach(doc => batch.delete(doc.ref)); await batch.commit(); } alert("All data reset. Reloading..."); location.reload(); };
 
-// -------------------- WEATHER & RAIN --------------------
 async function fetchWeather() { try { const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=14.5995&longitude=120.9842&current_weather=true&timezone=Asia/Manila'); const data = await res.json(); if (data.current_weather) { const temp = Math.round(data.current_weather.temperature); const code = data.current_weather.weathercode; let condition = 'Rainy', icon = 'cloud-rain'; if (code === 0) { condition = 'Clear'; icon = 'sun'; } else if (code === 1 || code === 2) { condition = 'Partly Cloudy'; icon = 'cloud'; } else if (code === 3) { condition = 'Overcast'; icon = 'cloud'; } else if (code >= 51 && code <= 67) { condition = 'Drizzle/Rain'; icon = 'cloud-rain'; } else if (code >= 80 && code <= 99) { condition = 'Rain/Thunder'; icon = 'cloud-lightning'; } document.getElementById('weatherText').innerHTML = `${condition} · ${temp}°C`; const iconElem = document.querySelector('#liveWeatherWidget i'); if (iconElem) { iconElem.setAttribute('data-feather', icon); feather.replace(); } } else throw new Error(); } catch(e) { document.getElementById('weatherText').innerHTML = '🌧️ Rainy · 24°C'; } }
 fetchWeather(); setInterval(fetchWeather, 30*60*1000);
 let rainCanvas, ctx, drops = [], animId; function initRain() { const container = document.querySelector('.branding-half'); if (!container) return; rainCanvas = document.getElementById('rainCanvas'); if (!rainCanvas) return; function resizeAndReset() { const rect = container.getBoundingClientRect(); rainCanvas.width = rect.width; rainCanvas.height = rect.height; rainCanvas.style.width = rect.width + 'px'; rainCanvas.style.height = rect.height + 'px'; drops = []; const count = Math.floor(100 * (rainCanvas.width / 1920)); for (let i = 0; i < count; i++) drops.push({ x: Math.random() * rainCanvas.width, y: Math.random() * rainCanvas.height, length: Math.random() * 12 + 8, speed: Math.random() * 8 + 6, opacity: Math.random() * 0.4 + 0.2 }); } function drawRain() { if (!rainCanvas || !ctx) return; ctx.clearRect(0, 0, rainCanvas.width, rainCanvas.height); ctx.lineWidth = 2; ctx.lineCap = 'round'; for (let i=0; i<drops.length; i++) { let p = drops[i]; ctx.beginPath(); ctx.strokeStyle = `rgba(165,195,245,${p.opacity})`; ctx.moveTo(p.x, p.y); ctx.lineTo(p.x+1, p.y+p.length); ctx.stroke(); p.y += p.speed; if (p.y > rainCanvas.height) { p.y = -p.length; p.x = Math.random() * rainCanvas.width; } } animId = requestAnimationFrame(drawRain); } ctx = rainCanvas.getContext('2d'); window.addEventListener('resize', resizeAndReset); resizeAndReset(); drawRain(); }
 document.addEventListener('DOMContentLoaded', () => { initRain(); if(localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark'); });
 
-// -------------------- EVENT LISTENERS --------------------
 document.getElementById('loginBtnMain').addEventListener('click', loginWithEmail);
 document.getElementById('showSignupBtnMain').addEventListener('click', showSignup);
 document.getElementById('signupBtnMain').addEventListener('click', signupWithEmail);
