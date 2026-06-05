@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Fully Working</title>
+    <title>EQUIPRIME HR - Fixed Department Error</title>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
@@ -14,7 +14,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <style>
-        /* ========== ALL STYLES (unchanged from working version) ========== */
+        /* All styles unchanged from previous working version */
         * { font-family: 'Inter', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
         body { background: #f3f6fb; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
         .desktop-sidebar { width: 300px; background-color: #011F7B; color: white; height: 100vh; position: sticky; top: 0; display: flex; flex-direction: column; padding: 1.5rem; overflow-y: auto; flex-shrink: 0; }
@@ -151,7 +151,7 @@
 <body>
 <div id="adaptiveBgGradient" class="adaptive-bg-gradient"></div>
 
-<!-- LOGIN SCREEN (unchanged) -->
+<!-- LOGIN SCREEN -->
 <div id="authScreen" class="login-split">
     <div class="branding-half" id="brandingHalf">
         <canvas id="rainCanvas"></canvas>
@@ -177,7 +177,7 @@
     </div>
 </div>
 
-<!-- MAIN APP (full DOM) -->
+<!-- MAIN APP -->
 <div id="mainApp" class="hidden app-container">
     <div id="overlay" class="overlay" onclick="closeMobileSidebar()"></div>
     <!-- Mobile Sidebar -->
@@ -253,7 +253,7 @@
         <div id="hr-payslip-tab" class="tab-content hidden"><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">Generate Payslip</h3><div class="space-y-4"><select id="payslipEmployee" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><option value="">Select Employee</option></select><input type="month" id="payslipMonth" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Payroll Month"><select id="cutOffPeriod" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><option value="first">1st cut-off (1st-15th)</option><option value="second">2nd cut-off (16th-31st)</option></select><input type="number" id="dailyRate" value="850" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Daily Rate (₱)"><input type="number" id="daysPresent" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Days Present (this cut‑off)"><input type="number" id="overtimePay" value="0" step="0.01" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Overtime Pay (₱)"><input type="number" id="otherEarnings" value="0" step="0.01" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Other Earnings / Allowances (₱)"><input type="number" id="otherDeduction" value="0" step="0.01" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Other Deductions (loan, advance, etc.)"><button id="generatePayslipBtn" class="w-full bg-[#011F7B] text-white py-3 rounded-xl font-semibold">Generate Payslip</button></div><p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Standard deductions (SSS, PhilHealth, Pag-IBIG, withholding tax) are auto‑computed.</p></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div></div>
         <div id="admin-helpdesk-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="shield"></i> Admin Helpdesk – Employee Requests</h2><div id="adminHelpdeskList" class="space-y-4"></div></div>
         <div id="hr-settings-tab" class="tab-content hidden"><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 space-y-6"><div><label class="font-semibold text-sm dark:text-white">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border dark:border-slate-600 rounded-xl mt-1 dark:bg-slate-700 dark:text-white" placeholder="192.168.1.100"></div><button id="saveSettingsBtn" class="bg-[#011F7B] text-white px-5 py-2 rounded-xl">Save Settings</button><hr class="dark:border-slate-600"><div id="resetButtonContainer"></div></div></div>
-        <div id="helpdesk-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex-items-center gap-2 dark:text-white"><i data-feather="help-circle"></i> HR Helpdesk</h2><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4 dark:text-white">Submit a Request to HR / Moderators</h3><div class="space-y-4"><select id="helpdeskType" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><option value="PIN Reset">PIN Reset Request</option><option value="Password Reset">Password Reset Request</option><option value="Profile Update">Profile Information Update</option><option value="Attendance Correction">Attendance Correction Request</option><option value="General Inquiry">General HR Inquiry / Concern</option></select><textarea id="helpdeskMessage" rows="4" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Please provide details..."></textarea><button onclick="submitHelpdeskRequest()" class="bg-[#011F7B] text-white px-6 py-2 rounded-xl font-semibold hover:bg-[#002a9e]">Submit Request</button></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">My Helpdesk Requests</h3><div id="myHelpdeskRequests" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div>
+        <div id="helpdesk-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 flex items-center gap-2 dark:text-white"><i data-feather="help-circle"></i> HR Helpdesk</h2><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4 dark:text-white">Submit a Request to HR / Moderators</h3><div class="space-y-4"><select id="helpdeskType" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white"><option value="PIN Reset">PIN Reset Request</option><option value="Password Reset">Password Reset Request</option><option value="Profile Update">Profile Information Update</option><option value="Attendance Correction">Attendance Correction Request</option><option value="General Inquiry">General HR Inquiry / Concern</option></select><textarea id="helpdeskMessage" rows="4" class="w-full p-3 border dark:border-slate-600 rounded-xl dark:bg-slate-700 dark:text-white" placeholder="Please provide details..."></textarea><button onclick="submitHelpdeskRequest()" class="bg-[#011F7B] text-white px-6 py-2 rounded-xl font-semibold hover:bg-[#002a9e]">Submit Request</button></div></div><div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4 dark:text-white">My Helpdesk Requests</h3><div id="myHelpdeskRequests" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div>
     </div>
 </div>
 
@@ -269,7 +269,7 @@
 <div id="payslipModal" class="modal-overlay"><div class="payslip-modal-container dark:bg-slate-800"><div class="payslip-card dark:bg-slate-800 dark:text-white"><div class="flex justify-between items-start mb-4 no-print"><h2 class="text-xl font-bold">Payslip Statement</h2><button onclick="closeModal('payslipModal')"><i data-feather="x" class="dark:text-white"></i></button></div><div id="payslipContent"></div><div class="text-right no-print mt-4"><button onclick="window.print()" class="bg-[#011F7B] text-white px-4 py-2 rounded-lg text-sm">Print Statement</button></div></div></div></div>
 
 <script>
-// ==================== FIREBASE CONFIG ====================
+// ==================== FIREBASE ====================
 const firebaseConfig = {
     apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
     authDomain: "equiprime-hr.firebaseapp.com",
@@ -562,13 +562,13 @@ async function loadEmployeeCalendar(employeeId) {
             const [inH,inM] = attRecord.timeIn.split(':').map(Number);
             if (inH*60+inM > 8*60) { status = 'Late'; badgeClass = 'late'; }
         }
-        return `<tr><td>${day.date}</td><td>${attRecord?.timeIn || '--'}</td><td>${attRecord?.timeOut || '--'}</td><td><span class="status-badge ${badgeClass}">${status}</span>NonNull</tr>`;
+        return `<tr><td>${day.date}</td><td>${attRecord?.timeIn || '--'}</td><td>${attRecord?.timeOut || '--'}</td><td><span class="status-badge ${badgeClass}">${status}</span>NonNull</td>`;
     }).join('');
     const detailsBody = document.getElementById('attendanceDetails');
     if (detailsBody) detailsBody.innerHTML = detailsRows;
 }
 
-// ==================== CLOCK IN/OUT ====================
+// ==================== CLOCK IN/OUT (FIXED: fallback for missing department) ====================
 function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:false }); }
 async function clockIn() {
     if (SYSTEM_ADMIN_EMAILS.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
@@ -576,7 +576,9 @@ async function clockIn() {
     const today = new Date().toISOString().split('T')[0];
     const time = getCurrentTime24();
     if (allAttendance.find(a => a.userId === currentUser.uid && a.date === today)) { alert("Already clocked in today!"); return; }
-    const newAtt = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: currentUserData.department, date: today, timeIn: time, timeOut: null, status: "Present", createdAt: new Date().toISOString() };
+    // FIX: Ensure department is not undefined
+    const userDepartment = currentUserData.department || "Unassigned";
+    const newAtt = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: userDepartment, date: today, timeIn: time, timeOut: null, status: "Present", createdAt: new Date().toISOString() };
     const docRef = await db.collection('attendance').add(newAtt);
     allAttendance.push({ id: docRef.id, ...newAtt });
     alert(`Clocked in at ${time}`);
