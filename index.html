@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Final</title>
+    <title>EQUIPRIME HR - Final Fixed</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -91,7 +91,6 @@
 <!-- LOGIN SCREEN (branding-image.jpg as background) -->
 <div id="authScreen" class="flex min-h-screen">
     <div class="branding-half w-3/5 relative flex items-center justify-center p-8">
-        <!-- Removed canvas and gradient, replaced by CSS background -->
         <div class="relative z-10 text-center text-white bg-black/30 p-6 rounded-2xl backdrop-blur-sm">
             <img src="welcome-logo.png" class="mx-auto h-20 mb-4" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E'">
             <h1 class="text-5xl font-black">Smart Choices.<br>Smarter Results.</h1>
@@ -133,7 +132,7 @@
     </div>
 </div>
 
-<!-- MAIN APP (sidebar, tabs, etc. - unchanged but with full functionality) -->
+<!-- MAIN APP -->
 <div id="mainApp" class="hidden app-container flex min-h-screen">
     <div id="overlay" class="overlay fixed inset-0 bg-black/50 z-40 hidden" onclick="closeMobileSidebar()"></div>
     <div id="mobileSidebar" class="mobile-sidebar fixed top-0 left-0 w-64 h-full bg-[#011F7B] z-50 p-4 overflow-y-auto">
@@ -303,7 +302,7 @@
     </div>
 </div>
 
-<!-- MODALS (same as before, functional) -->
+<!-- MODALS (all present and functional, same as before) -->
 <div id="addEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50"><div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white">Add Employee</h3><button onclick="closeModal('addEmployeeModal')"><i data-feather="x" class="dark:text-white"></i></button></div><div class="space-y-3"><input type="text" id="newEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="email" id="newEmpEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="newEmpEmployeeNumber" placeholder="Employee Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="date" id="newEmpDateHired" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><select id="newEmpGender" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><option value="">Gender</option><option>Male</option><option>Female</option></select><select id="newEmpCivilStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><option value="">Civil Status</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select><input type="text" id="newEmpPhone" placeholder="Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="newEmpAddress" placeholder="Address" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="newEmpEmergencyName" placeholder="Emergency Contact Name" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="newEmpEmergencyRelation" placeholder="Relationship" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="newEmpEmergencyPhone" placeholder="Emergency Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="newEmpEmergencyAddress" placeholder="Emergency Address" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="newEmpSSS" placeholder="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="newEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="newEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="newEmpDept" placeholder="Department" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><select id="newEmpRole" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select><input type="text" id="newEmpPin" placeholder="PIN" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="password" id="newEmpPass" placeholder="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"></div><div class="flex gap-3 mt-5"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('addEmployeeModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1 dark:text-white">Cancel</button></div></div></div>
 
 <div id="editEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50"><div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold dark:text-white">Edit Employee</h3><button onclick="closeModal('editEmployeeModal')"><i data-feather="x" class="dark:text-white"></i></button></div><input type="hidden" id="editEmpId"><div class="space-y-3"><input type="text" id="editEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="email" id="editEmpEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="editEmpEmployeeNumber" placeholder="Employee Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="date" id="editEmpDateHired" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><select id="editEmpGender" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><option value="">Gender</option><option>Male</option><option>Female</option></select><select id="editEmpCivilStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><option value="">Civil Status</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select><input type="text" id="editEmpPhone" placeholder="Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="editEmpAddress" placeholder="Address" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="editEmpEmergencyName" placeholder="Emergency Contact Name" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="editEmpEmergencyRelation" placeholder="Relationship" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="editEmpEmergencyPhone" placeholder="Emergency Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="editEmpEmergencyAddress" placeholder="Emergency Address" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="editEmpSSS" placeholder="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="editEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="editEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><select id="editEmpDept" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select><select id="editEmpRole" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select><select id="editEmpStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option></select><input type="number" id="editLeaveBalance" placeholder="Leave Balance" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="text" id="editEmpPin" placeholder="PIN" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><input type="password" id="editEmpPassword" placeholder="New Password (optional)" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"></div><div class="flex gap-3 mt-5"><button onclick="saveEmployeeEdit()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save Changes</button><button onclick="closeModal('editEmployeeModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1 dark:text-white">Cancel</button></div></div></div>
@@ -355,14 +354,68 @@ function getDefaultExtendedFields() {
 }
 
 // ==================== HELPER FUNCTIONS ====================
-async function ensureSystemAdminRecord(user) { /* same */ }
-async function grantApproverPermissions(employeeId, role, department) { /* same */ }
-async function revokeApproverPermissions(employeeId, department) { /* same */ }
-async function getApproverForDepartment(department, stage) { /* same */ }
-async function getDirectApproverForSubmitter(userEmail, role, department) { /* same */ }
+async function ensureSystemAdminRecord(user) {
+    const email = user.email;
+    if (!SYSTEM_ADMIN_EMAILS.includes(email)) return false;
+    const docRef = db.collection('employees').doc(user.uid);
+    const doc = await docRef.get();
+    if (!doc.exists) {
+        let role = "admin";
+        if (email === "hrd@equiprime.ph") role = "hr";
+        else if (email === "mod.rom@equiprime.ph" || email === "mod.dex@equiprime.ph") role = "moderator";
+        const name = email.split('@')[0].replace(/\./g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        const empData = { name, email, dept: "HR Department", role, status: "active", pin: "0000", leaveBalance: 15, createdAt: new Date().toISOString(), ...getDefaultExtendedFields() };
+        await docRef.set(empData);
+        await db.collection('users').doc(user.uid).set({ uid: user.uid, name, email, role, department: "HR Department", leaveBalance: 15, status: "active", phone: "N/A" });
+        await grantApproverPermissions(user.uid, role, "HR Department");
+        return true;
+    } else {
+        if (doc.data().status !== 'active') await docRef.update({ status: 'active' });
+        return true;
+    }
+}
+async function grantApproverPermissions(employeeId, role, department) {
+    const approverRoles = ['admin', 'supervisor', 'manager', 'hr', 'moderator'];
+    if (!approverRoles.includes(role)) return;
+    const deptRef = db.collection('departmentApprovers').doc(department);
+    const doc = await deptRef.get();
+    if (doc.exists) {
+        const current = doc.data().secondaryApprovers || [];
+        if (!current.includes(employeeId)) await deptRef.update({ secondaryApprovers: firebase.firestore.FieldValue.arrayUnion(employeeId) });
+    } else {
+        await deptRef.set({ secondaryApprovers: [employeeId], finalApprover: "hrd@equiprime.ph" });
+    }
+}
+async function revokeApproverPermissions(employeeId, department) {
+    const emp = allEmployees.find(e => e.id === employeeId);
+    if (emp && SYSTEM_ADMIN_EMAILS.includes(emp.email)) return;
+    const deptRef = db.collection('departmentApprovers').doc(department);
+    const doc = await deptRef.get();
+    if (doc.exists) await deptRef.update({ secondaryApprovers: firebase.firestore.FieldValue.arrayRemove(employeeId) });
+}
+async function getApproverForDepartment(department, stage) {
+    const deptDoc = await db.collection('departmentApprovers').doc(department).get();
+    if (!deptDoc.exists) return { email: "hrd@equiprime.ph", isFallback: true };
+    const data = deptDoc.data();
+    if (stage === 'secondary') {
+        const secondaryIds = data.secondaryApprovers || [];
+        for (let id of secondaryIds) {
+            const empDoc = await db.collection('employees').doc(id).get();
+            if (empDoc.exists && empDoc.data().status === 'active') return { email: empDoc.data().email, isFallback: false };
+        }
+        return { email: data.finalApprover || "hrd@equiprime.ph", isFallback: true };
+    } else {
+        return { email: data.finalApprover || "hrd@equiprime.ph", isFallback: false };
+    }
+}
+async function getDirectApproverForSubmitter(userEmail, role, department) {
+    if (SYSTEM_ADMIN_EMAILS.includes(userEmail)) return { email: "hrd@equiprime.ph", isDirect: true };
+    if (role === "admin" || role === "supervisor" || role === "manager") return { email: "hrd@equiprime.ph", isDirect: true };
+    return null;
+}
 async function auditLog(action, details) { await db.collection('attendanceAuditLogs').add({ userId: currentUser.uid, userEmail: currentUser.email, action, details, timestamp: new Date().toISOString() }); }
 
-// Real-time listeners (same as before)
+// Real-time listeners
 function setupRealtimeListeners() {
     db.collection('employees').onSnapshot(snap => { allEmployees = snap.docs.map(d => ({ id: d.id, ...d.data() })); refreshDashboard(); renderEmployeesTable(); if(document.getElementById('employeeListContainer')) loadEmployeeListForSummary(); });
     db.collection('requests').onSnapshot(snap => { allRequests = snap.docs.map(d => ({ id: d.id, ...d.data() })); refreshDashboard(); });
@@ -384,12 +437,11 @@ function getFilteredEmployees() {
     }
     return filtered;
 }
-
 function formatDateForDisplay(dateStr) { if (!dateStr) return ''; try { const d = new Date(dateStr); if (isNaN(d.getTime())) return dateStr; return d.toISOString().split('T')[0]; } catch(e) { return dateStr; } }
 
 // ==================== DASHBOARD REFRESH (with null guard) ====================
 function refreshDashboard() {
-    if (!currentUser) return;  // FIX: prevent error when called before login
+    if (!currentUser) return;  // FIX: prevent error before login
     const filtered = getFilteredEmployees();
     document.getElementById('totalEmployees').innerText = filtered.length;
     const today = new Date().toISOString().split('T')[0];
@@ -449,7 +501,7 @@ function refreshDashboard() {
     feather.replace();
 }
 
-// Navigation rendering (single-line tabs)
+// Navigation rendering
 function renderNavigation() {
     const isFull = fullPrivilegedEmails.includes(currentUser?.email);
     const canAccessEmployees = SYSTEM_ADMIN_EMAILS.includes(currentUser?.email);
@@ -477,7 +529,6 @@ function renderNavigation() {
     document.getElementById('mobileNavMenu').innerHTML = html;
     feather.replace();
 }
-
 function switchTab(tabName) {
     const allowed = ['dashboard','my-attendance','my-requests','payslip','helpdesk'];
     if (fullPrivilegedEmails.includes(currentUser?.email)) allowed.push('hr-requests','attendance-summary','approvals','hr-guard-schedule','hr-payslip','admin-helpdesk','hr-settings');
@@ -494,7 +545,6 @@ function switchTab(tabName) {
     if (tabName === 'employees') renderEmployeesTable();
     closeMobileSidebar();
 }
-
 function applyFilters() {
     const deptFilter = document.getElementById('dashboardFilterDepartment')?.value || document.getElementById('mobileFilterDepartment')?.value || 'all';
     const statusFilter = document.getElementById('dashboardFilterStatus')?.value || document.getElementById('mobileFilterStatus')?.value || 'all';
@@ -505,7 +555,6 @@ function applyFilters() {
     ['dashboardFilterLeaveType', 'mobileFilterLeaveType'].forEach(id => { const el = document.getElementById(id); if (el && el.value !== leaveFilter) el.value = leaveFilter; });
     refreshDashboard();
 }
-
 function openModal(id) { document.getElementById(id).classList.add('flex'); document.getElementById(id).classList.remove('hidden'); }
 function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
 function openNewRequestMenu() { openModal('newRequestMenuOverlay'); }
@@ -533,7 +582,6 @@ async function uploadAvatar() {
         alert("Profile picture updated!");
     });
 }
-
 function updateProfileDropdown() {
     if (!currentUserData) return;
     const container = document.getElementById('profileInfoContainer');
@@ -556,7 +604,7 @@ function updateProfileDropdown() {
     }
 }
 
-// Employee management (add, edit, delete, table) - with updated permissions
+// Employee management (add, edit, delete, table)
 async function addEmployee() {
     if (!SYSTEM_ADMIN_EMAILS.includes(currentUser?.email)) { alert("Only system admins can add employees."); return; }
     const name = document.getElementById('newEmpName').value;
@@ -596,7 +644,6 @@ async function addEmployee() {
         document.querySelectorAll('#addEmployeeModal input, #addEmployeeModal select').forEach(field => field.value = '');
     } catch (err) { alert("Error: " + err.message); }
 }
-
 function openEditEmployeeModal(emp) {
     if (!editAuthorizedEmails.includes(currentUser?.email)) { alert("Only HR Director and Moderators can edit."); return; }
     if (SYSTEM_ADMIN_EMAILS.includes(emp.email) && currentUser?.email !== resetAuthorizedEmail && currentUser?.email !== "hrd@equiprime.ph") { alert("System admin accounts can only be edited by mod.rom or HR Director."); return; }
@@ -626,7 +673,6 @@ function openEditEmployeeModal(emp) {
     if (SYSTEM_ADMIN_EMAILS.includes(emp.email)) { statusSelect.disabled = true; statusSelect.value = 'active'; } else { statusSelect.disabled = false; }
     openModal('editEmployeeModal');
 }
-
 async function saveEmployeeEdit() {
     const id = document.getElementById('editEmpId').value;
     const name = document.getElementById('editEmpName').value;
@@ -674,7 +720,6 @@ async function saveEmployeeEdit() {
     updateProfileDropdown();
     alert("Employee updated.");
 }
-
 async function deleteEmployee(id) {
     if (confirm("Delete employee?")) {
         const emp = allEmployees.find(e => e.id === id);
@@ -687,14 +732,12 @@ async function deleteEmployee(id) {
         } else { alert("Cannot delete system admin."); }
     }
 }
-
 function editLeaveBalance(empId, empName, currentBalance) {
     document.getElementById('editEmployeeId').value = empId;
     document.getElementById('editEmployeeName').value = empName;
     document.getElementById('editLeaveBalanceSimple').value = currentBalance;
     openModal('editLeaveModal');
 }
-
 async function saveLeaveBalance() {
     const empId = document.getElementById('editEmployeeId').value;
     const newBal = parseInt(document.getElementById('editLeaveBalanceSimple').value);
@@ -706,7 +749,6 @@ async function saveLeaveBalance() {
     refreshDashboard();
     alert(`Leave balance updated to ${newBal} days`);
 }
-
 function renderEmployeesTable() {
     const tbody = document.getElementById('employeesTableBody');
     if (!tbody) return;
@@ -730,7 +772,7 @@ function renderEmployeesTable() {
 function filterEmployeesTable() { renderEmployeesTable(); }
 function showAddEmployeeModal() { openModal('addEmployeeModal'); }
 
-// Attendance functions (same as before)
+// Attendance functions
 function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:false }); }
 async function clockIn() {
     if (SYSTEM_ADMIN_EMAILS.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
@@ -766,6 +808,7 @@ async function clockOut() {
     refreshDashboard();
 }
 function refreshMyAttendanceTab() {
+    if (!currentUser) return;
     const today = new Date().toISOString().split('T')[0];
     const userAtt = allAttendance.filter(a => a.userId === currentUser?.uid).sort((a,b)=>b.date.localeCompare(a.date));
     const todayRec = userAtt.find(a=>a.date===today);
@@ -777,8 +820,6 @@ function refreshMyAttendanceTab() {
         historyBody.innerHTML = userAtt.map(a => `<tr><td class="p-3 dark:text-white">${a.date}</td><td class="p-3 dark:text-white">${a.timeIn||'--'}</td><td class="p-3 dark:text-white">${a.timeOut||'--'}</td><td class="p-3 dark:text-white">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100 text-green-800':'bg-yellow-100 text-yellow-800'}">${a.timeOut?'Complete':'In Progress'}</span></td></tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center dark:text-white">No records</td></tr>';
     }
 }
-
-// Clock request
 function openClockRequestModal(type) {
     document.getElementById('clockRequestType').value = type;
     document.getElementById('clockRequestTitle').innerText = type === 'in' ? 'Request Clock In' : 'Request Clock Out';
@@ -816,8 +857,6 @@ async function submitClockRequest() {
     refreshDashboard();
     alert(`Clock ${type === 'in' ? 'in' : 'out'} request submitted for approval.`);
 }
-
-// Request submission & approvals (same as before)
 async function submitRequest() {
     const type = document.getElementById('requestTypeValue').value, start = document.getElementById('reqStartDate').value, end = document.getElementById('reqEndDate').value, reason = document.getElementById('reqReason').value;
     if (!start || !end) { alert("Select dates"); return; }
@@ -914,8 +953,6 @@ async function rejectRequest(id) {
         alert("Request rejected.");
     } else alert("Cannot reject.");
 }
-
-// Attendance summary (same as before)
 function populateYearDropdown() {
     const yearSelect = document.getElementById('summaryYear');
     if (!yearSelect) return;
@@ -998,11 +1035,9 @@ async function loadEmployeeCalendar(employeeId) {
     if (detailsBody) detailsBody.innerHTML = detailsRows;
 }
 
-// ==================== ENHANCED PAYSLIP (Manual Entry + Compute) ====================
+// Enhanced Payroll
 let currentComputedPayroll = null;
-
 function computePayroll() {
-    // Get all values
     const basicSalary = parseFloat(document.getElementById('basicSalary').value) || 0;
     const overtimePay = parseFloat(document.getElementById('overtimePay').value) || 0;
     const holidayPay = parseFloat(document.getElementById('holidayPay').value) || 0;
@@ -1015,30 +1050,21 @@ function computePayroll() {
     const salaryLoan = parseFloat(document.getElementById('salaryLoan').value) || 0;
     const cashAdvance = parseFloat(document.getElementById('cashAdvance').value) || 0;
     const otherDeductions = parseFloat(document.getElementById('otherDeductions').value) || 0;
-
     const grossPay = basicSalary + overtimePay + holidayPay + allowances + incentives + otherEarnings;
     const totalDeductions = sss + philhealth + pagibig + salaryLoan + cashAdvance + otherDeductions;
     const netPay = grossPay - totalDeductions;
-
-    // Update summary display
     document.getElementById('grossPayDisplay').innerText = grossPay.toFixed(2);
     document.getElementById('totalDeductionsDisplay').innerText = totalDeductions.toFixed(2);
     document.getElementById('netPayDisplay').innerText = netPay.toFixed(2);
     document.getElementById('payrollSummary').classList.remove('hidden');
-
-    // Store computed values for generation
     currentComputedPayroll = {
         basicSalary, overtimePay, holidayPay, allowances, incentives, otherEarnings,
         sss, philhealth, pagibig, salaryLoan, cashAdvance, otherDeductions,
         grossPay, totalDeductions, netPay
     };
 }
-
 async function generatePayslipFromComputed() {
-    if (!currentComputedPayroll) {
-        alert("Please click 'Compute Payroll' first.");
-        return;
-    }
+    if (!currentComputedPayroll) { alert("Please click 'Compute Payroll' first."); return; }
     if (!fullPrivilegedEmails.includes(currentUser.email)) { alert("Not authorized."); return; }
     const empId = document.getElementById('payslipEmployee').value;
     const month = document.getElementById('payslipMonth').value;
@@ -1046,7 +1072,6 @@ async function generatePayslipFromComputed() {
     if (!empId || !month) { alert("Please select employee and payroll month."); return; }
     const employee = allEmployees.find(e => e.id === empId);
     if (!employee) return;
-
     const cutOffLabel = cutOff === 'first' ? '1st cut-off (1st-15th)' : '2nd cut-off (16th-31st)';
     const newPayslip = {
         employeeId: empId, employeeName: employee.name, employeeEmail: employee.email,
@@ -1073,7 +1098,6 @@ async function generatePayslipFromComputed() {
     refreshHrPayslip();
     displayPayslipModal(newPayslip);
 }
-
 function displayPayslipModal(payslip) {
     const content = `
         <div class="payslip-card p-4 border rounded-lg dark:border-slate-600">
@@ -1120,7 +1144,7 @@ function refreshEmployeePayslip() {
     if (container) container.innerHTML = my.map(p => `<div class="card-bg p-3 rounded shadow dark:text-white">${p.month} (${p.cutOff})<br><span class="text-green-600 dark:text-green-400 font-bold">Net: ₱${p.netPay}</span></div>`).join('') || '<div class="dark:text-white">No payslips</div>';
 }
 
-// Announcements (same as before)
+// Announcements
 function escapeHtml(str) { const d=document.createElement('div'); d.textContent=str; return d.innerHTML; }
 function renderAnnouncements() {
     const cont = document.getElementById('announcementsList');
@@ -1141,7 +1165,7 @@ async function saveAnnouncement() {
 }
 async function deleteAnnouncement() { const id = document.getElementById('announcementId').value; if (!id) return; if (confirm("Delete announcement?")) { await db.collection('announcements').doc(id).delete(); allAnnouncements = allAnnouncements.filter(a=>a.id!==id); closeModal('announcementModal'); renderAnnouncements(); } }
 
-// Guard schedule (same as before)
+// Guard schedule
 async function assignGuardWeeklySchedule() {
     const empId = document.getElementById('guardEmployee').value;
     if (!empId) { alert("Select a guard."); return; }
@@ -1174,7 +1198,7 @@ async function loadGuardSelect() {
     if (sel) sel.innerHTML = '<option value="">Select Guard</option>' + allEmployees.filter(e => (e.dept === 'Security Guard Department' || e.role === 'guard') && !isSystemAdmin(e.email)).map(e => `<option value="${e.id}">${e.name}</option>`).join('');
 }
 
-// Helpdesk (same as before)
+// Helpdesk
 function generateTrackingNumber() {
     const now = new Date();
     const year = now.getFullYear();
@@ -1277,7 +1301,6 @@ async function signupWithEmail() {
 async function logout() { await auth.signOut(); location.reload(); }
 function showSignup() { document.getElementById('loginForm').classList.add('hidden'); document.getElementById('signupForm').classList.remove('hidden'); document.getElementById('authError').classList.add('hidden'); }
 function showLogin() { document.getElementById('signupForm').classList.add('hidden'); document.getElementById('loginForm').classList.remove('hidden'); document.getElementById('authError').classList.add('hidden'); }
-
 async function loadAllData() {
     const empSnap = await db.collection('employees').get();
     allEmployees = empSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -1300,7 +1323,6 @@ async function loadAllData() {
     refreshHelpdesk();
     updateProfileDropdown();
 }
-
 async function loadAnnouncements() {
     const snap = await db.collection('announcements').get();
     allAnnouncements = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -1311,7 +1333,6 @@ async function loadAnnouncements() {
     }
     renderAnnouncements();
 }
-
 window.resetAllSystemData = async function() { if (currentUser?.email !== resetAuthorizedEmail) { alert("Only mod.rom@equiprime.ph can reset."); return; } const pin = prompt("Enter reset PIN:"); if (pin !== "Moderator@2026!") { alert("Incorrect PIN."); return; } if (!confirm("Delete ALL data?")) return; const collections = ['employees','attendance','requests','payslips','announcements','guardWeeklySchedules','users','departmentApprovers','employeeSupportRequests','attendanceAuditLogs']; for (const col of collections) { const snap = await db.collection(col).get(); const batch = db.batch(); snap.docs.forEach(doc => batch.delete(doc.ref)); await batch.commit(); } alert("All data reset. Reloading..."); location.reload(); };
 
 // Initialize
