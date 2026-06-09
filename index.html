@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Final</title>
+    <title>EQUIPRIME HR - Beta test</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -16,123 +16,37 @@
         * { font-family: 'Inter', sans-serif; }
         body { background: #f3f6fb; transition: background 0.3s, color 0.3s; }
         body.dark { background: #0f172a; }
-        
-        .desktop-sidebar nav button,
-        .mobile-sidebar nav button {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            border-radius: 0.75rem;
-            width: 100%;
-            white-space: nowrap;
-            position: relative;
-        }
+        .desktop-sidebar nav button, .mobile-sidebar nav button { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-radius: 0.75rem; width: 100%; white-space: nowrap; position: relative; }
         .desktop-sidebar nav button i, .mobile-sidebar nav button i { flex-shrink: 0; }
-        .desktop-sidebar nav button span, .mobile-sidebar nav button span {
-            flex-grow: 1;
-            text-align: left;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        
-        .tab-active {
-            background-color: #011F7B;
-            color: white !important;
-        }
-        .tab-inactive {
-            background-color: transparent;
-            color: white !important;
-        }
-        .tab-inactive:hover {
-            background-color: #FFBA09;
-            color: #0f172a !important;
-        }
+        .desktop-sidebar nav button span, .mobile-sidebar nav button span { flex-grow: 1; text-align: left; font-size: 0.9rem; font-weight: 500; }
+        .tab-active { background-color: #011F7B; color: white !important; }
+        .tab-inactive { background-color: transparent; color: white !important; }
+        .tab-inactive:hover { background-color: #FFBA09; color: #0f172a !important; }
         body.dark .tab-inactive { color: white !important; }
         body.dark .tab-inactive:hover { background-color: #FFBA09; color: #0f172a !important; }
-        
-        .tab-badge {
-            background-color: #ef4444;
-            color: white;
-            font-size: 0.7rem;
-            font-weight: bold;
-            padding: 0.125rem 0.5rem;
-            border-radius: 9999px;
-            margin-left: auto;
-            white-space: nowrap;
-        }
+        .tab-badge { background-color: #ef4444; color: white; font-size: 0.7rem; font-weight: bold; padding: 0.125rem 0.5rem; border-radius: 9999px; margin-left: auto; white-space: nowrap; }
         body.dark .tab-badge { background-color: #dc2626; color: white; }
-        
         .card-bg { background-color: #ffffff; }
         body.dark .card-bg { background-color: #1e293b; }
         .card-bg, .card-bg * { color: #0f172a !important; }
         body.dark .card-bg, body.dark .card-bg * { color: #f1f5f9 !important; }
-        
-        .stat-card {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 1.25rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .stat-card { background: white; border-radius: 1.5rem; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
         body.dark .stat-card { background: #1e293b; }
         .stat-card p, .stat-card h3, .stat-card div { color: #0f172a !important; }
         body.dark .stat-card p, body.dark .stat-card h3, body.dark .stat-card div { color: #f1f5f9 !important; }
-        
-        .login-status-item {
-            background: #f1f5f9;
-            border-left: 3px solid #3b82f6;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-            color: #0f172a !important;
-        }
+        .login-status-item { background: #f1f5f9; border-left: 3px solid #3b82f6; padding: 0.5rem 0.75rem; border-radius: 0.5rem; margin-bottom: 0.5rem; color: #0f172a !important; }
         body.dark .login-status-item { background: #334155; color: #e2e8f0 !important; border-left-color: #60a5fa; }
-        
-        .details-table th, .attendance-history-table th, .employees-table th {
-            background-color: #e2e8f0;
-            color: #0f172a !important;
-            font-weight: 700;
-        }
-        body.dark .details-table th, body.dark .attendance-history-table th, body.dark .employees-table th {
-            background-color: #334155;
-            color: #e2e8f0 !important;
-        }
-        .details-table td, .attendance-history-table td, .employees-table td {
-            border-bottom: 1px solid #e2e8f0;
-            padding: 0.75rem;
-            color: #0f172a !important;
-        }
-        body.dark .details-table td, body.dark .attendance-history-table td, body.dark .employees-table td {
-            border-bottom-color: #475569;
-            color: #e2e8f0 !important;
-        }
-        
+        .details-table th, .attendance-history-table th, .employees-table th { background-color: #e2e8f0; color: #0f172a !important; font-weight: 700; }
+        body.dark .details-table th, body.dark .attendance-history-table th, body.dark .employees-table th { background-color: #334155; color: #e2e8f0 !important; }
+        .details-table td, .attendance-history-table td, .employees-table td { border-bottom: 1px solid #e2e8f0; padding: 0.75rem; color: #0f172a !important; }
+        body.dark .details-table td, body.dark .attendance-history-table td, body.dark .employees-table td { border-bottom-color: #475569; color: #e2e8f0 !important; }
         button.bg-green-600, button.bg-red-600, button.bg-blue-600, button.bg-[#011F7B] { color: white !important; }
-        
-        .modal-container {
-            background: white;
-            color: #0f172a !important;
-        }
+        .modal-container { background: white; color: #0f172a !important; }
         body.dark .modal-container { background: #1e293b; color: #e2e8f0 !important; }
-        
-        input, select, textarea {
-            background-color: #eef2ff;
-            border: 1px solid #cbd5e1;
-            border-radius: 0.75rem;
-            padding: 0.5rem 0.75rem;
-            color: #0f172a !important;
-        }
-        body.dark input, body.dark select, body.dark textarea {
-            background-color: #1e293b;
-            border-color: #475569;
-            color: #e2e8f0 !important;
-        }
+        input, select, textarea { background-color: #eef2ff; border: 1px solid #cbd5e1; border-radius: 0.75rem; padding: 0.5rem 0.75rem; color: #0f172a !important; }
+        body.dark input, body.dark select, body.dark textarea { background-color: #1e293b; border-color: #475569; color: #e2e8f0 !important; }
         select { background-color: #eef2ff; }
         body.dark select { background-color: #334155; }
-        
         .status-badge-approved { color: #22c55e; font-weight: 600; }
         .status-badge-rejected { color: #ef4444; font-weight: 600; }
         .status-badge-pending { color: #f97316; font-weight: 600; }
@@ -143,135 +57,42 @@
         body.dark .status-badge-pending { color: #fb923c; }
         body.dark .status-badge-under_review { color: #60a5fa; }
         body.dark .status-badge-completed { color: #a78bfa; }
-        
         .day.completed { background: #22c55e; color: white; }
         .day.late { background: #f59e0b; color: white; }
         .day.incomplete { background: #ef4444; color: white; }
         .day.leave { background: #8b5cf6; color: white; }
-        
         .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
         .avatar-large { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
         .profile-dropdown-content { background: white; border-radius: 1rem; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); z-index: 1000; }
         body.dark .profile-dropdown-content { background: #1e293b; }
-        
         .login-split { display: flex; min-height: 100vh; }
-        .branding-half {
-            background: url('branding-image.jpg') center center / cover no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-        .login-half {
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
+        .branding-half { background: linear-gradient(135deg, #011F7B, #004aad); display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .login-half { background: white; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
         body.dark .login-half { background: #1e293b; }
-        @media (max-width: 768px) {
-            .login-split { flex-direction: column; }
-            .branding-half { width: 100%; min-height: 40vh; padding: 1.5rem; }
-            .login-half { width: 100%; padding: 2rem 1.5rem; }
-            .branding-content { background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); border-radius: 2rem; padding: 1.5rem; }
-            .branding-content h1 { font-size: 2rem; }
-        }
-        @media (min-width: 769px) {
-            .branding-half { width: 60%; }
-            .login-half { width: 40%; }
-        }
-        
-        @media (max-width: 1023px) {
-            .desktop-sidebar { display: none; }
-            .mobile-header { display: flex; }
-        }
-        @media (min-width: 1024px) {
-            .mobile-header, .mobile-sidebar, .overlay { display: none; }
-        }
-        @media print { .no-print { display: none; } }
-        
-        .mobile-sidebar {
-            transform: translateX(-100%) !important;
-            transition: transform 0.3s ease !important;
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 280px !important;
-            height: 100% !important;
-            background: #011F7B !important;
-            z-index: 9999 !important;
-            overflow-y: auto !important;
-        }
+        @media (max-width: 768px) { .login-split { flex-direction: column; } .branding-half { width: 100%; min-height: 40vh; padding: 1.5rem; } .login-half { width: 100%; padding: 2rem 1.5rem; } .branding-content { background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); border-radius: 2rem; padding: 1.5rem; } .branding-content h1 { font-size: 2rem; } }
+        @media (min-width: 769px) { .branding-half { width: 60%; } .login-half { width: 40%; } }
+        @media (max-width: 1023px) { .desktop-sidebar { display: none; } .mobile-header { display: flex; } }
+        @media (min-width: 1024px) { .mobile-header, .mobile-sidebar, .overlay { display: none; } }
+        @media print { .no-print { display: none; } body { background: white; margin: 0; padding: 0; } .payslip-container { box-shadow: none; padding: 0.2in; page-break-after: avoid; break-inside: avoid; } }
+        .mobile-sidebar { transform: translateX(-100%) !important; transition: transform 0.3s ease !important; position: fixed !important; top: 0 !important; left: 0 !important; width: 280px !important; height: 100% !important; background: #011F7B !important; z-index: 9999 !important; overflow-y: auto !important; }
         .mobile-sidebar.open { transform: translateX(0) !important; }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 9998;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease;
-        }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; }
         .overlay.active { opacity: 1; visibility: visible; }
-        
-        .dashboard-filters select, .dashboard-filters option {
-            color: #0f172a !important;
-            background-color: #eef2ff;
-        }
-        body.dark .dashboard-filters select, body.dark .dashboard-filters option {
-            color: #e2e8f0 !important;
-            background-color: #334155;
-        }
-        
-        .quick-icon-green { color: #22c55e; }
-        .quick-icon-red { color: #ef4444; }
-        .quick-icon-blue { color: #3b82f6; }
-        .quick-icon-yellow { color: #eab308; }
-        .quick-icon-orange { color: #f97316; }
-        .quick-icon-white { color: #ffffff; }
-        body.dark .quick-icon-white { color: #e2e8f0; }
-        
-        button:disabled { opacity: 0.6; cursor: not-allowed; }
-        
-        /* Payslip custom styles */
-        .payslip-container {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        body.dark .payslip-container {
-            background: #1e293b;
-        }
-        .payslip-section {
-            margin-bottom: 1.25rem;
-        }
-        .payslip-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 0.25rem;
-            margin-bottom: 0.75rem;
-        }
-        body.dark .payslip-title {
-            border-bottom-color: #475569;
-        }
-        .earnings-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.25rem 1rem;
-        }
-        .signature-line {
-            margin-top: 2rem;
-            text-align: right;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 1rem;
-            font-style: italic;
-        }
+        /* Compact payslip styles */
+        .payslip-container { background: white; padding: 0.75rem; border-radius: 0.5rem; max-width: 100%; font-size: 0.7rem; line-height: 1.25; color: #0f172a; }
+        body.dark .payslip-container { background: #1e293b; color: #e2e8f0; }
+        .payslip-section { margin-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.4rem; }
+        .payslip-title { font-size: 0.75rem; font-weight: 800; margin-bottom: 0.3rem; background: #f1f5f9; display: inline-block; padding: 0.1rem 0.5rem; border-radius: 0.25rem; }
+        body.dark .payslip-title { background: #334155; }
+        .earnings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.15rem 0.8rem; }
+        .signature-line { margin-top: 0.75rem; text-align: right; border-top: 1px solid #cbd5e1; padding-top: 0.3rem; font-style: italic; font-size: 0.65rem; }
+        .payslip-header { text-align: center; margin-bottom: 0.75rem; }
+        .payslip-header h2 { font-size: 1rem; font-weight: 800; margin: 0; }
+        .payslip-header p { font-size: 0.6rem; margin: 0; }
+        .net-pay { font-size: 0.9rem; font-weight: 800; background: #e6f7e6; display: inline-block; padding: 0.1rem 0.8rem; border-radius: 2rem; }
+        .two-columns { display: flex; gap: 1rem; justify-content: space-between; }
+        .two-columns > div { flex: 1; }
+        @media print { .payslip-container { padding: 0.1in; font-size: 9pt; page-break-inside: avoid; break-inside: avoid; } .payslip-title { font-size: 10pt; } .net-pay { font-size: 12pt; } }
     </style>
 </head>
 <body>
@@ -280,49 +101,19 @@
 <div id="authScreen" class="login-split">
     <div class="branding-half">
         <div class="branding-content text-center">
-            <h1 class="text-5xl md:text-7xl font-black">
-                <span style="color: #3b82f6;">Smart Choices.</span><br>
-                <span style="color: #f4df17;">Smarter Results.</span>
-            </h1>
+            <h1 class="text-5xl md:text-7xl font-black"><span style="color: #3b82f6;">Smart Choices.</span><br><span style="color: #f4df17;">Smarter Results.</span></h1>
             <p class="mt-4" style="color: #3b82f6 !important;">Empowering your workforce with streamlined HR management.</p>
-            <div class="mt-8 flex gap-4 justify-center">
-                <a href="#"><i data-feather="facebook" style="color: #f4df17;"></i></a>
-                <a href="#"><i data-feather="instagram" style="color: #f4df17;"></i></a>
-                <a href="#"><i data-feather="globe" style="color: #f4df17;"></i></a>
-            </div>
+            <div class="mt-8 flex gap-4 justify-center"><a href="#"><i data-feather="facebook" style="color: #f4df17;"></i></a><a href="#"><i data-feather="instagram" style="color: #f4df17;"></i></a><a href="#"><i data-feather="globe" style="color: #f4df17;"></i></a></div>
             <div class="mt-6 text-xs text-white/80 text-center">© 2026 EQUIPRIME</div>
         </div>
     </div>
     <div class="login-half">
         <div class="w-full max-w-md">
-            <div class="text-center mb-8">
-                <img src="logo.png" class="h-12 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E'">
-                <h1 class="text-3xl font-extrabold text-slate-800 dark:text-white">
-                    <span style="color: #3b82f6;">EQUIPRIME</span><span style="color: #f4df17;">HR</span>
-                </h1>
-                <p class="text-slate-500 dark:text-slate-400">smart choices · smarter results</p>
-            </div>
+            <div class="text-center mb-8"><img src="logo.png" class="h-12 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E'"><h1 class="text-3xl font-extrabold text-slate-800 dark:text-white"><span style="color: #3b82f6;">EQUIPRIME</span><span style="color: #f4df17;">HR</span></h1><p class="text-slate-500 dark:text-slate-400">smart choices · smarter results</p></div>
             <div id="authError" class="bg-red-100 text-red-700 p-3 rounded-lg text-sm mb-4 hidden"></div>
             <div id="authSuccess" class="bg-green-100 text-green-700 p-3 rounded-lg text-sm mb-4 hidden"></div>
-            <div id="loginForm">
-                <div class="space-y-4">
-                    <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:border-slate-600">
-                    <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:border-slate-600">
-                    <button id="loginBtnMain" class="w-full bg-[#011F7B] text-white py-3 rounded-xl font-semibold hover:bg-blue-800">Login</button>
-                </div>
-                <div class="mt-4 text-center"><button id="showSignupBtnMain" class="text-[#011F7B] dark:text-blue-400 text-sm hover:underline">Don't have an account? Sign up</button></div>
-            </div>
-            <div id="signupForm" class="hidden">
-                <div class="space-y-3">
-                    <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700">
-                    <input type="email" id="signupEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700">
-                    <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700">
-                    <select id="signupRole" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option></select>
-                    <select id="signupDepartment" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><option value="">Select Department</option><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select>
-                    <button id="signupBtnMain" class="w-full bg-[#011F7B] text-white py-3 rounded-xl font-semibold">Sign Up</button>
-                </div>
-                <div class="mt-4 text-center"><button id="showLoginBtnMain" class="text-[#011F7B] dark:text-blue-400 text-sm hover:underline">Already have an account? Login</button></div>
-            </div>
+            <div id="loginForm"><div class="space-y-4"><input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:border-slate-600"><input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:border-slate-600"><button id="loginBtnMain" class="w-full bg-[#011F7B] text-white py-3 rounded-xl font-semibold hover:bg-blue-800">Login</button></div><div class="mt-4 text-center"><button id="showSignupBtnMain" class="text-[#011F7B] dark:text-blue-400 text-sm hover:underline">Don't have an account? Sign up</button></div></div>
+            <div id="signupForm" class="hidden"><div class="space-y-3"><input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="email" id="signupEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700"><select id="signupRole" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option></select><select id="signupDepartment" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white"><option value="">Select Department</option><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select><button id="signupBtnMain" class="w-full bg-[#011F7B] text-white py-3 rounded-xl font-semibold">Sign Up</button></div><div class="mt-4 text-center"><button id="showLoginBtnMain" class="text-[#011F7B] dark:text-blue-400 text-sm hover:underline">Already have an account? Login</button></div></div>
             <div class="mt-6 p-4 bg-slate-50 dark:bg-slate-700 rounded-xl text-sm"><p class="font-semibold dark:text-white">Authorized Users:</p><p class="dark:text-white">HR Director: hrd@equiprime.ph | Moderators: mod.rom@equiprime.ph, mod.dex@equiprime.ph</p></div>
         </div>
     </div>
@@ -331,92 +122,18 @@
 <!-- MAIN APP -->
 <div id="mainApp" class="hidden app-container flex min-h-screen">
     <div id="overlay" class="overlay fixed inset-0 bg-black/50 z-40 hidden" onclick="closeMobileSidebar()"></div>
-    <div id="mobileSidebar" class="mobile-sidebar">
-        <div class="flex justify-end mb-4 p-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x" class="text-white"></i></button></div>
-        <div class="px-4 mb-6"><h1 class="text-2xl font-bold text-white">EQUIPRIME<span class="text-yellow-400">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div>
-        <nav id="mobileNavMenu" class="flex flex-col gap-1 px-4"></nav>
-        <div class="mt-auto pt-6 border-t border-white/20 px-4 pb-6">
-            <div class="mb-4"><label class="text-white/70 text-xs">DEPARTMENT</label><select id="mobileFilterDepartment" class="w-full mt-1 p-2 rounded bg-white/10 text-white" onchange="applyFilters()"><option value="all">All Departments</option><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select></div>
-            <div class="mb-4"><label class="text-white/70 text-xs">STATUS</label><select id="mobileFilterStatus" class="w-full mt-1 p-2 rounded bg-white/10 text-white" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option></select></div>
-            <div class="mb-4"><label class="text-white/70 text-xs">LEAVE TYPE</label><select id="mobileFilterLeaveType" class="w-full mt-1 p-2 rounded bg-white/10 text-white" onchange="applyFilters()"><option value="all">All Leave Types</option><option>Official Business</option><option>Vacation Leave</option><option>Sick Leave</option><option>Birthday Leave</option><option>Emergency Leave</option><option>Offset</option></select></div>
-            <button onclick="toggleNightMode()" class="w-full flex items-center gap-3 text-white/80 hover:text-white p-2 rounded-xl"><i data-feather="moon"></i> Night Mode</button>
-            <button onclick="logout()" class="w-full flex items-center gap-3 text-white/80 hover:text-white p-2 rounded-xl mt-2"><i data-feather="log-out"></i> Logout</button>
-        </div>
-    </div>
+    <div id="mobileSidebar" class="mobile-sidebar"><div class="flex justify-end mb-4 p-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x" class="text-white"></i></button></div><div class="px-4 mb-6"><h1 class="text-2xl font-bold text-white">EQUIPRIME<span class="text-yellow-400">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div><nav id="mobileNavMenu" class="flex flex-col gap-1 px-4"></nav><div class="mt-auto pt-6 border-t border-white/20 px-4 pb-6"><div class="mb-4"><label class="text-white/70 text-xs">DEPARTMENT</label><select id="mobileFilterDepartment" class="w-full mt-1 p-2 rounded bg-white/10 text-white" onchange="applyFilters()"><option value="all">All Departments</option><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select></div><div class="mb-4"><label class="text-white/70 text-xs">STATUS</label><select id="mobileFilterStatus" class="w-full mt-1 p-2 rounded bg-white/10 text-white" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option></select></div><div class="mb-4"><label class="text-white/70 text-xs">LEAVE TYPE</label><select id="mobileFilterLeaveType" class="w-full mt-1 p-2 rounded bg-white/10 text-white" onchange="applyFilters()"><option value="all">All Leave Types</option><option>Official Business</option><option>Vacation Leave</option><option>Sick Leave</option><option>Birthday Leave</option><option>Emergency Leave</option><option>Offset</option></select></div><button onclick="toggleNightMode()" class="w-full flex items-center gap-3 text-white/80 hover:text-white p-2 rounded-xl"><i data-feather="moon"></i> Night Mode</button><button onclick="logout()" class="w-full flex items-center gap-3 text-white/80 hover:text-white p-2 rounded-xl mt-2"><i data-feather="log-out"></i> Logout</button></div></div>
 
-    <div class="desktop-sidebar w-64 bg-[#011F7B] sticky top-0 h-screen p-4 flex flex-col">
-        <div class="mb-6"><h1 class="text-2xl font-bold text-white">EQUIPRIME<span class="text-yellow-400">HR</span></h1><p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p></div>
-        <nav id="desktopNavMenu" class="flex flex-col gap-1 flex-1"></nav>
-        <div class="pt-6 border-t border-white/20 mt-auto">
-            <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-yellow-400 text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm text-white" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div>
-            <button onclick="toggleNightMode()" class="w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm py-2"><i data-feather="moon"></i> Night Mode</button>
-            <button onclick="logout()" class="w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm py-2"><i data-feather="log-out"></i> Logout</button>
-        </div>
-    </div>
+    <div class="desktop-sidebar w-64 bg-[#011F7B] sticky top-0 h-screen p-4 flex flex-col"><div class="mb-6"><h1 class="text-2xl font-bold text-white">EQUIPRIME<span class="text-yellow-400">HR</span></h1><p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p></div><nav id="desktopNavMenu" class="flex flex-col gap-1 flex-1"></nav><div class="pt-6 border-t border-white/20 mt-auto"><div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-yellow-400 text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm text-white" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div><button onclick="toggleNightMode()" class="w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm py-2"><i data-feather="moon"></i> Night Mode</button><button onclick="logout()" class="w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm py-2"><i data-feather="log-out"></i> Logout</button></div></div>
 
     <div class="main-content flex-1 p-4 md:p-6 overflow-y-auto">
-        <div class="mobile-header hidden justify-between items-center mb-4">
-            <button id="mobileMenuButton" class="bg-white dark:bg-slate-800 p-2 rounded-xl shadow"><i data-feather="menu"></i></button>
-            <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-[#011F7B] text-white flex items-center justify-center text-xs" id="mobileUserInitials">HR</div><span id="mobileUserName" class="font-semibold dark:text-white">User</span></div>
-        </div>
+        <div class="mobile-header hidden justify-between items-center mb-4"><button id="mobileMenuButton" class="bg-white dark:bg-slate-800 p-2 rounded-xl shadow"><i data-feather="menu"></i></button><div class="flex items-center gap-2"><div class="w-8 h-8 rounded-full bg-[#011F7B] text-white flex items-center justify-center text-xs" id="mobileUserInitials">HR</div><span id="mobileUserName" class="font-semibold dark:text-white">User</span></div></div>
 
         <!-- DASHBOARD TAB -->
-        <div id="dashboard-tab" class="tab-content">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                <div><h2 class="text-3xl font-extrabold text-yellow-600 dark:text-yellow-400">Welcome Back, <span id="welcomeName">User</span></h2><p class="text-slate-500 dark:text-slate-400" id="welcomeSubtitle"></p></div>
-                <div class="profile-dropdown relative">
-                    <div class="profile-trigger cursor-pointer flex items-center gap-2 bg-white dark:bg-slate-800 p-2 rounded-full shadow">
-                        <img id="profileAvatarImg" class="avatar-img w-8 h-8 rounded-full object-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E">
-                        <span class="hidden sm:inline text-sm font-medium dark:text-white" id="profileName">User</span>
-                        <i data-feather="chevron-down" class="w-4 h-4"></i>
-                    </div>
-                    <div id="profileDropdown" class="profile-dropdown-content absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-lg hidden z-50 p-4">
-                        <div class="font-bold text-lg mb-2 border-b pb-2 dark:border-slate-600">My Profile</div>
-                        <div class="flex flex-col items-center mb-3">
-                            <img id="profileAvatarLarge" class="avatar-large w-20 h-20 rounded-full object-cover mb-2" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230f172a'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E">
-                            <input type="file" id="avatarUpload" accept="image/*" class="text-xs"><button onclick="uploadAvatar()" class="mt-1 text-xs bg-blue-600 text-white px-3 py-1 rounded">Upload</button>
-                        </div>
-                        <div id="profileInfoContainer"></div>
-                        <hr class="my-2 dark:border-slate-600"><button onclick="logout()" class="w-full text-left text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 p-2 rounded-lg flex items-center gap-2"><i data-feather="log-out" class="w-4 h-4"></i> Logout</button>
-                    </div>
-                </div>
-            </div>
-            <div class="dashboard-filters grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-                <select id="dashboardFilterDepartment" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white" onchange="applyFilters()"><option value="all">All Departments</option><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select>
-                <select id="dashboardFilterStatus" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option></select>
-                <select id="dashboardFilterLeaveType" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white" onchange="applyFilters()"><option value="all">All Leave Types</option><option>Official Business</option><option>Vacation Leave</option><option>Sick Leave</option><option>Birthday Leave</option><option>Emergency Leave</option><option>Offset</option></select>
-            </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <div class="stat-card"><div><p>Total Employees</p><h3 class="text-3xl font-bold" id="totalEmployees">0</h3></div><i data-feather="users" class="text-blue-600 dark:text-blue-400 w-6 h-6"></i></div>
-                <div class="stat-card"><div><p>Dept Attendance (Today)</p><h3 class="text-3xl font-bold" id="deptAttendance">0</h3></div><i data-feather="user-check" class="text-green-600 dark:text-green-400 w-6 h-6"></i></div>
-                <div class="stat-card"><div><p>Pending Approvals</p><h3 class="text-3xl font-bold" id="pendingApprovals">0</h3></div><i data-feather="clock" class="text-orange-600 dark:text-orange-400 w-6 h-6"></i></div>
-                <div class="stat-card"><div><p>My Leave Balance</p><h3 class="text-3xl font-bold" id="myLeaveBalance">15</h3></div><i data-feather="calendar" class="text-purple-600 dark:text-purple-400 w-6 h-6"></i></div>
-            </div>
-            <div class="card-bg rounded-2xl p-6 shadow-sm mb-6">
-                <h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="file-text"></i> Quick Filing Options</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
-                    <button onclick="openRequestModal('Official Business')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="briefcase" class="quick-icon-green"></i><span class="text-xs mt-1">Official Business</span></button>
-                    <button onclick="openRequestModal('Overtime')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="clock" class="quick-icon-red"></i><span class="text-xs mt-1">Overtime</span></button>
-                    <button onclick="openRequestModal('Certificate of Attendance')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="file" class="quick-icon-blue"></i><span class="text-xs mt-1">Certificate</span></button>
-                    <button onclick="openLeaveModal()" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="calendar" class="quick-icon-yellow"></i><span class="text-xs mt-1">Leave</span></button>
-                    <button onclick="openOffsetsModal()" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="clock" class="quick-icon-orange"></i><span class="text-xs mt-1">Offsets</span></button>
-                    <button onclick="openClockRequestModal('in')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="log-in" class="quick-icon-green"></i><span class="text-xs mt-1">Request Clock In</span></button>
-                    <button onclick="openClockRequestModal('out')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="log-out" class="quick-icon-red"></i><span class="text-xs mt-1">Request Clock Out</span></button>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="card-bg rounded-2xl p-6 shadow-sm"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">My Recent Requests</h3><button onclick="openNewRequestMenu()" class="text-[#011F7B] dark:text-blue-400 text-sm">+ New Request</button></div><div id="myRequestsList" class="space-y-3 max-h-80 overflow-y-auto"></div><button onclick="switchTab('my-requests')" class="mt-4 w-full bg-slate-100 dark:bg-slate-700 py-2 rounded-xl text-sm">View All My Requests</button></div>
-                <div class="card-bg rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Employee Login Status</h3><div class="space-y-4"><div><div class="flex items-center gap-2"><div class="w-3 h-3 bg-green-500 rounded-full"></div><h4 class="font-semibold">Logged In Today</h4><span id="loggedInCount"></span></div><div id="loggedInList" class="mt-2 space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2"><div class="w-3 h-3 bg-red-500 rounded-full"></div><h4 class="font-semibold">Missed Log In</h4><span id="missedCount"></span></div><div id="missedList" class="mt-2 space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2"><div class="w-3 h-3 bg-orange-500 rounded-full"></div><h4 class="font-semibold">Late</h4><span id="lateCountDashboard"></span></div><div id="lateList" class="mt-2 space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2"><div class="w-3 h-3 bg-yellow-500 rounded-full"></div><h4 class="font-semibold">On Leave</h4><span id="onLeaveCount"></span></div><div id="onLeaveList" class="mt-2 space-y-2 max-h-40 overflow-y-auto"></div></div></div></div>
-            </div>
-            <div class="mt-6 card-bg rounded-2xl p-6 shadow-sm"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Announcements</h3><div id="announcementAddButton"></div></div><div id="announcementsList" class="space-y-3"></div></div>
-        </div>
+        <div id="dashboard-tab" class="tab-content"><div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6"><div><h2 class="text-3xl font-extrabold text-yellow-600 dark:text-yellow-400">Welcome Back, <span id="welcomeName">User</span></h2><p class="text-slate-500 dark:text-slate-400" id="welcomeSubtitle"></p></div><div class="profile-dropdown relative"><div class="profile-trigger cursor-pointer flex items-center gap-2 bg-white dark:bg-slate-800 p-2 rounded-full shadow"><img id="profileAvatarImg" class="avatar-img w-8 h-8 rounded-full object-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E"><span class="hidden sm:inline text-sm font-medium dark:text-white" id="profileName">User</span><i data-feather="chevron-down" class="w-4 h-4"></i></div><div id="profileDropdown" class="profile-dropdown-content absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-lg hidden z-50 p-4"><div class="font-bold text-lg mb-2 border-b pb-2 dark:border-slate-600">My Profile</div><div class="flex flex-col items-center mb-3"><img id="profileAvatarLarge" class="avatar-large w-20 h-20 rounded-full object-cover mb-2" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230f172a'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E"><input type="file" id="avatarUpload" accept="image/*" class="text-xs"><button onclick="uploadAvatar()" class="mt-1 text-xs bg-blue-600 text-white px-3 py-1 rounded">Upload</button></div><div id="profileInfoContainer"></div><hr class="my-2 dark:border-slate-600"><button onclick="logout()" class="w-full text-left text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 p-2 rounded-lg flex items-center gap-2"><i data-feather="log-out" class="w-4 h-4"></i> Logout</button></div></div></div><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"><div class="stat-card"><div><p>Total Employees</p><h3 class="text-3xl font-bold" id="totalEmployees">0</h3></div><i data-feather="users" class="text-blue-600 dark:text-blue-400 w-6 h-6"></i></div><div class="stat-card"><div><p>Dept Attendance (Today)</p><h3 class="text-3xl font-bold" id="deptAttendance">0</h3></div><i data-feather="user-check" class="text-green-600 dark:text-green-400 w-6 h-6"></i></div><div class="stat-card"><div><p>Pending Approvals</p><h3 class="text-3xl font-bold" id="pendingApprovals">0</h3></div><i data-feather="clock" class="text-orange-600 dark:text-orange-400 w-6 h-6"></i></div><div class="stat-card"><div><p>My Leave Balance</p><h3 class="text-3xl font-bold" id="myLeaveBalance">15</h3></div><i data-feather="calendar" class="text-purple-600 dark:text-purple-400 w-6 h-6"></i></div></div><div class="card-bg rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="file-text"></i> Quick Filing Options</h3><div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3"><button onclick="openRequestModal('Official Business')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="briefcase" class="quick-icon-green"></i><span class="text-xs mt-1">Official Business</span></button><button onclick="openRequestModal('Overtime')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="clock" class="quick-icon-red"></i><span class="text-xs mt-1">Overtime</span></button><button onclick="openRequestModal('Certificate of Attendance')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="file" class="quick-icon-blue"></i><span class="text-xs mt-1">Certificate</span></button><button onclick="openLeaveModal()" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="calendar" class="quick-icon-yellow"></i><span class="text-xs mt-1">Leave</span></button><button onclick="openOffsetsModal()" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="clock" class="quick-icon-orange"></i><span class="text-xs mt-1">Offsets</span></button><button onclick="openClockRequestModal('in')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="log-in" class="quick-icon-green"></i><span class="text-xs mt-1">Request Clock In</span></button><button onclick="openClockRequestModal('out')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl"><i data-feather="log-out" class="quick-icon-red"></i><span class="text-xs mt-1">Request Clock Out</span></button></div></div><div class="grid grid-cols-1 lg:grid-cols-2 gap-6"><div class="card-bg rounded-2xl p-6 shadow-sm"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">My Recent Requests</h3><button onclick="openNewRequestMenu()" class="text-[#011F7B] dark:text-blue-400 text-sm">+ New Request</button></div><div id="myRequestsList" class="space-y-3 max-h-80 overflow-y-auto"></div><button onclick="switchTab('my-requests')" class="mt-4 w-full bg-slate-100 dark:bg-slate-700 py-2 rounded-xl text-sm">View All My Requests</button></div><div class="card-bg rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Employee Login Status</h3><div class="space-y-4"><div><div class="flex items-center gap-2"><div class="w-3 h-3 bg-green-500 rounded-full"></div><h4 class="font-semibold">Logged In Today</h4><span id="loggedInCount"></span></div><div id="loggedInList" class="mt-2 space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2"><div class="w-3 h-3 bg-red-500 rounded-full"></div><h4 class="font-semibold">Missed Log In</h4><span id="missedCount"></span></div><div id="missedList" class="mt-2 space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2"><div class="w-3 h-3 bg-orange-500 rounded-full"></div><h4 class="font-semibold">Late</h4><span id="lateCountDashboard"></span></div><div id="lateList" class="mt-2 space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2"><div class="w-3 h-3 bg-yellow-500 rounded-full"></div><h4 class="font-semibold">On Leave</h4><span id="onLeaveCount"></span></div><div id="onLeaveList" class="mt-2 space-y-2 max-h-40 overflow-y-auto"></div></div></div></div></div><div class="mt-6 card-bg rounded-2xl p-6 shadow-sm"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Announcements</h3><div id="announcementAddButton"></div></div><div id="announcementsList" class="space-y-3"></div></div></div>
 
         <!-- MY ATTENDANCE TAB -->
-        <div id="my-attendance-tab" class="tab-content hidden">
-            <div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2 text-yellow-600"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button id="clockInBtn" onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-in"></i> Clock In</button><button id="clockOutBtn" onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-out"></i> Clock Out</button></div></div>
-            <div class="card-bg rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4">Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-slate-700"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500 dark:text-slate-400" id="todayTimeInfo"></div></div></div>
-            <div class="card-bg rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Attendance History</h3><div class="overflow-x-auto"><table class="attendance-history-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Date</th><th class="p-3 text-left">Clock In</th><th class="p-3 text-left">Clock Out</th><th class="p-3 text-left">Hours Worked</th><th class="p-3 text-left">Status</th></table></thead><tbody id="attendanceHistoryList"></tbody></table></div></div>
-        </div>
+        <div id="my-attendance-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2 text-yellow-600"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button id="clockInBtn" onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-in"></i> Clock In</button><button id="clockOutBtn" onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-out"></i> Clock Out</button></div></div><div class="card-bg rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4">Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-slate-700"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500 dark:text-slate-400" id="todayTimeInfo"></div></div></div><div class="card-bg rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Attendance History</h3><div class="overflow-x-auto"><table class="attendance-history-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Date</th><th class="p-3 text-left">Clock In</th><th class="p-3 text-left">Clock Out</th><th class="p-3 text-left">Hours Worked</th><th class="p-3 text-left">Status</th></tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div></div>
 
         <!-- MY REQUESTS TAB -->
         <div id="my-requests-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold text-yellow-600">My Requests</h2><button onclick="openNewRequestMenu()" class="bg-[#011F7B] text-white px-4 py-2 rounded-xl">New Request</button></div><div id="allMyRequestsList" class="space-y-3"></div></div>
@@ -425,11 +142,7 @@
         <div id="hr-requests-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 text-yellow-600">All Requests</h2><div id="allRequestsList" class="space-y-4"></div></div>
 
         <!-- ATTENDANCE SUMMARY TAB -->
-        <div id="attendance-summary-tab" class="tab-content hidden">
-            <div class="card-bg rounded-2xl p-6 shadow-sm"><div class="flex justify-between items-center flex-wrap gap-4 mb-4"><h2 class="text-2xl font-bold text-yellow-600">Attendance Summary</h2><div class="flex gap-2"><select id="summaryYear" class="border rounded-lg p-2 dark:bg-slate-700"></select><select id="summaryMonth" class="border rounded-lg p-2 dark:bg-slate-700"><option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option></select><button id="refreshSummaryBtn" class="bg-[#011F7B] text-white px-4 py-2 rounded-xl">Load</button></div></div>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6"><div class="lg:col-span-1"><h3 class="font-bold mb-3">Employees</h3><div id="employeeListContainer" class="space-y-2 max-h-96 overflow-y-auto"></div></div><div class="lg:col-span-2"><div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4"><div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Completed Days</small><h3 id="completedCount" class="text-2xl font-bold">0</h3></div><div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Late</small><h3 id="lateCountSummary" class="text-2xl font-bold">0</h3></div><div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Incomplete</small><h3 id="missingCountSummary" class="text-2xl font-bold">0</h3></div><div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Leave</small><h3 id="leaveCountSummary" class="text-2xl font-bold">0</h3></div></div><div class="calendar-box"><h3 class="mb-4">Attendance Calendar</h3><div id="calendarGrid" class="grid grid-cols-7 gap-2"></div></div><div class="details-box mt-4"><h3 class="mb-4">Details</h3><table class="details-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-2 text-left">Date</th><th class="p-2 text-left">Clock In</th><th class="p-2 text-left">Clock Out</th><th class="p-2 text-left">Status</th></tr></thead><tbody id="attendanceDetails"></tbody></table></div></div></div>
-            </div>
-        </div>
+        <div id="attendance-summary-tab" class="tab-content hidden"><div class="card-bg rounded-2xl p-6 shadow-sm"><div class="flex justify-between items-center flex-wrap gap-4 mb-4"><h2 class="text-2xl font-bold text-yellow-600">Attendance Summary</h2><div class="flex gap-2"><select id="summaryYear" class="border rounded-lg p-2 dark:bg-slate-700"></select><select id="summaryMonth" class="border rounded-lg p-2 dark:bg-slate-700"><option value="0">January</option><option value="1">February</option><option value="2">March</option><option value="3">April</option><option value="4">May</option><option value="5">June</option><option value="6">July</option><option value="7">August</option><option value="8">September</option><option value="9">October</option><option value="10">November</option><option value="11">December</option></select><button id="refreshSummaryBtn" class="bg-[#011F7B] text-white px-4 py-2 rounded-xl">Load</button></div></div><div class="grid grid-cols-1 lg:grid-cols-3 gap-6"><div class="lg:col-span-1"><h3 class="font-bold mb-3">Employees</h3><div id="employeeListContainer" class="space-y-2 max-h-96 overflow-y-auto"></div></div><div class="lg:col-span-2"><div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4"><div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Completed Days</small><h3 id="completedCount" class="text-2xl font-bold">0</h3></div><div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Late</small><h3 id="lateCountSummary" class="text-2xl font-bold">0</h3></div><div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Incomplete</small><h3 id="missingCountSummary" class="text-2xl font-bold">0</h3></div><div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Leave</small><h3 id="leaveCountSummary" class="text-2xl font-bold">0</h3></div></div><div class="calendar-box"><h3 class="mb-4">Attendance Calendar</h3><div id="calendarGrid" class="grid grid-cols-7 gap-2"></div></div><div class="details-box mt-4"><h3 class="mb-4">Details</h3><table class="details-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-2 text-left">Date</th><th class="p-2 text-left">Clock In</th><th class="p-2 text-left">Clock Out</th><th class="p-2 text-left">Status</th></tr></thead><tbody id="attendanceDetails"></tbody></table></div></div></div></div></div>
 
         <!-- APPROVALS TAB -->
         <div id="approvals-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 text-yellow-600">Pending Approvals</h2><div id="pendingApprovalsList" class="space-y-4"></div></div>
@@ -440,12 +153,12 @@
         <!-- MY PAYSLIP TAB -->
         <div id="payslip-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 text-yellow-600">My Payslip</h2><div id="employeePayslipList" class="space-y-4"></div></div>
 
-        <!-- HR PAYSLIP TAB (Payroll Management) -->
+        <!-- HR PAYSLIP TAB (Payroll Management) with auto-reset -->
         <div id="hr-payslip-tab" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="card-bg rounded-2xl p-6">
                     <h3 class="text-xl font-bold mb-4">Payroll Entry</h3>
-                    <div class="space-y-3 max-h-[70vh] overflow-y-auto pr-2">
+                    <div class="space-y-3 max-h-[70vh] overflow-y-auto pr-2" id="payrollFormFields">
                         <select id="payslipEmployee" class="w-full p-3 border rounded-xl dark:bg-slate-700"><option value="">Select Employee</option></select>
                         <input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl dark:bg-slate-700">
                         <select id="cutOffPeriod" class="w-full p-3 border rounded-xl dark:bg-slate-700"><option value="first">1st cut-off (1st-15th)</option><option value="second">2nd cut-off (16th-31st)</option></select>
@@ -462,7 +175,6 @@
                         <input type="number" id="otherNonTaxableEarnings" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Other Non-Taxable Earnings (₱)">
                         <input type="number" id="absencesLate" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Absences and Late (₱)">
                         <hr class="dark:border-slate-600">
-                        <!-- Auto-computed fields (readonly) -->
                         <input type="number" id="sssContribution" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="SSS Contribution (auto)" readonly disabled>
                         <input type="number" id="philhealthContribution" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="PhilHealth Contribution (auto)" readonly disabled>
                         <input type="number" id="pagibigContribution" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Pag-IBIG Contribution (auto)" readonly disabled>
@@ -484,29 +196,16 @@
                 </div>
                 <div class="card-bg rounded-2xl p-6">
                     <h3 class="text-xl font-bold mb-4">Payroll Summary & History</h3>
-                    <div id="payrollSummary" class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl mb-4 hidden">
-                        <h4 class="font-bold mb-2">Computed Summary</h4>
-                        <div class="space-y-1 text-sm">
-                            <p><strong>Gross Pay:</strong> <span id="grossPayDisplay">0.00</span></p>
-                            <p><strong>Total Deductions:</strong> <span id="totalDeductionsDisplay">0.00</span></p>
-                            <p><strong>Net Pay:</strong> <span id="netPayDisplay" class="text-green-600 font-bold">0.00</span></p>
-                        </div>
-                    </div>
+                    <div id="payrollSummary" class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl mb-4 hidden"><h4 class="font-bold mb-2">Computed Summary</h4><div class="space-y-1 text-sm"><p><strong>Gross Pay:</strong> <span id="grossPayDisplay">0.00</span></p><p><strong>Total Deductions:</strong> <span id="totalDeductionsDisplay">0.00</span></p><p><strong>Net Pay:</strong> <span id="netPayDisplay" class="text-green-600 font-bold">0.00</span></p></div></div>
                     <h3 class="text-xl font-bold mb-2">All Payslips History</h3>
                     <div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div>
                 </div>
             </div>
-            <!-- NEW: Payslip Preview Section (inline, not modal) -->
-            <div id="payslipPreviewContainer" class="card-bg rounded-2xl p-6 mt-6 hidden">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-bold">📄 Generated Payslip Preview</h3>
-                    <button onclick="closePayslipPreview()" class="text-red-500 hover:text-red-700"><i data-feather="x-circle"></i> Close</button>
-                </div>
+            <!-- Payslip Preview Container (inline, compact) -->
+            <div id="payslipPreviewContainer" class="card-bg rounded-2xl p-4 mt-6 hidden">
+                <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">📄 Generated Payslip</h3><button onclick="closePayslipPreview()" class="text-red-500 hover:text-red-700 text-sm"><i data-feather="x-circle"></i> Close</button></div>
                 <div id="payslipPreviewContent"></div>
-                <div class="text-right mt-4 no-print">
-                    <button onclick="downloadInlinePayslipPDF()" class="bg-[#011F7B] text-white px-4 py-2 rounded-lg text-sm">Download PDF</button>
-                    <button onclick="window.print()" class="bg-gray-600 text-white px-4 py-2 rounded-lg text-sm ml-2">Print</button>
-                </div>
+                <div class="text-right mt-3 no-print"><button onclick="downloadInlinePayslipPDF()" class="bg-[#011F7B] text-white px-4 py-1 rounded-lg text-sm">Download PDF</button><button onclick="window.print()" class="bg-gray-600 text-white px-4 py-1 rounded-lg text-sm ml-2">Print</button></div>
             </div>
         </div>
 
@@ -524,25 +223,16 @@
     </div>
 </div>
 
-<!-- MODALS (all required, same as original) -->
+<!-- MODALS -->
 <div id="addEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50"><div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="text" id="newEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="email" id="newEmpEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="newEmpEmployeeNumber" placeholder="Employee Number" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="date" id="newEmpDateHired" class="w-full p-3 border rounded-xl dark:bg-slate-700"><select id="newEmpGender" class="w-full p-3 border rounded-xl dark:bg-slate-700"><option value="">Gender</option><option>Male</option><option>Female</option></select><select id="newEmpCivilStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700"><option value="">Civil Status</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select><input type="text" id="newEmpPhone" placeholder="Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="newEmpAddress" placeholder="Address" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="newEmpEmergencyName" placeholder="Emergency Contact Name" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="newEmpEmergencyRelation" placeholder="Relationship" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="newEmpEmergencyPhone" placeholder="Emergency Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="newEmpEmergencyAddress" placeholder="Emergency Address" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="newEmpSSS" placeholder="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="newEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="newEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="newEmpDept" placeholder="Department" class="w-full p-3 border rounded-xl dark:bg-slate-700"><select id="newEmpRole" class="w-full p-3 border rounded-xl dark:bg-slate-700"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select><input type="text" id="newEmpPin" placeholder="PIN" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="password" id="newEmpPass" placeholder="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700"></div><div class="flex gap-3 mt-5"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('addEmployeeModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
-
 <div id="editEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50"><div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Employee</h3><button onclick="closeModal('editEmployeeModal')"><i data-feather="x"></i></button></div><input type="hidden" id="editEmpId"><div class="space-y-3"><input type="text" id="editEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="email" id="editEmpEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="editEmpEmployeeNumber" placeholder="Employee Number" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="date" id="editEmpDateHired" class="w-full p-3 border rounded-xl dark:bg-slate-700"><select id="editEmpGender" class="w-full p-3 border rounded-xl dark:bg-slate-700"><option value="">Gender</option><option>Male</option><option>Female</option></select><select id="editEmpCivilStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700"><option value="">Civil Status</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select><input type="text" id="editEmpPhone" placeholder="Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="editEmpAddress" placeholder="Address" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="editEmpEmergencyName" placeholder="Emergency Contact Name" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="editEmpEmergencyRelation" placeholder="Relationship" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="editEmpEmergencyPhone" placeholder="Emergency Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="editEmpEmergencyAddress" placeholder="Emergency Address" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="editEmpSSS" placeholder="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="editEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="editEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700"><select id="editEmpDept" class="w-full p-3 border rounded-xl dark:bg-slate-700"><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select><select id="editEmpRole" class="w-full p-3 border rounded-xl dark:bg-slate-700"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select><select id="editEmpStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700"><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option></select><input type="number" id="editLeaveBalance" placeholder="Leave Balance" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="text" id="editEmpPin" placeholder="PIN" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="password" id="editEmpPassword" placeholder="New Password (optional)" class="w-full p-3 border rounded-xl dark:bg-slate-700"></div><div class="flex gap-3 mt-5"><button onclick="saveEmployeeEdit()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save Changes</button><button onclick="closeModal('editEmployeeModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
-
 <div id="requestModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50"><div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="requestModalTitle">Submit Request</h3><button onclick="closeModal('requestModalOverlay')"><i data-feather="x"></i></button></div><input type="hidden" id="requestTypeValue"><div class="space-y-3"><input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl dark:bg-slate-700"><textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Reason..."></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
-
 <div id="leaveModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50"><div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 dark:bg-red-900/30 rounded-xl text-left">Sick Leave</button><button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 dark:bg-orange-900/30 rounded-xl text-left">Emergency Leave</button><button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-left">Vacation Leave</button></div></div></div>
-
 <div id="offsetsModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50"><div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeModal('offsetsModalOverlay')"><i data-feather="x"></i></button></div><div class="space-y-3"><input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="number" id="offsetsHours" step="0.5" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Hours to Offset"><textarea id="offsetsReasonText" rows="2" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Reason"></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitOffsets()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit</button><button onclick="closeModal('offsetsModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
-
 <div id="newRequestMenuOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50"><div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Request Type</h3><button onclick="closeModal('newRequestMenuOverlay')"><i data-feather="x"></i></button></div><div class="space-y-3"><button onclick="openRequestModal('Official Business')" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left">Official Business</button><button onclick="openRequestModal('Overtime')" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left">Overtime</button><button onclick="openRequestModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left">Certificate of Attendance</button><button onclick="closeModal('newRequestMenuOverlay'); openLeaveModal()" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left">Leave</button><button onclick="closeModal('newRequestMenuOverlay'); openOffsetsModal()" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left">Offsets</button></div></div></div>
-
 <div id="clockRequestModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50"><div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="clockRequestTitle">Request Clock In</h3><button onclick="closeModal('clockRequestModal')"><i data-feather="x"></i></button></div><input type="hidden" id="clockRequestType"><div class="space-y-3"><input type="date" id="clockDate" class="w-full p-3 border rounded-xl dark:bg-slate-700"><input type="time" id="clockTime" class="w-full p-3 border rounded-xl dark:bg-slate-700"><textarea id="clockReason" rows="2" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Reason for request"></textarea></div><div class="flex gap-3 mt-5"><button onclick="submitClockRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Submit Request</button><button onclick="closeModal('clockRequestModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
-
 <div id="payslipModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50"><div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto"><div class="flex justify-between items-start mb-4 no-print"><h2 class="text-xl font-bold">Payslip Statement</h2><button onclick="closeModal('payslipModal')"><i data-feather="x"></i></button></div><div id="payslipContent"></div><div class="text-right no-print mt-4"><button onclick="downloadPayslipPDF()" class="bg-[#011F7B] text-white px-4 py-2 rounded-lg text-sm">Download PDF</button><button onclick="window.print()" class="bg-gray-600 text-white px-4 py-2 rounded-lg text-sm ml-2">Print</button></div></div></div>
-
 <div id="announcementModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50"><div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold" id="announcementModalTitle">Edit Announcement</h3><button onclick="closeModal('announcementModal')"><i data-feather="x"></i></button></div><input type="hidden" id="announcementId"><div class="space-y-4"><input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Title"><textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Content"></textarea></div><div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
-
 <div id="editLeaveModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50"><div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl dark:bg-slate-700" readonly><input type="number" id="editLeaveBalanceSimple" class="w-full p-3 border rounded-xl dark:bg-slate-700" step="1"></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 
 <script>
@@ -569,13 +259,14 @@ const fullPrivilegedEmails = [...SYSTEM_ADMIN_EMAILS];
 const resetAuthorizedEmail = "mod.rom@equiprime.ph";
 const editAuthorizedEmails = ["mod.rom@equiprime.ph", "mod.dex@equiprime.ph", "hrd@equiprime.ph"];
 let clockInProgress = false;
+let currentComputedPayroll = null;
 
 function isSystemAdmin(email) { return SYSTEM_ADMIN_EMAILS.includes(email); }
 function getDefaultExtendedFields() {
     return { employeeNumber: '', dateHired: '', gender: '', civilStatus: '', phone: '', address: '', emergencyContactName: '', emergencyContactRelationship: '', emergencyContactNumber: '', emergencyContactAddress: '', sssNumber: '', philhealthNumber: '', pagibigNumber: '', photoURL: '' };
 }
 
-// ==================== HELPER FUNCTIONS ====================
+// Helper functions
 async function ensureSystemAdminRecord(user) {
     const email = user.email;
     if (!SYSTEM_ADMIN_EMAILS.includes(email)) return false;
@@ -726,33 +417,22 @@ function refreshDashboard() {
 
 // ==================== NAVIGATION WITH BADGES ====================
 function renderNavigation() {
-    const isFull = fullPrivilegedEmails.includes(currentUser?.email) || 
-                   currentUserRole === 'admin' || 
-                   currentUserRole === 'hr' || 
-                   currentUserRole === 'moderator';
+    const isFull = fullPrivilegedEmails.includes(currentUser?.email) || currentUserRole === 'admin' || currentUserRole === 'hr' || currentUserRole === 'moderator';
     const canAccessEmployees = isFull;
     let pendingApprovalCount = 0;
     let allRequestsPendingCount = 0;
     if (currentUser) {
-        if (currentUserRole === 'approver') {
-            pendingApprovalCount = allRequests.filter(r => r.approverEmail === currentUser?.email && r.status === "pending_secondary").length;
-        } else if (currentUser.email === 'hrd@equiprime.ph') {
-            pendingApprovalCount = allRequests.filter(r => r.status === "pending_final").length;
-        } else if (fullPrivilegedEmails.includes(currentUser.email) || currentUserRole === 'admin' || currentUserRole === 'hr' || currentUserRole === 'moderator') {
-            pendingApprovalCount = allRequests.filter(r => r.approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status === "pending_final")).length;
-        }
-        if (isFull) {
-            allRequestsPendingCount = allRequests.filter(r => r.status === "pending_secondary" || r.status === "pending_final").length;
-        }
+        if (currentUserRole === 'approver') pendingApprovalCount = allRequests.filter(r => r.approverEmail === currentUser?.email && r.status === "pending_secondary").length;
+        else if (currentUser.email === 'hrd@equiprime.ph') pendingApprovalCount = allRequests.filter(r => r.status === "pending_final").length;
+        else if (fullPrivilegedEmails.includes(currentUser.email) || currentUserRole === 'admin' || currentUserRole === 'hr' || currentUserRole === 'moderator') pendingApprovalCount = allRequests.filter(r => r.approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status === "pending_final")).length;
+        if (isFull) allRequestsPendingCount = allRequests.filter(r => r.status === "pending_secondary" || r.status === "pending_final").length;
     }
     const pendingBadge = pendingApprovalCount > 0 ? `<span class="tab-badge">${pendingApprovalCount}</span>` : '';
     const allRequestsBadge = allRequestsPendingCount > 0 ? `<span class="tab-badge">${allRequestsPendingCount}</span>` : '';
     let html = `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="home"></i><span>Dashboard</span></button>
                 <button onclick="switchTab('my-attendance')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i><span>My Attendance</span></button>
                 <button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i><span>My Request</span></button>`;
-    if (canAccessEmployees) {
-        html += `<button onclick="switchTab('employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="users"></i><span>Employees</span></button>`;
-    }
+    if (canAccessEmployees) html += `<button onclick="switchTab('employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="users"></i><span>Employees</span></button>`;
     if (isFull) {
         html += `<button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clipboard"></i><span>All Requests</span>${allRequestsBadge}</button>
                  <button onclick="switchTab('attendance-summary')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="bar-chart-2"></i><span>Attendance Summary</span></button>
@@ -765,9 +445,7 @@ function renderNavigation() {
     } else {
         html += `<button onclick="switchTab('payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i><span>My Payslip</span></button>
                  <button onclick="switchTab('helpdesk')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="help-circle"></i><span>HR Helpdesk</span></button>`;
-        if (currentUserRole === 'approver' || currentUserRole === 'supervisor' || currentUserRole === 'manager') {
-            html += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i><span>Pending Approval</span>${pendingBadge}</button>`;
-        }
+        if (currentUserRole === 'approver' || currentUserRole === 'supervisor' || currentUserRole === 'manager') html += `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i><span>Pending Approval</span>${pendingBadge}</button>`;
     }
     document.getElementById('desktopNavMenu').innerHTML = html;
     document.getElementById('mobileNavMenu').innerHTML = html;
@@ -776,12 +454,8 @@ function renderNavigation() {
 
 function switchTab(tabName) {
     const allowed = ['dashboard','my-attendance','my-requests','payslip','helpdesk'];
-    const isFull = fullPrivilegedEmails.includes(currentUser?.email) || 
-                   currentUserRole === 'admin' || 
-                   currentUserRole === 'hr' || 
-                   currentUserRole === 'moderator';
-    if (isFull) allowed.push('hr-requests','attendance-summary','approvals','hr-guard-schedule','hr-payslip','admin-helpdesk','hr-settings');
-    if (isFull) allowed.push('employees');
+    const isFull = fullPrivilegedEmails.includes(currentUser?.email) || currentUserRole === 'admin' || currentUserRole === 'hr' || currentUserRole === 'moderator';
+    if (isFull) allowed.push('hr-requests','attendance-summary','approvals','hr-guard-schedule','hr-payslip','admin-helpdesk','hr-settings','employees');
     if (!allowed.includes(tabName)) { alert("Access denied."); return; }
     document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
     const target = document.getElementById(`${tabName}-tab`);
@@ -813,26 +487,8 @@ function openRequestModal(type) { closeModal('newRequestMenuOverlay'); document.
 function selectLeaveType(type) { closeModal('leaveModalOverlay'); openRequestModal(type); }
 function toggleNightMode() { document.body.classList.toggle('dark'); localStorage.setItem('nightMode', document.body.classList.contains('dark') ? 'enabled' : 'disabled'); feather.replace(); }
 
-function openMobileSidebar() {
-    const sidebar = document.getElementById('mobileSidebar');
-    const overlay = document.getElementById('overlay');
-    if (sidebar) {
-        sidebar.classList.add('open');
-        overlay.classList.remove('hidden');
-        overlay.classList.add('active');
-        document.body.classList.add('overflow-hidden');
-    }
-}
-function closeMobileSidebar() {
-    const sidebar = document.getElementById('mobileSidebar');
-    const overlay = document.getElementById('overlay');
-    if (sidebar) {
-        sidebar.classList.remove('open');
-        overlay.classList.add('hidden');
-        overlay.classList.remove('active');
-        document.body.classList.remove('overflow-hidden');
-    }
-}
+function openMobileSidebar() { const sidebar = document.getElementById('mobileSidebar'); const overlay = document.getElementById('overlay'); if (sidebar) { sidebar.classList.add('open'); overlay.classList.remove('hidden'); overlay.classList.add('active'); document.body.classList.add('overflow-hidden'); } }
+function closeMobileSidebar() { const sidebar = document.getElementById('mobileSidebar'); const overlay = document.getElementById('overlay'); if (sidebar) { sidebar.classList.remove('open'); overlay.classList.add('hidden'); overlay.classList.remove('active'); document.body.classList.remove('overflow-hidden'); } }
 function saveSettings() { localStorage.setItem('device_ip', document.getElementById('deviceIp').value); alert('Settings saved'); }
 
 // ==================== AVATAR ====================
@@ -1033,8 +689,7 @@ function renderEmployeesTable() {
             <td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${emp.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${emp.status}</span></td>
             <td class="p-3"><button onclick='openEditEmployeeModal(${JSON.stringify(emp)})' class="text-blue-600 hover:text-blue-800 mr-2"><i data-feather="edit-2" class="w-4 h-4 inline"></i> Edit</button>
             <button onclick="deleteEmployee('${emp.id}')" class="text-red-600 hover:text-red-800"><i data-feather="trash-2" class="w-4 h-4 inline"></i> Delete</button></td>
-         </tr>
-    `).join('');
+         `).join('');
     feather.replace();
 }
 function filterEmployeesTable() { renderEmployeesTable(); }
@@ -1123,19 +778,10 @@ async function submitClockRequest() {
     if (!time) time = type === 'in' ? '08:00' : '17:00';
     const requestType = type === 'in' ? 'Clock In Request' : 'Clock Out Request';
     const req = {
-        userId: currentUser.uid,
-        userName: currentUserData.name,
-        userDepartment: currentUserData.department || "Unassigned",
-        type: requestType,
-        startDate: date,
-        endDate: date,
-        reason: `Time: ${time}\n${reason}`,
-        status: "pending_final",
-        approverEmail: "hrd@equiprime.ph",
-        secondaryApproved: false,
-        finalApproved: false,
-        requestedTime: time,
-        createdAt: new Date().toISOString()
+        userId: currentUser.uid, userName: currentUserData.name, userDepartment: currentUserData.department || "Unassigned",
+        type: requestType, startDate: date, endDate: date, reason: `Time: ${time}\n${reason}`,
+        status: "pending_final", approverEmail: "hrd@equiprime.ph", secondaryApproved: false, finalApproved: false,
+        requestedTime: time, createdAt: new Date().toISOString()
     };
     const ref = await db.collection('requests').add(req);
     allRequests.push({ id: ref.id, ...req });
@@ -1352,38 +998,14 @@ function computeMonthlyDeductions(monthlySalary) {
     const pagIbig = monthlySalary > 10000 ? 200 : 100;
     const taxableIncome = monthlySalary - (sss + philHealth + pagIbig);
     let tax = 0;
-    let taxRateUsed = 0;
-    if (taxableIncome <= 20833) {
-        tax = 0;
-        taxRateUsed = 0;
-    } else if (taxableIncome <= 33333) {
-        tax = (taxableIncome - 20833) * 0.15;
-        taxRateUsed = 0.15;
-    } else if (taxableIncome <= 66667) {
-        tax = (33333 - 20833) * 0.15 + (taxableIncome - 33333) * 0.20;
-        taxRateUsed = 0.20;
-    } else if (taxableIncome <= 166667) {
-        tax = (33333 - 20833) * 0.15 + (66667 - 33333) * 0.20 + (taxableIncome - 66667) * 0.25;
-        taxRateUsed = 0.25;
-    } else if (taxableIncome <= 666667) {
-        tax = (33333 - 20833) * 0.15 + (66667 - 33333) * 0.20 + (166667 - 66667) * 0.25 + (taxableIncome - 166667) * 0.30;
-        taxRateUsed = 0.30;
-    } else {
-        tax = (33333 - 20833) * 0.15 + (66667 - 33333) * 0.20 + (166667 - 66667) * 0.25 + (666667 - 166667) * 0.30 + (taxableIncome - 666667) * 0.35;
-        taxRateUsed = 0.35;
-    }
-    return {
-        sss: Math.round(sss),
-        philHealth: Math.round(philHealth),
-        pagIbig: Math.round(pagIbig),
-        taxableIncome: Math.round(taxableIncome),
-        withholdingTax: Math.round(tax),
-        taxRate: taxRateUsed
-    };
+    if (taxableIncome <= 20833) tax = 0;
+    else if (taxableIncome <= 33333) tax = (taxableIncome - 20833) * 0.15;
+    else if (taxableIncome <= 66667) tax = (33333 - 20833) * 0.15 + (taxableIncome - 33333) * 0.20;
+    else if (taxableIncome <= 166667) tax = (33333 - 20833) * 0.15 + (66667 - 33333) * 0.20 + (taxableIncome - 66667) * 0.25;
+    else if (taxableIncome <= 666667) tax = (33333 - 20833) * 0.15 + (66667 - 33333) * 0.20 + (166667 - 66667) * 0.25 + (taxableIncome - 166667) * 0.30;
+    else tax = (33333 - 20833) * 0.15 + (66667 - 33333) * 0.20 + (166667 - 66667) * 0.25 + (666667 - 166667) * 0.30 + (taxableIncome - 666667) * 0.35;
+    return { sss: Math.round(sss), philHealth: Math.round(philHealth), pagIbig: Math.round(pagIbig), taxableIncome: Math.round(taxableIncome), withholdingTax: Math.round(tax) };
 }
-
-// ==================== ENHANCED PAYROLL WITH NEW TEMPLATE ====================
-let currentComputedPayroll = null;
 
 function computePayroll() {
     const basicSalary = parseFloat(document.getElementById('basicSalary').value) || 0;
@@ -1436,135 +1058,64 @@ function computePayroll() {
         otherTaxableEarnings, deMinimis, otherNonTaxableEarnings, absencesLate,
         sssLoans, sssCl, hdmfLoans, hdmfCl, salaryLoan, otherDeductions, wtax,
         sssMpf, additionalPagibig,
-        sss: halfSSS,
-        philhealth: halfPhil,
-        pagibig: halfPag,
-        taxableGross,
-        totalEarnings,
-        netPayAfterAbsences,
-        totalNonTaxableDeductions,
-        totalContributions,
-        totalDeductions,
-        netPay,
+        sss: halfSSS, philhealth: halfPhil, pagibig: halfPag,
+        taxableGross, totalEarnings, netPayAfterAbsences,
+        totalNonTaxableDeductions, totalContributions, totalDeductions, netPay,
         taxableIncomeCutOff: Math.round(ded.taxableIncome / 2),
-        withholdingTax: Math.round(ded.withholdingTax / 2),
-        taxRate: ded.taxRate
+        withholdingTax: Math.round(ded.withholdingTax / 2)
     };
 }
 
 async function generatePayslipFromComputed() {
-    if (!currentComputedPayroll) {
-        alert("Please click 'Compute Payroll' first.");
-        return;
-    }
-    if (!fullPrivilegedEmails.includes(currentUser.email)) {
-        alert("Not authorized.");
-        return;
-    }
+    if (!currentComputedPayroll) { alert("Please click 'Compute Payroll' first."); return; }
+    if (!fullPrivilegedEmails.includes(currentUser.email)) { alert("Not authorized."); return; }
     const empId = document.getElementById('payslipEmployee').value;
     const month = document.getElementById('payslipMonth').value;
     const cutOff = document.getElementById('cutOffPeriod').value;
-    if (!empId || !month) {
-        alert("Please select employee and payroll month.");
-        return;
-    }
+    if (!empId || !month) { alert("Please select employee and payroll month."); return; }
     const employee = allEmployees.find(e => e.id === empId);
     if (!employee) return;
-
     const cutOffLabel = cutOff === 'first' ? '1st cut-off (1st-15th)' : '2nd cut-off (16th-31st)';
     const payrollDate = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-
     const payslipData = {
         employeeId: empId, employeeName: employee.name, employeeEmail: employee.email,
-        month, cutOff: cutOffLabel,
-        payrollDate,
+        month, cutOff: cutOffLabel, payrollDate,
         ...currentComputedPayroll
     };
-
-    const docRef = await db.collection('payslips').add(payslipData);
-    allPayslips.push({ id: docRef.id, ...payslipData });
+    await db.collection('payslips').add(payslipData);
     refreshHrPayslip();
-    // Show payslip inline in the same tab (no modal)
     renderInlinePayslip(payslipData);
+    // Reset payroll form for next employee
+    resetPayrollForm();
+    alert(`Payslip generated for ${employee.name} and form reset.`);
+}
+
+function resetPayrollForm() {
+    const fields = ['basicSalary', 'overtimePay', 'holidayPay', 'nd', 'ot', 'ndot', 'lhNd', 'restday', 'otherTaxableEarnings', 'deMinimis', 'otherNonTaxableEarnings', 'absencesLate', 'sssMpf', 'additionalPagibig', 'sssLoans', 'sssCl', 'hdmfLoans', 'hdmfCl', 'salaryLoan', 'otherDeductions', 'wtax'];
+    fields.forEach(id => { const el = document.getElementById(id); if (el) el.value = '0'; });
+    document.getElementById('basicSalary').value = '';
+    document.getElementById('payslipEmployee').value = '';
+    document.getElementById('payslipMonth').value = '';
+    document.getElementById('cutOffPeriod').value = 'first';
+    document.getElementById('sssContribution').value = '';
+    document.getElementById('philhealthContribution').value = '';
+    document.getElementById('pagibigContribution').value = '';
+    document.getElementById('payrollSummary').classList.add('hidden');
+    currentComputedPayroll = null;
 }
 
 function renderInlinePayslip(payslip) {
     const container = document.getElementById('payslipPreviewContainer');
     const contentDiv = document.getElementById('payslipPreviewContent');
     if (!container || !contentDiv) return;
-    
     const content = `
         <div class="payslip-container">
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-bold">EQUIPRIME HR</h2>
-                <p class="text-sm">Payslip Statement</p>
-            </div>
-            <div class="payslip-section">
-                <div class="grid grid-cols-3 gap-4 mb-2">
-                    <div><strong>Name:</strong> ${payslip.employeeName}</div>
-                    <div><strong>Period Coverage:</strong> ${payslip.month} (${payslip.cutOff})</div>
-                    <div><strong>Date of Payroll:</strong> ${payslip.payrollDate}</div>
-                </div>
-            </div>
-            <div class="payslip-section">
-                <div class="payslip-title">Gross Earning</div>
-                <div class="earnings-grid text-sm">
-                    <div>Basic Pay (taxable): ${payslip.basicSalary}</div>
-                    <div>Overtime (taxable): ${payslip.overtimePay}</div>
-                    <div>ND: ${payslip.nd}</div>
-                    <div>OT: ${payslip.ot}</div>
-                    <div>NDOT: ${payslip.ndot}</div>
-                    <div>Legal Holiday: ${payslip.holidayPay}</div>
-                    <div>LH-ND: ${payslip.lhNd}</div>
-                    <div>RESTDAY: ${payslip.restday}</div>
-                    <div>Other Taxable Earning: ${payslip.otherTaxableEarnings}</div>
-                </div>
-                <div class="mt-2"><strong>A. TOTAL TAXABLE EARNING:</strong> ${payslip.taxableGross}</div>
-            </div>
-            <div class="payslip-section">
-                <div class="grid grid-cols-2 gap-2 text-sm">
-                    <div>C. De Minimis (non-taxable): ${payslip.deMinimis}</div>
-                    <div>D. Other Non-Taxable Earning: ${payslip.otherNonTaxableEarnings}</div>
-                </div>
-                <div class="mt-2"><strong>TOTAL EARNINGS (A+B+D):</strong> ${payslip.totalEarnings}</div>
-                <div class="mt-2"><strong>Less Absences and Late:</strong> ${payslip.absencesLate}</div>
-                <div class="mt-2"><strong>Total Gross:</strong> ${payslip.netPayAfterAbsences}</div>
-            </div>
-            <div class="payslip-section">
-                <div class="payslip-title">Non-Taxable Deductions</div>
-                <div class="grid grid-cols-2 gap-2 text-sm">
-                    <div>SSSLOANS: ${payslip.sssLoans}</div>
-                    <div>SSS CL: ${payslip.sssCl}</div>
-                    <div>HDMFLOANS: ${payslip.hdmfLoans}</div>
-                    <div>HDMF CL: ${payslip.hdmfCl}</div>
-                    <div>SALARY LOAN: ${payslip.salaryLoan}</div>
-                    <div>WTAX: ${payslip.wtax}</div>
-                    <div>OTHERS: ${payslip.otherDeductions}</div>
-                </div>
-                <div class="mt-2"><strong>TOTAL:</strong> ${payslip.totalNonTaxableDeductions}</div>
-            </div>
-            <div class="payslip-section">
-                <div class="payslip-title">CONTRIBUTIONS</div>
-                <div class="grid grid-cols-2 gap-2 text-sm">
-                    <div>SSS: ${payslip.sss}</div>
-                    <div>SSS MPF: ${payslip.sssMpf}</div>
-                    <div>PHILHEALTH: ${payslip.philhealth}</div>
-                    <div>PagIBIG: ${payslip.pagibig}</div>
-                    <div>Additional PagIBIG: ${payslip.additionalPagibig}</div>
-                </div>
-                <div class="mt-2"><strong>TOTAL:</strong> ${payslip.totalContributions}</div>
-            </div>
-            <div class="payslip-section">
-                <div class="payslip-title">OTHER SUMMARY</div>
-                <div>TAXABLE GROSS FOR THIS CUT-OFF: ${payslip.taxableIncomeCutOff}</div>
-            </div>
-            <div class="payslip-section text-center mt-4">
-                <div class="text-2xl font-bold text-green-600">NET PAY: ₱${payslip.netPay}</div>
-            </div>
-            <div class="signature-line">
-                Certified True Copy
-                <div class="mt-2">Signature</div>
-            </div>
+            <div class="payslip-header"><h2>EQUIPRIME HR</h2><p>Payslip Statement</p></div>
+            <div class="two-columns"><div><strong>Name:</strong> ${payslip.employeeName}</div><div><strong>Period:</strong> ${payslip.month} (${payslip.cutOff})</div><div><strong>Date:</strong> ${payslip.payrollDate}</div></div>
+            <div class="payslip-section"><div class="payslip-title">Earnings</div><div class="earnings-grid"><div>Basic: ${payslip.basicSalary}</div><div>Overtime: ${payslip.overtimePay}</div><div>Holiday: ${payslip.holidayPay}</div><div>ND: ${payslip.nd}</div><div>OT: ${payslip.ot}</div><div>NDOT: ${payslip.ndot}</div><div>LH-ND: ${payslip.lhNd}</div><div>Rest Day: ${payslip.restday}</div><div>Other Taxable: ${payslip.otherTaxableEarnings}</div><div>De Minimis: ${payslip.deMinimis}</div><div>Other Non-Tax: ${payslip.otherNonTaxableEarnings}</div></div><div><strong>Total Taxable Gross:</strong> ${payslip.taxableGross}</div><div><strong>Total Earnings:</strong> ${payslip.totalEarnings}</div><div><strong>Less Absences/Late:</strong> ${payslip.absencesLate}</div><div><strong>Gross Pay:</strong> ${payslip.netPayAfterAbsences}</div></div>
+            <div class="payslip-section"><div class="payslip-title">Deductions</div><div class="earnings-grid"><div>SSS: ${payslip.sss}</div><div>SSS MPF: ${payslip.sssMpf}</div><div>PhilHealth: ${payslip.philhealth}</div><div>Pag-IBIG: ${payslip.pagibig}</div><div>Addl Pag-IBIG: ${payslip.additionalPagibig}</div><div>SSS Loans: ${payslip.sssLoans}</div><div>SSS CL: ${payslip.sssCl}</div><div>HDMF Loans: ${payslip.hdmfLoans}</div><div>HDMF CL: ${payslip.hdmfCl}</div><div>Salary Loan: ${payslip.salaryLoan}</div><div>WTAX: ${payslip.wtax}</div><div>Other Ded: ${payslip.otherDeductions}</div></div><div><strong>Total Deductions:</strong> ${payslip.totalDeductions}</div></div>
+            <div class="text-center mt-2"><span class="net-pay">NET PAY: ₱${payslip.netPay}</span></div>
+            <div class="signature-line">Certified True Copy<br>Signature</div>
         </div>
     `;
     contentDiv.innerHTML = content;
@@ -1572,22 +1123,18 @@ function renderInlinePayslip(payslip) {
     window.currentInlinePayslip = payslip;
 }
 
-function closePayslipPreview() {
-    const container = document.getElementById('payslipPreviewContainer');
-    if (container) container.classList.add('hidden');
-}
-
+function closePayslipPreview() { document.getElementById('payslipPreviewContainer').classList.add('hidden'); }
 function downloadInlinePayslipPDF() {
     if (!window.currentInlinePayslip) return;
     const element = document.getElementById('payslipPreviewContent');
-    html2pdf().from(element).set({ margin: 1, filename: `payslip_${window.currentInlinePayslip.employeeName}_${window.currentInlinePayslip.month}.pdf`, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } }).save();
+    html2pdf().from(element).set({ margin: 0.3, filename: `payslip_${window.currentInlinePayslip.employeeName}_${window.currentInlinePayslip.month}.pdf`, html2canvas: { scale: 2, letterRendering: true }, jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' } }).save();
 }
 
 function refreshHrPayslip() {
     const sel = document.getElementById('payslipEmployee');
     if (sel) sel.innerHTML = '<option value="">Select Employee</option>' + allEmployees.filter(e => !isSystemAdmin(e.email)).map(e => `<option value="${e.id}">${e.name} - ${e.dept}</option>`).join('');
     const hist = document.getElementById('payslipHistory');
-    if (hist) hist.innerHTML = allPayslips.slice().reverse().map(p => `<div class="card-bg p-3 rounded mb-2 shadow-sm"><b>${p.employeeName}</b> - ${p.month} (${p.cutOff})<br><span class="text-green-600 dark:text-green-400 font-bold">Net: ₱${p.netPay}</span></div>`).join('') || '<div>No payslips</div>';
+    if (hist) hist.innerHTML = allPayslips.slice().reverse().map(p => `<div class="card-bg p-2 rounded mb-1 shadow-sm text-sm"><b>${p.employeeName}</b> - ${p.month} (${p.cutOff})<br><span class="text-green-600 font-bold">Net: ₱${p.netPay}</span></div>`).join('') || '<div>No payslips</div>';
 }
 function refreshEmployeePayslip() {
     const my = allPayslips.filter(p => p.employeeEmail === currentUser?.email);
@@ -1799,7 +1346,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('generatePayslipBtn').addEventListener('click', generatePayslipFromComputed);
     document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
     document.getElementById('refreshSummaryBtn').addEventListener('click', () => loadEmployeeListForSummary());
-    document.addEventListener('click', function(event) { const dropdown = document.getElementById('profileDropdown'); const trigger = document.getElementById('profileTrigger'); if (!dropdown || !trigger) return; if (trigger.contains(event.target)) dropdown.classList.toggle('show'); else if (!dropdown.contains(event.target)) dropdown.classList.remove('show'); });
+    document.addEventListener('click', function(event) { const dropdown = document.getElementById('profileDropdown'); const trigger = document.querySelector('.profile-trigger'); if (!dropdown || !trigger) return; if (trigger.contains(event.target)) dropdown.classList.toggle('hidden'); else if (!dropdown.contains(event.target)) dropdown.classList.add('hidden'); });
     setupRealtimeListeners();
     auth.onAuthStateChanged(async (user) => {
         if (user) {
