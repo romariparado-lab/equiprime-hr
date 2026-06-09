@@ -343,11 +343,17 @@
         .quick-icon-orange { color: #f97316; }
         .quick-icon-white { color: #ffffff; }
         body.dark .quick-icon-white { color: #e2e8f0; }
+        
+        /* Disabled button style */
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN (branding changes: centered, larger font, blue subtitle, yellow icons, centered copyright) -->
+<!-- LOGIN SCREEN -->
 <div id="authScreen" class="login-split">
     <div class="branding-half">
         <div class="branding-content text-center">
@@ -484,7 +490,7 @@
 
         <!-- MY ATTENDANCE TAB -->
         <div id="my-attendance-tab" class="tab-content hidden">
-            <div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-in"></i> Clock In</button><button onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-out"></i> Clock Out</button></div></div>
+            <div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button id="clockInBtn" onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-in"></i> Clock In</button><button id="clockOutBtn" onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-out"></i> Clock Out</button></div></div>
             <div class="card-bg rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4">Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-slate-700"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500 dark:text-slate-400" id="todayTimeInfo"></div></div></div>
             <div class="card-bg rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Attendance History</h3><div class="overflow-x-auto"><table class="attendance-history-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Date</th><th class="p-3 text-left">Clock In</th><th class="p-3 text-left">Clock Out</th><th class="p-3 text-left">Hours Worked</th><th class="p-3 text-left">Status</th></tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div>
         </div>
@@ -511,7 +517,7 @@
         <!-- MY PAYSLIP TAB -->
         <div id="payslip-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5">My Payslip</h2><div id="employeePayslipList" class="space-y-4"></div></div>
 
-        <!-- HR PAYSLIP TAB (PAYSLIP MANAGEMENT) -->
+        <!-- HR PAYSLIP TAB -->
         <div id="hr-payslip-tab" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="card-bg rounded-2xl p-6">
@@ -565,7 +571,7 @@
         <div id="helpdesk-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5">HR Helpdesk</h2><div class="card-bg rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4">Submit a Request</h3><div class="space-y-4"><select id="helpdeskType" class="w-full p-3 border rounded-xl dark:bg-slate-700"><option value="PIN Reset">PIN Reset Request</option><option value="Password Reset">Password Reset Request</option><option value="Profile Update">Profile Update</option><option value="Attendance Correction">Attendance Correction</option><option value="General Inquiry">General Inquiry</option></select><textarea id="helpdeskMessage" rows="4" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Please provide details..."></textarea><button onclick="submitHelpdeskRequest()" class="bg-[#011F7B] text-white px-6 py-2 rounded-xl font-semibold">Submit Request</button></div></div><div class="card-bg rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">My Helpdesk Requests</h3><div id="myHelpdeskRequests" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div>
 
         <!-- EMPLOYEES TAB -->
-        <div id="employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold">Employees Management</h2><button onclick="showAddEmployeeModal()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex items-center gap-2"><i data-feather="plus"></i> Add Employee</button></div><div class="card-bg rounded-2xl p-6 shadow-sm"><input type="text" id="employeeSearch" class="search-input w-full max-w-md p-2 border rounded-lg mb-4 dark:bg-slate-700" placeholder="Search by name, email, department..." onkeyup="filterEmployeesTable()"><div class="overflow-x-auto"><table class="employees-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Name</th><th class="p-3 text-left">Email</th><th class="p-3 text-left">Employee #</th><th class="p-3 text-left">Department</th><th class="p-3 text-left">Role</th><th class="p-3 text-left">Status</th><th class="p-3 text-left">Actions</th></tr></thead><tbody id="employeesTableBody"></tbody></table></div></div></div>
+        <div id="employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold">Employees Management</h2><button onclick="showAddEmployeeModal()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex items-center gap-2"><i data-feather="plus"></i> Add Employee</button></div><div class="card-bg rounded-2xl p-6 shadow-sm"><input type="text" id="employeeSearch" class="search-input w-full max-w-md p-2 border rounded-lg mb-4 dark:bg-slate-700" placeholder="Search by name, email, department..." onkeyup="filterEmployeesTable()"><div class="overflow-x-auto"><table class="employees-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Name</th><th class="p-3 text-left">Email</th><th class="p-3 text-left">Employee #</th><th class="p-3 text-left">Department</th><th class="p-3 text-left">Role</th><th class="p-3 text-left">Status</th><th class="p-3 text-left">Actions</th><tr></thead><tbody id="employeesTableBody"></tbody></table></div></div></div>
     </div>
 </div>
 
@@ -616,17 +622,74 @@ const fullPrivilegedEmails = [...SYSTEM_ADMIN_EMAILS];
 const resetAuthorizedEmail = "mod.rom@equiprime.ph";
 const editAuthorizedEmails = ["mod.rom@equiprime.ph", "mod.dex@equiprime.ph", "hrd@equiprime.ph"];
 
+// Flag to prevent duplicate clock in/out submissions
+let clockInProgress = false;
+
 function isSystemAdmin(email) { return SYSTEM_ADMIN_EMAILS.includes(email); }
 function getDefaultExtendedFields() {
     return { employeeNumber: '', dateHired: '', gender: '', civilStatus: '', phone: '', address: '', emergencyContactName: '', emergencyContactRelationship: '', emergencyContactNumber: '', emergencyContactAddress: '', sssNumber: '', philhealthNumber: '', pagibigNumber: '', photoURL: '' };
 }
 
 // ==================== HELPER FUNCTIONS ====================
-async function ensureSystemAdminRecord(user) { /* same as before */ }
-async function grantApproverPermissions(employeeId, role, department) { /* same */ }
-async function revokeApproverPermissions(employeeId, department) { /* same */ }
-async function getApproverForDepartment(department, stage) { /* same */ }
-async function getDirectApproverForSubmitter(userEmail, role, department) { /* same */ }
+async function ensureSystemAdminRecord(user) { 
+    const email = user.email;
+    if (!SYSTEM_ADMIN_EMAILS.includes(email)) return false;
+    const docRef = db.collection('employees').doc(user.uid);
+    const doc = await docRef.get();
+    if (!doc.exists) {
+        let role = "admin";
+        if (email === "hrd@equiprime.ph") role = "hr";
+        else if (email === "mod.rom@equiprime.ph" || email === "mod.dex@equiprime.ph") role = "moderator";
+        const name = email.split('@')[0].replace(/\./g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+        const empData = { name, email, dept: "HR Department", role, status: "active", pin: "0000", leaveBalance: 15, createdAt: new Date().toISOString(), ...getDefaultExtendedFields() };
+        await docRef.set(empData);
+        await db.collection('users').doc(user.uid).set({ uid: user.uid, name, email, role, department: "HR Department", leaveBalance: 15, status: "active", phone: "N/A" });
+        await grantApproverPermissions(user.uid, role, "HR Department");
+        return true;
+    } else {
+        if (doc.data().status !== 'active') await docRef.update({ status: 'active' });
+        return true;
+    }
+}
+async function grantApproverPermissions(employeeId, role, department) {
+    const approverRoles = ['admin', 'supervisor', 'manager', 'hr', 'moderator'];
+    if (!approverRoles.includes(role)) return;
+    const deptRef = db.collection('departmentApprovers').doc(department);
+    const doc = await deptRef.get();
+    if (doc.exists) {
+        const current = doc.data().secondaryApprovers || [];
+        if (!current.includes(employeeId)) await deptRef.update({ secondaryApprovers: firebase.firestore.FieldValue.arrayUnion(employeeId) });
+    } else {
+        await deptRef.set({ secondaryApprovers: [employeeId], finalApprover: "hrd@equiprime.ph" });
+    }
+}
+async function revokeApproverPermissions(employeeId, department) {
+    const emp = allEmployees.find(e => e.id === employeeId);
+    if (emp && SYSTEM_ADMIN_EMAILS.includes(emp.email)) return;
+    const deptRef = db.collection('departmentApprovers').doc(department);
+    const doc = await deptRef.get();
+    if (doc.exists) await deptRef.update({ secondaryApprovers: firebase.firestore.FieldValue.arrayRemove(employeeId) });
+}
+async function getApproverForDepartment(department, stage) {
+    const deptDoc = await db.collection('departmentApprovers').doc(department).get();
+    if (!deptDoc.exists) return { email: "hrd@equiprime.ph", isFallback: true };
+    const data = deptDoc.data();
+    if (stage === 'secondary') {
+        const secondaryIds = data.secondaryApprovers || [];
+        for (let id of secondaryIds) {
+            const empDoc = await db.collection('employees').doc(id).get();
+            if (empDoc.exists && empDoc.data().status === 'active') return { email: empDoc.data().email, isFallback: false };
+        }
+        return { email: data.finalApprover || "hrd@equiprime.ph", isFallback: true };
+    } else {
+        return { email: data.finalApprover || "hrd@equiprime.ph", isFallback: false };
+    }
+}
+async function getDirectApproverForSubmitter(userEmail, role, department) {
+    if (SYSTEM_ADMIN_EMAILS.includes(userEmail)) return { email: "hrd@equiprime.ph", isDirect: true };
+    if (role === "admin" || role === "supervisor" || role === "manager") return { email: "hrd@equiprime.ph", isDirect: true };
+    return null;
+}
 async function auditLog(action, details) { await db.collection('attendanceAuditLogs').add({ userId: currentUser.uid, userEmail: currentUser.email, action, details, timestamp: new Date().toISOString() }); }
 
 // Real-time listeners (unchanged)
@@ -1020,40 +1083,58 @@ function renderEmployeesTable() {
 function filterEmployeesTable() { renderEmployeesTable(); }
 function showAddEmployeeModal() { openModal('addEmployeeModal'); }
 
-// Attendance functions (all unchanged, only essential ones shown for brevity)
+// ==================== CLOCK IN/OUT WITH DUPLICATE PREVENTION ====================
 function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:false }); }
 async function clockIn() {
-    if (SYSTEM_ADMIN_EMAILS.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
-    if (currentUserData?.status !== "active") { alert("Account inactive."); return; }
-    const today = new Date().toISOString().split('T')[0];
-    const time = getCurrentTime24();
-    if (allAttendance.find(a => a.userId === currentUser.uid && a.date === today)) { alert("Already clocked in today!"); return; }
-    const userDepartment = currentUserData.department || "Unassigned";
-    const newAtt = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: userDepartment, date: today, timeIn: time, timeOut: null, status: "Present", createdAt: new Date().toISOString() };
-    const docRef = await db.collection('attendance').add(newAtt);
-    allAttendance.push({ id: docRef.id, ...newAtt });
-    await auditLog("Clock In", `Clocked in at ${time}`);
-    alert(`Clocked in at ${time}`);
-    refreshMyAttendanceTab();
-    refreshDashboard();
+    if (clockInProgress) return;
+    clockInProgress = true;
+    const btn = document.getElementById('clockInBtn');
+    if (btn) btn.disabled = true;
+    try {
+        if (SYSTEM_ADMIN_EMAILS.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
+        if (currentUserData?.status !== "active") { alert("Account inactive."); return; }
+        const today = new Date().toISOString().split('T')[0];
+        const time = getCurrentTime24();
+        if (allAttendance.find(a => a.userId === currentUser.uid && a.date === today)) { alert("Already clocked in today!"); return; }
+        const userDepartment = currentUserData.department || "Unassigned";
+        const newAtt = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: userDepartment, date: today, timeIn: time, timeOut: null, status: "Present", createdAt: new Date().toISOString() };
+        const docRef = await db.collection('attendance').add(newAtt);
+        allAttendance.push({ id: docRef.id, ...newAtt });
+        await auditLog("Clock In", `Clocked in at ${time}`);
+        alert(`Clocked in at ${time}`);
+        refreshMyAttendanceTab();
+        refreshDashboard();
+    } catch (err) { console.error(err); alert("Error clocking in."); } finally {
+        clockInProgress = false;
+        if (btn) btn.disabled = false;
+    }
 }
 async function clockOut() {
-    if (SYSTEM_ADMIN_EMAILS.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
-    if (currentUserData?.status !== "active") { alert("Account inactive."); return; }
-    const today = new Date().toISOString().split('T')[0];
-    const time = getCurrentTime24();
-    const record = allAttendance.find(a => a.userId === currentUser.uid && a.date === today);
-    if (!record || !record.timeIn) { alert("Clock in first!"); return; }
-    if (record.timeOut) { alert("Already clocked out!"); return; }
-    const timeInDate = new Date(`${today}T${record.timeIn}:00`);
-    const timeOutDate = new Date(`${today}T${time}:00`);
-    const hours = ((timeOutDate - timeInDate) / (1000*60*60)).toFixed(2);
-    await db.collection('attendance').doc(record.id).update({ timeOut: time, hoursWorked: hours });
-    record.timeOut = time; record.hoursWorked = hours;
-    await auditLog("Clock Out", `Clocked out at ${time}, hours worked: ${hours}`);
-    alert(`Clocked out at ${time} | Hours: ${hours}`);
-    refreshMyAttendanceTab();
-    refreshDashboard();
+    if (clockInProgress) return;
+    clockInProgress = true;
+    const btn = document.getElementById('clockOutBtn');
+    if (btn) btn.disabled = true;
+    try {
+        if (SYSTEM_ADMIN_EMAILS.includes(currentUser.email)) { alert("HR/Moderator cannot clock in/out."); return; }
+        if (currentUserData?.status !== "active") { alert("Account inactive."); return; }
+        const today = new Date().toISOString().split('T')[0];
+        const time = getCurrentTime24();
+        const record = allAttendance.find(a => a.userId === currentUser.uid && a.date === today);
+        if (!record || !record.timeIn) { alert("Clock in first!"); return; }
+        if (record.timeOut) { alert("Already clocked out!"); return; }
+        const timeInDate = new Date(`${today}T${record.timeIn}:00`);
+        const timeOutDate = new Date(`${today}T${time}:00`);
+        const hours = ((timeOutDate - timeInDate) / (1000*60*60)).toFixed(2);
+        await db.collection('attendance').doc(record.id).update({ timeOut: time, hoursWorked: hours });
+        record.timeOut = time; record.hoursWorked = hours;
+        await auditLog("Clock Out", `Clocked out at ${time}, hours worked: ${hours}`);
+        alert(`Clocked out at ${time} | Hours: ${hours}`);
+        refreshMyAttendanceTab();
+        refreshDashboard();
+    } catch (err) { console.error(err); alert("Error clocking out."); } finally {
+        clockInProgress = false;
+        if (btn) btn.disabled = false;
+    }
 }
 function refreshMyAttendanceTab() {
     if (!currentUser) return;
@@ -1068,43 +1149,8 @@ function refreshMyAttendanceTab() {
         historyBody.innerHTML = userAtt.map(a => `<tr><td class="p-3">${a.date}</td><td class="p-3">${a.timeIn||'--'}</td><td class="p-3">${a.timeOut||'--'}</td><td class="p-3">${a.hoursWorked||'--'}</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${a.timeOut?'bg-green-100 text-green-800':'bg-yellow-100 text-yellow-800'}">${a.timeOut?'Complete':'In Progress'}</span></td></tr>`).join('') || '<tr><td colspan="5" class="p-4 text-center">No records</td></tr>';
     }
 }
-function openClockRequestModal(type) {
-    document.getElementById('clockRequestType').value = type;
-    document.getElementById('clockRequestTitle').innerText = type === 'in' ? 'Request Clock In' : 'Request Clock Out';
-    document.getElementById('clockDate').value = new Date().toISOString().split('T')[0];
-    document.getElementById('clockTime').value = type === 'in' ? '08:00' : '17:00';
-    document.getElementById('clockReason').value = '';
-    openModal('clockRequestModal');
-}
-async function submitClockRequest() {
-    const type = document.getElementById('clockRequestType').value;
-    const date = document.getElementById('clockDate').value;
-    let time = document.getElementById('clockTime').value;
-    const reason = document.getElementById('clockReason').value;
-    if (!date) { alert("Please select a date."); return; }
-    if (!time) time = type === 'in' ? '08:00' : '17:00';
-    const requestType = type === 'in' ? 'Clock In Request' : 'Clock Out Request';
-    const req = {
-        userId: currentUser.uid,
-        userName: currentUserData.name,
-        userDepartment: currentUserData.department || "Unassigned",
-        type: requestType,
-        startDate: date,
-        endDate: date,
-        reason: `Time: ${time}\n${reason}`,
-        status: "pending_final",
-        approverEmail: "hrd@equiprime.ph",
-        secondaryApproved: false,
-        finalApproved: false,
-        requestedTime: time,
-        createdAt: new Date().toISOString()
-    };
-    const ref = await db.collection('requests').add(req);
-    allRequests.push({ id: ref.id, ...req });
-    closeModal('clockRequestModal');
-    refreshDashboard();
-    alert(`Clock ${type === 'in' ? 'in' : 'out'} request submitted for approval.`);
-}
+
+// ==================== REQUEST SUBMISSION (APPROVAL WORKFLOW FIXED) ====================
 async function submitRequest() {
     const type = document.getElementById('requestTypeValue').value, start = document.getElementById('reqStartDate').value, end = document.getElementById('reqEndDate').value, reason = document.getElementById('reqReason').value;
     if (!start || !end) { alert("Select dates"); return; }
@@ -1120,9 +1166,18 @@ async function submitRequest() {
         alert(`Request submitted directly to ${direct.email}`);
         return;
     }
-    const secondary = await getApproverForDepartment(dept, 'secondary'), final = await getApproverForDepartment(dept, 'final');
+    // Get secondary approver based on department
+    const secondary = await getApproverForDepartment(dept, 'secondary');
+    const final = await getApproverForDepartment(dept, 'final');
     let status, approverEmail;
-    if (secondary.email !== final.email && !secondary.isFallback) { status = "pending_secondary"; approverEmail = secondary.email; } else { status = "pending_final"; approverEmail = final.email; }
+    // If secondary approver exists and is not the final approver (and not fallback), route to secondary first
+    if (secondary.email !== final.email && !secondary.isFallback) {
+        status = "pending_secondary";
+        approverEmail = secondary.email;
+    } else {
+        status = "pending_final";
+        approverEmail = final.email;
+    }
     const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type, startDate: start, endDate: end, reason, status, approverEmail, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
     const ref = await db.collection('requests').add(req);
     allRequests.push({ id: ref.id, ...req });
@@ -1144,7 +1199,8 @@ async function submitOffsets() {
         alert(`Offset request submitted to ${direct.email}`);
         return;
     }
-    const secondary = await getApproverForDepartment(dept, 'secondary'), final = await getApproverForDepartment(dept, 'final');
+    const secondary = await getApproverForDepartment(dept, 'secondary');
+    const final = await getApproverForDepartment(dept, 'final');
     const approverEmail = (secondary.email !== final.email && !secondary.isFallback) ? secondary.email : final.email;
     const status = (secondary.email !== final.email && !secondary.isFallback) ? "pending_secondary" : "pending_final";
     const req = { userId: currentUser.uid, userName: currentUserData.name, userDepartment: dept, type: `Offsets (${hours} hrs)`, startDate: date, endDate: date, reason, status, approverEmail, secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
@@ -1153,6 +1209,20 @@ async function submitOffsets() {
     closeModal('offsetsModalOverlay');
     refreshDashboard();
     alert("Offset request submitted");
+}
+// Secondary approval function (moves request to pending_final)
+async function approveSecondary(id) {
+    const r = allRequests.find(r => r.id === id);
+    if (r && r.status === "pending_secondary" && r.approverEmail === currentUser.email) {
+        // Determine final approver (HR Director)
+        const final = await getApproverForDepartment(r.userDepartment, 'final');
+        await db.collection('requests').doc(id).update({ status: "pending_final", approverEmail: final.email, secondaryApproved: true });
+        r.status = "pending_final";
+        r.approverEmail = final.email;
+        r.secondaryApproved = true;
+        refreshDashboard();
+        alert("Request forwarded to final approver.");
+    } else alert("Not authorized or request not in secondary pending.");
 }
 async function approveFinal(id) {
     const r = allRequests.find(r => r.id === id);
@@ -1201,6 +1271,8 @@ async function rejectRequest(id) {
         alert("Request rejected.");
     } else alert("Cannot reject.");
 }
+
+// ==================== OTHER FUNCTIONS (unchanged) ====================
 function populateYearDropdown() {
     const yearSelect = document.getElementById('summaryYear');
     if (!yearSelect) return;
@@ -1283,7 +1355,7 @@ async function loadEmployeeCalendar(employeeId) {
     if (detailsBody) detailsBody.innerHTML = detailsRows;
 }
 
-// Enhanced Payroll with VAT
+// Enhanced Payroll with VAT (unchanged)
 let currentComputedPayroll = null;
 function computePayroll() {
     const basicSalary = parseFloat(document.getElementById('basicSalary').value) || 0;
