@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Final Fixed</title>
+    <title>EQUIPRIME HR - Your HIRS</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -38,6 +38,27 @@
             font-weight: 500;
         }
         
+        /* Sidebar tab colors - fixed to white for inactive */
+        .tab-active {
+            background-color: #011F7B;
+            color: white !important;
+        }
+        .tab-inactive {
+            background-color: transparent;
+            color: white !important;
+        }
+        .tab-inactive:hover {
+            background-color: #FFBA09;
+            color: #0f172a !important;
+        }
+        body.dark .tab-inactive {
+            color: white !important;
+        }
+        body.dark .tab-inactive:hover {
+            background-color: #FFBA09;
+            color: #0f172a !important;
+        }
+        
         /* Card backgrounds and text */
         .card-bg { background-color: #ffffff; }
         body.dark .card-bg { background-color: #1e293b; }
@@ -67,6 +88,66 @@
         .profile-dropdown-content { background: white; border-radius: 1rem; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); z-index: 1000; }
         body.dark .profile-dropdown-content { background: #1e293b; }
         
+        /* Responsive login screen - no 60/40 split on mobile */
+        .login-split {
+            display: flex;
+            min-height: 100vh;
+        }
+        .branding-half {
+            background: url('branding-image.jpg') center center / cover no-repeat;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .login-half {
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        body.dark .login-half {
+            background: #1e293b;
+        }
+        
+        /* Mobile: stack vertically */
+        @media (max-width: 768px) {
+            .login-split {
+                flex-direction: column;
+            }
+            .branding-half {
+                width: 100%;
+                min-height: 40vh;
+                padding: 1.5rem;
+            }
+            .login-half {
+                width: 100%;
+                padding: 2rem 1.5rem;
+            }
+            .branding-content {
+                background: rgba(0,0,0,0.4);
+                backdrop-filter: blur(8px);
+                border-radius: 2rem;
+                padding: 1.5rem;
+            }
+            .branding-content h1 {
+                font-size: 2rem;
+            }
+            .welcome-logo {
+                max-height: 60px;
+                margin-bottom: 1rem;
+            }
+        }
+        
+        /* Desktop remains side-by-side */
+        @media (min-width: 769px) {
+            .branding-half { width: 60%; }
+            .login-half { width: 40%; }
+        }
+        
+        /* Main app responsiveness (unchanged) */
         @media (max-width: 1023px) {
             .desktop-sidebar { display: none; }
             .mobile-header { display: flex; }
@@ -80,26 +161,32 @@
         .mobile-sidebar.open { transform: translateX(0); }
         .overlay { transition: opacity 0.3s ease; }
         
-        /* Left panel background image */
-        .branding-half {
-            background: url('branding-image.jpg') center center / cover no-repeat;
+        /* Additional login branding adjustments */
+        .branding-content {
+            text-align: center;
+            color: white;
+        }
+        .welcome-logo {
+            max-height: 80px;
+            width: auto;
+            margin-bottom: 1rem;
         }
     </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN (branding-image.jpg as background) -->
-<div id="authScreen" class="flex min-h-screen">
-    <div class="branding-half w-3/5 relative flex items-center justify-center p-8">
-        <div class="relative z-10 text-center text-white bg-black/30 p-6 rounded-2xl backdrop-blur-sm">
-            <img src="welcome-logo.png" class="mx-auto h-20 mb-4" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E'">
-            <h1 class="text-5xl font-black">Smart Choices.<br>Smarter Results.</h1>
+<!-- LOGIN SCREEN - fully responsive -->
+<div id="authScreen" class="login-split">
+    <div class="branding-half">
+        <div class="branding-content">
+            <img src="welcome-logo.jpg" class="welcome-logo" alt="Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23ffffff%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27%23004aad%27%3EE%3C/text%3E%3C/svg%3E'">
+            <h1 class="text-4xl md:text-5xl font-black">Smart Choices.<br>Smarter Results.</h1>
             <p class="mt-4 text-blue-100">Empowering your workforce with streamlined HR management.</p>
             <div class="mt-8 flex gap-4 justify-center"><a href="#"><i data-feather="facebook"></i></a><a href="#"><i data-feather="instagram"></i></a><a href="#"><i data-feather="globe"></i></a></div>
             <div class="mt-6 text-xs text-white/80">© 2026 EQUIPRIME</div>
         </div>
     </div>
-    <div class="w-2/5 bg-white dark:bg-slate-800 flex items-center justify-center p-6">
+    <div class="login-half">
         <div class="w-full max-w-md">
             <div class="text-center mb-8">
                 <img src="logo.png" class="h-12 mx-auto" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E'">
@@ -132,7 +219,7 @@
     </div>
 </div>
 
-<!-- MAIN APP -->
+<!-- MAIN APP (same as before, fully functional) -->
 <div id="mainApp" class="hidden app-container flex min-h-screen">
     <div id="overlay" class="overlay fixed inset-0 bg-black/50 z-40 hidden" onclick="closeMobileSidebar()"></div>
     <div id="mobileSidebar" class="mobile-sidebar fixed top-0 left-0 w-64 h-full bg-[#011F7B] z-50 p-4 overflow-y-auto">
@@ -441,7 +528,7 @@ function formatDateForDisplay(dateStr) { if (!dateStr) return ''; try { const d 
 
 // ==================== DASHBOARD REFRESH (with null guard) ====================
 function refreshDashboard() {
-    if (!currentUser) return;  // FIX: prevent error before login
+    if (!currentUser) return;
     const filtered = getFilteredEmployees();
     document.getElementById('totalEmployees').innerText = filtered.length;
     const today = new Date().toISOString().split('T')[0];
