@@ -415,7 +415,7 @@
         <div id="my-attendance-tab" class="tab-content hidden">
             <div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2 text-yellow-600"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button id="clockInBtn" onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-in"></i> Clock In</button><button id="clockOutBtn" onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-out"></i> Clock Out</button></div></div>
             <div class="card-bg rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4">Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-slate-700"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500 dark:text-slate-400" id="todayTimeInfo"></div></div></div>
-            <div class="card-bg rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Attendance History</h3><div class="overflow-x-auto"><table class="attendance-history-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Date</th><th class="p-3 text-left">Clock In</th><th class="p-3 text-left">Clock Out</th><th class="p-3 text-left">Hours Worked</th><th class="p-3 text-left">Status</th></tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div>
+            <div class="card-bg rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Attendance History</h3><div class="overflow-x-auto"><table class="attendance-history-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Date</th><th class="p-3 text-left">Clock In</th><th class="p-3 text-left">Clock Out</th><th class="p-3 text-left">Hours Worked</th><th class="p-3 text-left">Status</th></table></thead><tbody id="attendanceHistoryList"></tbody></table></div></div>
         </div>
 
         <!-- MY REQUESTS TAB -->
@@ -496,6 +496,18 @@
                     <div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div>
                 </div>
             </div>
+            <!-- NEW: Payslip Preview Section (inline, not modal) -->
+            <div id="payslipPreviewContainer" class="card-bg rounded-2xl p-6 mt-6 hidden">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold">📄 Generated Payslip Preview</h3>
+                    <button onclick="closePayslipPreview()" class="text-red-500 hover:text-red-700"><i data-feather="x-circle"></i> Close</button>
+                </div>
+                <div id="payslipPreviewContent"></div>
+                <div class="text-right mt-4 no-print">
+                    <button onclick="downloadInlinePayslipPDF()" class="bg-[#011F7B] text-white px-4 py-2 rounded-lg text-sm">Download PDF</button>
+                    <button onclick="window.print()" class="bg-gray-600 text-white px-4 py-2 rounded-lg text-sm ml-2">Print</button>
+                </div>
+            </div>
         </div>
 
         <!-- ADMIN HELPDESK TAB -->
@@ -508,7 +520,7 @@
         <div id="helpdesk-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 text-yellow-600">HR Helpdesk</h2><div class="card-bg rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4">Submit a Request</h3><div class="space-y-4"><select id="helpdeskType" class="w-full p-3 border rounded-xl dark:bg-slate-700"><option value="PIN Reset">PIN Reset Request</option><option value="Password Reset">Password Reset Request</option><option value="Profile Update">Profile Update</option><option value="Attendance Correction">Attendance Correction</option><option value="General Inquiry">General Inquiry</option></select><textarea id="helpdeskMessage" rows="4" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Please provide details..."></textarea><button onclick="submitHelpdeskRequest()" class="bg-[#011F7B] text-white px-6 py-2 rounded-xl font-semibold">Submit Request</button></div></div><div class="card-bg rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">My Helpdesk Requests</h3><div id="myHelpdeskRequests" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div>
 
         <!-- EMPLOYEES TAB -->
-        <div id="employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold text-yellow-600">Employees Management</h2><button onclick="showAddEmployeeModal()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex items-center gap-2"><i data-feather="plus"></i> Add Employee</button></div><div class="card-bg rounded-2xl p-6 shadow-sm"><input type="text" id="employeeSearch" class="search-input w-full max-w-md p-2 border rounded-lg mb-4 dark:bg-slate-700" placeholder="Search by name, email, department..." onkeyup="filterEmployeesTable()"><div class="overflow-x-auto"><table class="employees-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Name</th><th class="p-3 text-left">Email</th><th class="p-3 text-left">Employee #</th><th class="p-3 text-left">Department</th><th class="p-3 text-left">Role</th><th class="p-3 text-left">Status</th><th class="p-3 text-left">Actions</th></tr></thead><tbody id="employeesTableBody"></tbody><tr></div></div></div>
+        <div id="employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold text-yellow-600">Employees Management</h2><button onclick="showAddEmployeeModal()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex items-center gap-2"><i data-feather="plus"></i> Add Employee</button></div><div class="card-bg rounded-2xl p-6 shadow-sm"><input type="text" id="employeeSearch" class="search-input w-full max-w-md p-2 border rounded-lg mb-4 dark:bg-slate-700" placeholder="Search by name, email, department..." onkeyup="filterEmployeesTable()"><div class="overflow-x-auto"><table class="employees-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Name</th><th class="p-3 text-left">Email</th><th class="p-3 text-left">Employee #</th><th class="p-3 text-left">Department</th><th class="p-3 text-left">Role</th><th class="p-3 text-left">Status</th><th class="p-3 text-left">Actions</th></tr></thead><tbody id="employeesTableBody"></tbody></table></div></div></div>
     </div>
 </div>
 
@@ -775,7 +787,7 @@ function switchTab(tabName) {
     const target = document.getElementById(`${tabName}-tab`);
     if (target) target.classList.remove('hidden');
     if (tabName === 'payslip') refreshEmployeePayslip();
-    if (tabName === 'hr-payslip') { refreshHrPayslip(); document.getElementById('payrollSummary').classList.add('hidden'); }
+    if (tabName === 'hr-payslip') { refreshHrPayslip(); document.getElementById('payrollSummary').classList.add('hidden'); closePayslipPreview(); }
     if (tabName === 'my-attendance') refreshMyAttendanceTab();
     if (tabName === 'attendance-summary') { populateYearDropdown(); loadEmployeeListForSummary(); }
     if (tabName === 'helpdesk' || tabName === 'admin-helpdesk') refreshHelpdesk();
@@ -1021,7 +1033,7 @@ function renderEmployeesTable() {
             <td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${emp.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${emp.status}</span></td>
             <td class="p-3"><button onclick='openEditEmployeeModal(${JSON.stringify(emp)})' class="text-blue-600 hover:text-blue-800 mr-2"><i data-feather="edit-2" class="w-4 h-4 inline"></i> Edit</button>
             <button onclick="deleteEmployee('${emp.id}')" class="text-red-600 hover:text-red-800"><i data-feather="trash-2" class="w-4 h-4 inline"></i> Delete</button></td>
-        </tr>
+         </tr>
     `).join('');
     feather.replace();
 }
@@ -1472,10 +1484,15 @@ async function generatePayslipFromComputed() {
     const docRef = await db.collection('payslips').add(payslipData);
     allPayslips.push({ id: docRef.id, ...payslipData });
     refreshHrPayslip();
-    displayPayslipModal(payslipData);
+    // Show payslip inline in the same tab (no modal)
+    renderInlinePayslip(payslipData);
 }
 
-function displayPayslipModal(payslip) {
+function renderInlinePayslip(payslip) {
+    const container = document.getElementById('payslipPreviewContainer');
+    const contentDiv = document.getElementById('payslipPreviewContent');
+    if (!container || !contentDiv) return;
+    
     const content = `
         <div class="payslip-container">
             <div class="text-center mb-6">
@@ -1550,14 +1567,20 @@ function displayPayslipModal(payslip) {
             </div>
         </div>
     `;
-    document.getElementById('payslipContent').innerHTML = content;
-    openModal('payslipModal');
-    window.currentPayslip = payslip;
+    contentDiv.innerHTML = content;
+    container.classList.remove('hidden');
+    window.currentInlinePayslip = payslip;
 }
 
-function downloadPayslipPDF() {
-    const element = document.getElementById('payslipContent');
-    html2pdf().from(element).set({ margin: 1, filename: `payslip_${window.currentPayslip?.employeeName}_${window.currentPayslip?.month}.pdf`, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } }).save();
+function closePayslipPreview() {
+    const container = document.getElementById('payslipPreviewContainer');
+    if (container) container.classList.add('hidden');
+}
+
+function downloadInlinePayslipPDF() {
+    if (!window.currentInlinePayslip) return;
+    const element = document.getElementById('payslipPreviewContent');
+    html2pdf().from(element).set({ margin: 1, filename: `payslip_${window.currentInlinePayslip.employeeName}_${window.currentInlinePayslip.month}.pdf`, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' } }).save();
 }
 
 function refreshHrPayslip() {
