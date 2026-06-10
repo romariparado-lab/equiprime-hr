@@ -12,7 +12,14 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <style>
+    <style> 
+        /* Ensure burger button is clickable on mobile */
+#mobileMenuButton {
+    position: relative;
+    z-index: 10001;
+    pointer-events: auto;
+    cursor: pointer;
+}
         /* ===== ORIGINAL STYLES (unchanged) ===== */
         * { font-family: 'Inter', sans-serif; }
         body { background: #f3f6fb; transition: background 0.3s, color 0.3s; }
@@ -1553,56 +1560,109 @@ async function loadAnnouncements() {
 window.resetAllSystemData = async function() { if (currentUser?.email !== resetAuthorizedEmail) { alert("Only mod.rom@equiprime.ph can reset."); return; } const pin = prompt("Enter reset PIN:"); if (pin !== "Moderator@2026!") { alert("Incorrect PIN."); return; } if (!confirm("Delete ALL data?")) return; const collections = ['employees','attendance','requests','payslips','announcements','guardWeeklySchedules','users','departmentApprovers','employeeSupportRequests','attendanceAuditLogs']; for (const col of collections) { const snap = await db.collection(col).get(); const batch = db.batch(); snap.docs.forEach(doc => batch.delete(doc.ref)); await batch.commit(); } alert("All data reset. Reloading..."); location.reload(); };
 
 // ==================== INITIALIZE ====================
-document.addEventListener('DOMContentLoaded', () => {
-    if(localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark');
-    const menuBtn = document.getElementById('mobileMenuButton');
-    if (menuBtn) menuBtn.addEventListener('click', openMobileSidebar);
-    document.getElementById('loginBtnMain').addEventListener('click', loginWithEmail);
-    document.getElementById('showSignupBtnMain').addEventListener('click', showSignup);
-    document.getElementById('signupBtnMain').addEventListener('click', signupWithEmail);
-    document.getElementById('showLoginBtnMain').addEventListener('click', showLogin);
-    document.getElementById('computePayrollBtn').addEventListener('click', computePayroll);
-    document.getElementById('generatePayslipBtn').addEventListener('click', generatePayslipFromComputed);
-    document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
-    document.getElementById('refreshSummaryBtn').addEventListener('click', () => loadEmployeeListForSummary());
-    document.addEventListener('click', function(event) { const dropdown = document.getElementById('profileDropdown'); const trigger = document.querySelector('.profile-trigger'); if (!dropdown || !trigger) return; if (trigger.contains(event.target)) dropdown.classList.toggle('hidden'); else if (!dropdown.contains(event.target)) dropdown.classList.add('hidden'); });
-    setupRealtimeListeners();
-    auth.onAuthStateChanged(async (user) => {
-        if (user) {
-            await ensureSystemAdminRecord(user);
-            const doc = await db.collection('employees').doc(user.uid).get();
-            if (doc.exists) {
-                currentUserData = doc.data();
-                if (currentUserData.status !== "active" && !SYSTEM_ADMIN_EMAILS.includes(user.email)) { await auth.signOut(); alert("Account inactive."); location.reload(); return; }
-                currentUserRole = currentUserData.role;
-                currentUser = user;
-                document.getElementById('authScreen').style.display = 'none';
-                document.getElementById('mainApp').classList.remove('hidden');
-                document.getElementById('welcomeName').innerText = currentUserData.name.split(' ')[0];
-                document.getElementById('userName').innerText = currentUserData.name;
-                document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join('');
-                document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join('');
-                document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
-                const displayRole = currentUserRole === 'admin' ? 'Administrator' : (currentUserRole === 'supervisor' ? 'Supervisor' : (currentUserRole === 'manager' ? 'Manager' : (currentUserRole === 'hr' ? 'HR Admin' : 'Employee')));
-                document.getElementById('welcomeSubtitle').innerHTML = displayRole;
-                document.getElementById('userRoleDisplay').innerText = displayRole;
-                renderNavigation();
-                await loadAllData();
-                await loadAnnouncements();
-                await refreshMyAttendanceTab();
-                if (fullPrivilegedEmails.includes(currentUser.email) || currentUserRole === 'admin' || currentUserRole === 'hr' || currentUserRole === 'moderator') populateYearDropdown();
-                const resetContainer = document.getElementById('resetButtonContainer');
-                if (resetContainer && currentUser.email === resetAuthorizedEmail) resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full">⚠️ Reset All System Data (PIN required)</button>`;
-                else resetContainer.innerHTML = "";
-                switchTab('dashboard');
-                updateProfileDropdown();
-            } else { await auth.signOut(); location.reload(); }
-        } else {
-            document.getElementById('authScreen').style.display = 'flex';
-            document.getElementById('mainApp').classList.add('hidden');
+    document.addEventListener('DOMContentLoaded', () => {
+        if(localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark');
+        
+        // Define global functions for mobile sidebar
+        window.openMobileSidebar = function() {
+            const sidebar = document.getElementById('mobileSidebar');
+            const overlay = document.getElementById('overlay');
+            if (sidebar && overlay) {
+                sidebar.classList.add('open');
+                overlay.classList.remove('hidden');
+                overlay.classList.add('active');
+                document.body.classList.add('overflow-hidden');
+            } else {
+                console.error("Sidebar or overlay not found");
+            }
+        };
+        
+        window.closeMobileSidebar = function() {
+            const sidebar = document.getElementById('mobileSidebar');
+            const overlay = document.getElementById('overlay');
+            if (sidebar && overlay) {
+                sidebar.classList.remove('open');
+                overlay.classList.add('hidden');
+                overlay.classList.remove('active');
+                document.body.classList.remove('overflow-hidden');
+            }
+        };
+        
+        // Attach burger button listener safely
+        function attachBurgerListener() {
+            const menuBtn = document.getElementById('mobileMenuButton');
+            if (menuBtn) {
+                menuBtn.removeEventListener('click', window.openMobileSidebar);
+                menuBtn.addEventListener('click', window.openMobileSidebar);
+            }
         }
+        
+        attachBurgerListener();
+        
+        // Regular event listeners
+        document.getElementById('loginBtnMain').addEventListener('click', loginWithEmail);
+        document.getElementById('showSignupBtnMain').addEventListener('click', showSignup);
+        document.getElementById('signupBtnMain').addEventListener('click', signupWithEmail);
+        document.getElementById('showLoginBtnMain').addEventListener('click', showLogin);
+        document.getElementById('computePayrollBtn').addEventListener('click', computePayroll);
+        document.getElementById('generatePayslipBtn').addEventListener('click', generatePayslipFromComputed);
+        document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
+        document.getElementById('refreshSummaryBtn').addEventListener('click', () => loadEmployeeListForSummary());
+        
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('profileDropdown');
+            const trigger = document.querySelector('.profile-trigger');
+            if (!dropdown || !trigger) return;
+            if (trigger.contains(event.target)) dropdown.classList.toggle('hidden');
+            else if (!dropdown.contains(event.target)) dropdown.classList.add('hidden');
+        });
+        
+        setupRealtimeListeners();
+        
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                await ensureSystemAdminRecord(user);
+                const doc = await db.collection('employees').doc(user.uid).get();
+                if (doc.exists) {
+                    currentUserData = doc.data();
+                    if (currentUserData.status !== "active" && !SYSTEM_ADMIN_EMAILS.includes(user.email)) {
+                        await auth.signOut();
+                        alert("Account inactive.");
+                        location.reload();
+                        return;
+                    }
+                    currentUserRole = currentUserData.role;
+                    currentUser = user;
+                    document.getElementById('authScreen').style.display = 'none';
+                    document.getElementById('mainApp').classList.remove('hidden');
+                    document.getElementById('welcomeName').innerText = currentUserData.name.split(' ')[0];
+                    document.getElementById('userName').innerText = currentUserData.name;
+                    document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join('');
+                    document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n=>n[0]).join('');
+                    document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
+                    const displayRole = currentUserRole === 'admin' ? 'Administrator' : (currentUserRole === 'supervisor' ? 'Supervisor' : (currentUserRole === 'manager' ? 'Manager' : (currentUserRole === 'hr' ? 'HR Admin' : 'Employee')));
+                    document.getElementById('welcomeSubtitle').innerHTML = displayRole;
+                    document.getElementById('userRoleDisplay').innerText = displayRole;
+                    renderNavigation();
+                    await loadAllData();
+                    await loadAnnouncements();
+                    await refreshMyAttendanceTab();
+                    if (fullPrivilegedEmails.includes(currentUser.email) || currentUserRole === 'admin' || currentUserRole === 'hr' || currentUserRole === 'moderator') populateYearDropdown();
+                    const resetContainer = document.getElementById('resetButtonContainer');
+                    if (resetContainer && currentUser.email === resetAuthorizedEmail) resetContainer.innerHTML = `<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full">⚠️ Reset All System Data (PIN required)</button>`;
+                    else resetContainer.innerHTML = "";
+                    switchTab('dashboard');
+                    updateProfileDropdown();
+                    
+                    // Re-attach burger listener after login (ensures it works)
+                    attachBurgerListener();
+                } else {
+                    await auth.signOut();
+                    location.reload();
+                }
+            } else {
+                document.getElementById('authScreen').style.display = 'flex';
+                document.getElementById('mainApp').classList.add('hidden');
+            }
+        });
     });
-});
-</script>
-</body>
-</html>
