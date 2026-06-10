@@ -64,29 +64,31 @@
         .day.leave { background: #8b5cf6; color: white; }
         .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
         .avatar-large { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
-        /* Profile dropdown base styles */
-/* Profile dropdown base styles */
+ 
+/* Profile dropdown – unified light blue background */
 .profile-dropdown-content {
-    background: white;
+    background: #bfdbfe !important;  /* Tailwind blue-200 – light blue */
     border-radius: 1rem;
     box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
     z-index: 1000;
-    color: #0f172a;  /* dark slate for light mode */
+    color: #0f172a !important;       /* dark slate text, readable on light blue */
 }
 
-/* Dark mode - force all text to white */
-body.dark .profile-dropdown-content,
-body.dark .profile-dropdown-content * {
-    background-color: #bfdbfe !important;  /* light blue */
-    color: #0f172a !important;             /* dark text, readable */
-    border-color: #93c5fd !important;
+/* Ensure all text inside is dark */
+.profile-dropdown-content * {
+    color: #0f172a !important;
 }
 
-/* Exception: keep the logout button red (optional) */
-body.dark .profile-dropdown-content button[onclick="logout()"],
-body.dark .profile-dropdown-content button[onclick="logout()"] * {
-    color: #f87171 !important;  /* light red */
-    background-color: transparent !important;
+/* Logout button can stay red (or any color you like) */
+.profile-dropdown-content button[onclick="logout()"] {
+    color: #dc2626 !important;  /* red */
+    background: transparent;
+}
+
+/* If you want the same background also in dark mode (no change) */
+body.dark .profile-dropdown-content {
+    background: #bfdbfe !important;  /* same light blue */
+    /* text already set above, stays dark */
 }
 
         .login-split { display: flex; min-height: 100vh; }
