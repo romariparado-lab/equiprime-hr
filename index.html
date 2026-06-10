@@ -65,32 +65,29 @@
         .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
         .avatar-large { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
         /* Profile dropdown base styles */
+/* Profile dropdown base styles */
 .profile-dropdown-content {
     background: white;
     border-radius: 1rem;
     box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
     z-index: 1000;
-    color: #0f172a;  /* dark text for light mode */
+    color: #0f172a;  /* dark slate for light mode */
 }
 
-/* Dark mode overrides */
-body.dark .profile-dropdown-content {
-    background: #1e293b;
-    color: #f1f5f9;  /* white text for all content */
+/* Dark mode - force all text to white */
+body.dark .profile-dropdown-content,
+body.dark .profile-dropdown-content * {
+    background-color: #1e293b !important;  /* dark slate background */
+    color: #f1f5f9 !important;             /* white text for everything */
 }
 
-/* Ensure all text elements inside are white in dark mode */
-body.dark .profile-dropdown-content .font-bold,
-body.dark .profile-dropdown-content .profile-info-item strong,
-body.dark .profile-dropdown-content div,
-body.dark .profile-dropdown-content span {
-    color: #f1f5f9 !important;
+/* Exception: keep the logout button red (optional) */
+body.dark .profile-dropdown-content button[onclick="logout()"],
+body.dark .profile-dropdown-content button[onclick="logout()"] * {
+    color: #f87171 !important;  /* light red */
+    background-color: transparent !important;
 }
 
-/* Logout button text in dark mode – light red for visibility */
-body.dark .profile-dropdown-content button[onclick="logout()"] {
-    color: #f87171 !important;
-}
         .login-split { display: flex; min-height: 100vh; }
         .branding-half { background: url('branding-image.jpg') center center / cover no-repeat; display: flex; align-items: center; justify-content: center; padding: 2rem; }
         .login-half { background: white; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
