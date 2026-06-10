@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Your HRIS</title>
+    <title>EQUIPRIME HR - Complete Payroll 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -432,7 +432,7 @@
                         <input type="number" id="wtax" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="WTAX (auto-computed)">
                     </div>
                     <div class="flex gap-3 mt-5"><button id="computePayrollBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl flex-1">Compute Payroll (2026 Rules)</button><button id="generatePayslipBtn" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Generate Payslip</button></div>
-                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">SSS, SSS MPF, PhilHealth, Pag-IBIG, Add. Pag-IBIG deducted only on 2nd cutoff | WTAX using semi-monthly table</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">SSS, SSS MPF, PhilHealth, Pag-IBIG, Add. Pag-IBIG deducted only on 2nd cutoff | WTAX with centavos</p>
                 </div>
                 <div class="card-bg rounded-2xl p-6"><h3 class="text-xl font-bold mb-4">Payroll Summary & History</h3><div id="payrollSummary" class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl mb-4 hidden"><h4 class="font-bold mb-2">Computed Summary</h4><div class="space-y-1 text-sm"><p><strong>Gross Pay (Cutoff):</strong> <span id="grossPayDisplay">0.00</span></p><p><strong>Total Deductions:</strong> <span id="totalDeductionsDisplay">0.00</span></p><p><strong>Net Pay:</strong> <span id="netPayDisplay" class="text-green-600 font-bold">0.00</span></p></div></div><h3 class="text-xl font-bold mb-2">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div>
             </div>
@@ -1174,8 +1174,8 @@ async function loadEmployeeCalendar(employeeId) {
     if (detailsBody) detailsBody.innerHTML = detailsRows;
 }
 
-// ==================== UPDATED PAYROLL COMPUTATION (2026) - FINAL ====================
-// SSS Table based on provided data (employee share, MPF EE only on 2nd cutoff)
+// ==================== CORRECTED PAYROLL COMPUTATION ====================
+// SSS Table based on the provided data (61 rows, employee share and MPF EE)
 const sssTable = [
     { minComp: 0, maxComp: 5249.99, msc: 5000, ee: 250, mpfEe: 0 },
     { minComp: 5250, maxComp: 5749.99, msc: 5500, ee: 275, mpfEe: 0 },
@@ -1253,7 +1253,7 @@ function computePagIBIG(additional = 0) {
     return 200 + (additional || 0);
 }
 
-// Semi-monthly Withholding Tax Table (provided)
+// Semi-monthly Withholding Tax Table (preserves decimals)
 function computeWithholdingTax(semiMonthlyTaxableIncome) {
     let tax = 0;
     if (semiMonthlyTaxableIncome <= 10417) {
@@ -1269,7 +1269,7 @@ function computeWithholdingTax(semiMonthlyTaxableIncome) {
     } else {
         tax = 91770.70 + (semiMonthlyTaxableIncome - 333333) * 0.35;
     }
-    return Math.round(tax);
+    return tax; // returns number with decimals
 }
 
 function computePayroll() {
@@ -1310,7 +1310,7 @@ function computePayroll() {
     let taxableIncomeForTax = totalTaxableEarningsCutoff - absences - totalContrib;
     if (taxableIncomeForTax < 0) taxableIncomeForTax = 0;
     const wtaxComputed = computeWithholdingTax(taxableIncomeForTax);
-    document.getElementById('wtax').value = wtaxComputed;
+    document.getElementById('wtax').value = wtaxComputed.toFixed(2);
 
     const grossPayCutoff = totalTaxableEarningsCutoff + deMinimis + otherNonTax - absences;
 
@@ -1370,7 +1370,7 @@ function renderInlinePayslip(p) {
                 <img src="EquiPrime Logo crop.png" alt="EQUIPRIME Logo" class="payslip-logo" onerror="this.style.display='none'">
                 <div class="payslip-title"><h2>EQUIPRIME HR</h2><p>Payslip Statement</p></div>
             </div>
-            <table class="payslip-table"><tr><td style="width:33%"><strong>Name:</strong> ${p.employeeName}</td><td style="width:33%"><strong>Period:</strong> ${p.month} (${p.cutOff})</td><td style="width:34%"><strong>Date:</strong> ${p.payrollDate}</td></tr></table>
+            <table class="payslip-table"><tr><td style="width:33%"><strong>Name:</strong> ${p.employeeName}</td><td style="width:33%"><strong>Period:</strong> ${p.month} (${p.cutOff})</td><td style="width:34%"><strong>Date:</strong> ${p.payrollDate}</td></tr>
             <table class="payslip-table"><thead><tr><th colspan="2">Salary Details</th></tr></thead><tbody>
                 <tr><td>Monthly Basic Salary:</td><td>₱ ${p.monthlyBasicSalary.toFixed(2)}</td></tr>
                 <tr><td>Bi-Monthly Basic Salary:</td><td>₱ ${p.biMonthlyBasicSalary.toFixed(2)}</td></tr>
