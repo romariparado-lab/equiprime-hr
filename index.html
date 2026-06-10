@@ -64,8 +64,33 @@
         .day.leave { background: #8b5cf6; color: white; }
         .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
         .avatar-large { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
-        .profile-dropdown-content { background: white; border-radius: 1rem; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); z-index: 1000; }
-        body.dark .profile-dropdown-content { background: #1e293b; }
+        /* Profile dropdown base styles */
+.profile-dropdown-content {
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    z-index: 1000;
+    color: #0f172a;  /* dark text for light mode */
+}
+
+/* Dark mode overrides */
+body.dark .profile-dropdown-content {
+    background: #1e293b;
+    color: #f1f5f9;  /* white text for all content */
+}
+
+/* Ensure all text elements inside are white in dark mode */
+body.dark .profile-dropdown-content .font-bold,
+body.dark .profile-dropdown-content .profile-info-item strong,
+body.dark .profile-dropdown-content div,
+body.dark .profile-dropdown-content span {
+    color: #f1f5f9 !important;
+}
+
+/* Logout button text in dark mode – light red for visibility */
+body.dark .profile-dropdown-content button[onclick="logout()"] {
+    color: #f87171 !important;
+}
         .login-split { display: flex; min-height: 100vh; }
         .branding-half { background: url('branding-image.jpg') center center / cover no-repeat; display: flex; align-items: center; justify-content: center; padding: 2rem; }
         .login-half { background: white; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
