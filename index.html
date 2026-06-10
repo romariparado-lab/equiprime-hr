@@ -13,126 +13,41 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
+        /* ===== ORIGINAL STYLES (unchanged) ===== */
         * { font-family: 'Inter', sans-serif; }
         body { background: #f3f6fb; transition: background 0.3s, color 0.3s; }
         body.dark { background: #0f172a; }
-        
-        .desktop-sidebar nav button,
-        .mobile-sidebar nav button {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.75rem 1rem;
-            border-radius: 0.75rem;
-            width: 100%;
-            white-space: nowrap;
-            position: relative;
-        }
+        .desktop-sidebar nav button, .mobile-sidebar nav button { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; border-radius: 0.75rem; width: 100%; white-space: nowrap; position: relative; }
         .desktop-sidebar nav button i, .mobile-sidebar nav button i { flex-shrink: 0; }
-        .desktop-sidebar nav button span, .mobile-sidebar nav button span {
-            flex-grow: 1;
-            text-align: left;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        
-        .tab-active {
-            background-color: #011F7B;
-            color: white !important;
-        }
-        .tab-inactive {
-            background-color: transparent;
-            color: white !important;
-        }
-        .tab-inactive:hover {
-            background-color: #FFBA09;
-            color: #0f172a !important;
-        }
+        .desktop-sidebar nav button span, .mobile-sidebar nav button span { flex-grow: 1; text-align: left; font-size: 0.9rem; font-weight: 500; }
+        .tab-active { background-color: #011F7B; color: white !important; }
+        .tab-inactive { background-color: transparent; color: white !important; }
+        .tab-inactive:hover { background-color: #FFBA09; color: #0f172a !important; }
         body.dark .tab-inactive { color: white !important; }
         body.dark .tab-inactive:hover { background-color: #FFBA09; color: #0f172a !important; }
-        
-        .tab-badge {
-            background-color: #ef4444;
-            color: white;
-            font-size: 0.7rem;
-            font-weight: bold;
-            padding: 0.125rem 0.5rem;
-            border-radius: 9999px;
-            margin-left: auto;
-            white-space: nowrap;
-        }
+        .tab-badge { background-color: #ef4444; color: white; font-size: 0.7rem; font-weight: bold; padding: 0.125rem 0.5rem; border-radius: 9999px; margin-left: auto; white-space: nowrap; }
         body.dark .tab-badge { background-color: #dc2626; color: white; }
-        
         .card-bg { background-color: #ffffff; }
         body.dark .card-bg { background-color: #1e293b; }
         .card-bg, .card-bg * { color: #0f172a !important; }
         body.dark .card-bg, body.dark .card-bg * { color: #f1f5f9 !important; }
-        
-        .stat-card {
-            background: white;
-            border-radius: 1.5rem;
-            padding: 1.25rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .stat-card { background: white; border-radius: 1.5rem; padding: 1.25rem; box-shadow: 0 1px 3px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
         body.dark .stat-card { background: #1e293b; }
         .stat-card p, .stat-card h3, .stat-card div { color: #0f172a !important; }
         body.dark .stat-card p, body.dark .stat-card h3, body.dark .stat-card div { color: #f1f5f9 !important; }
-        
-        .login-status-item {
-            background: #f1f5f9;
-            border-left: 3px solid #3b82f6;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.5rem;
-            margin-bottom: 0.5rem;
-            color: #0f172a !important;
-        }
+        .login-status-item { background: #f1f5f9; border-left: 3px solid #3b82f6; padding: 0.5rem 0.75rem; border-radius: 0.5rem; margin-bottom: 0.5rem; color: #0f172a !important; }
         body.dark .login-status-item { background: #334155; color: #e2e8f0 !important; border-left-color: #60a5fa; }
-        
-        .details-table th, .attendance-history-table th, .employees-table th {
-            background-color: #e2e8f0;
-            color: #0f172a !important;
-            font-weight: 700;
-        }
-        body.dark .details-table th, body.dark .attendance-history-table th, body.dark .employees-table th {
-            background-color: #334155;
-            color: #e2e8f0 !important;
-        }
-        .details-table td, .attendance-history-table td, .employees-table td {
-            border-bottom: 1px solid #e2e8f0;
-            padding: 0.75rem;
-            color: #0f172a !important;
-        }
-        body.dark .details-table td, body.dark .attendance-history-table td, body.dark .employees-table td {
-            border-bottom-color: #475569;
-            color: #e2e8f0 !important;
-        }
-        
+        .details-table th, .attendance-history-table th, .employees-table th { background-color: #e2e8f0; color: #0f172a !important; font-weight: 700; }
+        body.dark .details-table th, body.dark .attendance-history-table th, body.dark .employees-table th { background-color: #334155; color: #e2e8f0 !important; }
+        .details-table td, .attendance-history-table td, .employees-table td { border-bottom: 1px solid #e2e8f0; padding: 0.75rem; color: #0f172a !important; }
+        body.dark .details-table td, body.dark .attendance-history-table td, body.dark .employees-table td { border-bottom-color: #475569; color: #e2e8f0 !important; }
         button.bg-green-600, button.bg-red-600, button.bg-blue-600, button.bg-[#011F7B] { color: white !important; }
-        
-        .modal-container {
-            background: white;
-            color: #0f172a !important;
-        }
+        .modal-container { background: white; color: #0f172a !important; }
         body.dark .modal-container { background: #1e293b; color: #e2e8f0 !important; }
-        
-        input, select, textarea {
-            background-color: #eef2ff;
-            border: 1px solid #cbd5e1;
-            border-radius: 0.75rem;
-            padding: 0.5rem 0.75rem;
-            color: #0f172a !important;
-        }
-        body.dark input, body.dark select, body.dark textarea {
-            background-color: #1e293b;
-            border-color: #475569;
-            color: #e2e8f0 !important;
-        }
+        input, select, textarea { background-color: #eef2ff; border: 1px solid #cbd5e1; border-radius: 0.75rem; padding: 0.5rem 0.75rem; color: #0f172a !important; }
+        body.dark input, body.dark select, body.dark textarea { background-color: #1e293b; border-color: #475569; color: #e2e8f0 !important; }
         select { background-color: #eef2ff; }
         body.dark select { background-color: #334155; }
-        
         .status-badge-approved { color: #22c55e; font-weight: 600; }
         .status-badge-rejected { color: #ef4444; font-weight: 600; }
         .status-badge-pending { color: #f97316; font-weight: 600; }
@@ -143,113 +58,35 @@
         body.dark .status-badge-pending { color: #fb923c; }
         body.dark .status-badge-under_review { color: #60a5fa; }
         body.dark .status-badge-completed { color: #a78bfa; }
-        
         .day.completed { background: #22c55e; color: white; }
         .day.late { background: #f59e0b; color: white; }
         .day.incomplete { background: #ef4444; color: white; }
         .day.leave { background: #8b5cf6; color: white; }
-        
         .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
         .avatar-large { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
         .profile-dropdown-content { background: white; border-radius: 1rem; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); z-index: 1000; }
         body.dark .profile-dropdown-content { background: #1e293b; }
-        
         .login-split { display: flex; min-height: 100vh; }
-        .branding-half {
-            background: url('branding-image.jpg') center center / cover no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-        .login-half {
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
+        .branding-half { background: url('branding-image.jpg') center center / cover no-repeat; display: flex; align-items: center; justify-content: center; padding: 2rem; }
+        .login-half { background: white; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
         body.dark .login-half { background: #1e293b; }
-        @media (max-width: 768px) {
-            .login-split { flex-direction: column; }
-            .branding-half { width: 100%; min-height: 40vh; padding: 1.5rem; }
-            .login-half { width: 100%; padding: 2rem 1.5rem; }
-            .branding-content { background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); border-radius: 2rem; padding: 1.5rem; }
-            .branding-content h1 { font-size: 2rem; }
-        }
-        @media (min-width: 769px) {
-            .branding-half { width: 60%; }
-            .login-half { width: 40%; }
-        }
-        
-        @media (max-width: 1023px) {
-            .desktop-sidebar { display: none; }
-            .mobile-header { display: flex; }
-        }
-        @media (min-width: 1024px) {
-            .mobile-header, .mobile-sidebar, .overlay { display: none; }
-        }
-        
-        /* FIX: Print only the payslip preview, hide everything else */
+        @media (max-width: 768px) { .login-split { flex-direction: column; } .branding-half { width: 100%; min-height: 40vh; padding: 1.5rem; } .login-half { width: 100%; padding: 2rem 1.5rem; } .branding-content { background: rgba(0,0,0,0.4); backdrop-filter: blur(8px); border-radius: 2rem; padding: 1.5rem; } .branding-content h1 { font-size: 2rem; } }
+        @media (min-width: 769px) { .branding-half { width: 60%; } .login-half { width: 40%; } }
+        @media (max-width: 1023px) { .desktop-sidebar { display: none; } .mobile-header { display: flex; } }
+        @media (min-width: 1024px) { .mobile-header, .mobile-sidebar, .overlay { display: none; } }
+        /* Print only payslip content */
         @media print {
-            body * {
-                visibility: hidden;
-            }
-            #payslipPreviewContent, #payslipPreviewContent * {
-                visibility: visible;
-            }
-            #payslipPreviewContent {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                padding: 0.2in;
-                margin: 0;
-                background: white;
-            }
-            .payslip-container {
-                box-shadow: none;
-                page-break-after: avoid;
-                break-inside: avoid;
-            }
+            body * { visibility: hidden; }
+            #payslipPreviewContent, #payslipPreviewContent * { visibility: visible; }
+            #payslipPreviewContent { position: absolute; top: 0; left: 0; width: 100%; padding: 0.2in; margin: 0; background: white; }
+            .payslip-container { box-shadow: none; page-break-after: avoid; break-inside: avoid; }
         }
-        
-        .mobile-sidebar {
-            transform: translateX(-100%) !important;
-            transition: transform 0.3s ease !important;
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 280px !important;
-            height: 100% !important;
-            background: #011F7B !important;
-            z-index: 9999 !important;
-            overflow-y: auto !important;
-        }
+        .mobile-sidebar { transform: translateX(-100%) !important; transition: transform 0.3s ease !important; position: fixed !important; top: 0 !important; left: 0 !important; width: 280px !important; height: 100% !important; background: #011F7B !important; z-index: 9999 !important; overflow-y: auto !important; }
         .mobile-sidebar.open { transform: translateX(0) !important; }
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 9998;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease;
-        }
+        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9998; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; }
         .overlay.active { opacity: 1; visibility: visible; }
-        
-        .dashboard-filters select, .dashboard-filters option {
-            color: #0f172a !important;
-            background-color: #eef2ff;
-        }
-        body.dark .dashboard-filters select, body.dark .dashboard-filters option {
-            color: #e2e8f0 !important;
-            background-color: #334155;
-        }
-        
+        .dashboard-filters select, .dashboard-filters option { color: #0f172a !important; background-color: #eef2ff; }
+        body.dark .dashboard-filters select, body.dark .dashboard-filters option { color: #e2e8f0 !important; background-color: #334155; }
         .quick-icon-green { color: #22c55e; }
         .quick-icon-red { color: #ef4444; }
         .quick-icon-blue { color: #3b82f6; }
@@ -257,70 +94,88 @@
         .quick-icon-orange { color: #f97316; }
         .quick-icon-white { color: #ffffff; }
         body.dark .quick-icon-white { color: #e2e8f0; }
-        
         button:disabled { opacity: 0.6; cursor: not-allowed; }
         
-        /* Compact payslip styles for screen and print */
+        /* ===== NEW PAYSLIP TEMPLATE STYLES (matches PDF) ===== */
         .payslip-container {
             background: white;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            max-width: 100%;
-            font-size: 0.7rem;
-            line-height: 1.25;
+            padding: 1rem;
+            font-size: 0.75rem;
+            line-height: 1.4;
             color: #0f172a;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
-        body.dark .payslip-container { background: #1e293b; color: #e2e8f0; }
-        .payslip-section {
-            margin-bottom: 0.5rem;
-            border-bottom: 1px solid #e2e8f0;
-            padding-bottom: 0.4rem;
+        .payslip-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 0.5rem;
+        }
+        .payslip-logo {
+            height: 50px;
+            object-fit: contain;
         }
         .payslip-title {
-            font-size: 0.75rem;
-            font-weight: 800;
-            margin-bottom: 0.3rem;
-            background: #f1f5f9;
-            display: inline-block;
-            padding: 0.1rem 0.5rem;
-            border-radius: 0.25rem;
+            text-align: right;
         }
-        body.dark .payslip-title { background: #334155; }
-        .earnings-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.15rem 0.8rem;
+        .payslip-title h2 {
+            font-size: 1rem;
+            font-weight: 800;
+            margin: 0;
+        }
+        .payslip-title p {
+            font-size: 0.65rem;
+            margin: 0;
+        }
+        .payslip-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 0.5rem;
+        }
+        .payslip-table td, .payslip-table th {
+            border: 1px solid #cbd5e1;
+            padding: 0.3rem 0.5rem;
+            vertical-align: top;
+        }
+        .payslip-table th {
+            background-color: #f1f5f9;
+            font-weight: 700;
+            text-align: center;
+            font-size: 0.7rem;
+        }
+        body.dark .payslip-table td, body.dark .payslip-table th {
+            border-color: #475569;
+        }
+        body.dark .payslip-table th {
+            background-color: #334155;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .text-center {
+            text-align: center;
         }
         .signature-line {
-            margin-top: 0.75rem;
+            margin-top: 1rem;
             text-align: right;
             border-top: 1px solid #cbd5e1;
-            padding-top: 0.3rem;
+            padding-top: 0.5rem;
             font-style: italic;
-            font-size: 0.65rem;
+            font-size: 0.7rem;
         }
-        .payslip-header { text-align: center; margin-bottom: 0.75rem; }
-        .payslip-header h2 { font-size: 1rem; font-weight: 800; margin: 0; }
-        .payslip-header p { font-size: 0.6rem; margin: 0; }
-        .net-pay {
-            font-size: 0.9rem;
+        .netpay-value {
             font-weight: 800;
-            background: #e6f7e6;
-            display: inline-block;
-            padding: 0.1rem 0.8rem;
-            border-radius: 2rem;
+            font-size: 0.9rem;
         }
-        .two-columns {
-            display: flex;
-            gap: 1rem;
-            justify-content: space-between;
-        }
-        .two-columns > div { flex: 1; }
     </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN SCREEN (unchanged) -->
 <div id="authScreen" class="login-split">
     <div class="branding-half">
         <div class="branding-content text-center">
@@ -342,7 +197,7 @@
     </div>
 </div>
 
-<!-- MAIN APP (full functionality, same as original) -->
+<!-- MAIN APP (all original content - only the payslip preview function will be replaced) -->
 <div id="mainApp" class="hidden app-container flex min-h-screen">
     <div id="overlay" class="overlay fixed inset-0 bg-black/50 z-40 hidden" onclick="closeMobileSidebar()"></div>
     <div id="mobileSidebar" class="mobile-sidebar"><div class="flex justify-end mb-4 p-4"><button onclick="closeMobileSidebar()" class="p-2 rounded-full bg-white/10"><i data-feather="x" class="text-white"></i></button></div><div class="px-4 mb-6"><h1 class="text-2xl font-bold text-white">EQUIPRIME<span class="text-yellow-400">HR</span></h1><p class="text-slate-300 text-xs">smart choices · smarter results</p></div><nav id="mobileNavMenu" class="flex flex-col gap-1 px-4"></nav><div class="mt-auto pt-6 border-t border-white/20 px-4 pb-6"><div class="mb-4"><label class="text-white/70 text-xs">DEPARTMENT</label><select id="mobileFilterDepartment" class="w-full mt-1 p-2 rounded bg-white/10 text-white" onchange="applyFilters()"><option value="all">All Departments</option><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select></div><div class="mb-4"><label class="text-white/70 text-xs">STATUS</label><select id="mobileFilterStatus" class="w-full mt-1 p-2 rounded bg-white/10 text-white" onchange="applyFilters()"><option value="all">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option></select></div><div class="mb-4"><label class="text-white/70 text-xs">LEAVE TYPE</label><select id="mobileFilterLeaveType" class="w-full mt-1 p-2 rounded bg-white/10 text-white" onchange="applyFilters()"><option value="all">All Leave Types</option><option>Official Business</option><option>Vacation Leave</option><option>Sick Leave</option><option>Birthday Leave</option><option>Emergency Leave</option><option>Offset</option></select></div><button onclick="toggleNightMode()" class="w-full flex items-center gap-3 text-white/80 hover:text-white p-2 rounded-xl"><i data-feather="moon"></i> Night Mode</button><button onclick="logout()" class="w-full flex items-center gap-3 text-white/80 hover:text-white p-2 rounded-xl mt-2"><i data-feather="log-out"></i> Logout</button></div></div>
@@ -362,8 +217,8 @@
             <div class="mt-6 card-bg rounded-2xl p-6 shadow-sm"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Announcements</h3><div id="announcementAddButton"></div></div><div id="announcementsList" class="space-y-3"></div></div>
         </div>
 
-        <!-- MY ATTENDANCE TAB -->
-        <div id="my-attendance-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2 text-yellow-600"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button id="clockInBtn" onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-in"></i> Clock In</button><button id="clockOutBtn" onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-out"></i> Clock Out</button></div></div><div class="card-bg rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4">Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-slate-700"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500 dark:text-slate-400" id="todayTimeInfo"></div></div></div><div class="card-bg rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Attendance History</h3><div class="overflow-x-auto"><table class="attendance-history-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Date</th><th class="p-3 text-left">Clock In</th><th class="p-3 text-left">Clock Out</th><th class="p-3 text-left">Hours Worked</th><th class="p-3 text-left">Status</th></tr></thead><tbody id="attendanceHistoryList"></tbody></table></div></div></div>
+        <!-- MY ATTENDANCE TAB (unchanged) -->
+        <div id="my-attendance-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5 flex-wrap gap-4"><h2 class="text-2xl font-bold flex items-center gap-2 text-yellow-600"><i data-feather="clock"></i> My Attendance</h2><div class="flex gap-3"><button id="clockInBtn" onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-in"></i> Clock In</button><button id="clockOutBtn" onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold"><i data-feather="log-out"></i> Clock Out</button></div></div><div class="card-bg rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4">Today's Attendance</h3><div id="todayAttendanceCard" class="text-center py-4"><div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-slate-700"><span class="text-lg" id="todayStatusIcon">⏰</span><span class="font-semibold" id="todayStatusText">Not clocked in yet</span></div><div class="mt-3 text-sm text-slate-500 dark:text-slate-400" id="todayTimeInfo"></div></div></div><div class="card-bg rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Attendance History</h3><div class="overflow-x-auto"><table class="attendance-history-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Date</th><th class="p-3 text-left">Clock In</th><th class="p-3 text-left">Clock Out</th><th class="p-3 text-left">Hours Worked</th><th class="p-3 text-left">Status</th></table></thead><tbody id="attendanceHistoryList"></tbody></table></div></div></div>
 
         <!-- MY REQUESTS TAB -->
         <div id="my-requests-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold text-yellow-600">My Requests</h2><button onclick="openNewRequestMenu()" class="bg-[#011F7B] text-white px-4 py-2 rounded-xl">New Request</button></div><div id="allMyRequestsList" class="space-y-3"></div></div>
@@ -383,7 +238,7 @@
         <!-- MY PAYSLIP TAB -->
         <div id="payslip-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 text-yellow-600">My Payslip</h2><div id="employeePayslipList" class="space-y-4"></div></div>
 
-        <!-- HR PAYSLIP TAB (Payroll Management) with auto-reset and print fix -->
+        <!-- HR PAYSLIP TAB (Payroll Management) with updated payslip template -->
         <div id="hr-payslip-tab" class="tab-content hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <div class="card-bg rounded-2xl p-6">
@@ -431,7 +286,7 @@
                     <div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div>
                 </div>
             </div>
-            <!-- Payslip Preview Container (inline, compact) -->
+            <!-- Payslip Preview Container (inline) -->
             <div id="payslipPreviewContainer" class="card-bg rounded-2xl p-4 mt-6 hidden">
                 <div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">📄 Generated Payslip</h3><button onclick="closePayslipPreview()" class="text-red-500 hover:text-red-700 text-sm"><i data-feather="x-circle"></i> Close</button></div>
                 <div id="payslipPreviewContent"></div>
@@ -466,7 +321,7 @@
 <div id="editLeaveModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50"><div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')"><i data-feather="x"></i></button></div><input type="hidden" id="editEmployeeId"><div class="space-y-4"><input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl dark:bg-slate-700" readonly><input type="number" id="editLeaveBalanceSimple" class="w-full p-3 border rounded-xl dark:bg-slate-700" step="1"></div><div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1">Cancel</button></div></div></div>
 
 <script>
-// ==================== FIREBASE ====================
+// ==================== FIREBASE (unchanged) ====================
 const firebaseConfig = {
     apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
     authDomain: "equiprime-hr.firebaseapp.com",
@@ -480,7 +335,7 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
 
-// ==================== GLOBALS ====================
+// ==================== GLOBALS (unchanged) ====================
 let currentUser = null, currentUserData = null, currentUserRole = null;
 let allEmployees = [], allRequests = [], allAttendance = [], allPayslips = [], allAnnouncements = [], guardWeeklySchedules = [], allHelpdeskRequests = [];
 let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
@@ -582,7 +437,7 @@ function getFilteredEmployees() {
 }
 function formatDateForDisplay(dateStr) { if (!dateStr) return ''; try { const d = new Date(dateStr); if (isNaN(d.getTime())) return dateStr; return d.toISOString().split('T')[0]; } catch(e) { return dateStr; } }
 
-// ==================== DASHBOARD REFRESH ====================
+// ==================== DASHBOARD REFRESH (unchanged) ====================
 function refreshDashboard() {
     if (!currentUser) return;
     const filtered = getFilteredEmployees();
@@ -645,7 +500,7 @@ function refreshDashboard() {
     renderNavigation();
 }
 
-// ==================== NAVIGATION WITH BADGES ====================
+// ==================== NAVIGATION (unchanged) ====================
 function renderNavigation() {
     const isFull = fullPrivilegedEmails.includes(currentUser?.email) || currentUserRole === 'admin' || currentUserRole === 'hr' || currentUserRole === 'moderator';
     const canAccessEmployees = isFull;
@@ -721,7 +576,7 @@ function openMobileSidebar() { const sidebar = document.getElementById('mobileSi
 function closeMobileSidebar() { const sidebar = document.getElementById('mobileSidebar'); const overlay = document.getElementById('overlay'); if (sidebar) { sidebar.classList.remove('open'); overlay.classList.add('hidden'); overlay.classList.remove('active'); document.body.classList.remove('overflow-hidden'); } }
 function saveSettings() { localStorage.setItem('device_ip', document.getElementById('deviceIp').value); alert('Settings saved'); }
 
-// ==================== AVATAR ====================
+// ==================== AVATAR (unchanged) ====================
 async function uploadAvatar() {
     const fileInput = document.getElementById('avatarUpload');
     if (!fileInput.files || !fileInput.files[0]) { alert("Select an image first."); return; }
@@ -758,7 +613,7 @@ function updateProfileDropdown() {
     }
 }
 
-// ==================== EMPLOYEE MANAGEMENT ====================
+// ==================== EMPLOYEE MANAGEMENT (unchanged) ====================
 async function addEmployee() {
     if (!SYSTEM_ADMIN_EMAILS.includes(currentUser?.email)) { alert("Only system admins can add employees."); return; }
     const name = document.getElementById('newEmpName').value;
@@ -925,7 +780,7 @@ function renderEmployeesTable() {
 function filterEmployeesTable() { renderEmployeesTable(); }
 function showAddEmployeeModal() { openModal('addEmployeeModal'); }
 
-// ==================== ATTENDANCE ====================
+// ==================== ATTENDANCE (unchanged) ====================
 function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12:false }); }
 async function clockIn() {
     if (clockInProgress) return;
@@ -1020,7 +875,7 @@ async function submitClockRequest() {
     alert(`Clock ${type === 'in' ? 'in' : 'out'} request submitted for approval.`);
 }
 
-// ==================== REQUESTS & APPROVALS ====================
+// ==================== REQUESTS & APPROVALS (unchanged) ====================
 async function submitRequest() {
     const type = document.getElementById('requestTypeValue').value, start = document.getElementById('reqStartDate').value, end = document.getElementById('reqEndDate').value, reason = document.getElementById('reqReason').value;
     if (!start || !end) { alert("Select dates"); return; }
@@ -1138,7 +993,7 @@ async function rejectRequest(id) {
     } else alert("Cannot reject.");
 }
 
-// ==================== ATTENDANCE SUMMARY ====================
+// ==================== ATTENDANCE SUMMARY (unchanged) ====================
 function populateYearDropdown() {
     const yearSelect = document.getElementById('summaryYear');
     if (!yearSelect) return;
@@ -1221,7 +1076,7 @@ async function loadEmployeeCalendar(employeeId) {
     if (detailsBody) detailsBody.innerHTML = detailsRows;
 }
 
-// ==================== AUTO-COMPUTATION FUNCTION ====================
+// ==================== AUTO-COMPUTATION (unchanged) ====================
 function computeMonthlyDeductions(monthlySalary) {
     const sss = Math.min(monthlySalary, 30000) * 0.045;
     const philHealth = Math.min(monthlySalary, 100000) * 0.025;
@@ -1334,17 +1189,126 @@ function resetPayrollForm() {
     currentComputedPayroll = null;
 }
 
+// ==================== NEW PAYSLIP TEMPLATE (PDF style with logo) ====================
 function renderInlinePayslip(payslip) {
     const container = document.getElementById('payslipPreviewContainer');
     const contentDiv = document.getElementById('payslipPreviewContent');
     if (!container || !contentDiv) return;
+    
+    // Build the two-column table layout exactly as in the PDF
     const content = `
         <div class="payslip-container">
-            <div class="payslip-header"><h2>EQUIPRIME HR</h2><p>Payslip Statement</p></div>
-            <div class="two-columns"><div><strong>Name:</strong> ${payslip.employeeName}</div><div><strong>Period:</strong> ${payslip.month} (${payslip.cutOff})</div><div><strong>Date:</strong> ${payslip.payrollDate}</div></div>
-            <div class="payslip-section"><div class="payslip-title">Earnings</div><div class="earnings-grid"><div>Basic: ${payslip.basicSalary}</div><div>Overtime: ${payslip.overtimePay}</div><div>Holiday: ${payslip.holidayPay}</div><div>ND: ${payslip.nd}</div><div>OT: ${payslip.ot}</div><div>NDOT: ${payslip.ndot}</div><div>LH-ND: ${payslip.lhNd}</div><div>Rest Day: ${payslip.restday}</div><div>Other Taxable: ${payslip.otherTaxableEarnings}</div><div>De Minimis: ${payslip.deMinimis}</div><div>Other Non-Tax: ${payslip.otherNonTaxableEarnings}</div></div><div><strong>Total Taxable Gross:</strong> ${payslip.taxableGross}</div><div><strong>Total Earnings:</strong> ${payslip.totalEarnings}</div><div><strong>Less Absences/Late:</strong> ${payslip.absencesLate}</div><div><strong>Gross Pay:</strong> ${payslip.netPayAfterAbsences}</div></div>
-            <div class="payslip-section"><div class="payslip-title">Deductions</div><div class="earnings-grid"><div>SSS: ${payslip.sss}</div><div>SSS MPF: ${payslip.sssMpf}</div><div>PhilHealth: ${payslip.philhealth}</div><div>Pag-IBIG: ${payslip.pagibig}</div><div>Addl Pag-IBIG: ${payslip.additionalPagibig}</div><div>SSS Loans: ${payslip.sssLoans}</div><div>SSS CL: ${payslip.sssCl}</div><div>HDMF Loans: ${payslip.hdmfLoans}</div><div>HDMF CL: ${payslip.hdmfCl}</div><div>Salary Loan: ${payslip.salaryLoan}</div><div>WTAX: ${payslip.wtax}</div><div>Other Ded: ${payslip.otherDeductions}</div></div><div><strong>Total Deductions:</strong> ${payslip.totalDeductions}</div></div>
-            <div class="text-center mt-2"><span class="net-pay">NET PAY: ₱${payslip.netPay}</span></div>
+            <div class="payslip-header">
+                <img src="EquiPrime Logo crop.png" alt="EQUIPRIME Logo" class="payslip-logo" onerror="this.style.display='none'">
+                <div class="payslip-title">
+                    <h2>EQUIPRIME HR</h2>
+                    <p>Payslip Statement</p>
+                </div>
+            </div>
+            <table class="payslip-table" style="margin-bottom: 0.5rem;">
+                <tr>
+                    <td style="width: 33%"><strong>Name:</strong> ${payslip.employeeName}</td>
+                    <td style="width: 33%"><strong>Period:</strong> ${payslip.month} (${payslip.cutOff})</td>
+                    <td style="width: 34%"><strong>Date:</strong> ${payslip.payrollDate}</td>
+                </tr>
+            </table>
+            <table class="payslip-table">
+                <thead>
+                    <tr>
+                        <th>Gross Earning</th>
+                        <th>Non-Taxable Deductions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Basic Pay (Taxable): ${payslip.basicSalary}</td>
+                        <td>SSS Loans: ${payslip.sssLoans}</td>
+                    </tr>
+                    <tr>
+                        <td>Overtime (Taxable): ${payslip.overtimePay}</td>
+                        <td>SSS CL: ${payslip.sssCl}</td>
+                    </tr>
+                    <tr>
+                        <td>ND: ${payslip.nd}</td>
+                        <td>HDMF Loans: ${payslip.hdmfLoans}</td>
+                    </tr>
+                    <tr>
+                        <td>OT: ${payslip.ot}</td>
+                        <td>HDMF CL: ${payslip.hdmfCl}</td>
+                    </tr>
+                    <tr>
+                        <td>NDOT: ${payslip.ndot}</td>
+                        <td>SALARY LOAN: ${payslip.salaryLoan}</td>
+                    </tr>
+                    <tr>
+                        <td>Legal Holiday: ${payslip.holidayPay}</td>
+                        <td>WTAX: ${payslip.wtax}</td>
+                    </tr>
+                    <tr>
+                        <td>LH-ND: ${payslip.lhNd}</td>
+                        <td>OTHERS: ${payslip.otherDeductions}</td>
+                    </tr>
+                    <tr>
+                        <td>RESTDAY: ${payslip.restday}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Other Taxable Earning: ${payslip.otherTaxableEarnings}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>A. TOTAL TAXABLE EARNING:</strong> ${payslip.taxableGross}</td>
+                        <td><strong>TOTAL NON-TAXABLE DEDUCTIONS:</strong> ${payslip.totalNonTaxableDeductions}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>B. De Minimis (non-taxable):</strong> ${payslip.deMinimis}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>C. Other Non-Taxable Earning:</strong> ${payslip.otherNonTaxableEarnings}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>TOTAL EARNINGS (A+B+C):</strong> ${payslip.totalEarnings}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Absences and Late:</strong> ${payslip.absencesLate}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="payslip-table" style="margin-top: 0.5rem;">
+                <thead>
+                    <tr>
+                        <th colspan="2">CONTRIBUTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="width: 50%">SSS: ${payslip.sss}</td>
+                        <td style="width: 50%">SSS MPF: ${payslip.sssMpf}</td>
+                    </tr>
+                    <tr>
+                        <td>PHILHEALTH: ${payslip.philhealth}</td>
+                        <td>PagIBIG: ${payslip.pagibig}</td>
+                    </tr>
+                    <tr>
+                        <td>Additional PagIBIG: ${payslip.additionalPagibig}</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><strong>TOTAL CONTRIBUTIONS:</strong> ${payslip.totalContributions}</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="payslip-table" style="margin-top: 0.5rem;">
+                <tr>
+                    <td style="width: 50%"><strong>OTHER SUMMARY</strong><br>TAXABLE GROSS FOR THIS CUT-OFF:<br>${payslip.taxableIncomeCutOff}</td>
+                    <td style="width: 50%"><strong>Total Gross:</strong> ${payslip.netPayAfterAbsences}<br><strong>NET PAY:</strong> <span class="netpay-value">₱${payslip.netPay}</span></td>
+                </tr>
+            </table>
             <div class="signature-line">Certified True Copy<br>Signature</div>
         </div>
     `;
@@ -1372,7 +1336,7 @@ function refreshEmployeePayslip() {
     if (container) container.innerHTML = my.map(p => `<div class="card-bg p-3 rounded shadow">${p.month} (${p.cutOff})<br><span class="text-green-600 dark:text-green-400 font-bold">Net: ₱${p.netPay}</span></div>`).join('') || '<div>No payslips</div>';
 }
 
-// ==================== ANNOUNCEMENTS ====================
+// ==================== ANNOUNCEMENTS (unchanged) ====================
 function escapeHtml(str) { const d=document.createElement('div'); d.textContent=str; return d.innerHTML; }
 function renderAnnouncements() {
     const cont = document.getElementById('announcementsList');
@@ -1393,7 +1357,7 @@ async function saveAnnouncement() {
 }
 async function deleteAnnouncement() { const id = document.getElementById('announcementId').value; if (!id) return; if (confirm("Delete announcement?")) { await db.collection('announcements').doc(id).delete(); allAnnouncements = allAnnouncements.filter(a=>a.id!==id); closeModal('announcementModal'); renderAnnouncements(); } }
 
-// ==================== GUARD SCHEDULE ====================
+// ==================== GUARD SCHEDULE (unchanged) ====================
 async function assignGuardWeeklySchedule() {
     const empId = document.getElementById('guardEmployee').value;
     if (!empId) { alert("Select a guard."); return; }
@@ -1426,7 +1390,7 @@ async function loadGuardSelect() {
     if (sel) sel.innerHTML = '<option value="">Select Guard</option>' + allEmployees.filter(e => (e.dept === 'Security Guard Department' || e.role === 'guard') && !isSystemAdmin(e.email)).map(e => `<option value="${e.id}">${e.name}</option>`).join('');
 }
 
-// ==================== HELPDESK ====================
+// ==================== HELPDESK (unchanged) ====================
 function generateTrackingNumber() {
     const now = new Date();
     const year = now.getFullYear();
@@ -1479,7 +1443,7 @@ async function updateHelpdeskRequest(requestId) {
     alert("Request updated.");
 }
 
-// ==================== AUTH ====================
+// ==================== AUTH (unchanged) ====================
 async function loginWithEmail() {
     const email = document.getElementById('loginEmail').value, pwd = document.getElementById('loginPassword').value, errDiv = document.getElementById('authError');
     try {
