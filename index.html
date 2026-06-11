@@ -1364,10 +1364,8 @@ function computePayroll() {
     const cutoff = document.getElementById('cutOffPeriod').value;
 
     const totalTaxableEarningsCutoff = basic + overtime + holiday + nd + ndot + lhNd + restday + otherTaxable;
-    // NEW: total earnings for cutoff includes non‑taxable (de minimis, other non‑taxable)
     const totalEarningsCutoff = totalTaxableEarningsCutoff + deMinimis + otherNonTax;
     const monthlyBasicSalary = basic * 2;
-    // NEW: monthly gross salary now uses totalEarningsCutoff (including non‑taxable)
     const monthlyGrossSalary = totalEarningsCutoff * 2;
 
     let sssEmp = 0, sssMpf = 0, philHealthEmp = 0, pagibigEmp = 0;
