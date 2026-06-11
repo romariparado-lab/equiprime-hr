@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>EQUIPRIME HR - Beta Test</title>
+    <title>EQUIPRIME HR - Payroll 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -458,6 +458,7 @@
                         <input type="number" id="overtimePay" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Overtime Pay (₱)">
                         <input type="number" id="holidayPay" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Legal Holiday Pay (₱)">
                         <input type="number" id="nd" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="ND (Night Differential)">
+                        <!-- OT field removed -->
                         <input type="number" id="ndot" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="NDOT">
                         <input type="number" id="lhNd" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="LH-ND">
                         <input type="number" id="restday" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Rest Day">
@@ -1303,7 +1304,7 @@ const sssTable = [
     { minComp: 21250, maxComp: 21749.99, msc: 21500, ee: 1000, mpfEe: 75 },
     { minComp: 21750, maxComp: 22249.99, msc: 22000, ee: 1000, mpfEe: 100 },
     { minComp: 22250, maxComp: 22749.99, msc: 22500, ee: 1000, mpfEe: 125 },
-    { minComp: 22750, maxComp: 23249.99, msc: 23000, ee: 1000, mpfEe: 150 },
+    { minComp: 22750, maxComp: 23249.99, msc: 23000, ee: 1000, mpfEe: 150 },  // correct MPF = 150
     { minComp: 23250, maxComp: 23749.99, msc: 23500, ee: 1000, mpfEe: 175 },
     { minComp: 23750, maxComp: 24249.99, msc: 24000, ee: 1000, mpfEe: 200 },
     { minComp: 24250, maxComp: 24749.99, msc: 24500, ee: 1000, mpfEe: 225 },
@@ -1352,6 +1353,7 @@ function computePayroll() {
     const overtime = parseFloat(document.getElementById('overtimePay').value) || 0;
     const holiday = parseFloat(document.getElementById('holidayPay').value) || 0;
     const nd = parseFloat(document.getElementById('nd').value) || 0;
+    // OT field removed
     const ndot = parseFloat(document.getElementById('ndot').value) || 0;
     const lhNd = parseFloat(document.getElementById('lhNd').value) || 0;
     const restday = parseFloat(document.getElementById('restday').value) || 0;
@@ -1413,7 +1415,8 @@ function computePayroll() {
         grossPayCutoff: grossPayCutoff,
         totalDeductions: totalDeductions,
         netPay: netPay,
-        taxableIncomeCutoff: taxableIncomeForTax
+        taxableIncomeCutoff: taxableIncomeForTax,
+        totalTaxableEarnings: totalTaxableEarningsCutoff   // store for payslip
     };
 }
 
@@ -1437,7 +1440,6 @@ async function generatePayslipFromComputed() {
 }
 
 function renderInlinePayslip(p) {
-    // Helper to skip zero rows
     function formatRow(label, value, isNegative = false, isTotal = false) {
         if (Math.abs(value) < 0.01 && !isTotal) return '';
         let amount = `₱ ${value.toFixed(2)}`;
@@ -1452,11 +1454,11 @@ function renderInlinePayslip(p) {
         formatRow("Overtime Pay:", p.overtimePay),
         formatRow("Holiday Pay:", p.holidayPay),
         formatRow("Night Differential (ND):", p.nd),
-        // formatRow("OT:", p.ot),  // REMOVED as requested (OT field removed from payslip)
         formatRow("NDOT:", p.ndot),
         formatRow("LH-ND:", p.lhNd),
         formatRow("Rest Day:", p.restday),
         formatRow("Other Taxable Earnings:", p.otherTaxableEarnings),
+        formatRow("Total Taxable Earnings:", p.totalTaxableEarnings),
         formatRow("De Minimis (non-taxable):", p.deMinimis),
         formatRow("Other Non-Taxable:", p.otherNonTaxableEarnings),
         formatRow("Absences / Late:", p.absencesLate, true),
@@ -1477,16 +1479,16 @@ function renderInlinePayslip(p) {
         formatRow("Other Deductions:", p.otherDeductions),
         formatRow("Total Deductions:", p.totalDeductions, false, true)
     ].filter(row => row !== '');
-    const netRow = `<tr><td><strong>NET PAY</strong></td><td class="netpay-value"><strong>₱ ${p.netPay.toFixed(2)}</strong></td></tr>`;
+        const netRow = `<tr><td><strong>NET PAY</strong></td><td class="netpay-value"><strong>₱ ${p.netPay.toFixed(2)}</strong></td></tr>`;
     const content = `
         <div class="payslip-container">
             <div class="payslip-header">
                 <img src="EquiPrime Logo crop.png" alt="EQUIPRIME Logo" class="payslip-logo" onerror="this.style.display='none'">
                 <div class="payslip-title"><h2>EQUIPRIME HR</h2><p>Payslip Statement</p></div>
             </div>
-            <table class="payslip-table"><tr><td style="width:33%"><strong>Name:</strong> ${p.employeeName}</td><td style="width:33%"><strong>Period:</strong> ${p.month} (${p.cutOff})</td><td style="width:34%"><strong>Date:</strong> ${p.payrollDate}</td></tr></table>
+            <table class="payslip-table"><tr><td style="width:33%"><strong>Name:</strong> ${p.employeeName}</td><td style="width:33%"><strong>Period:</strong> ${p.month} (${p.cutOff})</td><td style="width:34%"><strong>Date:</strong> ${p.payrollDate}</td></tr>能有
             <table class="payslip-table"><thead><tr><th colspan="2">Salary Details</th></tr></thead><tbody>${salaryRows.join('')}</tbody></table>
-            <table class="payslip-table"><thead><tr><th>Deductions</th><th>Amount</th></tr></thead><tbody>${deductionRows.join('')}${netRow}</tbody></table>
+            <table class="payslip-table"><thead><tr><th>Deductions</th><th>Amount</th></tr></thead><tbody>${deductionRows.join('')}${netRow}</tbody></td>
             <div class="signature-line">Certified True Copy<br>Signature</div>
         </div>`;
     document.getElementById('payslipPreviewContent').innerHTML = content;
