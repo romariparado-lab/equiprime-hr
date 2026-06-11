@@ -1464,7 +1464,6 @@ function computePayroll() {
         taxableIncomeCutoff: taxableIncomeForTax,
         totalTaxableEarnings: totalTaxableEarningsCutoff   // store for payslip
     };
-}
 
 async function generatePayslipFromComputed() {
     if (!currentComputedPayroll) { alert("Please click 'Compute Payroll' first."); return; }
