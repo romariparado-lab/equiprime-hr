@@ -1353,7 +1353,6 @@ function computePayroll() {
     const overtime = parseFloat(document.getElementById('overtimePay').value) || 0;
     const holiday = parseFloat(document.getElementById('holidayPay').value) || 0;
     const nd = parseFloat(document.getElementById('nd').value) || 0;
-    // OT field removed
     const ndot = parseFloat(document.getElementById('ndot').value) || 0;
     const lhNd = parseFloat(document.getElementById('lhNd').value) || 0;
     const restday = parseFloat(document.getElementById('restday').value) || 0;
@@ -1365,8 +1364,11 @@ function computePayroll() {
     const cutoff = document.getElementById('cutOffPeriod').value;
 
     const totalTaxableEarningsCutoff = basic + overtime + holiday + nd + ndot + lhNd + restday + otherTaxable;
+    // NEW: total earnings for cutoff includes non‑taxable (de minimis, other non‑taxable)
+    const totalEarningsCutoff = totalTaxableEarningsCutoff + deMinimis + otherNonTax;
     const monthlyBasicSalary = basic * 2;
-    const monthlyGrossSalary = totalTaxableEarningsCutoff * 2;
+    // NEW: monthly gross salary now uses totalEarningsCutoff (including non‑taxable)
+    const monthlyGrossSalary = totalEarningsCutoff * 2;
 
     let sssEmp = 0, sssMpf = 0, philHealthEmp = 0, pagibigEmp = 0;
     if (cutoff === 'second') {
@@ -1375,6 +1377,50 @@ function computePayroll() {
         sssMpf = sssVals.mpfEe;
         philHealthEmp = computePhilHealth(monthlyBasicSalary);
         pagibigEmp = computePagIBIG(additionalPagibig);
+    }
+
+    document.getElementById('sssContribution').value = sssEmp.toFixed(2);
+    document.getElementById('sssMpf').value = sssMpf.toFixed(2);
+    document.getElementById('philhealthContribution').value = philHealthEmp.toFixed(2);
+    document.getElementById('pagibigContribution').value = pagibigEmp.toFixed(2);
+
+    const totalContrib = sssEmp + sssMpf + philHealthEmp + pagibigEmp;
+    let taxableIncomeForTax = totalTaxableEarningsCutoff - absences - totalContrib;
+    if (taxableIncomeForTax < 0) taxableIncomeForTax = 0;
+    const wtaxComputed = computeWithholdingTax(taxableIncomeForTax);
+    document.getElementById('wtax').value = wtaxComputed.toFixed(2);
+
+    const grossPayCutoff = totalTaxableEarningsCutoff + deMinimis + otherNonTax - absences;
+
+    const sssLoans = parseFloat(document.getElementById('sssLoans').value) || 0;
+    const sssCl = parseFloat(document.getElementById('sssCl').value) || 0;
+    const hdmfLoans = parseFloat(document.getElementById('hdmfLoans').value) || 0;
+    const hdmfCl = parseFloat(document.getElementById('hdmfCl').value) || 0;
+    const salaryLoan = parseFloat(document.getElementById('salaryLoan').value) || 0;
+    const otherDed = parseFloat(document.getElementById('otherDeductions').value) || 0;
+
+    const totalDeductions = totalContrib + sssLoans + sssCl + hdmfLoans + hdmfCl + salaryLoan + otherDed + wtaxComputed;
+    const netPay = grossPayCutoff - totalDeductions;
+
+    document.getElementById('grossPayDisplay').innerText = grossPayCutoff.toFixed(2);
+    document.getElementById('totalDeductionsDisplay').innerText = totalDeductions.toFixed(2);
+    document.getElementById('netPayDisplay').innerText = netPay.toFixed(2);
+    document.getElementById('payrollSummary').classList.remove('hidden');
+
+    currentComputedPayroll = {
+        employeeId: document.getElementById('payslipEmployee').value,
+        basicSalary: basic, overtimePay: overtime, holidayPay: holiday, nd, ndot, lhNd, restday,
+        otherTaxableEarnings: otherTaxable, deMinimis, otherNonTaxableEarnings: otherNonTax, absencesLate: absences,
+        sss: sssEmp, sssMpf: sssMpf, philhealth: philHealthEmp, pagibig: pagibigEmp, additionalPagibig: additionalPagibig,
+        sssLoans, sssCl, hdmfLoans, hdmfCl, salaryLoan, otherDeductions: otherDed, wtax: wtaxComputed,
+        monthlyBasicSalary: monthlyBasicSalary,
+        biMonthlyBasicSalary: basic,
+        grossPayCutoff: grossPayCutoff,
+        totalDeductions: totalDeductions,
+        netPay: netPay,
+        taxableIncomeCutoff: taxableIncomeForTax,
+        totalTaxableEarnings: totalTaxableEarningsCutoff
+    };
     }
 
     document.getElementById('sssContribution').value = sssEmp.toFixed(2);
