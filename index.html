@@ -1317,19 +1317,19 @@ function computeWithholdingTax(semiMonthlyTaxableIncome) {
 }
 
 function computePayroll() {
-    const basic = parseFloat(document.getElementById('basicSalary').value) || ;
-    const overtime = parseFloat(document.getElementById('overtimePay').value) || ;
-    const holiday = parseFloat(document.getElementById('holidayPay').value) || ;
-    const nd = parseFloat(document.getElementById('nd').value) || ;
-    const ot = parseFloat(document.getElementById('ot').value) || ;
-    const ndot = parseFloat(document.getElementById('ndot').value) || ;
-    const lhNd = parseFloat(document.getElementById('lhNd').value) || ;
-    const restday = parseFloat(document.getElementById('restday').value) || ;
-    const otherTaxable = parseFloat(document.getElementById('otherTaxableEarnings').value) || ;
-    const deMinimis = parseFloat(document.getElementById('deMinimis').value) || ;
-    const otherNonTax = parseFloat(document.getElementById('otherNonTaxableEarnings').value) || ;
-    const absences = parseFloat(document.getElementById('absencesLate').value) || ;
-    const additionalPagibig = parseFloat(document.getElementById('additionalPagibig').value) || ;
+    const basic = parseFloat(document.getElementById('basicSalary').value) || 0;
+    const overtime = parseFloat(document.getElementById('overtimePay').value) || 0;
+    const holiday = parseFloat(document.getElementById('holidayPay').value) || 0;
+    const nd = parseFloat(document.getElementById('nd').value) || 0;
+    const ot = parseFloat(document.getElementById('ot').value) || 0;
+    const ndot = parseFloat(document.getElementById('ndot').value) || 0;
+    const lhNd = parseFloat(document.getElementById('lhNd').value) || 0;
+    const restday = parseFloat(document.getElementById('restday').value) || 0;
+    const otherTaxable = parseFloat(document.getElementById('otherTaxableEarnings').value) || 0;
+    const deMinimis = parseFloat(document.getElementById('deMinimis').value) || 0;
+    const otherNonTax = parseFloat(document.getElementById('otherNonTaxableEarnings').value) || 0;
+    const absences = parseFloat(document.getElementById('absencesLate').value) || 0;
+    const additionalPagibig = parseFloat(document.getElementById('additionalPagibig').value) || 0;
     const cutoff = document.getElementById('cutOffPeriod').value;
 
     const totalTaxableEarningsCutoff = basic + overtime + holiday + nd + ot + ndot + lhNd + restday + otherTaxable;
