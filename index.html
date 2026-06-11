@@ -311,6 +311,26 @@
             font-size: 0.7rem;
         }
         .netpay-value { font-weight: 800; font-size: 0.9rem; }
+        /* Print styles – only show payslip when printing */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #payslipPreviewContainer, #payslipPreviewContainer * {
+                visibility: visible;
+            }
+            #payslipPreviewContainer {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                margin: 0;
+                padding: 1rem;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
          /* ===== QUICK FILING OPTIONS TEXT COLOR ===== */
         .card-bg .grid button span {
             color: #fbc300;
