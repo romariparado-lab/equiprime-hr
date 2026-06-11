@@ -1521,7 +1521,21 @@ function refreshEmployeePayslip() {
     if(container) container.innerHTML = my.map(p => `<div class="card-bg p-3 rounded shadow">${p.month} (${p.cutOff})<br><span class="text-green-600 dark:text-green-400 font-bold">Net: ₱${p.netPay.toFixed(2)}</span></div>`).join('') || '<div>No payslips</div>';
 }
 function closePayslipPreview() { document.getElementById('payslipPreviewContainer').classList.add('hidden'); }
-function downloadInlinePayslipPDF() { if(window.currentInlinePayslip) html2pdf().from(document.getElementById('payslipPreviewContent')).set({ filename: `payslip_${window.currentInlinePayslip.employeeName}_${window.currentInlinePayslip.month}.pdf` }).save(); }
+function downloadInlinePayslipPDF() {
+    if (!window.currentInlinePayslip) return;
+    const element = document.getElementById('payslipPreviewContent');
+    const clone = element.cloneNode(true);
+    clone.style.padding = '1rem';
+    clone.style.backgroundColor = 'white';
+    clone.style.width = '100%';
+    clone.style.maxWidth = '100%';
+    html2pdf().from(clone).set({
+        margin: 0.2,
+        filename: `payslip_${window.currentInlinePayslip.employeeName}_${window.currentInlinePayslip.month}.pdf`,
+        html2canvas: { scale: 2, letterRendering: true },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    }).save();
+}
 
 // Announcements
 function renderAnnouncements() {
