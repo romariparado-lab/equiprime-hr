@@ -266,11 +266,11 @@
         background: #0f172a;   /* dark blue/gray */
         color: #e2e8f0;
         }
-        }
         .payslip-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 1rem;
             margin-bottom: 1rem;
             border-bottom: 1px solid #cbd5e1;
             padding-bottom: 0.5rem;
@@ -278,9 +278,11 @@
         .payslip-logo {
             height: 50px;
             object-fit: contain;
+            display: block;
         }
         .payslip-title {
             text-align: right;
+            line-height: 1.2;
         }
         .payslip-title h2 { font-size: 1rem; font-weight: 800; margin: 0; }
         .payslip-title p { font-size: 0.65rem; margin: 0; }
@@ -483,7 +485,7 @@
                 </div>
                 <div class="card-bg rounded-2xl p-6"><h3 class="text-xl font-bold mb-4">Payroll Summary & History</h3><div id="payrollSummary" class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl mb-4 hidden"><h4 class="font-bold mb-2">Computed Summary</h4><div class="space-y-1 text-sm"><p><strong>Gross Pay (Cutoff):</strong> <span id="grossPayDisplay">0.00</span></p><p><strong>Total Deductions:</strong> <span id="totalDeductionsDisplay">0.00</span></p><p><strong>Net Pay:</strong> <span id="netPayDisplay" class="text-green-600 font-bold">0.00</span></p></div></div><h3 class="text-xl font-bold mb-2">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div>
             </div>
-            <div id="payslipPreviewContainer" class="card-bg rounded-2xl p-4 mt-6 hidden"><div class="flex justify-between items-center mb-3"><h3 class="text-lg font-bold">📄 Generated Payslip</h3><button onclick="closePayslipPreview()" class="text-red-500 hover:text-red-700 text-sm"><i data-feather="x-circle"></i> Close</button></div><div id="payslipPreviewContent"></div><div class="text-right mt-3 no-print"><button onclick="downloadInlinePayslipPDF()" class="bg-[#011F7B] text-white px-4 py-1 rounded-lg text-sm">Download PDF</button><button onclick="window.print()" class="bg-gray-600 text-white px-4 py-1 rounded-lg text-sm ml-2">Print</button></div></div>
+            <div id="payslipPreviewContainer" class="card-bg rounded-2xl p-4 mt-6 hidden"><div class="flex justify-between items-center mb-3 no-print"><h3 class="text-lg font-bold">📄 Generated Payslip</h3><button onclick="closePayslipPreview()" class="text-red-500 hover:text-red-700 text-sm"><i data-feather="x-circle"></i> Close</button></div><div id="payslipPreviewContent"></div><div class="text-right mt-3 no-print"><button onclick="downloadInlinePayslipPDF()" class="bg-[#011F7B] text-white px-4 py-1 rounded-lg text-sm">Download PDF</button><button onclick="window.print()" class="bg-gray-600 text-white px-4 py-1 rounded-lg text-sm ml-2">Print</button></div></div>
         </div>
 
         <!-- ADMIN HELPDESK TAB -->
@@ -1452,7 +1454,7 @@ function renderInlinePayslip(p) {
         formatRow("Overtime Pay:", p.overtimePay),
         formatRow("Holiday Pay:", p.holidayPay),
         formatRow("Night Differential (ND):", p.nd),
-        formatRow("OT:", p.ot),
+        // formatRow("OT:", p.ot),  // REMOVED as requested (OT field removed from payslip)
         formatRow("NDOT:", p.ndot),
         formatRow("LH-ND:", p.lhNd),
         formatRow("Rest Day:", p.restday),
