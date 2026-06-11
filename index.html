@@ -1696,6 +1696,23 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('generatePayslipBtn').addEventListener('click', generatePayslipFromComputed);
     document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
     document.getElementById('refreshSummaryBtn').addEventListener('click', () => loadEmployeeListForSummary());
+    // Forgot Password
+    const forgotBtn = document.getElementById('forgotPasswordBtn');
+    if (forgotBtn) {
+    forgotBtn.addEventListener('click', async () => {
+    const email = document.getElementById('loginEmail').value;
+    if (!email) {
+    alert("Please enter your email address first.");
+    return;
+    }
+    try {
+    await auth.sendPasswordResetEmail(email);
+    alert(`Password reset email sent to ${email}. Check your inbox.`);
+    } catch (error) {
+    alert("Error: " + error.message);
+    }
+    });
+    }
     document.addEventListener('click', function(event) { const dropdown = document.getElementById('profileDropdown'); const trigger = document.querySelector('.profile-trigger'); if (!dropdown || !trigger) return; if (trigger.contains(event.target)) dropdown.classList.toggle('hidden'); else if (!dropdown.contains(event.target)) dropdown.classList.add('hidden'); });
     setupRealtimeListeners();
     auth.onAuthStateChanged(async (user) => {
