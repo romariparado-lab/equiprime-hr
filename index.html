@@ -236,12 +236,11 @@
         .quick-icon-white { stroke: #ffffff; }
         body.dark .quick-icon-white { stroke: #e2e8f0; }
 
-        /* color for Quick Filing buttons */
-        button.flex.flex-col.items-center.p-3.bg-slate-50.rounded-xl span {
-        color: #1f2937 !important;   /* dark gray for light mode */
+        button.flex.flex-col.items-center.p-3.bg-slate-50.rounded-xl {
+        background-color: #e2e8f0 !important;   /* light mode background */
         }
-        body.dark button.flex.flex-col.items-center.p-3.bg-slate-50.rounded-xl span {
-        color: #f1f5f9 !important;   /* near white for dark mode */
+        body.dark button.flex.flex-col.items-center.p-3.bg-slate-50.rounded-xl {
+        background-color: #2d3748 !important;   /* dark mode background */
         }
         
         button:disabled { opacity: 0.6; cursor: not-allowed; }
