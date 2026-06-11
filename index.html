@@ -252,15 +252,20 @@
             cursor: pointer;
         }
         
-        .payslip-container {
-            background: white;
-            padding: 1rem;
-            font-size: 0.75rem;
-            line-height: 1.4;
-            color: #0f172a;
-            width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
+       .payslip-container {
+        background: #fdf8e7;   /* light cream background */
+        padding: 1rem;
+        font-size: 0.75rem;
+        line-height: 1.4;
+        color: #0f172a;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        }
+        body.dark .payslip-container {
+        background: #0f172a;   /* dark blue/gray */
+        color: #e2e8f0;
+        }
         }
         .payslip-header {
             display: flex;
