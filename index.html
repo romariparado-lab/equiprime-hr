@@ -236,11 +236,12 @@
         .quick-icon-white { stroke: #ffffff; }
         body.dark .quick-icon-white { stroke: #e2e8f0; }
 
-        body .card-bg .grid button {
-        color: #1f2937 !important;
+        /* color for Quick Filing buttons */
+        button.flex.flex-col.items-center.p-3.bg-slate-50.rounded-xl span {
+        color: #1f2937 !important;   /* dark gray for light mode */
         }
-        body.dark .card-bg .grid button {
-        color: #f1f5f9 !important;
+        body.dark button.flex.flex-col.items-center.p-3.bg-slate-50.rounded-xl span {
+        color: #f1f5f9 !important;   /* near white for dark mode */
         }
         
         button:disabled { opacity: 0.6; cursor: not-allowed; }
