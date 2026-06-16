@@ -153,7 +153,7 @@
         .avatar-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
         .avatar-large { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; }
         .profile-dropdown-content { background: white; border-radius: 1rem; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1); z-index: 1000; color: #fbc300; }
-        body.dark .profile-dropdown-content { background: #fbc300; color: #f1f5f9 }
+        body.dark .profile-dropdown-content { background: #fbc300; color: #f1f5f9; }
         
         .login-split { display: flex; min-height: 100vh; }
         .branding-half {
@@ -237,10 +237,10 @@
         body.dark .quick-icon-white { stroke: #e2e8f0; }
 
         button.flex.flex-col.items-center.p-3.bg-slate-50.rounded-xl {
-        background-color: #e2e8f0 !important;   /* light mode background */
+            background-color: #e2e8f0 !important;
         }
         body.dark button.flex.flex-col.items-center.p-3.bg-slate-50.rounded-xl {
-        background-color: #2d3748 !important;   /* dark mode background */
+            background-color: #2d3748 !important;
         }
         
         button:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -253,18 +253,18 @@
         }
         
        .payslip-container {
-        background: #fdf8e7;   /* light cream background */
-        padding: 1rem;
-        font-size: 0.75rem;
-        line-height: 1.4;
-        color: #0f172a;
-        width: 100%;
-        max-width: 100%;
-        box-sizing: border-box;
+            background: #fdf8e7;
+            padding: 1rem;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            color: #0f172a;
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
         }
         body.dark .payslip-container {
-        background: #0f172a;   /* dark blue/gray */
-        color: #e2e8f0;
+            background: #0f172a;
+            color: #e2e8f0;
         }
         .payslip-header {
             display: flex;
@@ -313,7 +313,6 @@
             font-size: 0.7rem;
         }
         .netpay-value { font-weight: 800; font-size: 0.9rem; }
-        /* Print styles – only show payslip when printing */
         @media print {
             body * {
                 visibility: hidden;
@@ -333,7 +332,6 @@
                 display: none !important;
             }
         }
-         /* ===== QUICK FILING OPTIONS TEXT COLOR ===== */
         .card-bg .grid button span {
             color: #fbc300;
         }
@@ -343,26 +341,22 @@
         .card-bg .grid button:hover span {
             color: #fbc300;
         }
-    .branding-content h1 span,
-    .branding-content p {
-    text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
-    }
-
-    /* Optional: move content higher on desktop */
-    @media (min-width: 769px) {
-    .branding-half {
-        align-items: flex-start;
-        padding-top: 15vh;
-    }
-    }
-
-    /* Optional: icon hover effect */
-    .branding-content a i {
-    transition: transform 0.2s ease;
-    }
-    .branding-content a:hover i {
-    transform: scale(1.2);
-    }
+        .branding-content h1 span,
+        .branding-content p {
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+        }
+        @media (min-width: 769px) {
+            .branding-half {
+                align-items: flex-start;
+                padding-top: 15vh;
+            }
+        }
+        .branding-content a i {
+            transition: transform 0.2s ease;
+        }
+        .branding-content a:hover i {
+            transform: scale(1.2);
+        }
     </style>
 </head>
 <body>
@@ -478,7 +472,6 @@
                         <input type="number" id="overtimePay" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Overtime Pay (₱)">
                         <input type="number" id="holidayPay" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Legal Holiday Pay (₱)">
                         <input type="number" id="nd" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="ND (Night Differential)">
-                        <!-- OT field removed -->
                         <input type="number" id="ndot" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="NDOT">
                         <input type="number" id="lhNd" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="LH-ND">
                         <input type="number" id="restday" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Rest Day">
@@ -559,7 +552,30 @@ const editAuthorizedEmails = ["mod.rom@equiprime.ph", "mod.dex@equiprime.ph", "h
 let clockInProgress = false;
 let currentComputedPayroll = null;
 
-// Helper functions
+// ===== BURGER MENU FUNCTIONS (GLOBAL) =====
+function openMobileSidebar() {
+    const sidebar = document.getElementById('mobileSidebar');
+    const overlay = document.getElementById('overlay');
+    if (sidebar && overlay) {
+        sidebar.classList.add('open');
+        overlay.classList.remove('hidden');
+        overlay.classList.add('active');
+        document.body.classList.add('overflow-hidden');
+    }
+}
+
+function closeMobileSidebar() {
+    const sidebar = document.getElementById('mobileSidebar');
+    const overlay = document.getElementById('overlay');
+    if (sidebar && overlay) {
+        sidebar.classList.remove('open');
+        overlay.classList.add('hidden');
+        overlay.classList.remove('active');
+        document.body.classList.remove('overflow-hidden');
+    }
+}
+
+// ===== HELPER FUNCTIONS =====
 function isSystemAdmin(email) { return SYSTEM_ADMIN_EMAILS.includes(email); }
 function getDefaultExtendedFields() {
     return { employeeNumber: '', dateHired: '', gender: '', civilStatus: '', phone: '', address: '', emergencyContactName: '', emergencyContactRelationship: '', emergencyContactNumber: '', emergencyContactAddress: '', sssNumber: '', philhealthNumber: '', pagibigNumber: '', photoURL: '' };
@@ -782,8 +798,6 @@ function openOffsetsModal() { closeModal('newRequestMenuOverlay'); openModal('of
 function openRequestModal(type) { closeModal('newRequestMenuOverlay'); document.getElementById('requestTypeValue').value = type; openModal('requestModalOverlay'); }
 function selectLeaveType(type) { closeModal('leaveModalOverlay'); openRequestModal(type); }
 function toggleNightMode() { document.body.classList.toggle('dark'); localStorage.setItem('nightMode', document.body.classList.contains('dark') ? 'enabled' : 'disabled'); feather.replace(); }
-function openMobileSidebar() { const sidebar = document.getElementById('mobileSidebar'); const overlay = document.getElementById('overlay'); if (sidebar && overlay) { sidebar.classList.add('open'); overlay.classList.remove('hidden'); overlay.classList.add('active'); document.body.classList.add('overflow-hidden'); } }
-function closeMobileSidebar() { const sidebar = document.getElementById('mobileSidebar'); const overlay = document.getElementById('overlay'); if (sidebar && overlay) { sidebar.classList.remove('open'); overlay.classList.add('hidden'); overlay.classList.remove('active'); document.body.classList.remove('overflow-hidden'); } }
 function saveSettings() { localStorage.setItem('device_ip', document.getElementById('deviceIp').value); alert('Settings saved'); }
 
 // Avatar upload
@@ -1286,7 +1300,7 @@ async function loadEmployeeCalendar(employeeId) {
     if (detailsBody) detailsBody.innerHTML = detailsRows;
 }
 
-// ==================== CORRECTED PAYROLL COMPUTATION ====================
+// ==================== SSS TABLE & PAYROLL FUNCTIONS ====================
 const sssTable = [
     { minComp: 0, maxComp: 5249.99, msc: 5000, ee: 250, mpfEe: 0 },
     { minComp: 5250, maxComp: 5749.99, msc: 5500, ee: 275, mpfEe: 0 },
@@ -1324,7 +1338,7 @@ const sssTable = [
     { minComp: 21250, maxComp: 21749.99, msc: 21500, ee: 1000, mpfEe: 75 },
     { minComp: 21750, maxComp: 22249.99, msc: 22000, ee: 1000, mpfEe: 100 },
     { minComp: 22250, maxComp: 22749.99, msc: 22500, ee: 1000, mpfEe: 125 },
-    { minComp: 22750, maxComp: 23249.99, msc: 23000, ee: 1000, mpfEe: 150 },  // correct MPF = 150
+    { minComp: 22750, maxComp: 23249.99, msc: 23000, ee: 1000, mpfEe: 150 },
     { minComp: 23250, maxComp: 23749.99, msc: 23500, ee: 1000, mpfEe: 175 },
     { minComp: 23750, maxComp: 24249.99, msc: 24000, ee: 1000, mpfEe: 200 },
     { minComp: 24250, maxComp: 24749.99, msc: 24500, ee: 1000, mpfEe: 225 },
@@ -1739,7 +1753,7 @@ async function loadAnnouncements() {
 }
 window.resetAllSystemData = async function() { if (currentUser?.email !== resetAuthorizedEmail) { alert("Only mod.rom@equiprime.ph can reset."); return; } const pin = prompt("Enter reset PIN:"); if (pin !== "Moderator@2026!") { alert("Incorrect PIN."); return; } if (!confirm("Delete ALL data?")) return; const collections = ['employees','attendance','requests','payslips','announcements','guardWeeklySchedules','users','departmentApprovers','employeeSupportRequests','attendanceAuditLogs']; for (const col of collections) { const snap = await db.collection(col).get(); const batch = db.batch(); snap.docs.forEach(doc => batch.delete(doc.ref)); await batch.commit(); } alert("All data reset. Reloading..."); location.reload(); };
 
-// Initialize
+// ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', () => {
     if(localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark');
     const menuBtn = document.getElementById('mobileMenuButton');
@@ -1755,19 +1769,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Forgot Password
     const forgotBtn = document.getElementById('forgotPasswordBtn');
     if (forgotBtn) {
-    forgotBtn.addEventListener('click', async () => {
-    const email = document.getElementById('loginEmail').value;
-    if (!email) {
-    alert("Please enter your email address first.");
-    return;
-    }
-    try {
-    await auth.sendPasswordResetEmail(email);
-    alert(`Password reset email sent to ${email}. Check your inbox.`);
-    } catch (error) {
-    alert("Error: " + error.message);
-    }
-    });
+        forgotBtn.addEventListener('click', async () => {
+            const email = document.getElementById('loginEmail').value;
+            if (!email) {
+                alert("Please enter your email address first.");
+                return;
+            }
+            try {
+                await auth.sendPasswordResetEmail(email);
+                alert(`Password reset email sent to ${email}. Check your inbox.`);
+            } catch (error) {
+                alert("Error: " + error.message);
+            }
+        });
     }
     document.addEventListener('click', function(event) { const dropdown = document.getElementById('profileDropdown'); const trigger = document.querySelector('.profile-trigger'); if (!dropdown || !trigger) return; if (trigger.contains(event.target)) dropdown.classList.toggle('hidden'); else if (!dropdown.contains(event.target)) dropdown.classList.add('hidden'); });
     setupRealtimeListeners();
