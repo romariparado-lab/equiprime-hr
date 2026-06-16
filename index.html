@@ -782,8 +782,6 @@ function openOffsetsModal() { closeModal('newRequestMenuOverlay'); openModal('of
 function openRequestModal(type) { closeModal('newRequestMenuOverlay'); document.getElementById('requestTypeValue').value = type; openModal('requestModalOverlay'); }
 function selectLeaveType(type) { closeModal('leaveModalOverlay'); openRequestModal(type); }
 function toggleNightMode() { document.body.classList.toggle('dark'); localStorage.setItem('nightMode', document.body.classList.contains('dark') ? 'enabled' : 'disabled'); feather.replace(); }
-function openMobileSidebar() { const sidebar = document.getElementById('mobileSidebar'); const overlay = document.getElementById('overlay'); if (sidebar && overlay) { sidebar.classList.add('open'); overlay.classList.remove('hidden'); overlay.classList.add('active'); document.body.classList.add('overflow-hidden'); } }
-function closeMobileSidebar() { const sidebar = document.getElementById('mobileSidebar'); const overlay = document.getElementById('overlay'); if (sidebar && overlay) { sidebar.classList.remove('open'); overlay.classList.add('hidden'); overlay.classList.remove('active'); document.body.classList.remove('overflow-hidden'); } }
 function saveSettings() { localStorage.setItem('device_ip', document.getElementById('deviceIp').value); alert('Settings saved'); }
 
 // Avatar upload
@@ -1738,6 +1736,10 @@ async function loadAnnouncements() {
     renderAnnouncements();
 }
 window.resetAllSystemData = async function() { if (currentUser?.email !== resetAuthorizedEmail) { alert("Only mod.rom@equiprime.ph can reset."); return; } const pin = prompt("Enter reset PIN:"); if (pin !== "Moderator@2026!") { alert("Incorrect PIN."); return; } if (!confirm("Delete ALL data?")) return; const collections = ['employees','attendance','requests','payslips','announcements','guardWeeklySchedules','users','departmentApprovers','employeeSupportRequests','attendanceAuditLogs']; for (const col of collections) { const snap = await db.collection(col).get(); const batch = db.batch(); snap.docs.forEach(doc => batch.delete(doc.ref)); await batch.commit(); } alert("All data reset. Reloading..."); location.reload(); };
+
+// ===== GLOBAL FUNCTIONS (can be called from HTML) =====
+function openMobileSidebar() { const sidebar = document.getElementById('mobileSidebar'); const overlay = document.getElementById('overlay'); if (sidebar && overlay) { sidebar.classList.add('open'); overlay.classList.remove('hidden'); overlay.classList.add('active'); document.body.classList.add('overflow-hidden'); } }
+function closeMobileSidebar() { const sidebar = document.getElementById('mobileSidebar'); const overlay = document.getElementById('overlay'); if (sidebar && overlay) { sidebar.classList.remove('open'); overlay.classList.add('hidden'); overlay.classList.remove('active'); document.body.classList.remove('overflow-hidden'); } }
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
