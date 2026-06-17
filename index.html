@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>EQUIPRIME HR - Payroll 2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js">
@@ -657,7 +657,6 @@
             transform: scale(1.2);
         }
 
-        /* dark mode override for dropdown */
         body.dark .mobile-dropdown-menu {
             background: #0f172a;
         }
@@ -759,8 +758,8 @@
         <!-- MAIN CONTENT -->
         <div class="main-content flex-1 p-4 md:p-6 overflow-y-auto">
 
-            <!-- ===== MOBILE HEADER with DROPDOWN TOGGLE ===== -->
-            <div class="mobile-header hidden items-center justify-between mb-4">
+            <!-- ===== MOBILE HEADER with DROPDOWN TOGGLE (removed 'hidden' class) ===== -->
+            <div class="mobile-header items-center justify-between mb-4">
                 <div class="brand">EQUIPRIME<span>HR</span></div>
                 <div class="user-info">
                     <span id="mobileUserName" class="hidden sm:inline">User</span>
@@ -1190,7 +1189,6 @@
             e.stopPropagation();
             const menu = document.getElementById('mobileDropdownMenu');
             menu.classList.toggle('open');
-            // rotate chevron
             const btn = document.getElementById('mobileDropdownToggle');
             const icon = btn.querySelector('i');
             if (icon) {
@@ -1359,7 +1357,6 @@
                 avatarLarge.src =
                     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230f172a'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
             }
-            // update mobile avatar too
             updateMobileAvatar();
         }
 
@@ -2558,7 +2555,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             if (localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark');
 
-            // Mobile dropdown toggle
             const toggleBtn = document.getElementById('mobileDropdownToggle');
             if (toggleBtn) toggleBtn.addEventListener('click', toggleMobileDropdown);
 
