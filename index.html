@@ -20,7 +20,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
     <style>
-        /* ===== ORIGINAL STYLES with accessibility fixes ===== */
+        /* ===== ORIGINAL STYLES ===== */
         * {
             font-family: 'Inter', sans-serif;
         }
@@ -39,18 +39,12 @@
             -webkit-text-size-adjust: 100%;
             text-size-adjust: 100%;
         }
-
         .branding-content {
             -webkit-backdrop-filter: blur(8px);
             backdrop-filter: blur(8px);
         }
-        .mobile-dropdown-menu {
-            -webkit-backdrop-filter: blur(4px);
-            backdrop-filter: blur(4px);
-        }
 
-        .desktop-sidebar nav button,
-        .mobile-sidebar nav button {
+        .desktop-sidebar nav button {
             display: flex;
             align-items: center;
             gap: 0.75rem;
@@ -60,12 +54,10 @@
             white-space: nowrap;
             position: relative;
         }
-        .desktop-sidebar nav button i,
-        .mobile-sidebar nav button i {
+        .desktop-sidebar nav button i {
             flex-shrink: 0;
         }
-        .desktop-sidebar nav button span,
-        .mobile-sidebar nav button span {
+        .desktop-sidebar nav button span {
             flex-grow: 1;
             text-align: left;
             font-size: 0.9rem;
@@ -364,7 +356,8 @@
         }
         @media (min-width: 1024px) {
             .mobile-header,
-            .mobile-dropdown-menu {
+            .mobile-sidebar,
+            .mobile-overlay {
                 display: none !important;
             }
         }
@@ -374,33 +367,72 @@
             }
         }
 
-        /* --- MOBILE DROPDOWN --- */
-        .mobile-dropdown-menu {
-            position: absolute;
-            top: 100%;
+        /* ===== MOBILE SIDEBAR (slide-out) ===== */
+        .mobile-sidebar {
+            position: fixed;
+            top: 0;
             left: 0;
-            right: 0;
+            width: 280px;
+            height: 100%;
             background: #011F7B;
-            border-radius: 0 0 1.5rem 1.5rem;
-            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
             z-index: 9999;
-            max-height: 75vh;
             overflow-y: auto;
-            padding: 0.5rem 0.75rem 1rem;
-            display: none;
-            transition: opacity 0.2s ease;
+            transform: translateX(-100%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 1rem 0.75rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
         }
-        .mobile-dropdown-menu.open {
-            display: block;
+        .mobile-sidebar.open {
+            transform: translateX(0);
         }
-        .mobile-dropdown-menu nav button {
+        .mobile-sidebar .close-btn {
+            align-self: flex-end;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 0.4rem 0.6rem;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            font-size: 1.2rem;
+            line-height: 1;
+            transition: background 0.15s;
+            margin-bottom: 0.5rem;
+        }
+        .mobile-sidebar .close-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .mobile-sidebar .brand {
+            padding: 0 0.5rem 1rem 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1rem;
+        }
+        .mobile-sidebar .brand h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+        .mobile-sidebar .brand h1 span {
+            color: #FFBA09;
+        }
+        .mobile-sidebar .brand p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.7rem;
+            margin-top: 0.1rem;
+        }
+        .mobile-sidebar nav {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.25rem 0;
+        }
+        .mobile-sidebar nav button {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.65rem 0.75rem;
+            padding: 0.7rem 0.75rem;
             border-radius: 0.75rem;
             width: 100%;
-            white-space: nowrap;
             color: white !important;
             background: transparent;
             border: none;
@@ -408,44 +440,88 @@
             font-weight: 500;
             cursor: pointer;
             transition: background 0.15s;
+            text-align: left;
+            white-space: nowrap;
         }
-        .mobile-dropdown-menu nav button:hover {
+        .mobile-sidebar nav button i {
+            flex-shrink: 0;
+        }
+        .mobile-sidebar nav button span {
+            flex-grow: 1;
+        }
+        .mobile-sidebar nav button:hover {
             background: #FFBA09;
             color: #0f172a !important;
         }
-        .mobile-dropdown-menu nav button .tab-badge {
+        .mobile-sidebar nav button .tab-badge {
             margin-left: auto;
+            flex-shrink: 0;
         }
-        .mobile-dropdown-menu .dropdown-divider {
-            height: 1px;
-            background: rgba(255, 255, 255, 0.15);
-            margin: 0.5rem 0;
-        }
-        .mobile-dropdown-menu .dropdown-footer {
+        .mobile-sidebar .footer-actions {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
             margin-top: 0.5rem;
-            padding-top: 0.5rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
         }
-        .mobile-dropdown-menu .dropdown-footer button {
-            color: rgba(255, 255, 255, 0.8) !important;
-            font-size: 0.85rem;
-            padding: 0.5rem 0.75rem;
-            background: transparent;
-            border: none;
-            width: 100%;
-            text-align: left;
-            border-radius: 0.5rem;
+        .mobile-sidebar .footer-actions button {
             display: flex;
             align-items: center;
             gap: 0.75rem;
+            padding: 0.6rem 0.75rem;
+            border-radius: 0.75rem;
+            width: 100%;
+            color: rgba(255, 255, 255, 0.8) !important;
+            background: transparent;
+            border: none;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: background 0.15s;
+            text-align: left;
         }
-        .mobile-dropdown-menu .dropdown-footer button:hover {
-            background: rgba(255, 255, 255, 0.1);
+        .mobile-sidebar .footer-actions button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: white !important;
+        }
+        body.dark .mobile-sidebar {
+            background: #0f172a;
+        }
+        body.dark .mobile-sidebar nav button {
+            color: #e2e8f0 !important;
+        }
+        body.dark .mobile-sidebar nav button:hover {
+            background: #FFBA09;
+            color: #0f172a !important;
+        }
+        body.dark .mobile-sidebar .footer-actions button {
+            color: rgba(226, 232, 240, 0.8) !important;
+        }
+        body.dark .mobile-sidebar .footer-actions button:hover {
+            background: rgba(255, 255, 255, 0.06);
             color: white !important;
         }
 
+        /* Overlay */
+        .mobile-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            display: block !important;
+        }
+        .mobile-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Mobile header with burger */
         .mobile-header {
             position: relative;
             z-index: 10000;
@@ -457,6 +533,7 @@
             justify-content: space-between;
             gap: 0.75rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            display: none;
         }
         .mobile-header .brand {
             display: flex;
@@ -469,22 +546,19 @@
         .mobile-header .brand span {
             color: #FFBA09;
         }
-        .mobile-header .user-info {
+        .mobile-header .right-group {
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            color: white;
-            font-size: 0.85rem;
-            font-weight: 500;
         }
-        .mobile-header .user-info .avatar-small {
+        .mobile-header .right-group .avatar-small {
             width: 32px;
             height: 32px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid rgba(255, 255, 255, 0.3);
         }
-        .mobile-header .dropdown-toggle {
+        .mobile-header .burger-btn {
             background: rgba(255, 255, 255, 0.12);
             border: none;
             color: white;
@@ -493,16 +567,20 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 0.25rem;
-            font-size: 0.85rem;
+            justify-content: center;
             transition: background 0.15s;
+            font-size: 1.3rem;
+            line-height: 1;
         }
-        .mobile-header .dropdown-toggle:hover {
+        .mobile-header .burger-btn:hover {
             background: rgba(255, 255, 255, 0.2);
         }
-        .mobile-header .dropdown-toggle i {
-            width: 18px;
-            height: 18px;
+        .mobile-header .burger-btn i {
+            width: 20px;
+            height: 20px;
+        }
+        body.dark .mobile-header {
+            background: #0f172a;
         }
 
         .dashboard-filters select,
@@ -673,25 +751,20 @@
             transform: scale(1.2);
         }
 
-        body.dark .mobile-dropdown-menu {
-            background: #0f172a;
+        /* scrollable nav inside sidebar */
+        .mobile-sidebar nav::-webkit-scrollbar {
+            width: 3px;
         }
-        body.dark .mobile-dropdown-menu nav button {
-            color: #e2e8f0 !important;
+        .mobile-sidebar nav::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
         }
-        body.dark .mobile-dropdown-menu nav button:hover {
-            background: #FFBA09;
-            color: #0f172a !important;
+        .mobile-sidebar nav::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
         }
-        body.dark .mobile-dropdown-menu .dropdown-footer button {
-            color: rgba(226, 232, 240, 0.8) !important;
-        }
-        body.dark .mobile-dropdown-menu .dropdown-footer button:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: white !important;
-        }
-        body.dark .mobile-header {
-            background: #0f172a;
+        body.dark .mobile-sidebar nav::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.15);
         }
     </style>
 </head>
@@ -768,7 +841,7 @@
     <!-- MAIN APP -->
     <div id="mainApp" class="hidden app-container flex min-h-screen">
 
-        <!-- DESKTOP SIDEBAR -->
+        <!-- DESKTOP SIDEBAR (unchanged) -->
         <div class="desktop-sidebar w-64 bg-[#011F7B] sticky top-0 h-screen p-4 flex flex-col">
             <div class="mb-6"><h1 class="text-2xl font-bold text-white">EQUIPRIME<span class="text-yellow-400">HR</span></h1><p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p></div>
             <nav id="desktopNavMenu" class="flex flex-col gap-1 flex-1"></nav>
@@ -782,27 +855,34 @@
         <!-- MAIN CONTENT -->
         <div class="main-content flex-1 p-4 md:p-6 overflow-y-auto">
 
-            <!-- MOBILE HEADER with DROPDOWN TOGGLE (inline onclick added as fallback) -->
+            <!-- MOBILE HEADER with BURGER MENU (replaces dropdown) -->
             <div class="mobile-header items-center justify-between mb-4">
                 <div class="brand">EQUIPRIME<span>HR</span></div>
-                <div class="user-info">
-                    <span id="mobileUserName" class="hidden sm:inline">User</span>
+                <div class="right-group">
+                    <span id="mobileUserName" class="hidden sm:inline text-white text-sm font-medium">User</span>
                     <img id="mobileAvatarSmall" class="avatar-small" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User avatar" title="User avatar" />
-                    <button id="mobileDropdownToggle" class="dropdown-toggle" aria-label="Menu" title="Menu" onclick="toggleMobileDropdown(event)">
-                        <i data-feather="chevron-down"></i>
+                    <button id="mobileBurgerBtn" class="burger-btn" aria-label="Menu" title="Menu">
+                        <i data-feather="menu"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- MOBILE DROPDOWN MENU -->
-            <div id="mobileDropdownMenu" class="mobile-dropdown-menu">
+            <!-- MOBILE SIDEBAR (slide-out) -->
+            <div id="mobileSidebar" class="mobile-sidebar">
+                <button class="close-btn" id="mobileSidebarClose" aria-label="Close menu" title="Close menu">✕</button>
+                <div class="brand">
+                    <h1>EQUIPRIME<span>HR</span></h1>
+                    <p>smart choices · smarter results</p>
+                </div>
                 <nav id="mobileNavMenu" class="flex flex-col gap-0.5"></nav>
-                <div class="dropdown-divider"></div>
-                <div class="dropdown-footer">
-                    <button onclick="toggleNightMode(); closeMobileDropdown();" title="Night Mode"><i data-feather="moon"></i> Night Mode</button>
+                <div class="footer-actions">
+                    <button onclick="toggleNightMode(); closeMobileSidebar();" title="Night Mode"><i data-feather="moon"></i> Night Mode</button>
                     <button onclick="logout();" title="Logout"><i data-feather="log-out"></i> Logout</button>
                 </div>
             </div>
+
+            <!-- OVERLAY -->
+            <div id="mobileOverlay" class="mobile-overlay" onclick="closeMobileSidebar()"></div>
 
             <!-- DASHBOARD TAB -->
             <div id="dashboard-tab" class="tab-content">
@@ -958,7 +1038,7 @@
         </div><!-- /main-content -->
     </div><!-- /mainApp -->
 
-    <!-- MODALS with accessibility attributes (unchanged) -->
+    <!-- MODALS (unchanged) -->
     <div id="addEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-modal="true" aria-labelledby="addEmployeeTitle">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-4"><h3 id="addEmployeeTitle" class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" title="Close" aria-label="Close"><i data-feather="x"></i></button></div>
@@ -1138,7 +1218,6 @@
         let clockInProgress = false;
         let currentComputedPayroll = null;
 
-        // Helper function to safely set text content
         function setText(id, text) {
             const el = document.getElementById(id);
             if (el) el.innerText = text;
@@ -1420,51 +1499,32 @@
             feather.replace();
         }
 
-        // ===== MOBILE DROPDOWN TOGGLE (called from inline onclick and event listener) =====
-        function toggleMobileDropdown(e) {
-            if (e) e.stopPropagation();
-            const menu = document.getElementById('mobileDropdownMenu');
-            if (!menu) return;
-            menu.classList.toggle('open');
-            const btn = document.getElementById('mobileDropdownToggle');
-            if (!btn) return;
-            const icon = btn.querySelector('i');
-            if (icon) {
-                if (menu.classList.contains('open')) {
-                    icon.setAttribute('data-feather', 'chevron-up');
-                } else {
-                    icon.setAttribute('data-feather', 'chevron-down');
-                }
-                feather.replace();
-            }
+        // ===== MOBILE SIDEBAR TOGGLE =====
+        function openMobileSidebar() {
+            const sidebar = document.getElementById('mobileSidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            if (sidebar) sidebar.classList.add('open');
+            if (overlay) overlay.classList.add('active');
+            document.body.classList.add('overflow-hidden');
         }
 
-        function closeMobileDropdown() {
-            const menu = document.getElementById('mobileDropdownMenu');
-            if (menu) menu.classList.remove('open');
-            const btn = document.getElementById('mobileDropdownToggle');
-            if (!btn) return;
-            const icon = btn.querySelector('i');
-            if (icon) {
-                icon.setAttribute('data-feather', 'chevron-down');
-                feather.replace();
-            }
+        function closeMobileSidebar() {
+            const sidebar = document.getElementById('mobileSidebar');
+            const overlay = document.getElementById('mobileOverlay');
+            if (sidebar) sidebar.classList.remove('open');
+            if (overlay) overlay.classList.remove('active');
+            document.body.classList.remove('overflow-hidden');
         }
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            const menu = document.getElementById('mobileDropdownMenu');
-            const toggle = document.getElementById('mobileDropdownToggle');
-            if (!menu || !toggle) return;
-            if (!toggle.contains(e.target) && !menu.contains(e.target)) {
-                closeMobileDropdown();
-            }
+        // Close sidebar on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeMobileSidebar();
         });
 
-        // Override switchTab to close dropdown
+        // Override switchTab to close sidebar
         const origSwitchTab = window.switchTab || function() {};
         window.switchTab = function(tabName) {
-            closeMobileDropdown();
+            closeMobileSidebar();
             origSwitchTab(tabName);
         };
 
@@ -1492,7 +1552,7 @@
 
         // Main switchTab function
         function switchTab(tabName) {
-            closeMobileDropdown();
+            closeMobileSidebar();
             const allowed = ['dashboard', 'my-attendance', 'my-requests', 'payslip', 'helpdesk'];
             const isFull = fullPrivilegedEmails.includes(currentUser?.email) || currentUserRole === 'admin' ||
                 currentUserRole === 'hr' || currentUserRole === 'moderator';
@@ -2809,10 +2869,19 @@
         document.addEventListener('DOMContentLoaded', function() {
             if (localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark');
 
-            // Ensure toggle button also has event listener (inline onclick already present)
-            const toggleBtn = document.getElementById('mobileDropdownToggle');
-            if (toggleBtn) {
-                toggleBtn.addEventListener('click', toggleMobileDropdown);
+            // Burger button
+            const burgerBtn = document.getElementById('mobileBurgerBtn');
+            if (burgerBtn) {
+                burgerBtn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    openMobileSidebar();
+                });
+            }
+
+            // Close button inside sidebar
+            const closeBtn = document.getElementById('mobileSidebarClose');
+            if (closeBtn) {
+                closeBtn.addEventListener('click', closeMobileSidebar);
             }
 
             document.getElementById('loginBtnMain').addEventListener('click', loginWithEmail);
