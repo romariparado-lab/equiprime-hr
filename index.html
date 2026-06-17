@@ -960,7 +960,7 @@
         </div><!-- /main-content -->
     </div><!-- /mainApp -->
 
-    <!-- MODALS with accessibility attributes -->
+    <!-- MODALS with accessibility attributes (unchanged) -->
     <div id="addEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-modal="true" aria-labelledby="addEmployeeTitle">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-4"><h3 id="addEmployeeTitle" class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" title="Close" aria-label="Close"><i data-feather="x"></i></button></div>
@@ -1140,7 +1140,17 @@
         let clockInProgress = false;
         let currentComputedPayroll = null;
 
-        // Helper functions
+        // Helper function to safely set text content
+        function setText(id, text) {
+            const el = document.getElementById(id);
+            if (el) el.innerText = text;
+        }
+
+        function setHTML(id, html) {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = html;
+        }
+
         function isSystemAdmin(email) { return SYSTEM_ADMIN_EMAILS.includes(email); }
 
         function getDefaultExtendedFields() {
@@ -1273,14 +1283,14 @@
         function refreshDashboard() {
             if (!currentUser) return;
             const filtered = getFilteredEmployees();
-            document.getElementById('totalEmployees').innerText = filtered.length;
+            setText('totalEmployees', filtered.length);
             const today = new Date().toISOString().split('T')[0];
             let deptAtt = 0;
             if (currentFilter.department !== 'all') {
                 const names = filtered.map(e => e.name);
                 deptAtt = allAttendance.filter(a => a.date === today && names.includes(a.userName)).length;
             } else deptAtt = allAttendance.filter(a => a.date === today).length;
-            document.getElementById('deptAttendance').innerText = deptAtt;
+            setText('deptAttendance', deptAtt);
             let pendingCount = 0;
             if (currentUserRole === 'approver') pendingCount = allRequests.filter(r => r.approverEmail === currentUser
                 ?.email && r.status === "pending_secondary").length;
@@ -1289,8 +1299,9 @@
             else if (fullPrivilegedEmails.includes(currentUser.email)) pendingCount = allRequests.filter(r => r
                 .approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status ===
                 "pending_final")).length;
-            document.getElementById('pendingApprovals').innerText = pendingCount;
-            document.getElementById('myLeaveBalance').innerText = currentUserData?.leaveBalance || 15;
+            setText('pendingApprovals', pendingCount);
+            setText('myLeaveBalance', currentUserData?.leaveBalance || 15);
+
             const myReqs = allRequests.filter(r => r.userId === currentUser.uid).sort((a, b) => new Date(b.createdAt) -
                 new Date(a.createdAt)).slice(0, 5);
             const myRequestsList = document.getElementById('myRequestsList');
@@ -1337,17 +1348,21 @@
                 new Date(r.startDate) <= new Date(today) && new Date(r.endDate) >= new Date(today) && (r.type ===
                     'Sick Leave' || r.type === 'Vacation Leave' || r.type === 'Emergency Leave' || r.type ===
                     'Official Business')));
-            document.getElementById('loggedInCount').innerHTML = `(${loggedInEmps.length})`;
-            document.getElementById('loggedInList').innerHTML = loggedInEmps.map(a =>
+            setText('loggedInCount', `(${loggedInEmps.length})`);
+            const loggedInList = document.getElementById('loggedInList');
+            if (loggedInList) loggedInList.innerHTML = loggedInEmps.map(a =>
                 `<div class="login-status-item">${a.userName} - ${a.timeIn}</div>`).join('');
-            document.getElementById('missedCount').innerHTML = `(${missedEmps.length})`;
-            document.getElementById('missedList').innerHTML = missedEmps.map(e =>
+            setText('missedCount', `(${missedEmps.length})`);
+            const missedList = document.getElementById('missedList');
+            if (missedList) missedList.innerHTML = missedEmps.map(e =>
                 `<div class="login-status-item">${e.name}</div>`).join('');
-            document.getElementById('lateCountDashboard').innerHTML = `(${lateEmps.length})`;
-            document.getElementById('lateList').innerHTML = lateEmps.map(a =>
+            setText('lateCountDashboard', `(${lateEmps.length})`);
+            const lateList = document.getElementById('lateList');
+            if (lateList) lateList.innerHTML = lateEmps.map(a =>
                 `<div class="login-status-item">${a.userName} - ${a.timeIn}</div>`).join('');
-            document.getElementById('onLeaveCount').innerHTML = `(${onLeaveEmps.length})`;
-            document.getElementById('onLeaveList').innerHTML = onLeaveEmps.map(e =>
+            setText('onLeaveCount', `(${onLeaveEmps.length})`);
+            const onLeaveList = document.getElementById('onLeaveList');
+            if (onLeaveList) onLeaveList.innerHTML = onLeaveEmps.map(e =>
                 `<div class="login-status-item">${e.name}</div>`).join('');
             feather.replace();
             renderNavigation();
@@ -1400,8 +1415,10 @@
                     html +=
                     `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i><span>Pending Approval</span>${pendingBadge}</button>`;
             }
-            document.getElementById('desktopNavMenu').innerHTML = html;
-            document.getElementById('mobileNavMenu').innerHTML = html;
+            const desktopNav = document.getElementById('desktopNavMenu');
+            if (desktopNav) desktopNav.innerHTML = html;
+            const mobileNav = document.getElementById('mobileNavMenu');
+            if (mobileNav) mobileNav.innerHTML = html;
             feather.replace();
         }
 
@@ -1409,8 +1426,10 @@
         function toggleMobileDropdown(e) {
             e.stopPropagation();
             const menu = document.getElementById('mobileDropdownMenu');
+            if (!menu) return;
             menu.classList.toggle('open');
             const btn = document.getElementById('mobileDropdownToggle');
+            if (!btn) return;
             const icon = btn.querySelector('i');
             if (icon) {
                 if (menu.classList.contains('open')) {
@@ -1424,8 +1443,9 @@
 
         function closeMobileDropdown() {
             const menu = document.getElementById('mobileDropdownMenu');
-            menu.classList.remove('open');
+            if (menu) menu.classList.remove('open');
             const btn = document.getElementById('mobileDropdownToggle');
+            if (!btn) return;
             const icon = btn.querySelector('i');
             if (icon) {
                 icon.setAttribute('data-feather', 'chevron-down');
@@ -1483,7 +1503,8 @@
             if (target) target.classList.remove('hidden');
             if (tabName === 'payslip') refreshEmployeePayslip();
             if (tabName === 'hr-payslip') { refreshHrPayslip();
-                document.getElementById('payrollSummary').classList.add('hidden');
+                const summary = document.getElementById('payrollSummary');
+                if (summary) summary.classList.add('hidden');
                 closePayslipPreview(); }
             if (tabName === 'my-attendance') refreshMyAttendanceTab();
             if (tabName === 'attendance-summary') { populateYearDropdown();
@@ -1506,11 +1527,11 @@
             refreshDashboard();
         }
 
-        function openModal(id) { document.getElementById(id).classList.add('flex');
-            document.getElementById(id).classList.remove('hidden'); }
+        function openModal(id) { const el = document.getElementById(id); if (el) { el.classList.add('flex');
+                el.classList.remove('hidden'); } }
 
-        function closeModal(id) { document.getElementById(id).classList.add('hidden');
-            document.getElementById(id).classList.remove('flex'); }
+        function closeModal(id) { const el = document.getElementById(id); if (el) { el.classList.add('hidden');
+                el.classList.remove('flex'); } }
 
         function openNewRequestMenu() { openModal('newRequestMenuOverlay'); }
 
@@ -1844,10 +1865,13 @@
             const userAtt = allAttendance.filter(a => a.userId === currentUser?.uid).sort((a, b) => b.date.localeCompare(a
                 .date));
             const todayRec = userAtt.find(a => a.date === today);
-            document.getElementById('todayStatusIcon').innerHTML = todayRec?.timeIn ? '✅' : '⏰';
-            document.getElementById('todayStatusText').innerHTML = todayRec?.timeIn ? (todayRec.timeOut ? 'Completed' :
-                'Clocked In') : 'Not clocked in yet';
-            document.getElementById('todayTimeInfo').innerHTML = todayRec?.timeIn ?
+            const statusIcon = document.getElementById('todayStatusIcon');
+            if (statusIcon) statusIcon.innerHTML = todayRec?.timeIn ? '✅' : '⏰';
+            const statusText = document.getElementById('todayStatusText');
+            if (statusText) statusText.innerHTML = todayRec?.timeIn ? (todayRec.timeOut ? 'Completed' : 'Clocked In') :
+                'Not clocked in yet';
+            const timeInfo = document.getElementById('todayTimeInfo');
+            if (timeInfo) timeInfo.innerHTML = todayRec?.timeIn ?
                 `In: ${todayRec.timeIn} | Out: ${todayRec.timeOut||'--'} | Hours: ${todayRec.hoursWorked||'--'}` : '';
             const historyBody = document.getElementById('attendanceHistoryList');
             if (historyBody) {
@@ -2137,10 +2161,10 @@
             if (calendarGrid) calendarGrid.innerHTML =
                 `<div class="calendar-header bg-slate-200 dark:bg-slate-700 p-2 text-center font-bold rounded">Sun</div><div class="calendar-header bg-slate-200 dark:bg-slate-700 p-2 text-center font-bold rounded">Mon</div><div class="calendar-header bg-slate-200 dark:bg-slate-700 p-2 text-center font-bold rounded">Tue</div><div class="calendar-header bg-slate-200 dark:bg-slate-700 p-2 text-center font-bold rounded">Wed</div><div class="calendar-header bg-slate-200 dark:bg-slate-700 p-2 text-center font-bold rounded">Thu</div><div class="calendar-header bg-slate-200 dark:bg-slate-700 p-2 text-center font-bold rounded">Fri</div><div class="calendar-header bg-slate-200 dark:bg-slate-700 p-2 text-center font-bold rounded">Sat</div>` +
                 calendarHTML;
-            document.getElementById('completedCount').innerText = completed;
-            document.getElementById('lateCountSummary').innerText = late;
-            document.getElementById('missingCountSummary').innerText = incomplete;
-            document.getElementById('leaveCountSummary').innerText = leave;
+            setText('completedCount', completed);
+            setText('lateCountSummary', late);
+            setText('missingCountSummary', incomplete);
+            setText('leaveCountSummary', leave);
             const detailsRows = daysArray.filter(d => d).map(day => {
                 const attRecord = empAttendance.find(a => a.date === day.date);
                 const isLeave = empLeaves.some(l => new Date(l.startDate) <= new Date(day.date) && new Date(l
@@ -2307,10 +2331,11 @@
                 wtaxComputed;
             const netPay = grossPayCutoff - totalDeductions;
 
-            document.getElementById('grossPayDisplay').innerText = grossPayCutoff.toFixed(2);
-            document.getElementById('totalDeductionsDisplay').innerText = totalDeductions.toFixed(2);
-            document.getElementById('netPayDisplay').innerText = netPay.toFixed(2);
-            document.getElementById('payrollSummary').classList.remove('hidden');
+            setText('grossPayDisplay', grossPayCutoff.toFixed(2));
+            setText('totalDeductionsDisplay', totalDeductions.toFixed(2));
+            setText('netPayDisplay', netPay.toFixed(2));
+            const summary = document.getElementById('payrollSummary');
+            if (summary) summary.classList.remove('hidden');
 
             currentComputedPayroll = {
                 employeeId: document.getElementById('payslipEmployee').value,
@@ -2419,8 +2444,10 @@
                             <table class="payslip-table"><thead><tr><th>Deductions</th><th>Amount</th></tr></thead><tbody>${deductionRows.join('')}${netRow}</tbody></td>
                             <div class="signature-line">Certified True Copy<br>Signature</div>
                         </div>`;
-            document.getElementById('payslipPreviewContent').innerHTML = content;
-            document.getElementById('payslipPreviewContainer').classList.remove('hidden');
+            const previewContent = document.getElementById('payslipPreviewContent');
+            if (previewContent) previewContent.innerHTML = content;
+            const container = document.getElementById('payslipPreviewContainer');
+            if (container) container.classList.remove('hidden');
             window.currentInlinePayslip = p;
         }
 
@@ -2439,7 +2466,8 @@
             document.getElementById('sssMpf').value = '';
             document.getElementById('philhealthContribution').value = '';
             document.getElementById('pagibigContribution').value = '';
-            document.getElementById('payrollSummary').classList.add('hidden');
+            const summary = document.getElementById('payrollSummary');
+            if (summary) summary.classList.add('hidden');
             currentComputedPayroll = null;
         }
 
@@ -2461,11 +2489,13 @@
                 ).join('') || '<div>No payslips</div>';
         }
 
-        function closePayslipPreview() { document.getElementById('payslipPreviewContainer').classList.add('hidden'); }
+        function closePayslipPreview() { const el = document.getElementById('payslipPreviewContainer'); if (el) el.classList
+                .add('hidden'); }
 
         function downloadInlinePayslipPDF() {
             if (!window.currentInlinePayslip) return;
             const element = document.getElementById('payslipPreviewContent');
+            if (!element) return;
             const clone = element.cloneNode(true);
             clone.style.padding = '1rem';
             clone.style.backgroundColor = 'white';
@@ -2651,18 +2681,24 @@
                     currentUser = user;
                     document.getElementById('authScreen').style.display = 'none';
                     document.getElementById('mainApp').classList.remove('hidden');
-                    document.getElementById('welcomeName').innerText = currentUserData.name.split(' ')[0];
-                    document.getElementById('userName').innerText = currentUserData.name;
-                    document.getElementById('userInitials').innerText = currentUserData.name.split(' ').map(n => n[0])
+                    const welcomeName = document.getElementById('welcomeName');
+                    if (welcomeName) welcomeName.innerText = currentUserData.name.split(' ')[0];
+                    const userName = document.getElementById('userName');
+                    if (userName) userName.innerText = currentUserData.name;
+                    const userInitials = document.getElementById('userInitials');
+                    if (userInitials) userInitials.innerText = currentUserData.name.split(' ').map(n => n[0]).join('');
+                    const mobileUserInitials = document.getElementById('mobileUserInitials');
+                    if (mobileUserInitials) mobileUserInitials.innerText = currentUserData.name.split(' ').map(n => n[0])
                         .join('');
-                    document.getElementById('mobileUserInitials').innerText = currentUserData.name.split(' ').map(n =>
-                        n[0]).join('');
-                    document.getElementById('mobileUserName').innerText = currentUserData.name.split(' ')[0];
+                    const mobileUserName = document.getElementById('mobileUserName');
+                    if (mobileUserName) mobileUserName.innerText = currentUserData.name.split(' ')[0];
                     const displayRole = currentUserRole === 'admin' ? 'Administrator' : (currentUserRole ===
                         'supervisor' ? 'Supervisor' : (currentUserRole === 'manager' ? 'Manager' : (currentUserRole ===
                         'hr' ? 'HR Admin' : 'Employee')));
-                    document.getElementById('welcomeSubtitle').innerHTML = displayRole;
-                    document.getElementById('userRoleDisplay').innerText = displayRole;
+                    const welcomeSubtitle = document.getElementById('welcomeSubtitle');
+                    if (welcomeSubtitle) welcomeSubtitle.innerHTML = displayRole;
+                    const userRoleDisplay = document.getElementById('userRoleDisplay');
+                    if (userRoleDisplay) userRoleDisplay.innerText = displayRole;
                     renderNavigation();
                     await loadAllData();
                     await loadAnnouncements();
@@ -2818,19 +2854,25 @@
                         currentUser = user;
                         document.getElementById('authScreen').style.display = 'none';
                         document.getElementById('mainApp').classList.remove('hidden');
-                        document.getElementById('welcomeName').innerText = currentUserData.name.split(' ')[0];
-                        document.getElementById('userName').innerText = currentUserData.name;
-                        document.getElementById('userInitials').innerText = currentUserData.name.split(' ')
+                        const welcomeName = document.getElementById('welcomeName');
+                        if (welcomeName) welcomeName.innerText = currentUserData.name.split(' ')[0];
+                        const userName = document.getElementById('userName');
+                        if (userName) userName.innerText = currentUserData.name;
+                        const userInitials = document.getElementById('userInitials');
+                        if (userInitials) userInitials.innerText = currentUserData.name.split(' ').map(n => n[
+                            0]).join('');
+                        const mobileUserInitials = document.getElementById('mobileUserInitials');
+                        if (mobileUserInitials) mobileUserInitials.innerText = currentUserData.name.split(' ')
                             .map(n => n[0]).join('');
-                        document.getElementById('mobileUserInitials').innerText = currentUserData.name
-                            .split(' ').map(n => n[0]).join('');
-                        document.getElementById('mobileUserName').innerText = currentUserData.name.split(
-                            ' ')[0];
+                        const mobileUserName = document.getElementById('mobileUserName');
+                        if (mobileUserName) mobileUserName.innerText = currentUserData.name.split(' ')[0];
                         const displayRole = currentUserRole === 'admin' ? 'Administrator' : (currentUserRole ===
                             'supervisor' ? 'Supervisor' : (currentUserRole === 'manager' ? 'Manager' : (
                             currentUserRole === 'hr' ? 'HR Admin' : 'Employee')));
-                        document.getElementById('welcomeSubtitle').innerHTML = displayRole;
-                        document.getElementById('userRoleDisplay').innerText = displayRole;
+                        const welcomeSubtitle = document.getElementById('welcomeSubtitle');
+                        if (welcomeSubtitle) welcomeSubtitle.innerHTML = displayRole;
+                        const userRoleDisplay = document.getElementById('userRoleDisplay');
+                        if (userRoleDisplay) userRoleDisplay.innerText = displayRole;
                         renderNavigation();
                         await loadAllData();
                         await loadAnnouncements();
