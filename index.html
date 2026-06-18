@@ -105,7 +105,6 @@
             background: #FFBA09;
             color: #0f172a !important;
         }
-        /* Only show label when tab-active */
         .desktop-sidebar nav button.tab-active .tab-label {
             display: inline;
         }
@@ -132,7 +131,6 @@
             background: #0f172a;
         }
 
-        /* Sidebar footer: user initials + logout (icons only) */
         .desktop-sidebar .footer-actions {
             width: 100%;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
@@ -199,7 +197,6 @@
             color: rgba(255, 255, 255, 0.8);
         }
 
-        /* Tooltip on hover for icons */
         .desktop-sidebar nav button::after {
             content: attr(data-tip);
             position: absolute;
@@ -225,12 +222,10 @@
         .desktop-sidebar nav button:hover::after {
             opacity: 1;
         }
-        /* don't show tooltip for active tab (already has label) */
         .desktop-sidebar nav button.tab-active::after {
             display: none;
         }
 
-        /* tabs in mobile dropdown always show labels */
         .mobile-dropdown-menu nav button .tab-label {
             display: inline !important;
         }
@@ -238,7 +233,6 @@
             display: none !important;
         }
 
-        /* ===== TAB STYLES (unchanged) ===== */
         .tab-active {
             background-color: #011F7B;
             color: white !important;
@@ -541,30 +535,34 @@
             }
         }
 
-        /* ===== MOBILE DROPDOWN MENU ===== */
+        /* ===== MOBILE DROPDOWN MENU - FIXED ===== */
         .mobile-dropdown-menu {
             position: absolute;
-            top: 100%;
+            top: calc(100% + 4px);
             left: 0;
             right: 0;
             background: #011F7B;
             border-radius: 0 0 1.5rem 1.5rem;
             box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
             z-index: 9999;
-            max-height: 75vh;
+            max-height: 70vh;
             overflow-y: auto;
-            padding: 0.5rem 0.75rem 1rem;
+            padding: 0.75rem;
             display: none;
-            transition: opacity 0.2s ease;
         }
         .mobile-dropdown-menu.open {
             display: block;
+        }
+        .mobile-dropdown-menu nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
         }
         .mobile-dropdown-menu nav button {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.65rem 0.75rem;
+            padding: 0.7rem 0.75rem;
             border-radius: 0.75rem;
             width: 100%;
             color: white !important;
@@ -678,6 +676,7 @@
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
         }
         body.dark .mobile-header {
             background: #0f172a;
@@ -865,6 +864,21 @@
         body.dark .mobile-dropdown-menu nav::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.15);
         }
+
+        /* Fix for mobile dropdown - ensure proper containment */
+        .app-container {
+            position: relative;
+        }
+        .main-content {
+            position: relative;
+        }
+        .mobile-dropdown-menu {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -962,13 +976,14 @@
         <!-- MAIN CONTENT -->
         <div class="main-content flex-1 p-4 md:p-6 overflow-y-auto">
 
-            <!-- MOBILE HEADER (minimal: burger + avatar) -->
+            <!-- MOBILE HEADER (burger + avatar) -->
             <div class="mobile-header items-center justify-between mb-4">
                 <button id="mobileBurgerBtn" class="burger-btn" aria-label="Menu" title="Menu" onclick="toggleMobileDropdown(event)">
                     <i data-feather="menu"></i>
                 </button>
                 <div class="right-group">
-                    <img id="mobileAvatarSmall" class="avatar-small" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User avatar" title="User avatar" />
+                    <span id="mobileUserName" class="text-white text-sm font-medium mr-1">User</span>
+                    <img id="mobileAvatarSmall" class="avatar-small" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User avatar" title="User avatar" onclick="toggleProfileDropdown(event)" />
                 </div>
             </div>
 
@@ -982,7 +997,7 @@
                 </div>
             </div>
 
-            <!-- DASHBOARD TAB (with profile dropdown restored) -->
+            <!-- DASHBOARD TAB -->
             <div id="dashboard-tab" class="tab-content">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                     <div>
@@ -990,14 +1005,14 @@
                         <h2 class="text-3xl font-extrabold text-slate-800 dark:text-white">Welcome Back, <span id="welcomeName">User</span></h2>
                         <p class="text-slate-500 dark:text-slate-400" id="welcomeSubtitle"></p>
                     </div>
-                    <!-- Profile dropdown (restored) -->
+                    <!-- Profile dropdown (desktop) -->
                     <div class="profile-dropdown relative">
-                        <div class="profile-trigger cursor-pointer flex items-center gap-2 bg-white dark:bg-slate-800 p-2 rounded-full shadow">
+                        <div class="profile-trigger cursor-pointer flex items-center gap-2 bg-white dark:bg-slate-800 p-2 rounded-full shadow" onclick="toggleProfileDropdown(event)">
                             <img id="profileAvatarImg" class="avatar-img w-8 h-8 rounded-full object-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile avatar" title="Profile avatar" />
                             <span class="hidden sm:inline text-sm font-medium dark:text-white" id="profileName">User</span>
                             <i data-feather="chevron-down" class="w-4 h-4"></i>
                         </div>
-                        <div id="profileDropdown" class="profile-dropdown-content absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-lg hidden z-50 p-4">
+                        <div id="profileDropdown" class="profile-dropdown-content absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-lg hidden z-50 p-4" style="max-width: calc(100vw - 2rem); left: auto; right: 0;">
                             <div class="font-bold text-lg mb-2 border-b pb-2 dark:border-slate-600">My Profile</div>
                             <div class="flex flex-col items-center mb-3">
                                 <img id="profileAvatarLarge" class="avatar-large w-20 h-20 rounded-full object-cover mb-2" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230f172a'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile avatar large" title="Profile avatar large" />
@@ -1321,6 +1336,89 @@
         let clockInProgress = false;
         let currentComputedPayroll = null;
 
+        // ===== TOGGLE PROFILE DROPDOWN (both desktop and mobile) =====
+        function toggleProfileDropdown(event) {
+            if (event) event.stopPropagation();
+            const dropdown = document.getElementById('profileDropdown');
+            if (dropdown) {
+                dropdown.classList.toggle('hidden');
+                // Ensure it stays on screen on mobile
+                if (!dropdown.classList.contains('hidden')) {
+                    const rect = dropdown.getBoundingClientRect();
+                    if (rect.right > window.innerWidth) {
+                        dropdown.style.left = 'auto';
+                        dropdown.style.right = '0';
+                    }
+                    if (rect.left < 0) {
+                        dropdown.style.left = '0';
+                        dropdown.style.right = 'auto';
+                    }
+                }
+            }
+        }
+
+        // ===== TOGGLE MOBILE DROPDOWN (burger menu) =====
+        function toggleMobileDropdown(event) {
+            if (event) event.stopPropagation();
+            const menu = document.getElementById('mobileDropdownMenu');
+            if (!menu) return;
+            menu.classList.toggle('open');
+            const btn = document.getElementById('mobileBurgerBtn');
+            if (!btn) return;
+            const icon = btn.querySelector('i');
+            if (icon) {
+                if (menu.classList.contains('open')) {
+                    icon.setAttribute('data-feather', 'x');
+                } else {
+                    icon.setAttribute('data-feather', 'menu');
+                }
+                feather.replace();
+            }
+        }
+
+        function closeMobileDropdown() {
+            const menu = document.getElementById('mobileDropdownMenu');
+            if (menu) menu.classList.remove('open');
+            const btn = document.getElementById('mobileBurgerBtn');
+            if (!btn) return;
+            const icon = btn.querySelector('i');
+            if (icon) {
+                icon.setAttribute('data-feather', 'menu');
+                feather.replace();
+            }
+        }
+
+        // Close profile dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('profileDropdown');
+            const trigger = document.querySelector('.profile-trigger');
+            const mobileAvatar = document.getElementById('mobileAvatarSmall');
+            if (!dropdown) return;
+            const isTrigger = trigger && trigger.contains(e.target);
+            const isMobileAvatar = mobileAvatar && mobileAvatar.contains(e.target);
+            if (!isTrigger && !isMobileAvatar && !dropdown.contains(e.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Close mobile dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobileDropdownMenu');
+            const toggle = document.getElementById('mobileBurgerBtn');
+            if (!menu || !toggle) return;
+            if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+                closeMobileDropdown();
+            }
+        });
+
+        // Override switchTab to close dropdown
+        const origSwitchTab = window.switchTab || function() {};
+        window.switchTab = function(tabName) {
+            closeMobileDropdown();
+            origSwitchTab(tabName);
+        };
+
+        // ===== Helper functions (unchanged) =====
         function setText(id, text) {
             const el = document.getElementById(id);
             if (el) el.innerText = text;
@@ -1650,54 +1748,6 @@
             feather.replace();
         }
 
-        // ===== MOBILE DROPDOWN TOGGLE =====
-        function toggleMobileDropdown(e) {
-            if (e) e.stopPropagation();
-            const menu = document.getElementById('mobileDropdownMenu');
-            if (!menu) return;
-            menu.classList.toggle('open');
-            const btn = document.getElementById('mobileBurgerBtn');
-            if (!btn) return;
-            const icon = btn.querySelector('i');
-            if (icon) {
-                if (menu.classList.contains('open')) {
-                    icon.setAttribute('data-feather', 'x');
-                } else {
-                    icon.setAttribute('data-feather', 'menu');
-                }
-                feather.replace();
-            }
-        }
-
-        function closeMobileDropdown() {
-            const menu = document.getElementById('mobileDropdownMenu');
-            if (menu) menu.classList.remove('open');
-            const btn = document.getElementById('mobileBurgerBtn');
-            if (!btn) return;
-            const icon = btn.querySelector('i');
-            if (icon) {
-                icon.setAttribute('data-feather', 'menu');
-                feather.replace();
-            }
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            const menu = document.getElementById('mobileDropdownMenu');
-            const toggle = document.getElementById('mobileBurgerBtn');
-            if (!menu || !toggle) return;
-            if (!toggle.contains(e.target) && !menu.contains(e.target)) {
-                closeMobileDropdown();
-            }
-        });
-
-        // Override switchTab to close dropdown
-        const origSwitchTab = window.switchTab || function() {};
-        window.switchTab = function(tabName) {
-            closeMobileDropdown();
-            origSwitchTab(tabName);
-        };
-
         function updateMobileAvatar() {
             const img = document.getElementById('mobileAvatarSmall');
             if (img && currentUserData) {
@@ -1708,9 +1758,12 @@
                         "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
                 }
             }
+            const nameSpan = document.getElementById('mobileUserName');
+            if (nameSpan && currentUserData) {
+                nameSpan.textContent = currentUserData.name.split(' ')[0] || 'User';
+            }
         }
 
-        // update sidebar user
         function updateSidebarUser() {
             const initials = document.getElementById('userInitialsSidebar');
             const name = document.getElementById('userNameSidebar');
@@ -1722,7 +1775,6 @@
             }
         }
 
-        // Profile dropdown update (restored)
         function updateProfileDropdown() {
             if (!currentUserData) return;
             const container = document.getElementById('profileInfoContainer');
@@ -1733,7 +1785,6 @@
                 container.innerHTML =
                     `<div class="profile-info-item"><strong>Name:</strong> ${escapeHtml(emp.name)}</div><div class="profile-info-item"><strong>Position:</strong> ${escapeHtml(emp.role)}</div><div class="profile-info-item"><strong>Department:</strong> ${escapeHtml(emp.dept)}</div><div class="profile-info-item"><strong>Employee #:</strong> ${escapeHtml(emp.employeeNumber || 'N/A')}</div><div class="profile-info-item"><strong>Email:</strong> ${escapeHtml(emp.email)}</div><div class="profile-info-item"><strong>Date Hired:</strong> ${escapeHtml(emp.dateHired || 'N/A')}</div><div class="profile-info-item"><strong>Gender:</strong> ${escapeHtml(emp.gender || 'N/A')}</div><div class="profile-info-item"><strong>Civil Status:</strong> ${escapeHtml(emp.civilStatus || 'N/A')}</div><div class="profile-info-item"><strong>Phone:</strong> ${escapeHtml(emp.phone || 'N/A')}</div><div class="profile-info-item"><strong>Address:</strong> ${escapeHtml(emp.address || 'N/A')}</div><div class="profile-info-item"><strong>SSS:</strong> ${escapeHtml(emp.sssNumber || 'N/A')}</div><div class="profile-info-item"><strong>PhilHealth:</strong> ${escapeHtml(emp.philhealthNumber || 'N/A')}</div><div class="profile-info-item"><strong>Pag-IBIG:</strong> ${escapeHtml(emp.pagibigNumber || 'N/A')}</div>${emergencyHtml}<div class="profile-info-item"><strong>Leave Balance:</strong> ${emp.leaveBalance || 15} days</div>`;
             }
-            // update profile avatar
             const avatarImg = document.getElementById('profileAvatarImg');
             const avatarLarge = document.getElementById('profileAvatarLarge');
             if (avatarImg && currentUserData.photoURL && currentUserData.photoURL.startsWith('http')) {
@@ -1748,7 +1799,6 @@
                 avatarLarge.src =
                     "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230f172a'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
             }
-            // profile name
             const profileNameSpan = document.getElementById('profileName');
             if (profileNameSpan && currentUserData) {
                 profileNameSpan.innerText = currentUserData.name.split(' ')[0];
@@ -1780,12 +1830,10 @@
             if (tabName === 'helpdesk' || tabName === 'admin-helpdesk') refreshHelpdesk();
             if (tabName === 'employees') renderEmployeesTable();
 
-            // Update active class on desktop sidebar
             document.querySelectorAll('.desktop-sidebar nav button').forEach(b => b.classList.remove('tab-active'));
             const targetBtn = document.querySelector(`.desktop-sidebar nav button[data-tip="${tabName.charAt(0).toUpperCase() + tabName.slice(1).replace(/-/g, ' ')}"]`);
             if (targetBtn) targetBtn.classList.add('tab-active');
             else {
-                // fallback: find by onclick
                 document.querySelectorAll('.desktop-sidebar nav button').forEach(b => {
                     if (b.getAttribute('onclick') === `switchTab('${tabName}')`) {
                         b.classList.add('tab-active');
@@ -2443,8 +2491,7 @@
             if (detailsBody) detailsBody.innerHTML = detailsRows;
         }
 
-        // ==================== PAYROLL COMPUTATION ====================
-        // (unchanged, kept for completeness)
+        // ==================== PAYROLL COMPUTATION (unchanged) ====================
         const sssTable = [
             { minComp: 0, maxComp: 5249.99, msc: 5000, ee: 250, mpfEe: 0 },
             { minComp: 5250, maxComp: 5749.99, msc: 5500, ee: 275, mpfEe: 0 },
@@ -2966,10 +3013,8 @@
                     else resetContainer.innerHTML = "";
                     updateSidebarUser();
                     updateProfileDropdown();
-                    // Show dashboard without activating any tab
                     document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
                     document.getElementById('dashboard-tab').classList.remove('hidden');
-                    // Remove any active class from sidebar buttons
                     document.querySelectorAll('.desktop-sidebar nav button').forEach(b => b.classList.remove('tab-active'));
                 } else { await auth.signOut();
                     alert("Employee record not found."); }
@@ -3064,28 +3109,14 @@
                 "All data reset. Reloading...");
             location.reload(); };
 
-        // Initialize
+        // ==================== INITIALIZATION (FIXED) ====================
         document.addEventListener('DOMContentLoaded', function() {
             if (localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark');
 
-            // Burger button with inline onclick + extra listener for safety
-            const burgerBtn = document.getElementById('mobileBurgerBtn');
-            if (burgerBtn) {
-                burgerBtn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    toggleMobileDropdown(e);
-                });
-            }
+            // --- FIX: Removed duplicate event listeners for burger, mobile avatar, profile trigger ---
+            // (Inline onclick attributes are now the sole handlers)
 
-            // Profile dropdown toggle
-            document.addEventListener('click', function(event) {
-                const dropdown = document.getElementById('profileDropdown');
-                const trigger = document.querySelector('.profile-trigger');
-                if (!dropdown || !trigger) return;
-                if (trigger.contains(event.target)) dropdown.classList.toggle('hidden');
-                else if (!dropdown.contains(event.target)) dropdown.classList.add('hidden');
-            });
-
+            // All other event listeners remain as before
             document.getElementById('loginBtnMain').addEventListener('click', loginWithEmail);
             document.getElementById('showSignupBtnMain').addEventListener('click', showSignup);
             document.getElementById('signupBtnMain').addEventListener('click', signupWithEmail);
@@ -3156,7 +3187,6 @@
                         else resetContainer.innerHTML = "";
                         updateSidebarUser();
                         updateProfileDropdown();
-                        // Show dashboard without activating any tab
                         document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
                         document.getElementById('dashboard-tab').classList.remove('hidden');
                         document.querySelectorAll('.desktop-sidebar nav button').forEach(b => b.classList
