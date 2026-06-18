@@ -20,7 +20,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
     <style>
-        /* ===== ORIGINAL STYLES ===== */
+        /* ===== ORIGINAL STYLES (minimal) ===== */
         * {
             font-family: 'Inter', sans-serif;
         }
@@ -44,26 +44,200 @@
             backdrop-filter: blur(8px);
         }
 
+        /* SIDEBAR: icons only, active shows label */
+        .desktop-sidebar {
+            width: 64px;
+            background: #011F7B;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+            padding: 0.75rem 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
+            transition: width 0.2s ease;
+        }
+        .desktop-sidebar:hover {
+            width: 200px;
+        }
+        .desktop-sidebar nav {
+            width: 100%;
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
         .desktop-sidebar nav button {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.75rem 1rem;
+            padding: 0.65rem 0.75rem;
             border-radius: 0.75rem;
             width: 100%;
+            color: rgba(255, 255, 255, 0.7);
+            background: transparent;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
             white-space: nowrap;
             position: relative;
         }
         .desktop-sidebar nav button i {
             flex-shrink: 0;
+            font-size: 1.3rem;
+            width: 24px;
+            text-align: center;
         }
-        .desktop-sidebar nav button span {
-            flex-grow: 1;
-            text-align: left;
-            font-size: 0.9rem;
+        .desktop-sidebar nav button .tab-label {
+            display: none;
+            font-size: 0.85rem;
             font-weight: 500;
         }
+        .desktop-sidebar nav button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+        .desktop-sidebar nav button.tab-active {
+            background: #FFBA09;
+            color: #0f172a !important;
+        }
+        .desktop-sidebar nav button.tab-active .tab-label {
+            display: inline;
+        }
+        .desktop-sidebar nav button .tab-badge {
+            background-color: #ef4444;
+            color: white;
+            font-size: 0.6rem;
+            font-weight: bold;
+            padding: 0.1rem 0.4rem;
+            border-radius: 9999px;
+            margin-left: auto;
+        }
+        body.dark .desktop-sidebar nav button.tab-active {
+            background: #FFBA09;
+            color: #0f172a !important;
+        }
+        body.dark .desktop-sidebar nav button {
+            color: rgba(226, 232, 240, 0.7);
+        }
+        body.dark .desktop-sidebar nav button:hover {
+            color: white;
+        }
+        body.dark .desktop-sidebar {
+            background: #0f172a;
+        }
 
+        /* Sidebar footer: user initials + logout (icons only) */
+        .desktop-sidebar .footer-actions {
+            width: 100%;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 0.75rem;
+            margin-top: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .desktop-sidebar .footer-actions .user-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #FFBA09;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+        .desktop-sidebar .footer-actions button {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.75rem;
+            width: 100%;
+            color: rgba(255, 255, 255, 0.6);
+            background: transparent;
+            border: none;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s;
+            white-space: nowrap;
+        }
+        .desktop-sidebar .footer-actions button i {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .desktop-sidebar .footer-actions button .action-label {
+            display: none;
+        }
+        .desktop-sidebar .footer-actions button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+        .desktop-sidebar:hover .footer-actions button .action-label,
+        .desktop-sidebar:hover .footer-actions .user-name {
+            display: inline;
+        }
+        .desktop-sidebar:hover .footer-actions .user-icon {
+            width: 32px;
+            height: 32px;
+            font-size: 0.8rem;
+        }
+        .desktop-sidebar .footer-actions .user-name {
+            display: none;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Tooltip on hover for icons */
+        .desktop-sidebar nav button::after {
+            content: attr(data-tip);
+            position: absolute;
+            left: calc(100% + 10px);
+            top: 50%;
+            transform: translateY(-50%);
+            background: #0f172a;
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 0.4rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.15s ease;
+            z-index: 100;
+        }
+        body.dark .desktop-sidebar nav button::after {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
+        .desktop-sidebar nav button:hover::after {
+            opacity: 1;
+        }
+        /* don't show tooltip for active tab (already has label) */
+        .desktop-sidebar nav button.tab-active::after {
+            display: none;
+        }
+
+        /* tabs in mobile dropdown always show labels */
+        .mobile-dropdown-menu nav button .tab-label {
+            display: inline !important;
+        }
+        .mobile-dropdown-menu nav button::after {
+            display: none !important;
+        }
+
+        /* ===== TAB STYLES (unchanged) ===== */
         .tab-active {
             background-color: #011F7B;
             color: white !important;
@@ -356,8 +530,7 @@
         }
         @media (min-width: 1024px) {
             .mobile-header,
-            .mobile-sidebar,
-            .mobile-overlay {
+            .mobile-dropdown-menu {
                 display: none !important;
             }
         }
@@ -367,70 +540,30 @@
             }
         }
 
-        /* ===== MOBILE SIDEBAR (slide-out) ===== */
-        .mobile-sidebar {
-            position: fixed;
-            top: 0;
+        /* ===== MOBILE DROPDOWN MENU ===== */
+        .mobile-dropdown-menu {
+            position: absolute;
+            top: 100%;
             left: 0;
-            width: 280px;
-            height: 100%;
+            right: 0;
             background: #011F7B;
+            border-radius: 0 0 1.5rem 1.5rem;
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
             z-index: 9999;
+            max-height: 75vh;
             overflow-y: auto;
-            transform: translateX(-100%);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 1rem 0.75rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3);
+            padding: 0.5rem 0.75rem 1rem;
+            display: none;
+            transition: opacity 0.2s ease;
         }
-        .mobile-sidebar.open {
-            transform: translateX(0);
+        .mobile-dropdown-menu.open {
+            display: block;
         }
-        .mobile-sidebar .close-btn {
-            align-self: flex-end;
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: white;
-            padding: 0.4rem 0.6rem;
-            border-radius: 0.75rem;
-            cursor: pointer;
-            font-size: 1.2rem;
-            line-height: 1;
-            transition: background 0.15s;
-            margin-bottom: 0.5rem;
-        }
-        .mobile-sidebar .close-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        .mobile-sidebar .brand {
-            padding: 0 0.5rem 1rem 0.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 1rem;
-        }
-        .mobile-sidebar .brand h1 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-        }
-        .mobile-sidebar .brand h1 span {
-            color: #FFBA09;
-        }
-        .mobile-sidebar .brand p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.7rem;
-            margin-top: 0.1rem;
-        }
-        .mobile-sidebar nav {
-            flex: 1;
-            overflow-y: auto;
-            padding: 0.25rem 0;
-        }
-        .mobile-sidebar nav button {
+        .mobile-dropdown-menu nav button {
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.7rem 0.75rem;
+            padding: 0.65rem 0.75rem;
             border-radius: 0.75rem;
             width: 100%;
             color: white !important;
@@ -440,93 +573,70 @@
             font-weight: 500;
             cursor: pointer;
             transition: background 0.15s;
-            text-align: left;
-            white-space: nowrap;
         }
-        .mobile-sidebar nav button i {
-            flex-shrink: 0;
-        }
-        .mobile-sidebar nav button span {
-            flex-grow: 1;
-        }
-        .mobile-sidebar nav button:hover {
+        .mobile-dropdown-menu nav button:hover {
             background: #FFBA09;
             color: #0f172a !important;
         }
-        .mobile-sidebar nav button .tab-badge {
+        .mobile-dropdown-menu nav button .tab-badge {
             margin-left: auto;
-            flex-shrink: 0;
         }
-        .mobile-sidebar .footer-actions {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 1rem;
+        .mobile-dropdown-menu nav button .tab-label {
+            display: inline !important;
+        }
+        .mobile-dropdown-menu .dropdown-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.15);
+            margin: 0.5rem 0;
+        }
+        .mobile-dropdown-menu .dropdown-footer {
             margin-top: 0.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.4rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
         }
-        .mobile-sidebar .footer-actions button {
+        .mobile-dropdown-menu .dropdown-footer button {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-size: 0.85rem;
+            padding: 0.5rem 0.75rem;
+            background: transparent;
+            border: none;
+            width: 100%;
+            text-align: left;
+            border-radius: 0.5rem;
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            padding: 0.6rem 0.75rem;
-            border-radius: 0.75rem;
-            width: 100%;
-            color: rgba(255, 255, 255, 0.8) !important;
-            background: transparent;
-            border: none;
-            font-size: 0.85rem;
             cursor: pointer;
             transition: background 0.15s;
-            text-align: left;
         }
-        .mobile-sidebar .footer-actions button:hover {
-            background: rgba(255, 255, 255, 0.08);
+        .mobile-dropdown-menu .dropdown-footer button:hover {
+            background: rgba(255, 255, 255, 0.1);
             color: white !important;
         }
-        body.dark .mobile-sidebar {
+        body.dark .mobile-dropdown-menu {
             background: #0f172a;
         }
-        body.dark .mobile-sidebar nav button {
+        body.dark .mobile-dropdown-menu nav button {
             color: #e2e8f0 !important;
         }
-        body.dark .mobile-sidebar nav button:hover {
+        body.dark .mobile-dropdown-menu nav button:hover {
             background: #FFBA09;
             color: #0f172a !important;
         }
-        body.dark .mobile-sidebar .footer-actions button {
+        body.dark .mobile-dropdown-menu .dropdown-footer button {
             color: rgba(226, 232, 240, 0.8) !important;
         }
-        body.dark .mobile-sidebar .footer-actions button:hover {
-            background: rgba(255, 255, 255, 0.06);
+        body.dark .mobile-dropdown-menu .dropdown-footer button:hover {
+            background: rgba(255, 255, 255, 0.08);
             color: white !important;
         }
 
-        /* Overlay */
-        .mobile-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 9998;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            display: block !important;
-        }
-        .mobile-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Mobile header with burger */
+        /* Mobile header – minimal (only burger + avatar) */
         .mobile-header {
             position: relative;
             z-index: 10000;
             background: #011F7B;
-            padding: 0.75rem 1rem;
+            padding: 0.6rem 1rem;
             border-radius: 0 0 1.5rem 1.5rem;
             display: flex;
             align-items: center;
@@ -534,29 +644,6 @@
             gap: 0.75rem;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             display: none;
-        }
-        .mobile-header .brand {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: white;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-        .mobile-header .brand span {
-            color: #FFBA09;
-        }
-        .mobile-header .right-group {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .mobile-header .right-group .avatar-small {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.3);
         }
         .mobile-header .burger-btn {
             background: rgba(255, 255, 255, 0.12);
@@ -576,8 +663,20 @@
             background: rgba(255, 255, 255, 0.2);
         }
         .mobile-header .burger-btn i {
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
+        }
+        .mobile-header .right-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .mobile-header .right-group .avatar-small {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
         body.dark .mobile-header {
             background: #0f172a;
@@ -751,19 +850,18 @@
             transform: scale(1.2);
         }
 
-        /* scrollable nav inside sidebar */
-        .mobile-sidebar nav::-webkit-scrollbar {
+        .mobile-dropdown-menu nav::-webkit-scrollbar {
             width: 3px;
         }
-        .mobile-sidebar nav::-webkit-scrollbar-track {
+        .mobile-dropdown-menu nav::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
         }
-        .mobile-sidebar nav::-webkit-scrollbar-thumb {
+        .mobile-dropdown-menu nav::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
         }
-        body.dark .mobile-sidebar nav::-webkit-scrollbar-thumb {
+        body.dark .mobile-dropdown-menu nav::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, 0.15);
         }
     </style>
@@ -841,71 +939,57 @@
     <!-- MAIN APP -->
     <div id="mainApp" class="hidden app-container flex min-h-screen">
 
-        <!-- DESKTOP SIDEBAR (unchanged) -->
-        <div class="desktop-sidebar w-64 bg-[#011F7B] sticky top-0 h-screen p-4 flex flex-col">
-            <div class="mb-6"><h1 class="text-2xl font-bold text-white">EQUIPRIME<span class="text-yellow-400">HR</span></h1><p class="text-slate-300 text-xs mt-1">smart choices · smarter results</p></div>
+        <!-- DESKTOP SIDEBAR (ICONS ONLY) -->
+        <div class="desktop-sidebar">
             <nav id="desktopNavMenu" class="flex flex-col gap-1 flex-1"></nav>
-            <div class="pt-6 border-t border-white/20 mt-auto">
-                <div class="flex items-center gap-3 mb-4"><div class="w-10 h-10 rounded-full bg-yellow-400 text-slate-800 flex items-center justify-center font-bold" id="userInitials">HR</div><div><p class="font-semibold text-sm text-white" id="userName">User</p><p class="text-xs text-slate-300" id="userRoleDisplay"></p></div></div>
-                <button onclick="toggleNightMode()" title="Toggle Night Mode" class="w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm py-2"><i data-feather="moon"></i> Night Mode</button>
-                <button onclick="logout()" title="Logout" class="w-full flex items-center justify-center gap-2 text-white/80 hover:text-white text-sm py-2"><i data-feather="log-out"></i> Logout</button>
+            <div class="footer-actions">
+                <div class="flex items-center gap-2 w-full px-2">
+                    <div class="user-icon" id="userInitialsSidebar">HR</div>
+                    <span class="user-name" id="userNameSidebar">User</span>
+                </div>
+                <button onclick="toggleNightMode()" title="Night Mode" data-tip="Night Mode">
+                    <i data-feather="moon"></i>
+                    <span class="action-label">Night Mode</span>
+                </button>
+                <button onclick="logout()" title="Logout" data-tip="Logout">
+                    <i data-feather="log-out"></i>
+                    <span class="action-label">Logout</span>
+                </button>
             </div>
         </div>
 
         <!-- MAIN CONTENT -->
         <div class="main-content flex-1 p-4 md:p-6 overflow-y-auto">
 
-            <!-- MOBILE HEADER with BURGER MENU (inline onclick added) -->
+            <!-- MOBILE HEADER (minimal: burger + avatar) -->
             <div class="mobile-header items-center justify-between mb-4">
-                <div class="brand">EQUIPRIME<span>HR</span></div>
+                <button id="mobileBurgerBtn" class="burger-btn" aria-label="Menu" title="Menu" onclick="toggleMobileDropdown(event)">
+                    <i data-feather="menu"></i>
+                </button>
                 <div class="right-group">
-                    <span id="mobileUserName" class="hidden sm:inline text-white text-sm font-medium">User</span>
                     <img id="mobileAvatarSmall" class="avatar-small" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User avatar" title="User avatar" />
-                    <button id="mobileBurgerBtn" class="burger-btn" aria-label="Menu" title="Menu" onclick="openMobileSidebar()">
-                        <i data-feather="menu"></i>
-                    </button>
                 </div>
             </div>
 
-            <!-- MOBILE SIDEBAR (slide-out) -->
-            <div id="mobileSidebar" class="mobile-sidebar">
-                <button class="close-btn" id="mobileSidebarClose" aria-label="Close menu" title="Close menu" onclick="closeMobileSidebar()">✕</button>
-                <div class="brand">
-                    <h1>EQUIPRIME<span>HR</span></h1>
-                    <p>smart choices · smarter results</p>
-                </div>
+            <!-- MOBILE DROPDOWN MENU -->
+            <div id="mobileDropdownMenu" class="mobile-dropdown-menu">
                 <nav id="mobileNavMenu" class="flex flex-col gap-0.5"></nav>
-                <div class="footer-actions">
-                    <button onclick="toggleNightMode(); closeMobileSidebar();" title="Night Mode"><i data-feather="moon"></i> Night Mode</button>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-footer">
+                    <button onclick="toggleNightMode(); closeMobileDropdown();" title="Night Mode"><i data-feather="moon"></i> Night Mode</button>
                     <button onclick="logout();" title="Logout"><i data-feather="log-out"></i> Logout</button>
                 </div>
             </div>
 
-            <!-- OVERLAY -->
-            <div id="mobileOverlay" class="mobile-overlay" onclick="closeMobileSidebar()"></div>
-
-            <!-- DASHBOARD TAB -->
+            <!-- DASHBOARD TAB (title moved here) -->
             <div id="dashboard-tab" class="tab-content">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-                    <div><h2 class="text-3xl font-extrabold text-yellow-600 dark:text-yellow-400">Welcome Back, <span id="welcomeName">User</span></h2><p class="text-slate-500 dark:text-slate-400" id="welcomeSubtitle"></p></div>
-                    <div class="profile-dropdown relative">
-                        <div class="profile-trigger cursor-pointer flex items-center gap-2 bg-white dark:bg-slate-800 p-2 rounded-full shadow">
-                            <img id="profileAvatarImg" class="avatar-img w-8 h-8 rounded-full object-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile avatar" title="Profile avatar" />
-                            <span class="hidden sm:inline text-sm font-medium dark:text-white" id="profileName">User</span>
-                            <i data-feather="chevron-down" class="w-4 h-4"></i>
-                        </div>
-                        <div id="profileDropdown" class="profile-dropdown-content absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-lg hidden z-50 p-4">
-                            <div class="font-bold text-lg mb-2 border-b pb-2 dark:border-slate-600">My Profile</div>
-                            <div class="flex flex-col items-center mb-3">
-                                <img id="profileAvatarLarge" class="avatar-large w-20 h-20 rounded-full object-cover mb-2" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230f172a'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile avatar large" title="Profile avatar large" />
-                                <input type="file" id="avatarUpload" accept="image/*" class="text-xs" title="Upload avatar" aria-label="Upload avatar" />
-                                <button onclick="uploadAvatar()" title="Upload avatar" class="mt-1 text-xs bg-blue-600 text-white px-3 py-1 rounded">Upload</button>
-                            </div>
-                            <div id="profileInfoContainer"></div>
-                            <hr class="my-2 dark:border-slate-600" />
-                            <button onclick="logout()" title="Logout" class="w-full text-left text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 p-2 rounded-lg flex items-center gap-2"><i data-feather="log-out" class="w-4 h-4"></i> Logout</button>
-                        </div>
+                    <div>
+                        <h1 class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">EQUIPRIME<span class="text-blue-600 dark:text-blue-400">HR</span></h1>
+                        <h2 class="text-3xl font-extrabold text-slate-800 dark:text-white">Welcome Back, <span id="welcomeName">User</span></h2>
+                        <p class="text-slate-500 dark:text-slate-400" id="welcomeSubtitle"></p>
                     </div>
+                    <!-- Profile dropdown removed -->
                 </div>
                 <div class="dashboard-filters grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                     <select id="dashboardFilterDepartment" title="Filter by Department" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white" onchange="applyFilters()" aria-label="Filter by Department">
@@ -1445,7 +1529,7 @@
             renderNavigation();
         }
 
-        // Navigation
+        // Navigation – ICONS ONLY on desktop, active shows label, tooltip on hover
         function renderNavigation() {
             const isFull = fullPrivilegedEmails.includes(currentUser?.email) || currentUserRole === 'admin' ||
                 currentUserRole === 'hr' || currentUserRole === 'moderator';
@@ -1468,29 +1552,77 @@
             const allRequestsBadge = allRequestsPendingCount > 0 ?
                 `<span class="tab-badge">${allRequestsPendingCount}</span>` : '';
 
-            let html =
-                `<button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="home"></i><span>Dashboard</span></button>
-                <button onclick="switchTab('my-attendance')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i><span>My Attendance</span></button>
-                <button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i><span>My Request</span></button>`;
-            if (canAccessEmployees) html +=
-                `<button onclick="switchTab('employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="users"></i><span>Employees</span></button>`;
+            let html = `
+                <button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Dashboard">
+                    <i data-feather="home"></i>
+                    <span class="tab-label">Dashboard</span>
+                </button>
+                <button onclick="switchTab('my-attendance')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="My Attendance">
+                    <i data-feather="clock"></i>
+                    <span class="tab-label">My Attendance</span>
+                </button>
+                <button onclick="switchTab('my-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="My Request">
+                    <i data-feather="file-text"></i>
+                    <span class="tab-label">My Request</span>
+                </button>`;
+            if (canAccessEmployees) {
+                html += `
+                <button onclick="switchTab('employees')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Employees">
+                    <i data-feather="users"></i>
+                    <span class="tab-label">Employees</span>
+                </button>`;
+            }
             if (isFull) {
-                html +=
-                    `<button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clipboard"></i><span>All Requests</span>${allRequestsBadge}</button>
-                 <button onclick="switchTab('attendance-summary')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="bar-chart-2"></i><span>Attendance Summary</span></button>
-                 <button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i><span>Pending Approval</span>${pendingBadge}</button>
-                 <button onclick="switchTab('hr-guard-schedule')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="calendar"></i><span>Guard Schedule</span></button>
-                 <button onclick="switchTab('payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i><span>My Payslip</span></button>
-                 <button onclick="switchTab('hr-payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i><span>Payslip Management</span></button>
-                 <button onclick="switchTab('admin-helpdesk')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="shield"></i><span>Admin Helpdesk</span></button>
-                 <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="settings"></i><span>Settings</span></button>`;
+                html += `
+                <button onclick="switchTab('hr-requests')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="All Requests">
+                    <i data-feather="clipboard"></i>
+                    <span class="tab-label">All Requests</span>${allRequestsBadge}
+                </button>
+                <button onclick="switchTab('attendance-summary')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Attendance Summary">
+                    <i data-feather="bar-chart-2"></i>
+                    <span class="tab-label">Attendance Summary</span>
+                </button>
+                <button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Pending Approval">
+                    <i data-feather="clock"></i>
+                    <span class="tab-label">Pending Approval</span>${pendingBadge}
+                </button>
+                <button onclick="switchTab('hr-guard-schedule')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Guard Schedule">
+                    <i data-feather="calendar"></i>
+                    <span class="tab-label">Guard Schedule</span>
+                </button>
+                <button onclick="switchTab('payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="My Payslip">
+                    <i data-feather="file-text"></i>
+                    <span class="tab-label">My Payslip</span>
+                </button>
+                <button onclick="switchTab('hr-payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Payslip Management">
+                    <i data-feather="file-text"></i>
+                    <span class="tab-label">Payslip Management</span>
+                </button>
+                <button onclick="switchTab('admin-helpdesk')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Admin Helpdesk">
+                    <i data-feather="shield"></i>
+                    <span class="tab-label">Admin Helpdesk</span>
+                </button>
+                <button onclick="switchTab('hr-settings')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Settings">
+                    <i data-feather="settings"></i>
+                    <span class="tab-label">Settings</span>
+                </button>`;
             } else {
-                html +=
-                    `<button onclick="switchTab('payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="file-text"></i><span>My Payslip</span></button>
-                 <button onclick="switchTab('helpdesk')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="help-circle"></i><span>HR Helpdesk</span></button>`;
-                if (currentUserRole === 'approver' || currentUserRole === 'supervisor' || currentUserRole === 'manager')
-                    html +=
-                    `<button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl"><i data-feather="clock"></i><span>Pending Approval</span>${pendingBadge}</button>`;
+                html += `
+                <button onclick="switchTab('payslip')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="My Payslip">
+                    <i data-feather="file-text"></i>
+                    <span class="tab-label">My Payslip</span>
+                </button>
+                <button onclick="switchTab('helpdesk')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="HR Helpdesk">
+                    <i data-feather="help-circle"></i>
+                    <span class="tab-label">HR Helpdesk</span>
+                </button>`;
+                if (currentUserRole === 'approver' || currentUserRole === 'supervisor' || currentUserRole === 'manager') {
+                    html += `
+                <button onclick="switchTab('approvals')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Pending Approval">
+                    <i data-feather="clock"></i>
+                    <span class="tab-label">Pending Approval</span>${pendingBadge}
+                </button>`;
+                }
             }
             const desktopNav = document.getElementById('desktopNavMenu');
             if (desktopNav) desktopNav.innerHTML = html;
@@ -1499,32 +1631,51 @@
             feather.replace();
         }
 
-        // ===== MOBILE SIDEBAR TOGGLE =====
-        function openMobileSidebar() {
-            const sidebar = document.getElementById('mobileSidebar');
-            const overlay = document.getElementById('mobileOverlay');
-            if (sidebar) sidebar.classList.add('open');
-            if (overlay) overlay.classList.add('active');
-            document.body.classList.add('overflow-hidden');
+        // ===== MOBILE DROPDOWN TOGGLE =====
+        function toggleMobileDropdown(e) {
+            if (e) e.stopPropagation();
+            const menu = document.getElementById('mobileDropdownMenu');
+            if (!menu) return;
+            menu.classList.toggle('open');
+            const btn = document.getElementById('mobileBurgerBtn');
+            if (!btn) return;
+            const icon = btn.querySelector('i');
+            if (icon) {
+                if (menu.classList.contains('open')) {
+                    icon.setAttribute('data-feather', 'x');
+                } else {
+                    icon.setAttribute('data-feather', 'menu');
+                }
+                feather.replace();
+            }
         }
 
-        function closeMobileSidebar() {
-            const sidebar = document.getElementById('mobileSidebar');
-            const overlay = document.getElementById('mobileOverlay');
-            if (sidebar) sidebar.classList.remove('open');
-            if (overlay) overlay.classList.remove('active');
-            document.body.classList.remove('overflow-hidden');
+        function closeMobileDropdown() {
+            const menu = document.getElementById('mobileDropdownMenu');
+            if (menu) menu.classList.remove('open');
+            const btn = document.getElementById('mobileBurgerBtn');
+            if (!btn) return;
+            const icon = btn.querySelector('i');
+            if (icon) {
+                icon.setAttribute('data-feather', 'menu');
+                feather.replace();
+            }
         }
 
-        // Close sidebar on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeMobileSidebar();
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const menu = document.getElementById('mobileDropdownMenu');
+            const toggle = document.getElementById('mobileBurgerBtn');
+            if (!menu || !toggle) return;
+            if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+                closeMobileDropdown();
+            }
         });
 
-        // Override switchTab to close sidebar
+        // Override switchTab to close dropdown
         const origSwitchTab = window.switchTab || function() {};
         window.switchTab = function(tabName) {
-            closeMobileSidebar();
+            closeMobileDropdown();
             origSwitchTab(tabName);
         };
 
@@ -1538,9 +1689,17 @@
                         "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
                 }
             }
-            const nameSpan = document.getElementById('mobileUserName');
-            if (nameSpan && currentUserData) {
-                nameSpan.textContent = currentUserData.name.split(' ')[0] || 'User';
+        }
+
+        // update sidebar user
+        function updateSidebarUser() {
+            const initials = document.getElementById('userInitialsSidebar');
+            const name = document.getElementById('userNameSidebar');
+            if (initials && currentUserData) {
+                initials.textContent = currentUserData.name.split(' ').map(n => n[0]).join('');
+            }
+            if (name && currentUserData) {
+                name.textContent = currentUserData.name;
             }
         }
 
@@ -1548,11 +1707,12 @@
         window.updateProfileDropdown = function() {
             origUpdateProfile();
             updateMobileAvatar();
+            updateSidebarUser();
         };
 
         // Main switchTab function
         function switchTab(tabName) {
-            closeMobileSidebar();
+            closeMobileDropdown();
             const allowed = ['dashboard', 'my-attendance', 'my-requests', 'payslip', 'helpdesk'];
             const isFull = fullPrivilegedEmails.includes(currentUser?.email) || currentUserRole === 'admin' ||
                 currentUserRole === 'hr' || currentUserRole === 'moderator';
@@ -1572,6 +1732,18 @@
                 loadEmployeeListForSummary(); }
             if (tabName === 'helpdesk' || tabName === 'admin-helpdesk') refreshHelpdesk();
             if (tabName === 'employees') renderEmployeesTable();
+            // update active class in sidebar
+            document.querySelectorAll('.desktop-sidebar nav button').forEach(b => b.classList.remove('tab-active'));
+            const activeBtn = document.querySelector(`.desktop-sidebar nav button[data-tip="${document.querySelector(`#${tabName}-tab`)?.querySelector('h2')?.textContent || tabName}"]`);
+            if (activeBtn) activeBtn.classList.add('tab-active');
+            else {
+                // fallback: find by onclick
+                document.querySelectorAll('.desktop-sidebar nav button').forEach(b => {
+                    if (b.getAttribute('onclick') === `switchTab('${tabName}')`) {
+                        b.classList.add('tab-active');
+                    }
+                });
+            }
         }
 
         function applyFilters() {
@@ -1634,29 +1806,9 @@
 
         function updateProfileDropdown() {
             if (!currentUserData) return;
-            const container = document.getElementById('profileInfoContainer');
-            if (!container) return;
-            const emp = currentUserData;
-            const emergencyHtml =
-                `<div class="font-semibold mt-2 mb-1">Emergency Contact:</div><div class="profile-info-item"><strong>Name:</strong> ${escapeHtml(emp.emergencyContactName || 'N/A')}</div><div class="profile-info-item"><strong>Relationship:</strong> ${escapeHtml(emp.emergencyContactRelationship || 'N/A')}</div><div class="profile-info-item"><strong>Contact Number:</strong> ${escapeHtml(emp.emergencyContactNumber || 'N/A')}</div><div class="profile-info-item"><strong>Address:</strong> ${escapeHtml(emp.emergencyContactAddress || 'N/A')}</div>`;
-            container.innerHTML =
-                `<div class="profile-info-item"><strong>Name:</strong> ${escapeHtml(emp.name)}</div><div class="profile-info-item"><strong>Position:</strong> ${escapeHtml(emp.role)}</div><div class="profile-info-item"><strong>Department:</strong> ${escapeHtml(emp.dept)}</div><div class="profile-info-item"><strong>Employee #:</strong> ${escapeHtml(emp.employeeNumber || 'N/A')}</div><div class="profile-info-item"><strong>Email:</strong> ${escapeHtml(emp.email)}</div><div class="profile-info-item"><strong>Date Hired:</strong> ${escapeHtml(emp.dateHired || 'N/A')}</div><div class="profile-info-item"><strong>Gender:</strong> ${escapeHtml(emp.gender || 'N/A')}</div><div class="profile-info-item"><strong>Civil Status:</strong> ${escapeHtml(emp.civilStatus || 'N/A')}</div><div class="profile-info-item"><strong>Phone:</strong> ${escapeHtml(emp.phone || 'N/A')}</div><div class="profile-info-item"><strong>Address:</strong> ${escapeHtml(emp.address || 'N/A')}</div><div class="profile-info-item"><strong>SSS:</strong> ${escapeHtml(emp.sssNumber || 'N/A')}</div><div class="profile-info-item"><strong>PhilHealth:</strong> ${escapeHtml(emp.philhealthNumber || 'N/A')}</div><div class="profile-info-item"><strong>Pag-IBIG:</strong> ${escapeHtml(emp.pagibigNumber || 'N/A')}</div>${emergencyHtml}<div class="profile-info-item"><strong>Leave Balance:</strong> ${emp.leaveBalance || 15} days</div>`;
-            const profileInitials = document.getElementById('userInitials');
-            const profileNameSpan = document.getElementById('profileName');
-            if (profileInitials) profileInitials.innerText = emp.name.split(' ').map(n => n[0]).join('');
-            if (profileNameSpan) profileNameSpan.innerText = emp.name.split(' ')[0];
-            const avatarImg = document.getElementById('profileAvatarImg');
-            const avatarLarge = document.getElementById('profileAvatarLarge');
-            if (emp.photoURL && emp.photoURL.startsWith('http')) {
-                avatarImg.src = emp.photoURL;
-                avatarLarge.src = emp.photoURL;
-            } else {
-                avatarImg.src =
-                    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
-                avatarLarge.src =
-                    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230f172a'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
-            }
+            // No profile dropdown anymore, but keep for mobile avatar
             updateMobileAvatar();
+            updateSidebarUser();
         }
 
         // Employee Management
@@ -2770,6 +2922,8 @@
                     if (resetContainer && currentUser.email === resetAuthorizedEmail) resetContainer.innerHTML =
                         `<button onclick="resetAllSystemData()" title="Reset All System Data" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full">⚠️ Reset All System Data (PIN required)</button>`;
                     else resetContainer.innerHTML = "";
+                    // update sidebar user
+                    updateSidebarUser();
                     switchTab('dashboard');
                     updateProfileDropdown();
                 } else { await auth.signOut();
@@ -2869,20 +3023,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             if (localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark');
 
-            // Burger button now has inline onclick, but we keep event listener for safety
+            // Burger button with inline onclick already, but we add event listener for safety
             const burgerBtn = document.getElementById('mobileBurgerBtn');
             if (burgerBtn) {
-                // Remove any existing listener to avoid duplicate toggles, then add our own
                 burgerBtn.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    openMobileSidebar();
+                    toggleMobileDropdown(e);
                 });
-            }
-
-            // Close button inside sidebar
-            const closeBtn = document.getElementById('mobileSidebarClose');
-            if (closeBtn) {
-                closeBtn.addEventListener('click', closeMobileSidebar);
             }
 
             document.getElementById('loginBtnMain').addEventListener('click', loginWithEmail);
@@ -2906,14 +3053,6 @@
                     error) { alert("Error: " + error.message); }
                 });
             }
-
-            document.addEventListener('click', function(event) {
-                const dropdown = document.getElementById('profileDropdown');
-                const trigger = document.querySelector('.profile-trigger');
-                if (!dropdown || !trigger) return;
-                if (trigger.contains(event.target)) dropdown.classList.toggle('hidden');
-                else if (!dropdown.contains(event.target)) dropdown.classList.add('hidden');
-            });
 
             setupRealtimeListeners();
             auth.onAuthStateChanged(async function(user) {
@@ -2961,6 +3100,7 @@
                             .innerHTML =
                             `<button onclick="resetAllSystemData()" title="Reset All System Data" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full">⚠️ Reset All System Data (PIN required)</button>`;
                         else resetContainer.innerHTML = "";
+                        updateSidebarUser();
                         switchTab('dashboard');
                         updateProfileDropdown();
                     } else { await auth.signOut();
