@@ -105,6 +105,7 @@
             background: #FFBA09;
             color: #0f172a !important;
         }
+        /* Only show label when tab-active */
         .desktop-sidebar nav button.tab-active .tab-label {
             display: inline;
         }
@@ -981,7 +982,7 @@
                 </div>
             </div>
 
-            <!-- DASHBOARD TAB (title moved here) -->
+            <!-- DASHBOARD TAB (with profile dropdown restored) -->
             <div id="dashboard-tab" class="tab-content">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                     <div>
@@ -989,7 +990,25 @@
                         <h2 class="text-3xl font-extrabold text-slate-800 dark:text-white">Welcome Back, <span id="welcomeName">User</span></h2>
                         <p class="text-slate-500 dark:text-slate-400" id="welcomeSubtitle"></p>
                     </div>
-                    <!-- Profile dropdown removed -->
+                    <!-- Profile dropdown (restored) -->
+                    <div class="profile-dropdown relative">
+                        <div class="profile-trigger cursor-pointer flex items-center gap-2 bg-white dark:bg-slate-800 p-2 rounded-full shadow">
+                            <img id="profileAvatarImg" class="avatar-img w-8 h-8 rounded-full object-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile avatar" title="Profile avatar" />
+                            <span class="hidden sm:inline text-sm font-medium dark:text-white" id="profileName">User</span>
+                            <i data-feather="chevron-down" class="w-4 h-4"></i>
+                        </div>
+                        <div id="profileDropdown" class="profile-dropdown-content absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-lg hidden z-50 p-4">
+                            <div class="font-bold text-lg mb-2 border-b pb-2 dark:border-slate-600">My Profile</div>
+                            <div class="flex flex-col items-center mb-3">
+                                <img id="profileAvatarLarge" class="avatar-large w-20 h-20 rounded-full object-cover mb-2" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230f172a'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile avatar large" title="Profile avatar large" />
+                                <input type="file" id="avatarUpload" accept="image/*" class="text-xs" title="Upload avatar" aria-label="Upload avatar" />
+                                <button onclick="uploadAvatar()" title="Upload avatar" class="mt-1 text-xs bg-blue-600 text-white px-3 py-1 rounded">Upload</button>
+                            </div>
+                            <div id="profileInfoContainer"></div>
+                            <hr class="my-2 dark:border-slate-600" />
+                            <button onclick="logout()" title="Logout" class="w-full text-left text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 p-2 rounded-lg flex items-center gap-2"><i data-feather="log-out" class="w-4 h-4"></i> Logout</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="dashboard-filters grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
                     <select id="dashboardFilterDepartment" title="Filter by Department" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white" onchange="applyFilters()" aria-label="Filter by Department">
@@ -1529,7 +1548,7 @@
             renderNavigation();
         }
 
-        // Navigation – ICONS ONLY on desktop, active shows label, tooltip on hover
+        // Navigation – ICONS ONLY on desktop, active shows label
         function renderNavigation() {
             const isFull = fullPrivilegedEmails.includes(currentUser?.email) || currentUserRole === 'admin' ||
                 currentUserRole === 'hr' || currentUserRole === 'moderator';
@@ -1553,7 +1572,7 @@
                 `<span class="tab-badge">${allRequestsPendingCount}</span>` : '';
 
             let html = `
-                <button onclick="switchTab('dashboard')" class="tab-active w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Dashboard">
+                <button onclick="switchTab('dashboard')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Dashboard">
                     <i data-feather="home"></i>
                     <span class="tab-label">Dashboard</span>
                 </button>
@@ -1703,14 +1722,42 @@
             }
         }
 
-        const origUpdateProfile = window.updateProfileDropdown || function() {};
-        window.updateProfileDropdown = function() {
-            origUpdateProfile();
+        // Profile dropdown update (restored)
+        function updateProfileDropdown() {
+            if (!currentUserData) return;
+            const container = document.getElementById('profileInfoContainer');
+            if (container) {
+                const emp = currentUserData;
+                const emergencyHtml =
+                    `<div class="font-semibold mt-2 mb-1">Emergency Contact:</div><div class="profile-info-item"><strong>Name:</strong> ${escapeHtml(emp.emergencyContactName || 'N/A')}</div><div class="profile-info-item"><strong>Relationship:</strong> ${escapeHtml(emp.emergencyContactRelationship || 'N/A')}</div><div class="profile-info-item"><strong>Contact Number:</strong> ${escapeHtml(emp.emergencyContactNumber || 'N/A')}</div><div class="profile-info-item"><strong>Address:</strong> ${escapeHtml(emp.emergencyContactAddress || 'N/A')}</div>`;
+                container.innerHTML =
+                    `<div class="profile-info-item"><strong>Name:</strong> ${escapeHtml(emp.name)}</div><div class="profile-info-item"><strong>Position:</strong> ${escapeHtml(emp.role)}</div><div class="profile-info-item"><strong>Department:</strong> ${escapeHtml(emp.dept)}</div><div class="profile-info-item"><strong>Employee #:</strong> ${escapeHtml(emp.employeeNumber || 'N/A')}</div><div class="profile-info-item"><strong>Email:</strong> ${escapeHtml(emp.email)}</div><div class="profile-info-item"><strong>Date Hired:</strong> ${escapeHtml(emp.dateHired || 'N/A')}</div><div class="profile-info-item"><strong>Gender:</strong> ${escapeHtml(emp.gender || 'N/A')}</div><div class="profile-info-item"><strong>Civil Status:</strong> ${escapeHtml(emp.civilStatus || 'N/A')}</div><div class="profile-info-item"><strong>Phone:</strong> ${escapeHtml(emp.phone || 'N/A')}</div><div class="profile-info-item"><strong>Address:</strong> ${escapeHtml(emp.address || 'N/A')}</div><div class="profile-info-item"><strong>SSS:</strong> ${escapeHtml(emp.sssNumber || 'N/A')}</div><div class="profile-info-item"><strong>PhilHealth:</strong> ${escapeHtml(emp.philhealthNumber || 'N/A')}</div><div class="profile-info-item"><strong>Pag-IBIG:</strong> ${escapeHtml(emp.pagibigNumber || 'N/A')}</div>${emergencyHtml}<div class="profile-info-item"><strong>Leave Balance:</strong> ${emp.leaveBalance || 15} days</div>`;
+            }
+            // update profile avatar
+            const avatarImg = document.getElementById('profileAvatarImg');
+            const avatarLarge = document.getElementById('profileAvatarLarge');
+            if (avatarImg && currentUserData.photoURL && currentUserData.photoURL.startsWith('http')) {
+                avatarImg.src = currentUserData.photoURL;
+            } else if (avatarImg) {
+                avatarImg.src =
+                    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
+            }
+            if (avatarLarge && currentUserData.photoURL && currentUserData.photoURL.startsWith('http')) {
+                avatarLarge.src = currentUserData.photoURL;
+            } else if (avatarLarge) {
+                avatarLarge.src =
+                    "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230f172a'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E";
+            }
+            // profile name
+            const profileNameSpan = document.getElementById('profileName');
+            if (profileNameSpan && currentUserData) {
+                profileNameSpan.innerText = currentUserData.name.split(' ')[0];
+            }
             updateMobileAvatar();
             updateSidebarUser();
-        };
+        }
 
-        // Main switchTab function
+        // Main switchTab function (adds active class to clicked button)
         function switchTab(tabName) {
             closeMobileDropdown();
             const allowed = ['dashboard', 'my-attendance', 'my-requests', 'payslip', 'helpdesk'];
@@ -1732,10 +1779,11 @@
                 loadEmployeeListForSummary(); }
             if (tabName === 'helpdesk' || tabName === 'admin-helpdesk') refreshHelpdesk();
             if (tabName === 'employees') renderEmployeesTable();
-            // update active class in sidebar
+
+            // Update active class on desktop sidebar
             document.querySelectorAll('.desktop-sidebar nav button').forEach(b => b.classList.remove('tab-active'));
-            const activeBtn = document.querySelector(`.desktop-sidebar nav button[data-tip="${document.querySelector(`#${tabName}-tab`)?.querySelector('h2')?.textContent || tabName}"]`);
-            if (activeBtn) activeBtn.classList.add('tab-active');
+            const targetBtn = document.querySelector(`.desktop-sidebar nav button[data-tip="${tabName.charAt(0).toUpperCase() + tabName.slice(1).replace(/-/g, ' ')}"]`);
+            if (targetBtn) targetBtn.classList.add('tab-active');
             else {
                 // fallback: find by onclick
                 document.querySelectorAll('.desktop-sidebar nav button').forEach(b => {
@@ -1804,14 +1852,7 @@
             });
         }
 
-        function updateProfileDropdown() {
-            if (!currentUserData) return;
-            // No profile dropdown anymore, but keep for mobile avatar
-            updateMobileAvatar();
-            updateSidebarUser();
-        }
-
-        // Employee Management
+        // Employee Management (unchanged)
         async function addEmployee() {
             if (!SYSTEM_ADMIN_EMAILS.includes(currentUser?.email)) { alert("Only system admins can add employees."); return; }
             const name = document.getElementById('newEmpName').value;
@@ -2010,7 +2051,7 @@
 
         function showAddEmployeeModal() { openModal('addEmployeeModal'); }
 
-        // Attendance functions
+        // Attendance functions (unchanged)
         function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit',
                 hour12: false }); }
 
@@ -2134,7 +2175,7 @@
             alert(`Clock ${type === 'in' ? 'in' : 'out'} request submitted for approval.`);
         }
 
-        // Requests & Approvals
+        // Requests & Approvals (unchanged)
         async function submitRequest() {
             const type = document.getElementById('requestTypeValue').value,
                 start = document.getElementById('reqStartDate').value,
@@ -2287,7 +2328,7 @@
             } else alert("Cannot reject.");
         }
 
-        // Attendance Summary
+        // Attendance Summary (unchanged)
         function populateYearDropdown() {
             const yearSelect = document.getElementById('summaryYear');
             if (!yearSelect) return;
@@ -2403,6 +2444,7 @@
         }
 
         // ==================== PAYROLL COMPUTATION ====================
+        // (unchanged, kept for completeness)
         const sssTable = [
             { minComp: 0, maxComp: 5249.99, msc: 5000, ee: 250, mpfEe: 0 },
             { minComp: 5250, maxComp: 5749.99, msc: 5500, ee: 275, mpfEe: 0 },
@@ -2722,7 +2764,7 @@
             }).save();
         }
 
-        // Announcements
+        // Announcements (unchanged)
         function renderAnnouncements() {
             const cont = document.getElementById('announcementsList');
             if (!cont) return;
@@ -2777,7 +2819,7 @@
                 closeModal('announcementModal');
                 renderAnnouncements(); } }
 
-        // Guard Schedule
+        // Guard Schedule (unchanged)
         async function assignGuardWeeklySchedule() {
             const empId = document.getElementById('guardEmployee').value;
             if (!empId) { alert("Select a guard."); return; }
@@ -2821,7 +2863,7 @@
                 `<option value="${e.id}">${e.name}</option>`).join('');
         }
 
-        // Helpdesk
+        // Helpdesk (unchanged)
         function generateTrackingNumber() { const now = new Date(); const year = now.getFullYear(); const month = String(now
                 .getMonth() + 1).padStart(2, '0'); const day = String(now.getDate()).padStart(2, '0'); const random = Math
                 .floor(Math.random() * 1000).toString().padStart(3, '0'); return `HR-${year}${month}${day}-${random}`; }
@@ -2922,10 +2964,13 @@
                     if (resetContainer && currentUser.email === resetAuthorizedEmail) resetContainer.innerHTML =
                         `<button onclick="resetAllSystemData()" title="Reset All System Data" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full">⚠️ Reset All System Data (PIN required)</button>`;
                     else resetContainer.innerHTML = "";
-                    // update sidebar user
                     updateSidebarUser();
-                    switchTab('dashboard');
                     updateProfileDropdown();
+                    // Show dashboard without activating any tab
+                    document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+                    document.getElementById('dashboard-tab').classList.remove('hidden');
+                    // Remove any active class from sidebar buttons
+                    document.querySelectorAll('.desktop-sidebar nav button').forEach(b => b.classList.remove('tab-active'));
                 } else { await auth.signOut();
                     alert("Employee record not found."); }
             } catch (e) { if (errDiv) { errDiv.innerText = e.message;
@@ -3023,7 +3068,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             if (localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark');
 
-            // Burger button with inline onclick already, but we add event listener for safety
+            // Burger button with inline onclick + extra listener for safety
             const burgerBtn = document.getElementById('mobileBurgerBtn');
             if (burgerBtn) {
                 burgerBtn.addEventListener('click', function(e) {
@@ -3031,6 +3076,15 @@
                     toggleMobileDropdown(e);
                 });
             }
+
+            // Profile dropdown toggle
+            document.addEventListener('click', function(event) {
+                const dropdown = document.getElementById('profileDropdown');
+                const trigger = document.querySelector('.profile-trigger');
+                if (!dropdown || !trigger) return;
+                if (trigger.contains(event.target)) dropdown.classList.toggle('hidden');
+                else if (!dropdown.contains(event.target)) dropdown.classList.add('hidden');
+            });
 
             document.getElementById('loginBtnMain').addEventListener('click', loginWithEmail);
             document.getElementById('showSignupBtnMain').addEventListener('click', showSignup);
@@ -3101,8 +3155,12 @@
                             `<button onclick="resetAllSystemData()" title="Reset All System Data" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full">⚠️ Reset All System Data (PIN required)</button>`;
                         else resetContainer.innerHTML = "";
                         updateSidebarUser();
-                        switchTab('dashboard');
                         updateProfileDropdown();
+                        // Show dashboard without activating any tab
+                        document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+                        document.getElementById('dashboard-tab').classList.remove('hidden');
+                        document.querySelectorAll('.desktop-sidebar nav button').forEach(b => b.classList
+                            .remove('tab-active'));
                     } else { await auth.signOut();
                         location.reload(); }
                 } else {
