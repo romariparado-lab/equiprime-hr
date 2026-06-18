@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>EQUIPRIME HR - Payroll 2026</title>
+    <title>EQUIPRIME HR - Payroll Beta Test</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com">
     </script>
@@ -536,9 +536,23 @@
         }
 
         /* ===== MOBILE DROPDOWN MENU - FIXED ===== */
+        .mobile-header {
+            position: relative;
+            z-index: 10000;
+            background: #011F7B;
+            padding: 0.6rem 1rem;
+            border-radius: 0 0 1.5rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            display: none;
+        }
+
         .mobile-dropdown-menu {
             position: absolute;
-            top: calc(100% + 4px);
+            top: 100%;
             left: 0;
             right: 0;
             background: #011F7B;
@@ -630,20 +644,6 @@
             color: white !important;
         }
 
-        /* Mobile header – minimal (only burger + avatar) */
-        .mobile-header {
-            position: relative;
-            z-index: 10000;
-            background: #011F7B;
-            padding: 0.6rem 1rem;
-            border-radius: 0 0 1.5rem 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 0.75rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            display: none;
-        }
         .mobile-header .burger-btn {
             background: rgba(255, 255, 255, 0.12);
             border: none;
@@ -874,7 +874,7 @@
         }
         .mobile-dropdown-menu {
             position: absolute;
-            top: calc(100% + 4px);
+            top: 100%;
             left: 0;
             right: 0;
             width: 100%;
@@ -976,7 +976,7 @@
         <!-- MAIN CONTENT -->
         <div class="main-content flex-1 p-4 md:p-6 overflow-y-auto">
 
-            <!-- MOBILE HEADER (burger + avatar) -->
+            <!-- MOBILE HEADER (burger + avatar) - THIS CONTAINS THE DROPDOWN -->
             <div class="mobile-header items-center justify-between mb-4">
                 <button id="mobileBurgerBtn" class="burger-btn" aria-label="Menu" title="Menu" onclick="toggleMobileDropdown(event)">
                     <i data-feather="menu"></i>
@@ -985,15 +985,15 @@
                     <span id="mobileUserName" class="text-white text-sm font-medium mr-1">User</span>
                     <img id="mobileAvatarSmall" class="avatar-small" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User avatar" title="User avatar" onclick="toggleProfileDropdown(event)" />
                 </div>
-            </div>
 
-            <!-- MOBILE DROPDOWN MENU -->
-            <div id="mobileDropdownMenu" class="mobile-dropdown-menu">
-                <nav id="mobileNavMenu" class="flex flex-col gap-0.5"></nav>
-                <div class="dropdown-divider"></div>
-                <div class="dropdown-footer">
-                    <button onclick="toggleNightMode(); closeMobileDropdown();" title="Night Mode"><i data-feather="moon"></i> Night Mode</button>
-                    <button onclick="logout();" title="Logout"><i data-feather="log-out"></i> Logout</button>
+                <!-- MOBILE DROPDOWN MENU - INSIDE THE MOBILE HEADER -->
+                <div id="mobileDropdownMenu" class="mobile-dropdown-menu">
+                    <nav id="mobileNavMenu" class="flex flex-col gap-0.5"></nav>
+                    <div class="dropdown-divider"></div>
+                    <div class="dropdown-footer">
+                        <button onclick="toggleNightMode(); closeMobileDropdown();" title="Night Mode"><i data-feather="moon"></i> Night Mode</button>
+                        <button onclick="logout();" title="Logout"><i data-feather="log-out"></i> Logout</button>
+                    </div>
                 </div>
             </div>
 
