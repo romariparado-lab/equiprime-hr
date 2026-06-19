@@ -465,13 +465,73 @@
             display: flex;
             min-height: 100vh;
         }
+
+        /* ===== FIXED BRANDING BACKGROUND WITH IMAGE ===== */
         .branding-half {
-            background: linear-gradient(135deg, #011F7B 0%, #1a3a8f 100%);
+            background-image: url('branding-image.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 2rem;
+            position: relative;
         }
+        /* Fallback gradient if image doesn't load */
+        .branding-half::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(1, 31, 123, 0.85) 0%, rgba(26, 58, 143, 0.75) 50%, rgba(59, 90, 175, 0.65) 100%);
+            z-index: 0;
+        }
+        /* Animated glow overlay */
+        .branding-half::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 186, 9, 0.15) 0%, transparent 70%);
+            animation: pulseGlow 8s ease-in-out infinite;
+            z-index: 0;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(45deg); }
+        }
+        .branding-content {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 2rem;
+            padding: 2.5rem 3rem;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        .branding-content h1 {
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .branding-content p {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .branding-content a {
+            transition: all 0.3s ease;
+        }
+        .branding-content a:hover {
+            transform: translateY(-3px);
+            color: #FFBA09 !important;
+        }
+
         .login-half {
             background: white;
             display: flex;
@@ -491,25 +551,25 @@
                 min-height: 40vh;
                 padding: 1.5rem;
             }
-            .login-half {
-                width: 100%;
-                padding: 2rem 1.5rem;
-            }
             .branding-content {
-                background: rgba(0, 0, 0, 0.4);
-                border-radius: 2rem;
                 padding: 1.5rem;
             }
             .branding-content h1 {
                 font-size: 2rem;
             }
+            .login-half {
+                width: 100%;
+                padding: 2rem 1.5rem;
+            }
         }
         @media (min-width: 769px) {
             .branding-half {
                 width: 60%;
+                min-height: 100vh;
             }
             .login-half {
                 width: 40%;
+                min-height: 100vh;
             }
         }
 
@@ -830,22 +890,6 @@
         .card-bg .grid button:hover span {
             color: #fbc300;
         }
-        .branding-content h1 span,
-        .branding-content p {
-            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-        }
-        @media (min-width: 769px) {
-            .branding-half {
-                align-items: flex-start;
-                padding-top: 15vh;
-            }
-        }
-        .branding-content a i {
-            transition: transform 0.2s ease;
-        }
-        .branding-content a:hover i {
-            transform: scale(1.2);
-        }
 
         .mobile-dropdown-menu nav::-webkit-scrollbar {
             width: 3px;
@@ -950,14 +994,17 @@
     <div id="authScreen" class="login-split">
         <div class="branding-half">
             <div class="branding-content text-center text-white">
-                <h1 class="text-5xl md:text-7xl font-black"><span style="color: #FFBA09;">Smart Choices.</span><br><span style="color: #f4df17;">Smarter Results.</span></h1>
-                <p class="mt-4 text-white/80">Your gateway to smarter HR processes, happier employees, and better business outcomes.</p>
-                <div class="mt-8 flex gap-4 justify-center">
-                    <a href="#" class="text-white/60 hover:text-white"><i data-feather="facebook"></i></a>
-                    <a href="#" class="text-white/60 hover:text-white"><i data-feather="instagram"></i></a>
-                    <a href="#" class="text-white/60 hover:text-white"><i data-feather="globe"></i></a>
+                <h1 class="text-4xl md:text-6xl font-black leading-tight">
+                    <span style="color: #FFBA09;">Smart Choices.</span><br>
+                    <span style="color: #f4df17;">Smarter Results.</span>
+                </h1>
+                <p class="mt-4 text-white/90 text-lg">Your gateway to smarter HR processes, happier employees, and better business outcomes.</p>
+                <div class="mt-8 flex gap-6 justify-center">
+                    <a href="#" class="text-white/60 hover:text-[#FFBA09] transition-all duration-300 hover:scale-110"><i data-feather="facebook" class="w-6 h-6"></i></a>
+                    <a href="#" class="text-white/60 hover:text-[#FFBA09] transition-all duration-300 hover:scale-110"><i data-feather="instagram" class="w-6 h-6"></i></a>
+                    <a href="#" class="text-white/60 hover:text-[#FFBA09] transition-all duration-300 hover:scale-110"><i data-feather="globe" class="w-6 h-6"></i></a>
                 </div>
-                <div class="mt-6 text-xs text-white/50">© 2026 EQUIPRIME</div>
+                <div class="mt-6 text-xs text-white/40">© 2026 EQUIPRIME</div>
             </div>
         </div>
         <div class="login-half">
@@ -1783,7 +1830,8 @@
                     .filter(r => r.approverEmail === currentUser?.email && (r.status === "pending_secondary" || r
                         .status === "pending_final")).length;
             }
-            const pendingBadge = pendingApprovalCount > 0 ? `<span class="tab-badge">${pendingApprovalCount}</span>` : '';
+            const pendingBadge = pendingApprovalCount > 0 ? '<span class="tab-badge">' + pendingApprovalCount +
+                '</span>' : '';
 
             let html = `
                 <button onclick="switchTab('dashboard')" data-tab="dashboard" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Dashboard">
