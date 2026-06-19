@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>EQUIPRIME HR - Payroll 2026</title>
+    <title>EQUIPRIME HR - Beta Test</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com">
     </script>
@@ -28,23 +28,134 @@
         body {
             background: #f3f6fb;
             transition: background 0.3s, color 0.3s;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
         }
         body.dark {
             background: #0f172a;
         }
 
-        .branding-content,
-        .login-half,
-        .main-content,
-        .mobile-header {
-            -webkit-text-size-adjust: 100%;
-            text-size-adjust: 100%;
-        }
-        .branding-content {
-            -webkit-backdrop-filter: blur(8px);
-            backdrop-filter: blur(8px);
+        /* ===== LOGIN SCREEN FIXES ===== */
+        .login-split {
+            display: flex;
+            min-height: 100vh;
+            height: 100vh;
+            overflow: hidden;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 9999;
         }
 
+        /* Branding half with image - NO OVERLAY GRADIENTS */
+        .branding-half {
+            background-image: url('branding-image.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            width: 60%;
+            min-height: 100vh;
+            flex-shrink: 0;
+        }
+        /* Only a subtle dark overlay for text readability - NOT covering the whole image with gradients */
+        .branding-half .branding-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 0;
+        }
+        .branding-content {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 2rem;
+            padding: 2.5rem 3rem;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+        }
+        .branding-content h1 {
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .branding-content p {
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .branding-content a {
+            transition: all 0.3s ease;
+        }
+        .branding-content a:hover {
+            transform: translateY(-3px);
+            color: #FFBA09 !important;
+        }
+
+        /* Login half - NO overflow issues */
+        .login-half {
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            width: 40%;
+            min-height: 100vh;
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+        body.dark .login-half {
+            background: #1e293b;
+        }
+
+        @media (max-width: 768px) {
+            .login-split {
+                flex-direction: column;
+                overflow-y: auto;
+                height: 100%;
+                position: relative;
+            }
+            .branding-half {
+                width: 100%;
+                min-height: 40vh;
+                padding: 1.5rem;
+                flex-shrink: 0;
+            }
+            .branding-content {
+                padding: 1.5rem;
+            }
+            .branding-content h1 {
+                font-size: 2rem;
+            }
+            .login-half {
+                width: 100%;
+                padding: 2rem 1.5rem;
+                min-height: 60vh;
+                flex-shrink: 0;
+            }
+        }
+        @media (min-width: 769px) {
+            .branding-half {
+                width: 60%;
+                min-height: 100vh;
+            }
+            .login-half {
+                width: 40%;
+                min-height: 100vh;
+            }
+        }
+
+        /* Rest of the styles remain the same */
         .desktop-sidebar {
             width: 64px;
             background: #011F7B;
@@ -57,6 +168,7 @@
             align-items: center;
             overflow: hidden;
             transition: width 0.2s ease;
+            flex-shrink: 0;
         }
         .desktop-sidebar:hover {
             width: 200px;
@@ -461,118 +573,6 @@
             background: #1e293b;
         }
 
-        .login-split {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* ===== FIXED BRANDING BACKGROUND WITH IMAGE ===== */
-        .branding-half {
-            background-image: url('branding-image.jpg');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            position: relative;
-        }
-        /* Fallback gradient if image doesn't load */
-        .branding-half::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(1, 31, 123, 0.85) 0%, rgba(26, 58, 143, 0.75) 50%, rgba(59, 90, 175, 0.65) 100%);
-            z-index: 0;
-        }
-        /* Animated glow overlay */
-        .branding-half::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 186, 9, 0.15) 0%, transparent 70%);
-            animation: pulseGlow 8s ease-in-out infinite;
-            z-index: 0;
-        }
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.2) rotate(45deg); }
-        }
-        .branding-content {
-            position: relative;
-            z-index: 1;
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 2rem;
-            padding: 2.5rem 3rem;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            width: 100%;
-        }
-        .branding-content h1 {
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        }
-        .branding-content p {
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-        .branding-content a {
-            transition: all 0.3s ease;
-        }
-        .branding-content a:hover {
-            transform: translateY(-3px);
-            color: #FFBA09 !important;
-        }
-
-        .login-half {
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-        body.dark .login-half {
-            background: #1e293b;
-        }
-        @media (max-width: 768px) {
-            .login-split {
-                flex-direction: column;
-            }
-            .branding-half {
-                width: 100%;
-                min-height: 40vh;
-                padding: 1.5rem;
-            }
-            .branding-content {
-                padding: 1.5rem;
-            }
-            .branding-content h1 {
-                font-size: 2rem;
-            }
-            .login-half {
-                width: 100%;
-                padding: 2rem 1.5rem;
-            }
-        }
-        @media (min-width: 769px) {
-            .branding-half {
-                width: 60%;
-                min-height: 100vh;
-            }
-            .login-half {
-                width: 40%;
-                min-height: 100vh;
-            }
-        }
-
         @media (max-width: 1023px) {
             .desktop-sidebar {
                 display: none;
@@ -908,9 +908,14 @@
 
         .app-container {
             position: relative;
+            display: flex;
+            min-height: 100vh;
         }
         .main-content {
             position: relative;
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
         }
         .mobile-dropdown-menu {
             position: absolute;
@@ -986,6 +991,22 @@
         body.dark .profile-info-item {
             border-bottom-color: #334155;
         }
+
+        /* Fix for login inputs - ensure they are clickable */
+        .login-half input,
+        .login-half button,
+        .login-half select {
+            position: relative;
+            z-index: 10;
+        }
+        .login-half .w-full.max-w-md {
+            position: relative;
+            z-index: 10;
+        }
+        .login-half .text-center.mb-8 {
+            position: relative;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
@@ -993,6 +1014,7 @@
     <!-- LOGIN SCREEN -->
     <div id="authScreen" class="login-split">
         <div class="branding-half">
+            <div class="branding-overlay"></div>
             <div class="branding-content text-center text-white">
                 <h1 class="text-4xl md:text-6xl font-black leading-tight">
                     <span style="color: #FFBA09;">Smart Choices.</span><br>
