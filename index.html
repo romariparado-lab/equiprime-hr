@@ -19,7 +19,6 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
-    <!-- CryptoJS for encryption -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js">
     </script>
     <style>
@@ -907,6 +906,31 @@
             background: #064e3b !important;
             border-color: #22c55e !important;
         }
+
+        /* Device management styles */
+        .device-card {
+            transition: all 0.2s;
+        }
+        .device-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .device-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        .device-status-dot.active {
+            background: #22c55e;
+        }
+        .device-status-dot.blocked {
+            background: #ef4444;
+        }
+        .device-status-dot.inactive {
+            background: #f59e0b;
+        }
     </style>
 </head>
 <body>
@@ -933,6 +957,7 @@
                     <p class="text-slate-500 dark:text-slate-400">smart choices · smarter results</p>
                     <div class="mt-2">
                         <span class="security-badge"><i data-feather="shield"></i> Encrypted & Secure</span>
+                        <span class="security-badge ml-2"><i data-feather="smartphone"></i> Device Lock</span>
                     </div>
                 </div>
                 <div id="authError" class="bg-red-100 text-red-700 p-3 rounded-lg text-sm mb-4 hidden" role="alert"></div>
@@ -981,6 +1006,7 @@
                     <p class="font-semibold dark:text-white">Authorized Users:</p>
                     <p class="dark:text-white">HR Director: hrd@equiprime.ph | Moderators: mod.rom@equiprime.ph, mod.dex@equiprime.ph</p>
                     <p class="text-xs text-green-600 dark:text-green-400 mt-2 flex items-center gap-1"><i data-feather="lock" class="w-3 h-3"></i> All sensitive data is encrypted</p>
+                    <p class="text-xs text-blue-600 dark:text-blue-400 mt-1 flex items-center gap-1"><i data-feather="smartphone" class="w-3 h-3"></i> Device-based access control enabled</p>
                 </div>
             </div>
         </div>
@@ -1011,7 +1037,7 @@
         <!-- MAIN CONTENT -->
         <div class="main-content flex-1 p-4 md:p-6 overflow-y-auto">
 
-            <!-- MOBILE HEADER (burger + avatar) - THIS CONTAINS THE DROPDOWN -->
+            <!-- MOBILE HEADER (burger + avatar) -->
             <div class="mobile-header items-center justify-between mb-4">
                 <button id="mobileBurgerBtn" class="burger-btn" aria-label="Menu" title="Menu" onclick="toggleMobileDropdown(event)">
                     <i data-feather="menu"></i>
@@ -1021,7 +1047,7 @@
                     <img id="mobileAvatarSmall" class="avatar-small" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User avatar" title="User avatar" onclick="toggleProfileDropdown(event)" />
                 </div>
 
-                <!-- MOBILE DROPDOWN MENU - INSIDE THE MOBILE HEADER -->
+                <!-- MOBILE DROPDOWN MENU -->
                 <div id="mobileDropdownMenu" class="mobile-dropdown-menu">
                     <nav id="mobileNavMenu" class="flex flex-col gap-0.5"></nav>
                     <div class="dropdown-divider"></div>
@@ -1055,6 +1081,19 @@
                                 <button onclick="uploadAvatar()" title="Upload avatar" class="mt-1 text-xs bg-blue-600 text-white px-3 py-1 rounded">Upload</button>
                             </div>
                             <div id="profileInfoContainer"></div>
+                            
+                            <!-- Device Management in Profile -->
+                            <hr class="my-2 dark:border-slate-600" />
+                            <div id="deviceManagementSection">
+                                <h4 class="font-bold text-sm mb-2 flex items-center gap-2">
+                                    <i data-feather="smartphone" class="w-4 h-4"></i> My Devices
+                                </h4>
+                                <div id="registeredDevicesList" class="space-y-2 max-h-40 overflow-y-auto"></div>
+                                <button onclick="registerCurrentDevice()" class="mt-2 text-blue-600 dark:text-blue-400 text-sm flex items-center gap-1 hover:underline">
+                                    <i data-feather="plus" class="w-3 h-3"></i> Register This Device
+                                </button>
+                            </div>
+                            
                             <hr class="my-2 dark:border-slate-600" />
                             <button onclick="logout()" title="Logout" class="w-full text-left text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 p-2 rounded-lg flex items-center gap-2"><i data-feather="log-out" class="w-4 h-4"></i> Logout</button>
                         </div>
@@ -1212,6 +1251,10 @@
                                 <span class="text-sm">Audit Logging</span>
                                 <span class="security-badge text-xs"><i data-feather="check"></i> Active</span>
                             </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">Device Access Control</span>
+                                <span class="security-badge text-xs"><i data-feather="smartphone"></i> Active</span>
+                            </div>
                         </div>
                     </div>
                     
@@ -1225,6 +1268,65 @@
 
             <!-- EMPLOYEES TAB -->
             <div id="employees-tab" class="tab-content hidden"><div class="flex justify-between items-center mb-5"><h2 class="text-2xl font-bold text-yellow-600">Employees Management</h2><button onclick="showAddEmployeeModal()" title="Add Employee" class="bg-green-600 text-white px-4 py-2 rounded-xl flex items-center gap-2"><i data-feather="plus"></i> Add Employee</button></div><div class="card-bg rounded-2xl p-6 shadow-sm"><input type="text" id="employeeSearch" class="search-input w-full max-w-md p-2 border rounded-lg mb-4 dark:bg-slate-700" placeholder="Search by name, email, department..." title="Search Employees" aria-label="Search Employees" onkeyup="filterEmployeesTable()" /><div class="overflow-x-auto"><table class="employees-table w-full"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Name</th><th class="p-3 text-left">Email</th><th class="p-3 text-left">Employee #</th><th class="p-3 text-left">Department</th><th class="p-3 text-left">Role</th><th class="p-3 text-left">Status</th><th class="p-3 text-left">Actions</th></tr></thead><tbody id="employeesTableBody"></tbody></table></div></div></div>
+
+            <!-- DEVICE MANAGEMENT TAB -->
+            <div id="device-management-tab" class="tab-content hidden">
+                <div class="flex justify-between items-center mb-5">
+                    <h2 class="text-2xl font-bold text-yellow-600">Mobile Device Management</h2>
+                    <button onclick="refreshDeviceList()" class="bg-blue-600 text-white px-4 py-2 rounded-xl flex items-center gap-2">
+                        <i data-feather="refresh-cw"></i> Refresh
+                    </button>
+                </div>
+                
+                <!-- Device Stats -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <div class="stat-card">
+                        <div><p>Total Registered Devices</p><h3 class="text-3xl font-bold" id="totalDevices">0</h3></div>
+                        <i data-feather="smartphone" class="text-blue-600 dark:text-blue-400 w-6 h-6"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div><p>Active Devices</p><h3 class="text-3xl font-bold" id="activeDevices">0</h3></div>
+                        <i data-feather="check-circle" class="text-green-600 dark:text-green-400 w-6 h-6"></i>
+                    </div>
+                    <div class="stat-card">
+                        <div><p>Blocked Devices</p><h3 class="text-3xl font-bold" id="blockedDevices">0</h3></div>
+                        <i data-feather="x-circle" class="text-red-600 dark:text-red-400 w-6 h-6"></i>
+                    </div>
+                </div>
+                
+                <div class="card-bg rounded-2xl p-6 shadow-sm">
+                    <div class="flex gap-4 mb-4 flex-wrap">
+                        <input type="text" id="deviceSearch" placeholder="Search by employee or device..." 
+                               class="flex-1 p-2 border rounded-lg dark:bg-slate-700 min-w-[200px]" 
+                               onkeyup="filterDevices()">
+                        <select id="deviceStatusFilter" class="p-2 border rounded-lg dark:bg-slate-700" 
+                                onchange="filterDevices()">
+                            <option value="all">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="blocked">Blocked</option>
+                        </select>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="bg-slate-100 dark:bg-slate-700">
+                                    <th class="p-3 text-left">Employee</th>
+                                    <th class="p-3 text-left">Device Name</th>
+                                    <th class="p-3 text-left">Device Details</th>
+                                    <th class="p-3 text-left">Registered</th>
+                                    <th class="p-3 text-left">Last Used</th>
+                                    <th class="p-3 text-left">Status</th>
+                                    <th class="p-3 text-left">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="devicesTableBody">
+                                <tr><td colspan="7" class="p-4 text-center text-gray-500">Loading devices...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
         </div><!-- /main-content -->
     </div><!-- /mainApp -->
@@ -1266,6 +1368,17 @@
                 
                 <input type="text" id="newEmpDept" placeholder="Department" title="Department" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Department" />
                 <select id="newEmpRole" title="Role" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Role"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select>
+                
+                <!-- Device Restriction Settings -->
+                <div class="border-t pt-4 mt-4">
+                    <h4 class="font-bold mb-3 text-sm flex items-center gap-2"><i data-feather="smartphone" class="w-4 h-4"></i> Device Access Control</h4>
+                    <select id="newEmpDeviceRestriction" class="w-full p-3 border rounded-xl dark:bg-slate-700">
+                        <option value="enabled">Enable device restriction (recommended)</option>
+                        <option value="disabled">Disable device restriction</option>
+                    </select>
+                    <p class="text-xs text-gray-500 mt-1">When enabled, employee can only login from registered devices</p>
+                </div>
+                
                 <input type="text" id="newEmpPin" placeholder="PIN" title="PIN" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="PIN" />
                 <input type="password" id="newEmpPass" placeholder="Password" title="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Password" />
             </div>
@@ -1311,6 +1424,17 @@
                 <select id="editEmpDept" title="Department" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Department"><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select>
                 <select id="editEmpRole" title="Role" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Role"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select>
                 <select id="editEmpStatus" title="Status" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Status"><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option></select>
+                
+                <!-- Device Restriction Settings -->
+                <div class="border-t pt-4 mt-4">
+                    <h4 class="font-bold mb-3 text-sm flex items-center gap-2"><i data-feather="smartphone" class="w-4 h-4"></i> Device Access Control</h4>
+                    <select id="editEmpDeviceRestriction" class="w-full p-3 border rounded-xl dark:bg-slate-700">
+                        <option value="enabled">Enable device restriction</option>
+                        <option value="disabled">Disable device restriction</option>
+                    </select>
+                    <p class="text-xs text-gray-500 mt-1">When enabled, employee can only login from registered devices</p>
+                </div>
+                
                 <input type="number" id="editLeaveBalance" placeholder="Leave Balance" title="Leave Balance" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Leave Balance" />
                 <input type="text" id="editEmpPin" placeholder="PIN" title="PIN" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="PIN" />
                 <input type="password" id="editEmpPassword" placeholder="New Password (optional)" title="New Password" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="New Password" />
@@ -1408,7 +1532,6 @@
 
     <script>
         // ==================== FIREBASE CONFIG ====================
-        // Using environment variable pattern (in production, use actual env vars)
         const firebaseConfig = {
             apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
             authDomain: "equiprime-hr.firebaseapp.com",
@@ -1423,7 +1546,6 @@
         const storage = firebase.storage();
 
         // ==================== ENCRYPTION HELPER ====================
-        // In production, use a secure key rotation mechanism
         const ENCRYPTION_KEY = "EQUIPRIME_2026_SECURE_KEY_PLEASE_CHANGE_IN_PRODUCTION";
         
         function encryptData(data) {
@@ -1438,7 +1560,7 @@
                 return bytes.toString(CryptoJS.enc.Utf8);
             } catch (e) {
                 console.error('Decryption failed:', e);
-                return encryptedData; // Return as-is if decryption fails
+                return encryptedData;
             }
         }
 
@@ -1449,9 +1571,40 @@
             return '****' + str.slice(-4);
         }
 
-        function isSensitiveField(fieldName) {
-            const sensitive = ['sssNumber', 'philhealthNumber', 'pagibigNumber', 'pin', 'password'];
-            return sensitive.includes(fieldName);
+        // ==================== DEVICE FINGERPRINTING ====================
+        function getDeviceFingerprint() {
+            try {
+                const navigatorInfo = {
+                    userAgent: navigator.userAgent,
+                    platform: navigator.platform,
+                    language: navigator.language,
+                    hardwareConcurrency: navigator.hardwareConcurrency || 'unknown',
+                    deviceMemory: navigator.deviceMemory || 'unknown',
+                    screenResolution: `${screen.width}x${screen.height}`,
+                    colorDepth: screen.colorDepth,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
+                };
+                
+                const fingerprint = {
+                    ...navigatorInfo,
+                    deviceModel: navigator.userAgentData?.platform || 'unknown',
+                    mobileVendor: navigator.vendor || 'unknown'
+                };
+                
+                const deviceString = JSON.stringify(fingerprint);
+                const deviceId = CryptoJS.SHA256(deviceString).toString();
+                
+                return {
+                    deviceId: deviceId,
+                    details: fingerprint
+                };
+            } catch (e) {
+                console.error('Device fingerprint error:', e);
+                return {
+                    deviceId: 'unknown-' + Date.now(),
+                    details: { error: 'Could not fingerprint device' }
+                };
+            }
         }
 
         // ==================== GLOBALS ====================
@@ -1464,7 +1617,8 @@
             allPayslips = [],
             allAnnouncements = [],
             guardWeeklySchedules = [],
-            allHelpdeskRequests = [];
+            allHelpdeskRequests = [],
+            allUserDevices = [];
         let currentFilter = { department: 'all', status: 'all', leaveType: 'all' };
         const SYSTEM_ADMIN_EMAILS = ["hrd@equiprime.ph", "mod.rom@equiprime.ph", "mod.dex@equiprime.ph"];
         const fullPrivilegedEmails = [...SYSTEM_ADMIN_EMAILS];
@@ -1473,13 +1627,11 @@
         let clockInProgress = false;
         let currentComputedPayroll = null;
         let sessionTimeoutTimer = null;
-        const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+        const SESSION_TIMEOUT = 30 * 60 * 1000;
 
         // ===== SESSION MANAGEMENT =====
         function resetSessionTimer() {
-            if (sessionTimeoutTimer) {
-                clearTimeout(sessionTimeoutTimer);
-            }
+            if (sessionTimeoutTimer) clearTimeout(sessionTimeoutTimer);
             if (currentUser) {
                 sessionTimeoutTimer = setTimeout(() => {
                     alert('Session expired due to inactivity. Please login again.');
@@ -1488,7 +1640,6 @@
             }
         }
 
-        // Reset session on user activity
         document.addEventListener('click', resetSessionTimer);
         document.addEventListener('keypress', resetSessionTimer);
         document.addEventListener('mousemove', resetSessionTimer);
@@ -1520,89 +1671,329 @@
             }
         }
 
-        // ===== TOGGLE PROFILE DROPDOWN =====
-        function toggleProfileDropdown(event) {
-            if (event) event.stopPropagation();
-            const dropdown = document.getElementById('profileDropdown');
-            if (dropdown) {
-                dropdown.classList.toggle('hidden');
-                if (!dropdown.classList.contains('hidden')) {
-                    const rect = dropdown.getBoundingClientRect();
-                    if (rect.right > window.innerWidth) {
-                        dropdown.style.left = 'auto';
-                        dropdown.style.right = '0';
-                    }
-                    if (rect.left < 0) {
-                        dropdown.style.left = '0';
-                        dropdown.style.right = 'auto';
-                    }
+        // ===== DEVICE MANAGEMENT FUNCTIONS =====
+        async function isDeviceAuthorized(userId, deviceId) {
+            try {
+                // Check if device restriction is enabled for this employee
+                const empDoc = await db.collection('employees').doc(userId).get();
+                const empData = empDoc.data();
+                
+                // If restriction is disabled, allow any device
+                if (empData.deviceRestriction === 'disabled') {
+                    return { authorized: true, reason: 'Device restriction disabled' };
                 }
-            }
-            resetSessionTimer();
-        }
-
-        // ===== TOGGLE MOBILE DROPDOWN =====
-        function toggleMobileDropdown(event) {
-            if (event) event.stopPropagation();
-            const menu = document.getElementById('mobileDropdownMenu');
-            if (!menu) return;
-            menu.classList.toggle('open');
-            const btn = document.getElementById('mobileBurgerBtn');
-            if (!btn) return;
-            const icon = btn.querySelector('i');
-            if (icon) {
-                if (menu.classList.contains('open')) {
-                    icon.setAttribute('data-feather', 'x');
-                } else {
-                    icon.setAttribute('data-feather', 'menu');
+                
+                // Check if device is registered and active
+                const deviceQuery = await db.collection('userDevices')
+                    .where('userId', '==', userId)
+                    .where('deviceId', '==', deviceId)
+                    .where('status', '==', 'active')
+                    .get();
+                
+                if (!deviceQuery.empty) {
+                    // Update last used timestamp
+                    const doc = deviceQuery.docs[0];
+                    await db.collection('userDevices').doc(doc.id).update({
+                        lastUsed: new Date().toISOString()
+                    });
+                    return { authorized: true, reason: 'Device authorized' };
                 }
-                feather.replace();
+                
+                // Check if device is blocked
+                const blockedQuery = await db.collection('userDevices')
+                    .where('userId', '==', userId)
+                    .where('deviceId', '==', deviceId)
+                    .where('status', '==', 'blocked')
+                    .get();
+                
+                if (!blockedQuery.empty) {
+                    return { authorized: false, reason: 'Device is blocked by HR' };
+                }
+                
+                return { authorized: false, reason: 'Device not registered' };
+            } catch (e) {
+                console.error('Device authorization error:', e);
+                return { authorized: false, reason: 'Error checking device authorization' };
             }
-            resetSessionTimer();
         }
 
-        function closeMobileDropdown() {
-            const menu = document.getElementById('mobileDropdownMenu');
-            if (menu) menu.classList.remove('open');
-            const btn = document.getElementById('mobileBurgerBtn');
-            if (!btn) return;
-            const icon = btn.querySelector('i');
-            if (icon) {
-                icon.setAttribute('data-feather', 'menu');
-                feather.replace();
+        async function registerDeviceForUser(userId, deviceInfo, deviceName) {
+            try {
+                const deviceData = {
+                    userId: userId,
+                    userEmail: currentUser?.email || 'unknown',
+                    deviceId: deviceInfo.deviceId,
+                    deviceName: deviceName || 'My Device',
+                    deviceDetails: deviceInfo.details,
+                    registeredAt: new Date().toISOString(),
+                    lastUsed: new Date().toISOString(),
+                    status: 'active',
+                    registeredBy: currentUser?.email || 'system'
+                };
+                
+                const docRef = await db.collection('userDevices').add(deviceData);
+                await auditLog('DEVICE_REGISTERED', `Device "${deviceName}" registered for user ${userId}`, docRef.id);
+                return docRef.id;
+            } catch (e) {
+                console.error('Device registration error:', e);
+                throw e;
             }
         }
 
-        // Close profile dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            const dropdown = document.getElementById('profileDropdown');
-            const trigger = document.querySelector('.profile-trigger');
-            const mobileAvatar = document.getElementById('mobileAvatarSmall');
-            if (!dropdown) return;
-            const isTrigger = trigger && trigger.contains(e.target);
-            const isMobileAvatar = mobileAvatar && mobileAvatar.contains(e.target);
-            if (!isTrigger && !isMobileAvatar && !dropdown.contains(e.target)) {
-                dropdown.classList.add('hidden');
+        async function registerCurrentDevice() {
+            if (!currentUser) {
+                alert('Please login first.');
+                return;
             }
-        });
-
-        // Close mobile dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            const menu = document.getElementById('mobileDropdownMenu');
-            const toggle = document.getElementById('mobileBurgerBtn');
-            if (!menu || !toggle) return;
-            if (!toggle.contains(e.target) && !menu.contains(e.target)) {
-                closeMobileDropdown();
+            
+            const deviceInfo = getDeviceFingerprint();
+            
+            // Check if already registered
+            const existing = await db.collection('userDevices')
+                .where('userId', '==', currentUser.uid)
+                .where('deviceId', '==', deviceInfo.deviceId)
+                .get();
+            
+            if (!existing.empty) {
+                alert('✅ This device is already registered.');
+                loadRegisteredDevices();
+                return;
             }
-        });
+            
+            const deviceName = prompt('📱 Name this device (e.g., "My Work Phone"):', 'My Phone');
+            if (!deviceName) return;
+            
+            await registerDeviceForUser(currentUser.uid, deviceInfo, deviceName);
+            
+            // Update session
+            sessionStorage.setItem('deviceId', deviceInfo.deviceId);
+            sessionStorage.setItem('deviceRegistered', 'true');
+            
+            alert('✅ Device registered successfully! You can now use this device.');
+            loadRegisteredDevices();
+            refreshDeviceList();
+        }
 
-        // Override switchTab to close dropdown
-        const origSwitchTab = window.switchTab || function() {};
-        window.switchTab = function(tabName) {
-            closeMobileDropdown();
-            origSwitchTab(tabName);
-            resetSessionTimer();
-        };
+        async function loadRegisteredDevices() {
+            if (!currentUser) return;
+            
+            const devices = await db.collection('userDevices')
+                .where('userId', '==', currentUser.uid)
+                .orderBy('lastUsed', 'desc')
+                .get();
+            
+            const container = document.getElementById('registeredDevicesList');
+            if (!container) return;
+            
+            const currentDeviceId = getDeviceFingerprint().deviceId;
+            
+            container.innerHTML = devices.docs.map(doc => {
+                const d = doc.data();
+                const isCurrent = d.deviceId === currentDeviceId;
+                return `
+                    <div class="flex justify-between items-center p-2 bg-gray-50 dark:bg-slate-700 rounded">
+                        <div class="flex-1">
+                            <span class="font-medium">${escapeHtml(d.deviceName || 'Unknown Device')}</span>
+                            <span class="text-xs text-gray-500 block">Last used: ${new Date(d.lastUsed).toLocaleDateString()}</span>
+                            ${isCurrent ? '<span class="text-xs text-green-500">(Current)</span>' : ''}
+                            ${d.status === 'blocked' ? '<span class="text-xs text-red-500">(Blocked)</span>' : ''}
+                        </div>
+                        <button onclick="removeUserDevice('${doc.id}')" class="text-red-500 text-sm hover:text-red-700" ${isCurrent ? 'disabled style="opacity:0.5"' : ''}>
+                            <i data-feather="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                `;
+            }).join('') || '<div class="text-sm text-gray-500">No devices registered</div>';
+            
+            feather.replace();
+        }
+
+        async function removeUserDevice(deviceDocId) {
+            if (!confirm('⚠️ Are you sure you want to remove this device?\n\nYou will need to re-register it to use it again.')) return;
+            
+            await db.collection('userDevices').doc(deviceDocId).delete();
+            await auditLog('DEVICE_REMOVED', `Device ${deviceDocId} removed by user`, deviceDocId);
+            loadRegisteredDevices();
+            refreshDeviceList();
+            alert('✅ Device removed successfully.');
+        }
+
+        // ===== ADMIN DEVICE MANAGEMENT =====
+        async function refreshDeviceList() {
+            const devices = await db.collection('userDevices')
+                .orderBy('lastUsed', 'desc')
+                .get();
+            
+            allUserDevices = devices.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderDeviceTable();
+            updateDeviceStats();
+        }
+
+        function renderDeviceTable() {
+            const tbody = document.getElementById('devicesTableBody');
+            if (!tbody) return;
+            
+            const searchTerm = document.getElementById('deviceSearch')?.value.toLowerCase() || '';
+            const statusFilter = document.getElementById('deviceStatusFilter')?.value || 'all';
+            
+            let filtered = allUserDevices;
+            if (searchTerm) {
+                filtered = filtered.filter(d => {
+                    const employee = allEmployees.find(e => e.id === d.userId);
+                    const name = employee?.name?.toLowerCase() || '';
+                    const deviceName = (d.deviceName || '').toLowerCase();
+                    return name.includes(searchTerm) || deviceName.includes(searchTerm);
+                });
+            }
+            if (statusFilter !== 'all') {
+                filtered = filtered.filter(d => d.status === statusFilter);
+            }
+            
+            if (filtered.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-gray-500">No devices found</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = filtered.map(d => {
+                const employee = allEmployees.find(e => e.id === d.userId);
+                const statusColors = {
+                    active: 'bg-green-100 text-green-800',
+                    blocked: 'bg-red-100 text-red-800',
+                    inactive: 'bg-yellow-100 text-yellow-800'
+                };
+                const statusDots = {
+                    active: 'active',
+                    blocked: 'blocked',
+                    inactive: 'inactive'
+                };
+                
+                return `
+                    <tr class="border-b dark:border-slate-600">
+                        <td class="p-3">
+                            <div class="font-medium">${escapeHtml(employee?.name || 'Unknown')}</div>
+                            <div class="text-xs text-gray-500">${escapeHtml(d.userEmail || '')}</div>
+                        </td>
+                        <td class="p-3">${escapeHtml(d.deviceName || 'Unnamed')}</td>
+                        <td class="p-3 text-sm">
+                            <div>${escapeHtml(d.deviceDetails?.platform || 'Unknown')}</div>
+                            <div class="text-xs text-gray-500">${escapeHtml(d.deviceDetails?.screenResolution || '')}</div>
+                        </td>
+                        <td class="p-3 text-sm">${new Date(d.registeredAt).toLocaleDateString()}</td>
+                        <td class="p-3 text-sm">${new Date(d.lastUsed).toLocaleDateString()}</td>
+                        <td class="p-3">
+                            <span class="px-2 py-1 rounded-full text-xs ${statusColors[d.status] || 'bg-gray-100 text-gray-800'}">
+                                <span class="device-status-dot ${statusDots[d.status] || 'inactive'}"></span>
+                                ${d.status || 'Active'}
+                            </span>
+                        </td>
+                        <td class="p-3">
+                            <button onclick="toggleDeviceStatus('${d.id}', '${d.status}')" 
+                                    class="text-${d.status === 'active' ? 'red' : 'green'}-600 hover:text-${d.status === 'active' ? 'red' : 'green'}-800 text-sm mr-2">
+                                ${d.status === 'active' ? 'Block' : 'Unblock'}
+                            </button>
+                            <button onclick="deleteDeviceRecord('${d.id}')" class="text-red-600 hover:text-red-800 text-sm">Delete</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+            
+            feather.replace();
+        }
+
+        function filterDevices() {
+            renderDeviceTable();
+        }
+
+        function updateDeviceStats() {
+            const total = allUserDevices.length;
+            const active = allUserDevices.filter(d => d.status === 'active').length;
+            const blocked = allUserDevices.filter(d => d.status === 'blocked').length;
+            
+            document.getElementById('totalDevices').textContent = total;
+            document.getElementById('activeDevices').textContent = active;
+            document.getElementById('blockedDevices').textContent = blocked;
+        }
+
+        async function toggleDeviceStatus(deviceId, currentStatus) {
+            const newStatus = currentStatus === 'active' ? 'blocked' : 'active';
+            const action = newStatus === 'active' ? 'unblock' : 'block';
+            
+            if (!confirm(`Are you sure you want to ${action} this device?`)) return;
+            
+            await db.collection('userDevices').doc(deviceId).update({
+                status: newStatus,
+                updatedAt: new Date().toISOString(),
+                updatedBy: currentUser.email
+            });
+            
+            await auditLog('DEVICE_STATUS_CHANGED', `Device ${deviceId} ${action}ed by ${currentUser.email}`, deviceId);
+            
+            refreshDeviceList();
+            alert(`✅ Device ${action}ed successfully!`);
+        }
+
+        async function deleteDeviceRecord(deviceId) {
+            if (!confirm('⚠️ Are you sure you want to delete this device record?\n\nThis action cannot be undone.')) return;
+            
+            await db.collection('userDevices').doc(deviceId).delete();
+            await auditLog('DEVICE_DELETED', `Device ${deviceId} deleted by ${currentUser.email}`, deviceId);
+            
+            refreshDeviceList();
+            alert('✅ Device record deleted successfully.');
+        }
+
+        // ===== DEVICE CHECK ON LOGIN =====
+        async function checkDeviceAuthorization(user) {
+            const deviceInfo = getDeviceFingerprint();
+            const deviceId = deviceInfo.deviceId;
+            
+            // Check if employee has device restriction enabled
+            const empDoc = await db.collection('employees').doc(user.uid).get();
+            const empData = empDoc.data();
+            
+            // If restriction is disabled, allow login
+            if (empData.deviceRestriction === 'disabled') {
+                sessionStorage.setItem('deviceId', deviceId);
+                sessionStorage.setItem('deviceVerified', 'true');
+                return true;
+            }
+            
+            // Check device authorization
+            const auth = await isDeviceAuthorized(user.uid, deviceId);
+            
+            if (!auth.authorized) {
+                if (auth.reason === 'Device not registered') {
+                    // Ask user to register
+                    const shouldRegister = confirm(
+                        `📱 New Device Detected\n\n` +
+                        `Device: ${deviceInfo.details.platform || 'Unknown'}\n` +
+                        `Browser: ${deviceInfo.details.userAgent?.split(' ').slice(0, 3).join(' ') || 'Unknown'}\n\n` +
+                        `This device is not registered for your account.\n\n` +
+                        `Would you like to register it now?`
+                    );
+                    
+                    if (shouldRegister) {
+                        const deviceName = prompt('Name this device:', 'My Phone');
+                        if (deviceName) {
+                            await registerDeviceForUser(user.uid, deviceInfo, deviceName);
+                            sessionStorage.setItem('deviceId', deviceId);
+                            sessionStorage.setItem('deviceRegistered', 'true');
+                            await auditLog('DEVICE_REGISTERED_ON_LOGIN', `Device "${deviceName}" registered during login for ${user.email}`, user.uid);
+                            return true;
+                        }
+                    }
+                } else if (auth.reason === 'Device is blocked by HR') {
+                    alert('❌ This device has been blocked by HR. Please contact support.');
+                }
+                
+                await auditLog('UNAUTHORIZED_DEVICE_ATTEMPT', `${user.email} attempted login from unauthorized device: ${deviceId}`, user.uid);
+                return false;
+            }
+            
+            sessionStorage.setItem('deviceId', deviceId);
+            sessionStorage.setItem('deviceVerified', 'true');
+            return true;
+        }
 
         // ===== Helper functions =====
         function setText(id, text) {
@@ -1634,7 +2025,7 @@
                 else if (email === "mod.rom@equiprime.ph" || email === "mod.dex@equiprime.ph") role = "moderator";
                 const name = email.split('@')[0].replace(/\./g, ' ').replace(/\b\w/g, l => l.toUpperCase());
                 const empData = { name, email, dept: "HR Department", role, status: "active", pin: encryptData("0000"), leaveBalance: 15,
-                    createdAt: new Date().toISOString(), ...getDefaultExtendedFields() };
+                    deviceRestriction: "enabled", createdAt: new Date().toISOString(), ...getDefaultExtendedFields() };
                 await docRef.set(empData);
                 await db.collection('users').doc(user.uid).set({ uid: user.uid, name, email, role, department: "HR Department",
                     leaveBalance: 15, status: "active", phone: "N/A" });
@@ -1659,7 +2050,6 @@
             } else {
                 await deptRef.set({ secondaryApprovers: [employeeId], finalApprover: "hrd@equiprime.ph" });
             }
-            await auditLog('Approver Permissions Granted', `${employeeId} granted ${role} permissions for ${department}`, employeeId);
         }
 
         async function revokeApproverPermissions(employeeId, department) {
@@ -1670,7 +2060,6 @@
             if (doc.exists) {
                 await deptRef.update({ secondaryApprovers: firebase.firestore.FieldValue.arrayRemove(employeeId) });
             }
-            await auditLog('Approver Permissions Revoked', `${employeeId} permissions revoked for ${department}`, employeeId);
         }
 
         async function getApproverForDepartment(department, stage) {
@@ -1720,6 +2109,10 @@
             db.collection('employeeSupportRequests').onSnapshot(snap => { allHelpdeskRequests = snap.docs.map(d => ({ id: d
                         .id, ...d.data() }));
                 refreshHelpdesk(); });
+            db.collection('userDevices').onSnapshot(snap => { allUserDevices = snap.docs.map(d => ({ id: d.id, ...d
+                        .data() }));
+                refreshDeviceList();
+                loadRegisteredDevices(); });
         }
 
         // Data and filtering helpers
@@ -1828,10 +2221,9 @@
                 `<div class="login-status-item">${e.name}</div>`).join('');
             feather.replace();
             renderNavigation();
-            resetSessionTimer();
         }
 
-        // Navigation – ICONS ONLY on desktop, active shows label
+        // Navigation
         function renderNavigation() {
             const isFull = fullPrivilegedEmails.includes(currentUser?.email) || currentUserRole === 'admin' ||
                 currentUserRole === 'hr' || currentUserRole === 'moderator';
@@ -1900,6 +2292,10 @@
                     <i data-feather="file-text"></i>
                     <span class="tab-label">Payslip Management</span>
                 </button>
+                <button onclick="switchTab('device-management')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Device Management">
+                    <i data-feather="smartphone"></i>
+                    <span class="tab-label">Device Management</span>
+                </button>
                 <button onclick="switchTab('admin-helpdesk')" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Admin Helpdesk">
                     <i data-feather="shield"></i>
                     <span class="tab-label">Admin Helpdesk</span>
@@ -1965,7 +2361,6 @@
             const container = document.getElementById('profileInfoContainer');
             if (container) {
                 const emp = currentUserData;
-                // Decrypt sensitive data for display
                 const sssDisplay = maskSensitiveData(decryptData(emp.sssNumber) || emp.sssNumber);
                 const philDisplay = maskSensitiveData(decryptData(emp.philhealthNumber) || emp.philhealthNumber);
                 const pagibigDisplay = maskSensitiveData(decryptData(emp.pagibigNumber) || emp.pagibigNumber);
@@ -1977,7 +2372,8 @@
                     <div class="profile-info-item"><strong>SSS:</strong> <span class="text-green-600 dark:text-green-400">${sssDisplay}</span> <i data-feather="lock" class="w-3 h-3 inline text-green-600 dark:text-green-400"></i></div>
                     <div class="profile-info-item"><strong>PhilHealth:</strong> <span class="text-green-600 dark:text-green-400">${philDisplay}</span> <i data-feather="lock" class="w-3 h-3 inline text-green-600 dark:text-green-400"></i></div>
                     <div class="profile-info-item"><strong>Pag-IBIG:</strong> <span class="text-green-600 dark:text-green-400">${pagibigDisplay}</span> <i data-feather="lock" class="w-3 h-3 inline text-green-600 dark:text-green-400"></i></div>
-                    ${emergencyHtml}<div class="profile-info-item"><strong>Leave Balance:</strong> ${emp.leaveBalance || 15} days</div>`;
+                    ${emergencyHtml}<div class="profile-info-item"><strong>Leave Balance:</strong> ${emp.leaveBalance || 15} days</div>
+                    <div class="profile-info-item"><strong>Device Restriction:</strong> ${emp.deviceRestriction === 'disabled' ? 'Disabled' : 'Enabled'}</div>`;
             }
             const avatarImg = document.getElementById('profileAvatarImg');
             const avatarLarge = document.getElementById('profileAvatarLarge');
@@ -2008,7 +2404,7 @@
             const isFull = fullPrivilegedEmails.includes(currentUser?.email) || currentUserRole === 'admin' ||
                 currentUserRole === 'hr' || currentUserRole === 'moderator';
             if (isFull) allowed.push('hr-requests', 'attendance-summary', 'approvals', 'hr-guard-schedule', 'hr-payslip',
-                'admin-helpdesk', 'hr-settings', 'employees');
+                'device-management', 'admin-helpdesk', 'hr-settings', 'employees');
             if (!allowed.includes(tabName)) { alert("Access denied."); return; }
             document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
             const target = document.getElementById(`${tabName}-tab`);
@@ -2023,6 +2419,7 @@
                 loadEmployeeListForSummary(); }
             if (tabName === 'helpdesk' || tabName === 'admin-helpdesk') refreshHelpdesk();
             if (tabName === 'employees') renderEmployeesTable();
+            if (tabName === 'device-management') refreshDeviceList();
 
             document.querySelectorAll('.desktop-sidebar nav button').forEach(b => b.classList.remove('tab-active'));
             const targetBtn = document.querySelector(`.desktop-sidebar nav button[data-tip="${tabName.charAt(0).toUpperCase() + tabName.slice(1).replace(/-/g, ' ')}"]`);
@@ -2034,7 +2431,6 @@
                     }
                 });
             }
-            resetSessionTimer();
         }
 
         function applyFilters() {
@@ -2049,14 +2445,13 @@
             ['dashboardFilterLeaveType'].forEach(id => { const el = document.getElementById(id); if (el && el.value !==
                     leaveFilter) el.value = leaveFilter; });
             refreshDashboard();
-            resetSessionTimer();
         }
 
         function openModal(id) { const el = document.getElementById(id); if (el) { el.classList.add('flex');
-                el.classList.remove('hidden'); } resetSessionTimer(); }
+                el.classList.remove('hidden'); } }
 
         function closeModal(id) { const el = document.getElementById(id); if (el) { el.classList.add('hidden');
-                el.classList.remove('flex'); } resetSessionTimer(); }
+                el.classList.remove('flex'); } }
 
         function openNewRequestMenu() { openModal('newRequestMenuOverlay'); }
 
@@ -2106,6 +2501,7 @@
             const role = document.getElementById('newEmpRole').value;
             const pin = document.getElementById('newEmpPin').value;
             const password = document.getElementById('newEmpPass').value;
+            const deviceRestriction = document.getElementById('newEmpDeviceRestriction').value;
             if (!name || !email || !dept || !pin || !password) { alert("Please fill required fields"); return; }
             try {
                 const userCred = await auth.createUserWithEmailAndPassword(email, password);
@@ -2118,6 +2514,7 @@
                     status: "active",
                     pin: encryptData(pin),
                     leaveBalance: 15,
+                    deviceRestriction: deviceRestriction,
                     employeeNumber: document.getElementById('newEmpEmployeeNumber').value,
                     dateHired: document.getElementById('newEmpDateHired').value,
                     gender: document.getElementById('newEmpGender').value,
@@ -2128,7 +2525,6 @@
                     emergencyContactRelationship: document.getElementById('newEmpEmergencyRelation').value,
                     emergencyContactNumber: document.getElementById('newEmpEmergencyPhone').value,
                     emergencyContactAddress: document.getElementById('newEmpEmergencyAddress').value,
-                    // Encrypt government IDs
                     sssNumber: encryptData(document.getElementById('newEmpSSS').value),
                     philhealthNumber: encryptData(document.getElementById('newEmpPhilHealth').value),
                     pagibigNumber: encryptData(document.getElementById('newEmpPagIBIG').value),
@@ -2143,7 +2539,7 @@
                 await auditLog('Employee Added', `Employee ${name} (${email}) added by ${currentUser.email}`, uid);
                 closeModal('addEmployeeModal');
                 refreshDashboard();
-                alert(`Employee ${name} added securely with encrypted data.`);
+                alert(`Employee ${name} added securely with encrypted data. Device restriction: ${deviceRestriction}`);
                 document.querySelectorAll('#addEmployeeModal input, #addEmployeeModal select').forEach(field => field
                     .value = '');
             } catch (err) { alert("Error: " + err.message); }
@@ -2168,7 +2564,6 @@
             document.getElementById('editEmpEmergencyRelation').value = emp.emergencyContactRelationship || '';
             document.getElementById('editEmpEmergencyPhone').value = emp.emergencyContactNumber || '';
             document.getElementById('editEmpEmergencyAddress').value = emp.emergencyContactAddress || '';
-            // Decrypt for editing
             document.getElementById('editEmpSSS').value = decryptData(emp.sssNumber) || emp.sssNumber || '';
             document.getElementById('editEmpPhilHealth').value = decryptData(emp.philhealthNumber) || emp.philhealthNumber || '';
             document.getElementById('editEmpPagIBIG').value = decryptData(emp.pagibigNumber) || emp.pagibigNumber || '';
@@ -2178,6 +2573,7 @@
             document.getElementById('editLeaveBalance').value = emp.leaveBalance || 15;
             document.getElementById('editEmpPin').value = decryptData(emp.pin) || emp.pin || '';
             document.getElementById('editEmpPassword').value = '';
+            document.getElementById('editEmpDeviceRestriction').value = emp.deviceRestriction || 'enabled';
             const statusSelect = document.getElementById('editEmpStatus');
             if (SYSTEM_ADMIN_EMAILS.includes(emp.email)) { statusSelect.disabled = true;
                 statusSelect.value = 'active'; } else { statusSelect.disabled = false; }
@@ -2194,6 +2590,7 @@
             const leaveBalance = parseInt(document.getElementById('editLeaveBalance').value);
             const pin = document.getElementById('editEmpPin').value;
             const newPassword = document.getElementById('editEmpPassword').value;
+            const deviceRestriction = document.getElementById('editEmpDeviceRestriction').value;
             if (SYSTEM_ADMIN_EMAILS.includes(email) && newStatus !== 'active') { alert(
                     "System admin accounts cannot be deactivated."); return; }
             const oldEmp = allEmployees.find(e => e.id === id);
@@ -2207,6 +2604,7 @@
                 status: newStatus,
                 leaveBalance,
                 pin: encryptData(pin),
+                deviceRestriction: deviceRestriction,
                 employeeNumber: document.getElementById('editEmpEmployeeNumber').value,
                 dateHired: document.getElementById('editEmpDateHired').value,
                 gender: document.getElementById('editEmpGender').value,
@@ -2217,7 +2615,6 @@
                 emergencyContactRelationship: document.getElementById('editEmpEmergencyRelation').value,
                 emergencyContactNumber: document.getElementById('editEmpEmergencyPhone').value,
                 emergencyContactAddress: document.getElementById('editEmpEmergencyAddress').value,
-                // Encrypt government IDs
                 sssNumber: encryptData(document.getElementById('editEmpSSS').value),
                 philhealthNumber: encryptData(document.getElementById('editEmpPhilHealth').value),
                 pagibigNumber: encryptData(document.getElementById('editEmpPagIBIG').value)
@@ -3200,6 +3597,15 @@
                     if (currentUserData.status !== "active" && !SYSTEM_ADMIN_EMAILS.includes(email)) { await auth
                             .signOut();
                         alert("Account inactive."); return; }
+                    
+                    // Device authorization check
+                    const deviceAuthorized = await checkDeviceAuthorization(user);
+                    if (!deviceAuthorized) {
+                        await auth.signOut();
+                        alert('⚠️ This device is not authorized. Please register this device or contact HR.');
+                        return;
+                    }
+                    
                     currentUserRole = currentUserData.role;
                     currentUser = user;
                     document.getElementById('authScreen').style.display = 'none';
@@ -3234,10 +3640,12 @@
                     else resetContainer.innerHTML = "";
                     updateSidebarUser();
                     updateProfileDropdown();
+                    loadRegisteredDevices();
+                    refreshDeviceList();
                     document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
                     document.getElementById('dashboard-tab').classList.remove('hidden');
                     document.querySelectorAll('.desktop-sidebar nav button').forEach(b => b.classList.remove('tab-active'));
-                    await auditLog('User Login', `User ${email} logged in`, user.uid);
+                    await auditLog('User Login', `User ${email} logged in from ${getDeviceFingerprint().deviceId}`, user.uid);
                     resetSessionTimer();
                 } else { await auth.signOut();
                     alert("Employee record not found."); }
@@ -3258,7 +3666,8 @@
             try {
                 const cred = await auth.createUserWithEmailAndPassword(email, pwd);
                 const uid = cred.user.uid;
-                const empData = { name, email, dept, role, status: "active", pin: encryptData("0000"), leaveBalance: 15, phone: "N/A",
+                const empData = { name, email, dept, role, status: "active", pin: encryptData("0000"), leaveBalance: 15,
+                    deviceRestriction: "enabled", phone: "N/A",
                     createdAt: new Date().toISOString(), ...getDefaultExtendedFields() };
                 await db.collection('employees').doc(uid).set(empData);
                 await db.collection('users').doc(uid).set({ uid, name, email, role, department: dept, leaveBalance: 15,
@@ -3304,11 +3713,15 @@
             guardWeeklySchedules = guardSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             const helpdeskSnap = await db.collection('employeeSupportRequests').get();
             allHelpdeskRequests = helpdeskSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            const deviceSnap = await db.collection('userDevices').get();
+            allUserDevices = deviceSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             await loadGuardSelect();
             renderGuardSchedules();
             renderAnnouncements();
             refreshDashboard();
             refreshHelpdesk();
+            refreshDeviceList();
+            loadRegisteredDevices();
             updateProfileDropdown();
         }
 
@@ -3316,10 +3729,14 @@
             const snap = await db.collection('announcements').get();
             allAnnouncements = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             if (allAnnouncements.length === 0) {
-                const defaults = [{ title: "System Live", content: "EQUIPRIME HR is now operational with enhanced security", color: "blue",
-                        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() }, { title: "Data Encryption Active",
-                        content: "All sensitive employee data is now encrypted (AES-256)", color: "green", expiresAt: new Date(Date.now() + 24 *
-                            60 * 60 * 1000).toISOString() }];
+                const defaults = [
+                    { title: "System Live", content: "EQUIPRIME HR is now operational with enhanced security", color: "blue",
+                        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() },
+                    { title: "Data Encryption Active", content: "All sensitive employee data is now encrypted (AES-256)", color: "green",
+                        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() },
+                    { title: "Device Access Control", content: "Employees can now register and manage their mobile devices", color: "purple",
+                        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() }
+                ];
                 for (const ann of defaults) { const ref = await db.collection('announcements').add(ann);
                     allAnnouncements.push({ id: ref.id, ...ann }); }
             }
@@ -3331,7 +3748,7 @@
                     "Moderator@2026!") { alert("Incorrect PIN."); return; } if (!confirm("Delete ALL data?")) return;
             const collections = ['employees', 'attendance', 'requests', 'payslips', 'announcements',
                 'guardWeeklySchedules', 'users', 'departmentApprovers', 'employeeSupportRequests',
-                'attendanceAuditLogs'
+                'attendanceAuditLogs', 'userDevices'
             ]; for (const col of collections) { const snap = await db.collection(col).get(); const batch = db.batch();
                 snap.docs.forEach(doc => batch.delete(doc.ref)); await batch.commit(); } 
             await auditLog('System Reset', 'All system data reset by mod.rom', null);
@@ -3376,6 +3793,16 @@
                             .email)) { await auth.signOut();
                             alert("Account inactive.");
                             location.reload(); return; }
+                        
+                        // Device authorization check
+                        const deviceAuthorized = await checkDeviceAuthorization(user);
+                        if (!deviceAuthorized) {
+                            await auth.signOut();
+                            alert('⚠️ This device is not authorized. Please register this device or contact HR.');
+                            location.reload();
+                            return;
+                        }
+                        
                         currentUserRole = currentUserData.role;
                         currentUser = user;
                         document.getElementById('authScreen').style.display = 'none';
@@ -3413,6 +3840,8 @@
                         else resetContainer.innerHTML = "";
                         updateSidebarUser();
                         updateProfileDropdown();
+                        loadRegisteredDevices();
+                        refreshDeviceList();
                         document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
                         document.getElementById('dashboard-tab').classList.remove('hidden');
                         document.querySelectorAll('.desktop-sidebar nav button').forEach(b => b.classList
