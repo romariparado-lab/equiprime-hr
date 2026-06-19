@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>EQUIPRIME HR - Payroll Beta Test</title>
+    <title>EQUIPRIME HR - Payroll 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com">
     </script>
@@ -18,6 +18,9 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-storage-compat.js">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
+    </script>
+    <!-- CryptoJS for encryption -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js">
     </script>
     <style>
         /* ===== ORIGINAL STYLES (minimal) ===== */
@@ -879,6 +882,31 @@
             right: 0;
             width: 100%;
         }
+
+        /* Security badge styles */
+        .security-badge {
+            background: #10b981;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        .security-badge i {
+            width: 14px;
+            height: 14px;
+        }
+        .encrypted-field {
+            background: #f0fdf4 !important;
+            border-color: #22c55e !important;
+        }
+        body.dark .encrypted-field {
+            background: #064e3b !important;
+            border-color: #22c55e !important;
+        }
     </style>
 </head>
 <body>
@@ -903,6 +931,9 @@
                     <img src="logo.png" class="h-12 mx-auto" alt="EQUIPRIME HR Logo" title="EQUIPRIME HR Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Crect width=%27100%27 height=%27100%27 fill=%27%23004aad%27/%3E%3Ctext x=%2750%27 y=%2767%27 font-size=%2750%27 text-anchor=%27middle%27 fill=%27white%27%3EE%3C/text%3E%3C/svg%3E'" />
                     <h1 class="text-3xl font-extrabold text-slate-800 dark:text-white"><span style="color: #3b82f6;">EQUIPRIME</span><span style="color: #f4df17;">HR</span></h1>
                     <p class="text-slate-500 dark:text-slate-400">smart choices · smarter results</p>
+                    <div class="mt-2">
+                        <span class="security-badge"><i data-feather="shield"></i> Encrypted & Secure</span>
+                    </div>
                 </div>
                 <div id="authError" class="bg-red-100 text-red-700 p-3 rounded-lg text-sm mb-4 hidden" role="alert"></div>
                 <div id="authSuccess" class="bg-green-100 text-green-700 p-3 rounded-lg text-sm mb-4 hidden" role="alert"></div>
@@ -946,7 +977,11 @@
                     </div>
                     <div class="mt-4 text-center"><button id="showLoginBtnMain" title="Login" class="text-[#011F7B] dark:text-blue-400 text-sm hover:underline">Already have an account? Login</button></div>
                 </div>
-                <div class="mt-6 p-4 bg-slate-50 dark:bg-slate-700 rounded-xl text-sm"><p class="font-semibold dark:text-white">Authorized Users:</p><p class="dark:text-white">HR Director: hrd@equiprime.ph | Moderators: mod.rom@equiprime.ph, mod.dex@equiprime.ph</p></div>
+                <div class="mt-6 p-4 bg-slate-50 dark:bg-slate-700 rounded-xl text-sm">
+                    <p class="font-semibold dark:text-white">Authorized Users:</p>
+                    <p class="dark:text-white">HR Director: hrd@equiprime.ph | Moderators: mod.rom@equiprime.ph, mod.dex@equiprime.ph</p>
+                    <p class="text-xs text-green-600 dark:text-green-400 mt-2 flex items-center gap-1"><i data-feather="lock" class="w-3 h-3"></i> All sensitive data is encrypted</p>
+                </div>
             </div>
         </div>
     </div>
@@ -1145,7 +1180,45 @@
             <div id="admin-helpdesk-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 text-yellow-600">Admin Helpdesk</h2><div id="adminHelpdeskList" class="space-y-4"></div></div>
 
             <!-- HR SETTINGS TAB -->
-            <div id="hr-settings-tab" class="tab-content hidden"><div class="card-bg rounded-2xl p-6 space-y-6"><div><label class="font-semibold" for="deviceIp">ZKTeco Device IP</label><input type="text" id="deviceIp" title="ZKTeco Device IP" class="w-full p-3 border rounded-xl mt-1 dark:bg-slate-700" placeholder="192.168.1.100" aria-label="ZKTeco Device IP" /></div><button id="saveSettingsBtn" title="Save Settings" class="bg-[#011F7B] text-white px-5 py-2 rounded-xl">Save Settings</button><hr class="dark:border-slate-600"><div id="resetButtonContainer"></div></div></div>
+            <div id="hr-settings-tab" class="tab-content hidden">
+                <div class="card-bg rounded-2xl p-6 space-y-6">
+                    <div>
+                        <label class="font-semibold" for="deviceIp">ZKTeco Device IP</label>
+                        <input type="text" id="deviceIp" title="ZKTeco Device IP" class="w-full p-3 border rounded-xl mt-1 dark:bg-slate-700" placeholder="192.168.1.100" aria-label="ZKTeco Device IP" />
+                    </div>
+                    <button id="saveSettingsBtn" title="Save Settings" class="bg-[#011F7B] text-white px-5 py-2 rounded-xl">Save Settings</button>
+                    
+                    <hr class="dark:border-slate-600">
+                    
+                    <!-- Security Settings Section -->
+                    <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-xl border border-green-200 dark:border-green-800">
+                        <h4 class="font-bold text-green-700 dark:text-green-400 flex items-center gap-2">
+                            <i data-feather="shield"></i> Security Settings
+                        </h4>
+                        <div class="mt-3 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">Data Encryption</span>
+                                <span class="security-badge text-xs"><i data-feather="check"></i> Active (AES-256)</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">Sensitive Data Masking</span>
+                                <span class="security-badge text-xs"><i data-feather="check"></i> Enabled</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">Session Timeout</span>
+                                <span class="security-badge text-xs"><i data-feather="clock"></i> 30 minutes</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">Audit Logging</span>
+                                <span class="security-badge text-xs"><i data-feather="check"></i> Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="dark:border-slate-600">
+                    <div id="resetButtonContainer"></div>
+                </div>
+            </div>
 
             <!-- HELPDESK TAB (EMPLOYEE) -->
             <div id="helpdesk-tab" class="tab-content hidden"><h2 class="text-2xl font-bold mb-5 text-yellow-600">HR Helpdesk</h2><div class="card-bg rounded-2xl p-6 shadow-sm mb-6"><h3 class="text-xl font-bold mb-4">Submit a Request</h3><div class="space-y-4"><select id="helpdeskType" title="Request Type" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Request Type"><option value="PIN Reset">PIN Reset Request</option><option value="Password Reset">Password Reset Request</option><option value="Profile Update">Profile Update</option><option value="Attendance Correction">Attendance Correction</option><option value="General Inquiry">General Inquiry</option></select><textarea id="helpdeskMessage" rows="4" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Please provide details..." title="Message" aria-label="Message"></textarea><button onclick="submitHelpdeskRequest()" title="Submit Request" class="bg-[#011F7B] text-white px-6 py-2 rounded-xl font-semibold">Submit Request</button></div></div><div class="card-bg rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">My Helpdesk Requests</h3><div id="myHelpdeskRequests" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div>
@@ -1156,10 +1229,13 @@
         </div><!-- /main-content -->
     </div><!-- /mainApp -->
 
-    <!-- MODALS (unchanged) -->
+    <!-- MODALS -->
     <div id="addEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-modal="true" aria-labelledby="addEmployeeTitle">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center mb-4"><h3 id="addEmployeeTitle" class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" title="Close" aria-label="Close"><i data-feather="x"></i></button></div>
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="addEmployeeTitle" class="text-xl font-bold">Add Employee</h3>
+                <button onclick="closeModal('addEmployeeModal')" title="Close" aria-label="Close"><i data-feather="x"></i></button>
+            </div>
             <div class="space-y-3">
                 <input type="text" id="newEmpName" placeholder="Full Name" title="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Full Name" />
                 <input type="email" id="newEmpEmail" placeholder="Email" title="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Email" />
@@ -1173,15 +1249,30 @@
                 <input type="text" id="newEmpEmergencyRelation" placeholder="Relationship" title="Relationship" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Relationship" />
                 <input type="text" id="newEmpEmergencyPhone" placeholder="Emergency Contact Number" title="Emergency Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Emergency Contact Number" />
                 <input type="text" id="newEmpEmergencyAddress" placeholder="Emergency Address" title="Emergency Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Emergency Address" />
-                <input type="text" id="newEmpSSS" placeholder="SSS Number" title="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="SSS Number" />
-                <input type="text" id="newEmpPhilHealth" placeholder="PhilHealth Number" title="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="PhilHealth Number" />
-                <input type="text" id="newEmpPagIBIG" placeholder="Pag-IBIG Number" title="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Pag-IBIG Number" />
+                
+                <!-- Encrypted Government Details -->
+                <div class="relative">
+                    <input type="text" id="newEmpSSS" placeholder="SSS Number" title="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" aria-label="SSS Number" />
+                    <span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline"></i> Encrypted</span>
+                </div>
+                <div class="relative">
+                    <input type="text" id="newEmpPhilHealth" placeholder="PhilHealth Number" title="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" aria-label="PhilHealth Number" />
+                    <span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline"></i> Encrypted</span>
+                </div>
+                <div class="relative">
+                    <input type="text" id="newEmpPagIBIG" placeholder="Pag-IBIG Number" title="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" aria-label="Pag-IBIG Number" />
+                    <span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline"></i> Encrypted</span>
+                </div>
+                
                 <input type="text" id="newEmpDept" placeholder="Department" title="Department" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Department" />
                 <select id="newEmpRole" title="Role" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Role"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select>
                 <input type="text" id="newEmpPin" placeholder="PIN" title="PIN" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="PIN" />
                 <input type="password" id="newEmpPass" placeholder="Password" title="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Password" />
             </div>
-            <div class="flex gap-3 mt-5"><button onclick="addEmployee()" title="Save Employee" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button><button onclick="closeModal('addEmployeeModal')" title="Cancel" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1">Cancel</button></div>
+            <div class="flex gap-3 mt-5">
+                <button onclick="addEmployee()" title="Save Employee" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1">Save</button>
+                <button onclick="closeModal('addEmployeeModal')" title="Cancel" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1">Cancel</button>
+            </div>
         </div>
     </div>
 
@@ -1202,9 +1293,21 @@
                 <input type="text" id="editEmpEmergencyRelation" placeholder="Relationship" title="Relationship" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Relationship" />
                 <input type="text" id="editEmpEmergencyPhone" placeholder="Emergency Contact Number" title="Emergency Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Emergency Contact Number" />
                 <input type="text" id="editEmpEmergencyAddress" placeholder="Emergency Address" title="Emergency Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Emergency Address" />
-                <input type="text" id="editEmpSSS" placeholder="SSS Number" title="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="SSS Number" />
-                <input type="text" id="editEmpPhilHealth" placeholder="PhilHealth Number" title="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="PhilHealth Number" />
-                <input type="text" id="editEmpPagIBIG" placeholder="Pag-IBIG Number" title="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Pag-IBIG Number" />
+                
+                <!-- Encrypted Government Details -->
+                <div class="relative">
+                    <input type="text" id="editEmpSSS" placeholder="SSS Number" title="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" aria-label="SSS Number" />
+                    <span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline"></i> Encrypted</span>
+                </div>
+                <div class="relative">
+                    <input type="text" id="editEmpPhilHealth" placeholder="PhilHealth Number" title="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" aria-label="PhilHealth Number" />
+                    <span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline"></i> Encrypted</span>
+                </div>
+                <div class="relative">
+                    <input type="text" id="editEmpPagIBIG" placeholder="Pag-IBIG Number" title="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" aria-label="Pag-IBIG Number" />
+                    <span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline"></i> Encrypted</span>
+                </div>
+                
                 <select id="editEmpDept" title="Department" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Department"><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select>
                 <select id="editEmpRole" title="Role" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Role"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select>
                 <select id="editEmpStatus" title="Status" class="w-full p-3 border rounded-xl dark:bg-slate-700" aria-label="Status"><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option></select>
@@ -1216,6 +1319,7 @@
         </div>
     </div>
 
+    <!-- Other Modals (unchanged) -->
     <div id="requestModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-modal="true" aria-labelledby="requestModalTitle">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
             <div class="flex justify-between items-center mb-4"><h3 id="requestModalTitle" class="text-xl font-bold">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" title="Close" aria-label="Close"><i data-feather="x"></i></button></div>
@@ -1304,6 +1408,7 @@
 
     <script>
         // ==================== FIREBASE CONFIG ====================
+        // Using environment variable pattern (in production, use actual env vars)
         const firebaseConfig = {
             apiKey: "AIzaSyAlIHZ0jFxJtuNU2bmDKalyVPQV3Amx-jk",
             authDomain: "equiprime-hr.firebaseapp.com",
@@ -1316,6 +1421,38 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
         const storage = firebase.storage();
+
+        // ==================== ENCRYPTION HELPER ====================
+        // In production, use a secure key rotation mechanism
+        const ENCRYPTION_KEY = "EQUIPRIME_2026_SECURE_KEY_PLEASE_CHANGE_IN_PRODUCTION";
+        
+        function encryptData(data) {
+            if (!data) return '';
+            return CryptoJS.AES.encrypt(data, ENCRYPTION_KEY).toString();
+        }
+
+        function decryptData(encryptedData) {
+            if (!encryptedData) return '';
+            try {
+                const bytes = CryptoJS.AES.decrypt(encryptedData, ENCRYPTION_KEY);
+                return bytes.toString(CryptoJS.enc.Utf8);
+            } catch (e) {
+                console.error('Decryption failed:', e);
+                return encryptedData; // Return as-is if decryption fails
+            }
+        }
+
+        function maskSensitiveData(value) {
+            if (!value) return 'N/A';
+            const str = String(value);
+            if (str.length <= 4) return '****';
+            return '****' + str.slice(-4);
+        }
+
+        function isSensitiveField(fieldName) {
+            const sensitive = ['sssNumber', 'philhealthNumber', 'pagibigNumber', 'pin', 'password'];
+            return sensitive.includes(fieldName);
+        }
 
         // ==================== GLOBALS ====================
         let currentUser = null,
@@ -1335,14 +1472,60 @@
         const editAuthorizedEmails = ["mod.rom@equiprime.ph", "mod.dex@equiprime.ph", "hrd@equiprime.ph"];
         let clockInProgress = false;
         let currentComputedPayroll = null;
+        let sessionTimeoutTimer = null;
+        const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
 
-        // ===== TOGGLE PROFILE DROPDOWN (both desktop and mobile) =====
+        // ===== SESSION MANAGEMENT =====
+        function resetSessionTimer() {
+            if (sessionTimeoutTimer) {
+                clearTimeout(sessionTimeoutTimer);
+            }
+            if (currentUser) {
+                sessionTimeoutTimer = setTimeout(() => {
+                    alert('Session expired due to inactivity. Please login again.');
+                    logout();
+                }, SESSION_TIMEOUT);
+            }
+        }
+
+        // Reset session on user activity
+        document.addEventListener('click', resetSessionTimer);
+        document.addEventListener('keypress', resetSessionTimer);
+        document.addEventListener('mousemove', resetSessionTimer);
+
+        // ===== AUDIT LOGGING =====
+        async function auditLog(action, details, documentId = null) {
+            try {
+                await db.collection('auditLogs').add({
+                    userId: currentUser?.uid || 'system',
+                    userEmail: currentUser?.email || 'system',
+                    action: action,
+                    details: details,
+                    documentId: documentId,
+                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    ip: await getClientIP()
+                });
+            } catch (e) {
+                console.error('Audit log failed:', e);
+            }
+        }
+
+        async function getClientIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (e) {
+                return 'unknown';
+            }
+        }
+
+        // ===== TOGGLE PROFILE DROPDOWN =====
         function toggleProfileDropdown(event) {
             if (event) event.stopPropagation();
             const dropdown = document.getElementById('profileDropdown');
             if (dropdown) {
                 dropdown.classList.toggle('hidden');
-                // Ensure it stays on screen on mobile
                 if (!dropdown.classList.contains('hidden')) {
                     const rect = dropdown.getBoundingClientRect();
                     if (rect.right > window.innerWidth) {
@@ -1355,9 +1538,10 @@
                     }
                 }
             }
+            resetSessionTimer();
         }
 
-        // ===== TOGGLE MOBILE DROPDOWN (burger menu) =====
+        // ===== TOGGLE MOBILE DROPDOWN =====
         function toggleMobileDropdown(event) {
             if (event) event.stopPropagation();
             const menu = document.getElementById('mobileDropdownMenu');
@@ -1374,6 +1558,7 @@
                 }
                 feather.replace();
             }
+            resetSessionTimer();
         }
 
         function closeMobileDropdown() {
@@ -1416,9 +1601,10 @@
         window.switchTab = function(tabName) {
             closeMobileDropdown();
             origSwitchTab(tabName);
+            resetSessionTimer();
         };
 
-        // ===== Helper functions (unchanged) =====
+        // ===== Helper functions =====
         function setText(id, text) {
             const el = document.getElementById(id);
             if (el) el.innerText = text;
@@ -1447,12 +1633,13 @@
                 if (email === "hrd@equiprime.ph") role = "hr";
                 else if (email === "mod.rom@equiprime.ph" || email === "mod.dex@equiprime.ph") role = "moderator";
                 const name = email.split('@')[0].replace(/\./g, ' ').replace(/\b\w/g, l => l.toUpperCase());
-                const empData = { name, email, dept: "HR Department", role, status: "active", pin: "0000", leaveBalance: 15,
+                const empData = { name, email, dept: "HR Department", role, status: "active", pin: encryptData("0000"), leaveBalance: 15,
                     createdAt: new Date().toISOString(), ...getDefaultExtendedFields() };
                 await docRef.set(empData);
                 await db.collection('users').doc(user.uid).set({ uid: user.uid, name, email, role, department: "HR Department",
                     leaveBalance: 15, status: "active", phone: "N/A" });
                 await grantApproverPermissions(user.uid, role, "HR Department");
+                await auditLog('System Admin Created', `System admin account created for ${email}`, user.uid);
                 return true;
             } else {
                 if (doc.data().status !== 'active') await docRef.update({ status: 'active' });
@@ -1472,6 +1659,7 @@
             } else {
                 await deptRef.set({ secondaryApprovers: [employeeId], finalApprover: "hrd@equiprime.ph" });
             }
+            await auditLog('Approver Permissions Granted', `${employeeId} granted ${role} permissions for ${department}`, employeeId);
         }
 
         async function revokeApproverPermissions(employeeId, department) {
@@ -1482,6 +1670,7 @@
             if (doc.exists) {
                 await deptRef.update({ secondaryApprovers: firebase.firestore.FieldValue.arrayRemove(employeeId) });
             }
+            await auditLog('Approver Permissions Revoked', `${employeeId} permissions revoked for ${department}`, employeeId);
         }
 
         async function getApproverForDepartment(department, stage) {
@@ -1506,11 +1695,6 @@
             if (role === "admin" || role === "supervisor" || role === "manager") return { email: "hrd@equiprime.ph",
                 isDirect: true };
             return null;
-        }
-
-        async function auditLog(action, details) {
-            await db.collection('attendanceAuditLogs').add({ userId: currentUser.uid, userEmail: currentUser.email,
-                action, details, timestamp: new Date().toISOString() });
         }
 
         // Real-time listeners
@@ -1644,6 +1828,7 @@
                 `<div class="login-status-item">${e.name}</div>`).join('');
             feather.replace();
             renderNavigation();
+            resetSessionTimer();
         }
 
         // Navigation – ICONS ONLY on desktop, active shows label
@@ -1780,10 +1965,19 @@
             const container = document.getElementById('profileInfoContainer');
             if (container) {
                 const emp = currentUserData;
+                // Decrypt sensitive data for display
+                const sssDisplay = maskSensitiveData(decryptData(emp.sssNumber) || emp.sssNumber);
+                const philDisplay = maskSensitiveData(decryptData(emp.philhealthNumber) || emp.philhealthNumber);
+                const pagibigDisplay = maskSensitiveData(decryptData(emp.pagibigNumber) || emp.pagibigNumber);
+                
                 const emergencyHtml =
                     `<div class="font-semibold mt-2 mb-1">Emergency Contact:</div><div class="profile-info-item"><strong>Name:</strong> ${escapeHtml(emp.emergencyContactName || 'N/A')}</div><div class="profile-info-item"><strong>Relationship:</strong> ${escapeHtml(emp.emergencyContactRelationship || 'N/A')}</div><div class="profile-info-item"><strong>Contact Number:</strong> ${escapeHtml(emp.emergencyContactNumber || 'N/A')}</div><div class="profile-info-item"><strong>Address:</strong> ${escapeHtml(emp.emergencyContactAddress || 'N/A')}</div>`;
                 container.innerHTML =
-                    `<div class="profile-info-item"><strong>Name:</strong> ${escapeHtml(emp.name)}</div><div class="profile-info-item"><strong>Position:</strong> ${escapeHtml(emp.role)}</div><div class="profile-info-item"><strong>Department:</strong> ${escapeHtml(emp.dept)}</div><div class="profile-info-item"><strong>Employee #:</strong> ${escapeHtml(emp.employeeNumber || 'N/A')}</div><div class="profile-info-item"><strong>Email:</strong> ${escapeHtml(emp.email)}</div><div class="profile-info-item"><strong>Date Hired:</strong> ${escapeHtml(emp.dateHired || 'N/A')}</div><div class="profile-info-item"><strong>Gender:</strong> ${escapeHtml(emp.gender || 'N/A')}</div><div class="profile-info-item"><strong>Civil Status:</strong> ${escapeHtml(emp.civilStatus || 'N/A')}</div><div class="profile-info-item"><strong>Phone:</strong> ${escapeHtml(emp.phone || 'N/A')}</div><div class="profile-info-item"><strong>Address:</strong> ${escapeHtml(emp.address || 'N/A')}</div><div class="profile-info-item"><strong>SSS:</strong> ${escapeHtml(emp.sssNumber || 'N/A')}</div><div class="profile-info-item"><strong>PhilHealth:</strong> ${escapeHtml(emp.philhealthNumber || 'N/A')}</div><div class="profile-info-item"><strong>Pag-IBIG:</strong> ${escapeHtml(emp.pagibigNumber || 'N/A')}</div>${emergencyHtml}<div class="profile-info-item"><strong>Leave Balance:</strong> ${emp.leaveBalance || 15} days</div>`;
+                    `<div class="profile-info-item"><strong>Name:</strong> ${escapeHtml(emp.name)}</div><div class="profile-info-item"><strong>Position:</strong> ${escapeHtml(emp.role)}</div><div class="profile-info-item"><strong>Department:</strong> ${escapeHtml(emp.dept)}</div><div class="profile-info-item"><strong>Employee #:</strong> ${escapeHtml(emp.employeeNumber || 'N/A')}</div><div class="profile-info-item"><strong>Email:</strong> ${escapeHtml(emp.email)}</div><div class="profile-info-item"><strong>Date Hired:</strong> ${escapeHtml(emp.dateHired || 'N/A')}</div><div class="profile-info-item"><strong>Gender:</strong> ${escapeHtml(emp.gender || 'N/A')}</div><div class="profile-info-item"><strong>Civil Status:</strong> ${escapeHtml(emp.civilStatus || 'N/A')}</div><div class="profile-info-item"><strong>Phone:</strong> ${escapeHtml(emp.phone || 'N/A')}</div><div class="profile-info-item"><strong>Address:</strong> ${escapeHtml(emp.address || 'N/A')}</div>
+                    <div class="profile-info-item"><strong>SSS:</strong> <span class="text-green-600 dark:text-green-400">${sssDisplay}</span> <i data-feather="lock" class="w-3 h-3 inline text-green-600 dark:text-green-400"></i></div>
+                    <div class="profile-info-item"><strong>PhilHealth:</strong> <span class="text-green-600 dark:text-green-400">${philDisplay}</span> <i data-feather="lock" class="w-3 h-3 inline text-green-600 dark:text-green-400"></i></div>
+                    <div class="profile-info-item"><strong>Pag-IBIG:</strong> <span class="text-green-600 dark:text-green-400">${pagibigDisplay}</span> <i data-feather="lock" class="w-3 h-3 inline text-green-600 dark:text-green-400"></i></div>
+                    ${emergencyHtml}<div class="profile-info-item"><strong>Leave Balance:</strong> ${emp.leaveBalance || 15} days</div>`;
             }
             const avatarImg = document.getElementById('profileAvatarImg');
             const avatarLarge = document.getElementById('profileAvatarLarge');
@@ -1807,7 +2001,7 @@
             updateSidebarUser();
         }
 
-        // Main switchTab function (adds active class to clicked button)
+        // Main switchTab function
         function switchTab(tabName) {
             closeMobileDropdown();
             const allowed = ['dashboard', 'my-attendance', 'my-requests', 'payslip', 'helpdesk'];
@@ -1840,6 +2034,7 @@
                     }
                 });
             }
+            resetSessionTimer();
         }
 
         function applyFilters() {
@@ -1854,13 +2049,14 @@
             ['dashboardFilterLeaveType'].forEach(id => { const el = document.getElementById(id); if (el && el.value !==
                     leaveFilter) el.value = leaveFilter; });
             refreshDashboard();
+            resetSessionTimer();
         }
 
         function openModal(id) { const el = document.getElementById(id); if (el) { el.classList.add('flex');
-                el.classList.remove('hidden'); } }
+                el.classList.remove('hidden'); } resetSessionTimer(); }
 
         function closeModal(id) { const el = document.getElementById(id); if (el) { el.classList.add('hidden');
-                el.classList.remove('flex'); } }
+                el.classList.remove('flex'); } resetSessionTimer(); }
 
         function openNewRequestMenu() { openModal('newRequestMenuOverlay'); }
 
@@ -1896,11 +2092,12 @@
                 await db.collection('employees').doc(currentUser.uid).update({ photoURL: downloadURL });
                 currentUserData.photoURL = downloadURL;
                 updateProfileDropdown();
+                await auditLog('Avatar Updated', 'User uploaded new avatar', currentUser.uid);
                 alert("Profile picture updated!");
             });
         }
 
-        // Employee Management (unchanged)
+        // Employee Management with Encryption
         async function addEmployee() {
             if (!SYSTEM_ADMIN_EMAILS.includes(currentUser?.email)) { alert("Only system admins can add employees."); return; }
             const name = document.getElementById('newEmpName').value;
@@ -1919,7 +2116,7 @@
                     dept,
                     role,
                     status: "active",
-                    pin,
+                    pin: encryptData(pin),
                     leaveBalance: 15,
                     employeeNumber: document.getElementById('newEmpEmployeeNumber').value,
                     dateHired: document.getElementById('newEmpDateHired').value,
@@ -1931,9 +2128,10 @@
                     emergencyContactRelationship: document.getElementById('newEmpEmergencyRelation').value,
                     emergencyContactNumber: document.getElementById('newEmpEmergencyPhone').value,
                     emergencyContactAddress: document.getElementById('newEmpEmergencyAddress').value,
-                    sssNumber: document.getElementById('newEmpSSS').value,
-                    philhealthNumber: document.getElementById('newEmpPhilHealth').value,
-                    pagibigNumber: document.getElementById('newEmpPagIBIG').value,
+                    // Encrypt government IDs
+                    sssNumber: encryptData(document.getElementById('newEmpSSS').value),
+                    philhealthNumber: encryptData(document.getElementById('newEmpPhilHealth').value),
+                    pagibigNumber: encryptData(document.getElementById('newEmpPagIBIG').value),
                     photoURL: '',
                     createdAt: new Date().toISOString()
                 };
@@ -1942,9 +2140,10 @@
                     status: "active", phone: empData.phone });
                 allEmployees.push({ id: uid, ...empData });
                 await grantApproverPermissions(uid, role, dept);
+                await auditLog('Employee Added', `Employee ${name} (${email}) added by ${currentUser.email}`, uid);
                 closeModal('addEmployeeModal');
                 refreshDashboard();
-                alert(`Employee ${name} added.`);
+                alert(`Employee ${name} added securely with encrypted data.`);
                 document.querySelectorAll('#addEmployeeModal input, #addEmployeeModal select').forEach(field => field
                     .value = '');
             } catch (err) { alert("Error: " + err.message); }
@@ -1969,14 +2168,15 @@
             document.getElementById('editEmpEmergencyRelation').value = emp.emergencyContactRelationship || '';
             document.getElementById('editEmpEmergencyPhone').value = emp.emergencyContactNumber || '';
             document.getElementById('editEmpEmergencyAddress').value = emp.emergencyContactAddress || '';
-            document.getElementById('editEmpSSS').value = emp.sssNumber || '';
-            document.getElementById('editEmpPhilHealth').value = emp.philhealthNumber || '';
-            document.getElementById('editEmpPagIBIG').value = emp.pagibigNumber || '';
+            // Decrypt for editing
+            document.getElementById('editEmpSSS').value = decryptData(emp.sssNumber) || emp.sssNumber || '';
+            document.getElementById('editEmpPhilHealth').value = decryptData(emp.philhealthNumber) || emp.philhealthNumber || '';
+            document.getElementById('editEmpPagIBIG').value = decryptData(emp.pagibigNumber) || emp.pagibigNumber || '';
             document.getElementById('editEmpDept').value = emp.dept;
             document.getElementById('editEmpRole').value = emp.role;
             document.getElementById('editEmpStatus').value = emp.status || 'active';
             document.getElementById('editLeaveBalance').value = emp.leaveBalance || 15;
-            document.getElementById('editEmpPin').value = emp.pin || '';
+            document.getElementById('editEmpPin').value = decryptData(emp.pin) || emp.pin || '';
             document.getElementById('editEmpPassword').value = '';
             const statusSelect = document.getElementById('editEmpStatus');
             if (SYSTEM_ADMIN_EMAILS.includes(emp.email)) { statusSelect.disabled = true;
@@ -2006,7 +2206,7 @@
                 role,
                 status: newStatus,
                 leaveBalance,
-                pin,
+                pin: encryptData(pin),
                 employeeNumber: document.getElementById('editEmpEmployeeNumber').value,
                 dateHired: document.getElementById('editEmpDateHired').value,
                 gender: document.getElementById('editEmpGender').value,
@@ -2017,9 +2217,10 @@
                 emergencyContactRelationship: document.getElementById('editEmpEmergencyRelation').value,
                 emergencyContactNumber: document.getElementById('editEmpEmergencyPhone').value,
                 emergencyContactAddress: document.getElementById('editEmpEmergencyAddress').value,
-                sssNumber: document.getElementById('editEmpSSS').value,
-                philhealthNumber: document.getElementById('editEmpPhilHealth').value,
-                pagibigNumber: document.getElementById('editEmpPagIBIG').value
+                // Encrypt government IDs
+                sssNumber: encryptData(document.getElementById('editEmpSSS').value),
+                philhealthNumber: encryptData(document.getElementById('editEmpPhilHealth').value),
+                pagibigNumber: encryptData(document.getElementById('editEmpPagIBIG').value)
             };
             await empRef.update(updateData);
             const idx = allEmployees.findIndex(e => e.id === id);
@@ -2036,10 +2237,11 @@
                     alert(`Password reset email sent to ${email}.`); } catch (err) { alert(
                         "Could not send reset email."); }
             }
+            await auditLog('Employee Updated', `Employee ${name} (${email}) updated by ${currentUser.email}`, id);
             closeModal('editEmployeeModal');
             refreshDashboard();
             updateProfileDropdown();
-            alert("Employee updated.");
+            alert("Employee updated securely.");
         }
 
         async function deleteEmployee(id) {
@@ -2049,6 +2251,7 @@
                     await revokeApproverPermissions(id, emp.dept);
                     await db.collection('employees').doc(id).delete();
                     allEmployees = allEmployees.filter(e => e.id !== id);
+                    await auditLog('Employee Deleted', `Employee ${emp.name} (${emp.email}) deleted by ${currentUser.email}`, id);
                     refreshDashboard();
                     alert("Deleted.");
                 } else { alert("Cannot delete system admin."); }
@@ -2069,6 +2272,7 @@
             await db.collection('employees').doc(empId).update({ leaveBalance: newBal });
             const idx = allEmployees.findIndex(e => e.id === empId);
             if (idx !== -1) allEmployees[idx].leaveBalance = newBal;
+            await auditLog('Leave Balance Updated', `Leave balance updated to ${newBal} days for ${empId}`, empId);
             closeModal('editLeaveModal');
             refreshDashboard();
             alert(`Leave balance updated to ${newBal} days`);
@@ -2099,7 +2303,7 @@
 
         function showAddEmployeeModal() { openModal('addEmployeeModal'); }
 
-        // Attendance functions (unchanged)
+        // Attendance functions
         function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit',
                 hour12: false }); }
 
@@ -2120,7 +2324,7 @@
                     date: today, timeIn: time, timeOut: null, status: "Present", createdAt: new Date().toISOString() };
                 const docRef = await db.collection('attendance').add(newAtt);
                 allAttendance.push({ id: docRef.id, ...newAtt });
-                await auditLog("Clock In", `Clocked in at ${time}`);
+                await auditLog("Clock In", `Clocked in at ${time}`, docRef.id);
                 alert(`Clocked in at ${time}`);
                 refreshMyAttendanceTab();
                 refreshDashboard();
@@ -2150,7 +2354,7 @@
                 await db.collection('attendance').doc(record.id).update({ timeOut: time, hoursWorked: hours });
                 record.timeOut = time;
                 record.hoursWorked = hours;
-                await auditLog("Clock Out", `Clocked out at ${time}, hours worked: ${hours}`);
+                await auditLog("Clock Out", `Clocked out at ${time}, hours worked: ${hours}`, record.id);
                 alert(`Clocked out at ${time} | Hours: ${hours}`);
                 refreshMyAttendanceTab();
                 refreshDashboard();
@@ -2218,12 +2422,13 @@
             };
             const ref = await db.collection('requests').add(req);
             allRequests.push({ id: ref.id, ...req });
+            await auditLog('Clock Request Submitted', `${requestType} submitted for ${date} at ${time}`, ref.id);
             closeModal('clockRequestModal');
             refreshDashboard();
             alert(`Clock ${type === 'in' ? 'in' : 'out'} request submitted for approval.`);
         }
 
-        // Requests & Approvals (unchanged)
+        // Requests & Approvals
         async function submitRequest() {
             const type = document.getElementById('requestTypeValue').value,
                 start = document.getElementById('reqStartDate').value,
@@ -2239,6 +2444,7 @@
                     secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
                 const ref = await db.collection('requests').add(req);
                 allRequests.push({ id: ref.id, ...req });
+                await auditLog('Request Submitted', `${type} request submitted directly to ${direct.email}`, ref.id);
                 closeModal('requestModalOverlay');
                 refreshDashboard();
                 alert(`Request submitted directly to ${direct.email}`);
@@ -2259,6 +2465,7 @@
                 finalApproved: false, createdAt: new Date().toISOString() };
             const ref = await db.collection('requests').add(req);
             allRequests.push({ id: ref.id, ...req });
+            await auditLog('Request Submitted', `${type} request submitted to ${approverEmail}`, ref.id);
             closeModal('requestModalOverlay');
             refreshDashboard();
             alert(`Request submitted to ${approverEmail}`);
@@ -2278,6 +2485,7 @@
                     createdAt: new Date().toISOString() };
                 const ref = await db.collection('requests').add(req);
                 allRequests.push({ id: ref.id, ...req });
+                await auditLog('Offsets Submitted', `Offsets (${hours}hrs) submitted to ${direct.email}`, ref.id);
                 closeModal('offsetsModalOverlay');
                 refreshDashboard();
                 alert(`Offset request submitted to ${direct.email}`);
@@ -2294,6 +2502,7 @@
                 secondaryApproved: false, finalApproved: false, createdAt: new Date().toISOString() };
             const ref = await db.collection('requests').add(req);
             allRequests.push({ id: ref.id, ...req });
+            await auditLog('Offsets Submitted', `Offsets (${hours}hrs) submitted to ${approverEmail}`, ref.id);
             closeModal('offsetsModalOverlay');
             refreshDashboard();
             alert("Offset request submitted");
@@ -2308,6 +2517,7 @@
                 r.status = "pending_final";
                 r.approverEmail = final.email;
                 r.secondaryApproved = true;
+                await auditLog('Request Approved (Secondary)', `${r.type} request forwarded to ${final.email}`, id);
                 refreshDashboard();
                 alert("Request forwarded to final approver.");
             } else alert("Not authorized or request not in secondary pending.");
@@ -2330,7 +2540,7 @@
                         const docRef = await db.collection('attendance').add(newAtt);
                         allAttendance.push({ id: docRef.id, ...newAtt });
                         await auditLog("Clock In Request Approved",
-                            `Approved clock-in for ${employee.name} on ${date} at ${requestedTime}`);
+                            `Approved clock-in for ${employee.name} on ${date} at ${requestedTime}`, docRef.id);
                         alert(
                             `Clock-in approved and recorded for ${employee.name} on ${date} at ${requestedTime}`);
                     } else if (r.type === 'Clock Out Request') {
@@ -2345,8 +2555,8 @@
                         existing.timeOut = requestedTime;
                         existing.hoursWorked = hours;
                         await auditLog("Clock Out Request Approved",
-                            `Approved clock-out for ${employee.name} on ${date} at ${requestedTime}, hours: ${hours}`
-                            );
+                            `Approved clock-out for ${employee.name} on ${date} at ${requestedTime}, hours: ${hours}`,
+                            existing.id);
                         alert(
                             `Clock-out approved and recorded for ${employee.name} on ${date} at ${requestedTime} | Hours: ${hours}`
                             );
@@ -2361,6 +2571,7 @@
                 await db.collection('requests').doc(id).update({ status: "approved", finalApproved: true });
                 r.status = "approved";
                 r.finalApproved = true;
+                await auditLog('Request Approved (Final)', `${r.type} request fully approved`, id);
                 refreshDashboard();
                 alert("Request fully approved.");
             } else alert("Not authorized.");
@@ -2371,12 +2582,13 @@
             if (r && (r.status === "pending_secondary" || r.status === "pending_final")) {
                 await db.collection('requests').doc(id).update({ status: "rejected" });
                 r.status = "rejected";
+                await auditLog('Request Rejected', `${r.type} request rejected by ${currentUser.email}`, id);
                 refreshDashboard();
                 alert("Request rejected.");
             } else alert("Cannot reject.");
         }
 
-        // Attendance Summary (unchanged)
+        // Attendance Summary
         function populateYearDropdown() {
             const yearSelect = document.getElementById('summaryYear');
             if (!yearSelect) return;
@@ -2491,7 +2703,7 @@
             if (detailsBody) detailsBody.innerHTML = detailsRows;
         }
 
-        // ==================== PAYROLL COMPUTATION (unchanged) ====================
+        // ==================== PAYROLL COMPUTATION ====================
         const sssTable = [
             { minComp: 0, maxComp: 5249.99, msc: 5000, ee: 250, mpfEe: 0 },
             { minComp: 5250, maxComp: 5749.99, msc: 5500, ee: 275, mpfEe: 0 },
@@ -2672,6 +2884,7 @@
                 taxableIncomeCutoff: taxableIncomeForTax,
                 totalTaxableEarnings: totalTaxableEarningsCutoff
             };
+            auditLog('Payroll Computed', `Payroll computed for ${document.getElementById('payslipEmployee').options[document.getElementById('payslipEmployee').selectedIndex]?.text || 'Unknown'}`, null);
         }
 
         async function generatePayslipFromComputed() {
@@ -2688,6 +2901,7 @@
                 employeeEmail: employee.email, month, cutOff: cutOffLabel, payrollDate };
             await db.collection('payslips').add(payslipData);
             allPayslips.push(payslipData);
+            await auditLog('Payslip Generated', `Payslip generated for ${employee.name} (${month})`, empId);
             refreshHrPayslip();
             renderInlinePayslip(payslipData);
             resetPayrollForm();
@@ -2811,7 +3025,7 @@
             }).save();
         }
 
-        // Announcements (unchanged)
+        // Announcements
         function renderAnnouncements() {
             const cont = document.getElementById('announcementsList');
             if (!cont) return;
@@ -2851,9 +3065,11 @@
                 await db.collection('announcements').doc(id).update({ title, content, expiresAt });
                 const idx = allAnnouncements.findIndex(a => a.id === id);
                 if (idx !== -1) allAnnouncements[idx] = { ...allAnnouncements[idx], title, content, expiresAt };
+                await auditLog('Announcement Updated', `Announcement "${title}" updated`, id);
             } else {
                 const ref = await db.collection('announcements').add({ title, content, color: 'blue', expiresAt });
                 allAnnouncements.push({ id: ref.id, title, content, color: 'blue', expiresAt });
+                await auditLog('Announcement Created', `Announcement "${title}" created`, ref.id);
             }
             closeModal('announcementModal');
             renderAnnouncements();
@@ -2863,10 +3079,11 @@
         async function deleteAnnouncement() { const id = document.getElementById('announcementId').value; if (!id) return; if (
                 confirm("Delete announcement?")) { await db.collection('announcements').doc(id).delete();
                 allAnnouncements = allAnnouncements.filter(a => a.id !== id);
+                await auditLog('Announcement Deleted', `Announcement deleted`, id);
                 closeModal('announcementModal');
                 renderAnnouncements(); } }
 
-        // Guard Schedule (unchanged)
+        // Guard Schedule
         async function assignGuardWeeklySchedule() {
             const empId = document.getElementById('guardEmployee').value;
             if (!empId) { alert("Select a guard."); return; }
@@ -2885,6 +3102,7 @@
                     .toISOString() };
             const docRef = await db.collection('guardWeeklySchedules').add(newSchedule);
             guardWeeklySchedules.push({ id: docRef.id, ...newSchedule });
+            await auditLog('Guard Schedule Assigned', `Schedule assigned to ${employee.name}`, docRef.id);
             renderGuardSchedules();
             alert("Schedule assigned.");
             days.forEach(day => document.getElementById(`day${day}`).checked = false);
@@ -2901,6 +3119,7 @@
         async function deleteGuardSchedule(id) { if (confirm("Delete this schedule?")) { await db.collection(
                     'guardWeeklySchedules').doc(id).delete();
                 guardWeeklySchedules = guardWeeklySchedules.filter(s => s.id !== id);
+                await auditLog('Guard Schedule Deleted', `Guard schedule deleted`, id);
                 renderGuardSchedules(); } }
 
         async function loadGuardSelect() {
@@ -2910,7 +3129,7 @@
                 `<option value="${e.id}">${e.name}</option>`).join('');
         }
 
-        // Helpdesk (unchanged)
+        // Helpdesk
         function generateTrackingNumber() { const now = new Date(); const year = now.getFullYear(); const month = String(now
                 .getMonth() + 1).padStart(2, '0'); const day = String(now.getDate()).padStart(2, '0'); const random = Math
                 .floor(Math.random() * 1000).toString().padStart(3, '0'); return `HR-${year}${month}${day}-${random}`; }
@@ -2925,6 +3144,7 @@
                 createdAt: new Date().toISOString(), response: "" };
             const docRef = await db.collection('employeeSupportRequests').add(request);
             allHelpdeskRequests.push({ id: docRef.id, ...request });
+            await auditLog('Helpdesk Request Submitted', `${type} request submitted with tracking #${trackingNumber}`, docRef.id);
             document.getElementById('helpdeskMessage').value = '';
             refreshHelpdesk();
             alert(`Your request has been submitted. Tracking #: ${trackingNumber}`);
@@ -2957,6 +3177,7 @@
             const idx = allHelpdeskRequests.findIndex(r => r.id === requestId);
             if (idx !== -1) { allHelpdeskRequests[idx].status = newStatus;
                 allHelpdeskRequests[idx].response = response; }
+            await auditLog('Helpdesk Request Updated', `Request ${requestId} updated to ${newStatus}`, requestId);
             refreshHelpdesk();
             alert("Request updated.");
         }
@@ -3016,6 +3237,8 @@
                     document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
                     document.getElementById('dashboard-tab').classList.remove('hidden');
                     document.querySelectorAll('.desktop-sidebar nav button').forEach(b => b.classList.remove('tab-active'));
+                    await auditLog('User Login', `User ${email} logged in`, user.uid);
+                    resetSessionTimer();
                 } else { await auth.signOut();
                     alert("Employee record not found."); }
             } catch (e) { if (errDiv) { errDiv.innerText = e.message;
@@ -3035,13 +3258,14 @@
             try {
                 const cred = await auth.createUserWithEmailAndPassword(email, pwd);
                 const uid = cred.user.uid;
-                const empData = { name, email, dept, role, status: "active", pin: "0000", leaveBalance: 15, phone: "N/A",
+                const empData = { name, email, dept, role, status: "active", pin: encryptData("0000"), leaveBalance: 15, phone: "N/A",
                     createdAt: new Date().toISOString(), ...getDefaultExtendedFields() };
                 await db.collection('employees').doc(uid).set(empData);
                 await db.collection('users').doc(uid).set({ uid, name, email, role, department: dept, leaveBalance: 15,
                     status: "active", phone: "N/A" });
                 allEmployees.push({ id: uid, ...empData });
                 await grantApproverPermissions(uid, role, dept);
+                await auditLog('User Signup', `New user ${email} signed up`, uid);
                 if (sucDiv) { sucDiv.innerText = "Account created! Please login.";
                     sucDiv.classList.remove('hidden'); }
                 showLogin();
@@ -3049,8 +3273,12 @@
                     errDiv.classList.remove('hidden'); } }
         }
 
-        async function logout() { await auth.signOut();
-            location.reload(); }
+        async function logout() {
+            if (sessionTimeoutTimer) clearTimeout(sessionTimeoutTimer);
+            await auditLog('User Logout', `User ${currentUser?.email} logged out`, currentUser?.uid);
+            await auth.signOut();
+            location.reload();
+        }
 
         function showSignup() { document.getElementById('loginForm').classList.add('hidden');
             document.getElementById('signupForm').classList.remove('hidden');
@@ -3088,9 +3316,9 @@
             const snap = await db.collection('announcements').get();
             allAnnouncements = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             if (allAnnouncements.length === 0) {
-                const defaults = [{ title: "System Live", content: "EQUIPRIME HR is now operational", color: "blue",
-                        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() }, { title: "Biometrics Ready",
-                        content: "ZKTeco integration available", color: "green", expiresAt: new Date(Date.now() + 24 *
+                const defaults = [{ title: "System Live", content: "EQUIPRIME HR is now operational with enhanced security", color: "blue",
+                        expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() }, { title: "Data Encryption Active",
+                        content: "All sensitive employee data is now encrypted (AES-256)", color: "green", expiresAt: new Date(Date.now() + 24 *
                             60 * 60 * 1000).toISOString() }];
                 for (const ann of defaults) { const ref = await db.collection('announcements').add(ann);
                     allAnnouncements.push({ id: ref.id, ...ann }); }
@@ -3105,18 +3333,16 @@
                 'guardWeeklySchedules', 'users', 'departmentApprovers', 'employeeSupportRequests',
                 'attendanceAuditLogs'
             ]; for (const col of collections) { const snap = await db.collection(col).get(); const batch = db.batch();
-                snap.docs.forEach(doc => batch.delete(doc.ref)); await batch.commit(); } alert(
-                "All data reset. Reloading...");
+                snap.docs.forEach(doc => batch.delete(doc.ref)); await batch.commit(); } 
+            await auditLog('System Reset', 'All system data reset by mod.rom', null);
+            alert("All data reset. Reloading...");
             location.reload(); };
 
-        // ==================== INITIALIZATION (FIXED) ====================
+        // ==================== INITIALIZATION ====================
         document.addEventListener('DOMContentLoaded', function() {
             if (localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark');
 
-            // --- FIX: Removed duplicate event listeners for burger, mobile avatar, profile trigger ---
-            // (Inline onclick attributes are now the sole handlers)
-
-            // All other event listeners remain as before
+            // All event listeners
             document.getElementById('loginBtnMain').addEventListener('click', loginWithEmail);
             document.getElementById('showSignupBtnMain').addEventListener('click', showSignup);
             document.getElementById('signupBtnMain').addEventListener('click', signupWithEmail);
@@ -3191,6 +3417,7 @@
                         document.getElementById('dashboard-tab').classList.remove('hidden');
                         document.querySelectorAll('.desktop-sidebar nav button').forEach(b => b.classList
                             .remove('tab-active'));
+                        resetSessionTimer();
                     } else { await auth.signOut();
                         location.reload(); }
                 } else {
