@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>EQUIPRIME HR - Beta Test</title>
+    <title>EQUIPRIME HR - Payroll 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="https://cdn.tailwindcss.com">
     </script>
@@ -37,7 +37,7 @@
             background: #0f172a;
         }
 
-        /* ===== LOGIN SCREEN FIXES ===== */
+        /* ===== LOGIN SCREEN ===== */
         .login-split {
             display: flex;
             min-height: 100vh;
@@ -50,7 +50,6 @@
             z-index: 9999;
         }
 
-        /* Branding half with image - NO OVERLAY GRADIENTS */
         .branding-half {
             background-image: url('branding-image.jpg');
             background-size: cover;
@@ -65,7 +64,6 @@
             min-height: 100vh;
             flex-shrink: 0;
         }
-        /* Only a subtle dark overlay for text readability - NOT covering the whole image with gradients */
         .branding-half .branding-overlay {
             position: absolute;
             top: 0;
@@ -102,7 +100,6 @@
             color: #FFBA09 !important;
         }
 
-        /* Login half - NO overflow issues */
         .login-half {
             background: white;
             display: flex;
@@ -116,6 +113,21 @@
         }
         body.dark .login-half {
             background: #1e293b;
+        }
+
+        .login-half input,
+        .login-half button,
+        .login-half select {
+            position: relative;
+            z-index: 10;
+        }
+        .login-half .w-full.max-w-md {
+            position: relative;
+            z-index: 10;
+        }
+        .login-half .text-center.mb-8 {
+            position: relative;
+            z-index: 10;
         }
 
         @media (max-width: 768px) {
@@ -155,7 +167,7 @@
             }
         }
 
-        /* Rest of the styles remain the same */
+        /* ===== DESKTOP SIDEBAR ===== */
         .desktop-sidebar {
             width: 64px;
             background: #011F7B;
@@ -990,22 +1002,6 @@
         }
         body.dark .profile-info-item {
             border-bottom-color: #334155;
-        }
-
-        /* Fix for login inputs - ensure they are clickable */
-        .login-half input,
-        .login-half button,
-        .login-half select {
-            position: relative;
-            z-index: 10;
-        }
-        .login-half .w-full.max-w-md {
-            position: relative;
-            z-index: 10;
-        }
-        .login-half .text-center.mb-8 {
-            position: relative;
-            z-index: 10;
         }
     </style>
 </head>
@@ -1970,6 +1966,7 @@
                 if (empData.deviceRestriction === 'disabled') {
                     return { authorized: true, reason: 'Device restriction disabled' };
                 }
+                // Check if device is active (not blocked)
                 const deviceQuery = await db.collection('userDevices')
                     .where('userId', '==', userId)
                     .where('deviceId', '==', deviceId)
@@ -1980,6 +1977,7 @@
                     await db.collection('userDevices').doc(doc.id).update({ lastUsed: new Date().toISOString() });
                     return { authorized: true, reason: 'Device authorized' };
                 }
+                // Check if device is blocked
                 const blockedQuery = await db.collection('userDevices')
                     .where('userId', '==', userId)
                     .where('deviceId', '==', deviceId)
@@ -1990,12 +1988,32 @@
                 }
                 return { authorized: false, reason: 'Device not registered' };
             } catch (e) {
+                console.error('Device authorization error:', e);
                 return { authorized: false, reason: 'Error checking device authorization' };
             }
         }
 
         async function registerDeviceForUser(userId, deviceInfo, deviceName) {
             try {
+                // Check if this exact device already exists for this user (including blocked)
+                const existing = await db.collection('userDevices')
+                    .where('userId', '==', userId)
+                    .where('deviceId', '==', deviceInfo.deviceId)
+                    .get();
+
+                if (!existing.empty) {
+                    const doc = existing.docs[0];
+                    const data = doc.data();
+                    if (data.status === 'blocked') {
+                        return { success: false, error: 'This device is blocked by HR and cannot be registered.' };
+                    }
+                    // If active, just update lastUsed
+                    await db.collection('userDevices').doc(doc.id).update({
+                        lastUsed: new Date().toISOString()
+                    });
+                    return { success: true, message: 'Device already registered' };
+                }
+
                 const deviceData = {
                     userId: userId,
                     userEmail: currentUser?.email || 'unknown',
@@ -2009,30 +2027,47 @@
                 };
                 const docRef = await db.collection('userDevices').add(deviceData);
                 await auditLog('DEVICE_REGISTERED', 'Device "' + deviceName + '" registered for user ' + userId, docRef.id);
-                return docRef.id;
+                return { success: true, message: 'Device registered successfully' };
             } catch (e) {
                 console.error('Device registration error:', e);
-                throw e;
+                return { success: false, error: e.message };
             }
         }
 
         async function registerCurrentDevice() {
             if (!currentUser) { alert('Please login first.'); return; }
             const deviceInfo = getDeviceFingerprint();
+
+            // Check if device exists (including blocked)
             const existing = await db.collection('userDevices')
                 .where('userId', '==', currentUser.uid)
                 .where('deviceId', '==', deviceInfo.deviceId)
                 .get();
-            if (!existing.empty) { alert('This device is already registered.');
-                loadRegisteredDevices(); return; }
-            const deviceName = prompt('Name this device (e.g., "My Work Phone"):', 'My Phone');
+
+            if (!existing.empty) {
+                const data = existing.docs[0].data();
+                if (data.status === 'blocked') {
+                    alert('❌ This device has been blocked by HR and cannot be registered.');
+                    return;
+                }
+                alert('✅ This device is already registered.');
+                loadRegisteredDevices();
+                return;
+            }
+
+            const deviceName = prompt('📱 Name this device (e.g., "My Work Phone"):', 'My Phone');
             if (!deviceName) return;
-            await registerDeviceForUser(currentUser.uid, deviceInfo, deviceName);
-            sessionStorage.setItem('deviceId', deviceInfo.deviceId);
-            sessionStorage.setItem('deviceRegistered', 'true');
-            alert('Device registered successfully!');
-            loadRegisteredDevices();
-            refreshDeviceList();
+
+            const result = await registerDeviceForUser(currentUser.uid, deviceInfo, deviceName);
+            if (result.success) {
+                sessionStorage.setItem('deviceId', deviceInfo.deviceId);
+                sessionStorage.setItem('deviceRegistered', 'true');
+                alert('✅ Device registered successfully!');
+                loadRegisteredDevices();
+                refreshDeviceList();
+            } else {
+                alert('❌ ' + result.error);
+            }
         }
 
         async function loadRegisteredDevices() {
@@ -2055,9 +2090,9 @@
                             ${isCurrent ? '<span class="text-xs text-green-500">(Current)</span>' : ''}
                             ${d.status === 'blocked' ? '<span class="text-xs text-red-500">(Blocked)</span>' : ''}
                         </div>
-                        <button onclick="removeUserDevice('${doc.id}')" class="text-red-500 text-sm hover:text-red-700" ${isCurrent ? 'disabled style="opacity:0.5"' : ''}>
+                        ${d.status !== 'blocked' ? `<button onclick="removeUserDevice('${doc.id}')" class="text-red-500 text-sm hover:text-red-700" ${isCurrent ? 'disabled style="opacity:0.5"' : ''}>
                             <i data-feather="x" class="w-4 h-4"></i>
-                        </button>
+                        </button>` : ''}
                     </div>
                 `;
             }).join('') || '<div class="text-sm text-slate-500">No devices registered</div>';
@@ -2065,12 +2100,12 @@
         }
 
         async function removeUserDevice(deviceDocId) {
-            if (!confirm('Are you sure you want to remove this device?')) return;
+            if (!confirm('⚠️ Are you sure you want to remove this device?')) return;
             await db.collection('userDevices').doc(deviceDocId).delete();
             await auditLog('DEVICE_REMOVED', 'Device removed by user', deviceDocId);
             loadRegisteredDevices();
             refreshDeviceList();
-            alert('Device removed successfully.');
+            alert('✅ Device removed successfully.');
         }
 
         async function refreshDeviceList() {
@@ -2140,7 +2175,8 @@
         async function toggleDeviceStatus(deviceId, currentStatus) {
             const newStatus = currentStatus === 'active' ? 'blocked' : 'active';
             const action = newStatus === 'active' ? 'unblock' : 'block';
-            if (!confirm('Are you sure you want to ' + action + ' this device?')) return;
+            if (!confirm('⚠️ Are you sure you want to ' + action + ' this device?')) return;
+
             await db.collection('userDevices').doc(deviceId).update({
                 status: newStatus,
                 updatedAt: new Date().toISOString(),
@@ -2148,16 +2184,44 @@
             });
             await auditLog('DEVICE_STATUS_CHANGED', 'Device ' + deviceId + ' ' + action + 'ed by ' + currentUser.email,
                 deviceId);
+
+            // If blocking, sign out any user who might be using this device
+            if (newStatus === 'blocked') {
+                const device = allUserDevices.find(d => d.id === deviceId);
+                if (device && device.userId === currentUser.uid) {
+                    // If current user's device is blocked, log them out
+                    alert('⚠️ Your current device has been blocked. You will be logged out.');
+                    await handleLogout();
+                    return;
+                }
+            }
+
             refreshDeviceList();
-            alert('Device ' + action + 'ed successfully!');
+            loadRegisteredDevices();
+            alert('✅ Device ' + action + 'ed successfully!');
         }
 
         async function deleteDeviceRecord(deviceId) {
-            if (!confirm('Are you sure you want to delete this device record?')) return;
+            if (!confirm('⚠️ Are you sure you want to permanently delete this device record?\n\nThis action cannot be undone.'))
+                return;
+
+            const device = allUserDevices.find(d => d.id === deviceId);
             await db.collection('userDevices').doc(deviceId).delete();
             await auditLog('DEVICE_DELETED', 'Device ' + deviceId + ' deleted by ' + currentUser.email, deviceId);
+
+            // If current user's device is deleted, log them out
+            if (device && device.userId === currentUser.uid) {
+                const currentDeviceId = getDeviceFingerprint().deviceId;
+                if (device.deviceId === currentDeviceId) {
+                    alert('⚠️ Your current device has been removed. You will be logged out.');
+                    await handleLogout();
+                    return;
+                }
+            }
+
             refreshDeviceList();
-            alert('Device record deleted successfully.');
+            loadRegisteredDevices();
+            alert('✅ Device record permanently deleted.');
         }
 
         function exportDeviceReport() {
@@ -2565,7 +2629,6 @@
 
         // ===== PAYROLL FUNCTIONS =====
         function computePayroll() {
-            // Simplified payroll computation
             const basic = parseFloat(document.getElementById('basicSalary').value) || 0;
             const overtime = parseFloat(document.getElementById('overtimePay').value) || 0;
             const holiday = parseFloat(document.getElementById('holidayPay').value) || 0;
@@ -2583,7 +2646,6 @@
             const totalTaxableEarningsCutoff = basic + overtime + holiday + nd + ndot + lhNd + restday + otherTaxable;
             const totalEarningsCutoff = totalTaxableEarningsCutoff + deMinimis + otherNonTax;
 
-            // Simplified deductions
             let sssEmp = 0,
                 philHealthEmp = 0,
                 pagibigEmp = 0;
@@ -2852,7 +2914,6 @@
         }
 
         async function loadEmployeeCalendar(employeeId) {
-            // Simplified calendar rendering
             const year = parseInt(document.getElementById('summaryYear').value);
             const month = parseInt(document.getElementById('summaryMonth').value);
             const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -3047,17 +3108,14 @@
                         .deviceRestriction === 'disabled' ? 'Disabled' : 'Enabled') + '</div>';
                 feather.replace();
             }
-            // Update avatar
             if (currentUserData.photoURL) {
                 document.getElementById('profileAvatarImg').src = currentUserData.photoURL;
                 document.getElementById('profileAvatarLarge').src = currentUserData.photoURL;
                 document.getElementById('mobileAvatarSmall').src = currentUserData.photoURL;
             }
-            // Update name
             document.getElementById('profileName').textContent = currentUserData.name.split(' ')[0];
             document.getElementById('mobileUserName').textContent = currentUserData.name.split(' ')[0];
             document.getElementById('welcomeName').textContent = currentUserData.name.split(' ')[0];
-            // Update sidebar
             const initials = currentUserData.name.split(' ').map(n => n[0]).join('');
             document.getElementById('userInitialsSidebar').textContent = initials;
             document.getElementById('userNameSidebar').textContent = currentUserData.name;
@@ -3096,7 +3154,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             if (localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark');
 
-            // Auth listeners
             document.getElementById('loginBtnMain').addEventListener('click', handleLogin);
             document.getElementById('showSignupBtnMain').addEventListener('click', showSignup);
             document.getElementById('signupBtnMain').addEventListener('click', handleSignup);
@@ -3122,7 +3179,6 @@
                 loadEmployeeListForSummary();
             });
 
-            // Real-time listeners
             db.collection('employees').onSnapshot(snap => {
                 allEmployees = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                 refreshDashboard();
@@ -3161,7 +3217,6 @@
                 loadRegisteredDevices();
             });
 
-            // Auth state
             auth.onAuthStateChanged(async function(user) {
                 if (user) {
                     currentUser = user;
@@ -3170,17 +3225,29 @@
                         currentUserData = doc.data();
                         currentUserRole = currentUserData.role;
 
-                        // Device check
                         const deviceInfo = getDeviceFingerprint();
                         const authResult = await isDeviceAuthorized(user.uid, deviceInfo.deviceId);
                         if (!authResult.authorized) {
+                            if (authResult.reason === 'Device is blocked by HR') {
+                                alert('❌ This device has been blocked by HR. Please contact support.');
+                                await auth.signOut();
+                                location.reload();
+                                return;
+                            }
                             const shouldRegister = confirm(
-                                'New device detected. Would you like to register this device?'
+                                '📱 New device detected. Would you like to register this device?'
                                 );
                             if (shouldRegister) {
                                 const deviceName = prompt('Name this device:', 'My Phone');
                                 if (deviceName) {
-                                    await registerDeviceForUser(user.uid, deviceInfo, deviceName);
+                                    const result = await registerDeviceForUser(user.uid, deviceInfo,
+                                        deviceName);
+                                    if (!result.success) {
+                                        alert('❌ ' + result.error);
+                                        await auth.signOut();
+                                        location.reload();
+                                        return;
+                                    }
                                 } else {
                                     await auth.signOut();
                                     location.reload();
