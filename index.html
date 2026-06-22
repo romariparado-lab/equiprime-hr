@@ -2615,6 +2615,284 @@
             feather.replace();
         }
 
+        // ===== FILTERS =====
+        function applyFilters() {
+            const dept = document.getElementById('dashboardFilterDepartment')?.value || 'all';
+            const status = document.getElementById('dashboardFilterStatus')?.value || 'all';
+            const leaveType = document.getElementById('dashboardFilterLeaveType')?.value || 'all';
+            currentFilter = { department: dept, status: status, leaveType: leaveType };
+            // Refresh the dashboard displays
+            refreshDashboard();
+            // Update any filtered lists
+            renderMyRequests();
+            renderAllRequests();
+        }
+
+        // ===== REQUEST FUNCTIONS =====
+        async function submitRequest() {
+            if (!currentUser) { alert('Please login first.'); return; }
+            const type = document.getElementById('requestTypeValue').value;
+            const startDate = document.getElementById('reqStartDate').value;
+            const endDate = document.getElementById('reqEndDate').value;
+            const reason = document.getElementById('reqReason').value;
+
+            if (!type || !startDate || !endDate || !reason) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            try {
+                const requestData = {
+                    userId: currentUser.uid,
+                    userName: currentUserData.name,
+                    userEmail: currentUser.email,
+                    userDepartment: currentUserData.dept || 'Unassigned',
+                    type: type,
+                    startDate: startDate,
+                    endDate: endDate,
+                    reason: reason,
+                    status: 'pending',
+                    approverEmail: null,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+
+                // Determine approver based on department
+                const dept = currentUserData.dept || '';
+                let approverEmail = null;
+                if (dept === 'Security Guard Department') {
+                    approverEmail = 'mod.rom@equiprime.ph';
+                } else if (dept === 'HR Department') {
+                    approverEmail = 'hrd@equiprime.ph';
+                } else if (dept === 'IT/Asset Management Department') {
+                    approverEmail = 'mod.dex@equiprime.ph';
+                } else {
+                    // Default: HR Director
+                    approverEmail = 'hrd@equiprime.ph';
+                }
+
+                requestData.approverEmail = approverEmail;
+
+                const docRef = await db.collection('requests').add(requestData);
+                allRequests.push({ id: docRef.id, ...requestData });
+                await auditLog('REQUEST_SUBMITTED', type + ' request submitted by ' + currentUser.email, docRef.id);
+
+                closeModal('requestModalOverlay');
+                document.getElementById('reqStartDate').value = '';
+                document.getElementById('reqEndDate').value = '';
+                document.getElementById('reqReason').value = '';
+
+                alert('✅ Request submitted successfully! Your request has been sent for approval.');
+                refreshDashboard();
+                renderMyRequests();
+                renderAllRequests();
+            } catch (err) {
+                console.error('Error submitting request:', err);
+                alert('Error submitting request: ' + err.message);
+            }
+        }
+
+        function renderMyRequests() {
+            const container = document.getElementById('myRequestsList');
+            if (!container) return;
+            const myRequests = allRequests.filter(r => r.userId === currentUser?.uid);
+            if (myRequests.length === 0) {
+                container.innerHTML = '<div class="text-center text-slate-500 dark:text-slate-400 py-4">No requests</div>';
+                return;
+            }
+            container.innerHTML = myRequests.slice(0, 5).map(r => `
+                <div class="p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="font-semibold">${escapeHtml(r.type)}</p>
+                            <p class="text-sm text-slate-600 dark:text-slate-300">${escapeHtml(r.reason || '')}</p>
+                            <p class="text-xs text-slate-400">${new Date(r.createdAt).toLocaleDateString()}</p>
+                        </div>
+                        <span class="text-xs px-2 py-1 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-800' : r.status === 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}">${r.status}</span>
+                    </div>
+                </div>
+            `).join('');
+            const allMyContainer = document.getElementById('allMyRequestsList');
+            if (allMyContainer) {
+                allMyContainer.innerHTML = myRequests.map(r => `
+                    <div class="p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-semibold">${escapeHtml(r.type)}</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-300">${escapeHtml(r.reason || '')}</p>
+                                <p class="text-xs text-slate-400">${new Date(r.createdAt).toLocaleDateString()} - ${r.startDate || ''} to ${r.endDate || ''}</p>
+                            </div>
+                            <span class="text-xs px-2 py-1 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-800' : r.status === 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}">${r.status}</span>
+                        </div>
+                    </div>
+                `).join('') || '<div class="text-center text-slate-500 dark:text-slate-400 py-8">No requests found</div>';
+            }
+        }
+
+        function renderAllRequests() {
+            const container = document.getElementById('allRequestsList');
+            if (!container) return;
+            // Only show to authorized users
+            if (!fullPrivilegedEmails.includes(currentUser?.email) && currentUserRole !== 'admin' && currentUserRole !== 'hr' && currentUserRole !== 'moderator') {
+                container.innerHTML = '<div class="text-center text-slate-500 dark:text-slate-400 py-8">Access restricted</div>';
+                return;
+            }
+            if (allRequests.length === 0) {
+                container.innerHTML = '<div class="text-center text-slate-500 dark:text-slate-400 py-8">No requests found</div>';
+                return;
+            }
+            container.innerHTML = allRequests.slice().reverse().map(r => `
+                <div class="p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                    <div class="flex justify-between items-start flex-wrap gap-2">
+                        <div>
+                            <p class="font-semibold">${escapeHtml(r.userName)} - ${escapeHtml(r.type)}</p>
+                            <p class="text-sm text-slate-600 dark:text-slate-300">${escapeHtml(r.reason || '')}</p>
+                            <p class="text-xs text-slate-400">${new Date(r.createdAt).toLocaleDateString()} | Dept: ${escapeHtml(r.userDepartment || 'N/A')}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs px-2 py-1 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-800' : r.status === 'rejected' ? 'bg-red-100 text-red-800' : r.status === 'pending_final' ? 'bg-purple-100 text-purple-800' : 'bg-yellow-100 text-yellow-800'}">${r.status}</span>
+                            ${r.status === 'pending' || r.status === 'pending_final' ? `<button onclick="approveRequest('${r.id}')" class="text-xs bg-green-500 text-white px-2 py-1 rounded">Approve</button><button onclick="rejectRequest('${r.id}')" class="text-xs bg-red-500 text-white px-2 py-1 rounded">Reject</button>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function approveRequest(requestId) {
+            if (!confirm('Approve this request?')) return;
+            try {
+                await db.collection('requests').doc(requestId).update({
+                    status: 'approved',
+                    updatedAt: new Date().toISOString(),
+                    approvedBy: currentUser.email,
+                    approvedAt: new Date().toISOString()
+                });
+                const idx = allRequests.findIndex(r => r.id === requestId);
+                if (idx !== -1) allRequests[idx].status = 'approved';
+                await auditLog('REQUEST_APPROVED', 'Request ' + requestId + ' approved by ' + currentUser.email, requestId);
+                alert('✅ Request approved!');
+                refreshDashboard();
+                renderMyRequests();
+                renderAllRequests();
+            } catch (err) {
+                alert('Error approving request: ' + err.message);
+            }
+        }
+
+        async function rejectRequest(requestId) {
+            if (!confirm('Reject this request?')) return;
+            try {
+                await db.collection('requests').doc(requestId).update({
+                    status: 'rejected',
+                    updatedAt: new Date().toISOString(),
+                    rejectedBy: currentUser.email,
+                    rejectedAt: new Date().toISOString()
+                });
+                const idx = allRequests.findIndex(r => r.id === requestId);
+                if (idx !== -1) allRequests[idx].status = 'rejected';
+                await auditLog('REQUEST_REJECTED', 'Request ' + requestId + ' rejected by ' + currentUser.email, requestId);
+                alert('❌ Request rejected.');
+                refreshDashboard();
+                renderMyRequests();
+                renderAllRequests();
+            } catch (err) {
+                alert('Error rejecting request: ' + err.message);
+            }
+        }
+
+        // ===== CLOCK REQUEST FUNCTIONS =====
+        function openClockRequestModal(type) {
+            document.getElementById('clockRequestType').value = type;
+            const titleEl = document.querySelector('#clockRequestModal .text-xl');
+            if (titleEl) titleEl.textContent = type === 'in' ? 'Request Clock In' : 'Request Clock Out';
+            document.getElementById('clockDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('clockTime').value = getCurrentTime24();
+            openModal('clockRequestModal');
+        }
+
+        async function submitClockRequest() {
+            const type = document.getElementById('clockRequestType').value;
+            const date = document.getElementById('clockDate').value;
+            const time = document.getElementById('clockTime').value;
+            const reason = document.getElementById('clockReason').value;
+
+            if (!date || !time || !reason) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            try {
+                const requestData = {
+                    userId: currentUser.uid,
+                    userName: currentUserData.name,
+                    userEmail: currentUser.email,
+                    type: 'Clock ' + (type === 'in' ? 'In' : 'Out') + ' Request',
+                    requestType: 'clock_' + type,
+                    date: date,
+                    time: time,
+                    reason: reason,
+                    status: 'pending',
+                    approverEmail: 'hrd@equiprime.ph',
+                    createdAt: new Date().toISOString()
+                };
+
+                const docRef = await db.collection('requests').add(requestData);
+                allRequests.push({ id: docRef.id, ...requestData });
+                await auditLog('CLOCK_REQUEST_SUBMITTED', 'Clock ' + type + ' request submitted by ' + currentUser.email,
+                    docRef.id);
+
+                closeModal('clockRequestModal');
+                document.getElementById('clockReason').value = '';
+                alert('✅ Clock request submitted successfully!');
+                refreshDashboard();
+                renderMyRequests();
+            } catch (err) {
+                alert('Error submitting request: ' + err.message);
+            }
+        }
+
+        // ===== OFFSETS FUNCTIONS =====
+        async function submitOffsets() {
+            const date = document.getElementById('offsetsDate').value;
+            const hours = document.getElementById('offsetsHours').value;
+            const reason = document.getElementById('offsetsReasonText').value;
+
+            if (!date || !hours || !reason) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            try {
+                const requestData = {
+                    userId: currentUser.uid,
+                    userName: currentUserData.name,
+                    userEmail: currentUser.email,
+                    type: 'Offset Request',
+                    startDate: date,
+                    endDate: date,
+                    reason: 'Offset: ' + hours + ' hours - ' + reason,
+                    offsetHours: parseFloat(hours),
+                    status: 'pending',
+                    approverEmail: 'hrd@equiprime.ph',
+                    createdAt: new Date().toISOString()
+                };
+
+                const docRef = await db.collection('requests').add(requestData);
+                allRequests.push({ id: docRef.id, ...requestData });
+                await auditLog('OFFSETS_SUBMITTED', 'Offsets request submitted by ' + currentUser.email, docRef.id);
+
+                closeModal('offsetsModalOverlay');
+                document.getElementById('offsetsDate').value = '';
+                document.getElementById('offsetsHours').value = '';
+                document.getElementById('offsetsReasonText').value = '';
+                alert('✅ Offsets request submitted successfully!');
+                refreshDashboard();
+                renderMyRequests();
+            } catch (err) {
+                alert('Error submitting request: ' + err.message);
+            }
+        }
+
         // ===== PAYROLL FUNCTIONS =====
         function computePayroll() {
             const basic = parseFloat(document.getElementById('basicSalary').value) || 0;
@@ -2958,7 +3236,6 @@
                 const safeTitle = escapeHtml(a.title || '');
                 const safeContent = escapeHtml(a.content || '');
 
-                // Build edit button using data attributes to avoid escaping issues
                 const editBtnHtml = canEdit ?
                     `<button onclick="editAnnouncement('${safeId}')" class="text-blue-600 text-sm mr-2" data-title="${encodeURIComponent(a.title || '')}" data-content="${encodeURIComponent(a.content || '')}">Edit</button>` :
                     '';
@@ -2980,7 +3257,6 @@
             feather.replace();
         }
 
-        // Fixed: Now retrieves title/content from data attributes
         function editAnnouncement(id) {
             const btn = document.querySelector(`[onclick*="editAnnouncement('${id}')"]`);
             let title = '',
@@ -3163,6 +3439,23 @@
             document.getElementById('userNameSidebar').textContent = currentUserData.name;
         }
 
+        // ===== SAVE LEAVE BALANCE =====
+        async function saveLeaveBalance() {
+            const id = document.getElementById('editEmployeeId').value;
+            const balance = parseInt(document.getElementById('editLeaveBalanceSimple').value);
+            if (!id || isNaN(balance)) { alert('Invalid input'); return; }
+            try {
+                await db.collection('employees').doc(id).update({ leaveBalance: balance });
+                const idx = allEmployees.findIndex(e => e.id === id);
+                if (idx !== -1) allEmployees[idx].leaveBalance = balance;
+                closeModal('editLeaveModal');
+                alert('✅ Leave balance updated!');
+                refreshDashboard();
+            } catch (err) {
+                alert('Error updating leave balance: ' + err.message);
+            }
+        }
+
         // ===== LOAD DATA =====
         async function loadAllData() {
             const empSnap = await db.collection('employees').get();
@@ -3184,6 +3477,8 @@
             await loadGuardSelect();
             renderGuardSchedules();
             renderAnnouncements();
+            renderMyRequests();
+            renderAllRequests();
             refreshDashboard();
             refreshHelpdesk();
             refreshDeviceList();
@@ -3229,6 +3524,8 @@
             });
             db.collection('requests').onSnapshot(snap => {
                 allRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderMyRequests();
+                renderAllRequests();
                 refreshDashboard();
             });
             db.collection('attendance').onSnapshot(snap => {
