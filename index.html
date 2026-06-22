@@ -1534,9 +1534,13 @@
         </div>
     </div>
 
+    <!-- ===== REQUEST MODAL ===== -->
     <div id="requestModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
-            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Submit Request</h3><button onclick="closeModal('requestModalOverlay')"><i data-feather="x"></i></button></div>
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="requestModalTitle" class="text-xl font-bold">Submit Request</h3>
+                <button onclick="closeModal('requestModalOverlay')"><i data-feather="x"></i></button>
+            </div>
             <input type="hidden" id="requestTypeValue" />
             <div class="space-y-3">
                 <input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl dark:bg-slate-700" />
@@ -1596,7 +1600,7 @@
         </div>
     </div>
 
-    <!-- ===== FIXED ANNOUNCEMENT MODAL ===== -->
+    <!-- ===== ANNOUNCEMENT MODAL ===== -->
     <div id="announcementModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
             <div class="flex justify-between items-center mb-4"><h3 id="announcementModalTitle" class="text-xl font-bold">Edit Announcement</h3><button onclick="closeModal('announcementModal')"><i data-feather="x"></i></button></div>
@@ -1937,9 +1941,12 @@
         function openOffsetsModal() { closeModal('newRequestMenuOverlay');
             openModal('offsetsModalOverlay'); }
 
-        function openRequestModal(type) { closeModal('newRequestMenuOverlay');
+        function openRequestModal(type) {
+            closeModal('newRequestMenuOverlay');
             document.getElementById('requestTypeValue').value = type;
-            openModal('requestModalOverlay'); }
+            document.getElementById('requestModalTitle').innerText = 'Submit ' + type + ' Request';
+            openModal('requestModalOverlay');
+        }
 
         function selectLeaveType(type) { closeModal('leaveModalOverlay');
             openRequestModal(type); }
@@ -1953,6 +1960,342 @@
 
         function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit',
                 hour12: false }); }
+
+        // ===== REQUEST FUNCTIONS =====
+        async function submitRequest() {
+            const type = document.getElementById('requestTypeValue').value;
+            const start = document.getElementById('reqStartDate').value;
+            const end = document.getElementById('reqEndDate').value;
+            const reason = document.getElementById('reqReason').value;
+
+            if (!start || !end) { alert("Please select start and end dates."); return; }
+            if (new Date(start) > new Date(end)) { alert("End date must be after start date."); return; }
+
+            try {
+                const reqData = {
+                    userId: currentUser.uid,
+                    userName: currentUserData.name,
+                    userDepartment: currentUserData.department || "Unassigned",
+                    type: type,
+                    startDate: start,
+                    endDate: end,
+                    reason: reason || 'No reason provided',
+                    status: "pending",
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+
+                // If user is admin/HR, auto-approve
+                if (fullPrivilegedEmails.includes(currentUser.email) || currentUserRole === 'admin' ||
+                    currentUserRole === 'hr' || currentUserRole === 'moderator') {
+                    reqData.status = "approved";
+                    reqData.approvedBy = currentUser.email;
+                    reqData.approvedAt = new Date().toISOString();
+                }
+
+                const docRef = await db.collection('requests').add(reqData);
+                allRequests.push({ id: docRef.id, ...reqData });
+
+                closeModal('requestModalOverlay');
+                refreshDashboard();
+                refreshMyRequests();
+
+                const msg = reqData.status === 'approved' ?
+                    'Request submitted and auto-approved (Admin/HR)' :
+                    'Request submitted successfully!';
+                alert(msg);
+
+                // Clear form
+                document.getElementById('reqStartDate').value = '';
+                document.getElementById('reqEndDate').value = '';
+                document.getElementById('reqReason').value = '';
+
+            } catch (error) {
+                console.error('Error submitting request:', error);
+                alert('Error submitting request: ' + error.message);
+            }
+        }
+
+        async function submitOffsets() {
+            const date = document.getElementById('offsetsDate').value;
+            const hours = document.getElementById('offsetsHours').value;
+            const reason = document.getElementById('offsetsReasonText').value;
+
+            if (!date || !hours) { alert("Please fill all required fields."); return; }
+
+            try {
+                const reqData = {
+                    userId: currentUser.uid,
+                    userName: currentUserData.name,
+                    userDepartment: currentUserData.department || "Unassigned",
+                    type: 'Offset Request',
+                    startDate: date,
+                    endDate: date,
+                    reason: 'Offset ' + hours + ' hours - ' + (reason || 'No reason provided'),
+                    status: "pending",
+                    hours: hours,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+
+                if (fullPrivilegedEmails.includes(currentUser.email) || currentUserRole === 'admin' ||
+                    currentUserRole === 'hr' || currentUserRole === 'moderator') {
+                    reqData.status = "approved";
+                    reqData.approvedBy = currentUser.email;
+                    reqData.approvedAt = new Date().toISOString();
+                }
+
+                const docRef = await db.collection('requests').add(reqData);
+                allRequests.push({ id: docRef.id, ...reqData });
+
+                closeModal('offsetsModalOverlay');
+                refreshDashboard();
+                refreshMyRequests();
+
+                const msg = reqData.status === 'approved' ?
+                    'Offset request submitted and auto-approved (Admin/HR)' :
+                    'Offset request submitted successfully!';
+                alert(msg);
+
+                document.getElementById('offsetsDate').value = '';
+                document.getElementById('offsetsHours').value = '';
+                document.getElementById('offsetsReasonText').value = '';
+
+            } catch (error) {
+                console.error('Error submitting offsets:', error);
+                alert('Error submitting offsets: ' + error.message);
+            }
+        }
+
+        async function submitClockRequest() {
+            const type = document.getElementById('clockRequestType').value;
+            const date = document.getElementById('clockDate').value;
+            const time = document.getElementById('clockTime').value;
+            const reason = document.getElementById('clockReason').value;
+
+            if (!date || !time) { alert("Please select date and time."); return; }
+
+            try {
+                const reqData = {
+                    userId: currentUser.uid,
+                    userName: currentUserData.name,
+                    userDepartment: currentUserData.department || "Unassigned",
+                    type: type === 'in' ? 'Clock In Request' : 'Clock Out Request',
+                    startDate: date,
+                    endDate: date,
+                    reason: 'Requested time: ' + time + ' - ' + (reason || 'No reason provided'),
+                    status: "pending",
+                    requestedTime: time,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+
+                if (fullPrivilegedEmails.includes(currentUser.email) || currentUserRole === 'admin' ||
+                    currentUserRole === 'hr' || currentUserRole === 'moderator') {
+                    reqData.status = "approved";
+                    reqData.approvedBy = currentUser.email;
+                    reqData.approvedAt = new Date().toISOString();
+                }
+
+                const docRef = await db.collection('requests').add(reqData);
+                allRequests.push({ id: docRef.id, ...reqData });
+
+                closeModal('clockRequestModal');
+                refreshDashboard();
+                refreshMyRequests();
+
+                const msg = reqData.status === 'approved' ?
+                    'Clock request submitted and auto-approved (Admin/HR)' :
+                    'Clock request submitted successfully!';
+                alert(msg);
+
+                document.getElementById('clockDate').value = '';
+                document.getElementById('clockTime').value = '';
+                document.getElementById('clockReason').value = '';
+
+            } catch (error) {
+                console.error('Error submitting clock request:', error);
+                alert('Error submitting clock request: ' + error.message);
+            }
+        }
+
+        function refreshMyRequests() {
+            if (!currentUser) return;
+
+            // My recent requests on dashboard
+            const myReqs = allRequests.filter(r => r.userId === currentUser.uid)
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .slice(0, 5);
+
+            const myRequestsList = document.getElementById('myRequestsList');
+            if (myRequestsList) {
+                if (myReqs.length === 0) {
+                    myRequestsList.innerHTML = '<div class="text-center text-slate-500 dark:text-slate-400 py-4">No requests</div>';
+                } else {
+                    myRequestsList.innerHTML = myReqs.map(r => {
+                        let statusClass = '';
+                        if (r.status === 'approved') statusClass = 'status-badge-approved';
+                        else if (r.status === 'rejected') statusClass = 'status-badge-rejected';
+                        else if (r.status === 'pending') statusClass = 'status-badge-pending';
+                        else if (r.status === 'under_review') statusClass = 'status-badge-under_review';
+                        else statusClass = 'status-badge-pending';
+
+                        return `<div class="flex justify-between p-3 bg-slate-50 dark:bg-slate-700 rounded">
+                            <div><b>${escapeHtml(r.type)}</b><br><span>${formatDateForDisplay(r.startDate)} - ${formatDateForDisplay(r.endDate)}</span></div>
+                            <span class="${statusClass}">${r.status}</span>
+                        </div>`;
+                    }).join('');
+                }
+            }
+
+            // All my requests on My Requests tab
+            const allMyRequestsList = document.getElementById('allMyRequestsList');
+            if (allMyRequestsList) {
+                const allMyReqs = allRequests.filter(r => r.userId === currentUser.uid)
+                    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+                if (allMyReqs.length === 0) {
+                    allMyRequestsList.innerHTML = '<div class="text-center text-slate-500 dark:text-slate-400 py-8">No requests found</div>';
+                } else {
+                    allMyRequestsList.innerHTML = allMyReqs.map(r => {
+                        let statusClass = '';
+                        if (r.status === 'approved') statusClass = 'status-badge-approved';
+                        else if (r.status === 'rejected') statusClass = 'status-badge-rejected';
+                        else if (r.status === 'pending') statusClass = 'status-badge-pending';
+                        else if (r.status === 'under_review') statusClass = 'status-badge-under_review';
+                        else statusClass = 'status-badge-pending';
+
+                        return `<div class="card-bg p-4 rounded-xl shadow-sm flex justify-between items-center">
+                            <div>
+                                <div class="font-bold">${escapeHtml(r.type)}</div>
+                                <div class="text-sm text-slate-500">${formatDateForDisplay(r.startDate)} - ${formatDateForDisplay(r.endDate)}</div>
+                                <div class="text-xs text-slate-400">${escapeHtml(r.reason || '')}</div>
+                            </div>
+                            <span class="px-3 py-1 rounded-full text-sm ${statusClass}">${r.status}</span>
+                        </div>`;
+                    }).join('');
+                }
+            }
+
+            // All requests for HR/Admin
+            const allRequestsList = document.getElementById('allRequestsList');
+            if (allRequestsList && (fullPrivilegedEmails.includes(currentUser?.email) || currentUserRole === 'admin' ||
+                    currentUserRole === 'hr' || currentUserRole === 'moderator')) {
+                const allReqs = allRequests.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+                if (allReqs.length === 0) {
+                    allRequestsList.innerHTML = '<div class="text-center text-slate-500 dark:text-slate-400 py-8">No requests found</div>';
+                } else {
+                    allRequestsList.innerHTML = allReqs.map(r => {
+                        let statusClass = '';
+                        if (r.status === 'approved') statusClass = 'status-badge-approved';
+                        else if (r.status === 'rejected') statusClass = 'status-badge-rejected';
+                        else if (r.status === 'pending') statusClass = 'status-badge-pending';
+                        else if (r.status === 'under_review') statusClass = 'status-badge-under_review';
+                        else statusClass = 'status-badge-pending';
+
+                        return `<div class="card-bg p-4 rounded-xl shadow-sm">
+                            <div class="flex justify-between items-start flex-wrap gap-2">
+                                <div>
+                                    <div class="font-bold">${escapeHtml(r.userName)}</div>
+                                    <div class="text-sm">${escapeHtml(r.type)}</div>
+                                    <div class="text-xs text-slate-500">${formatDateForDisplay(r.startDate)} - ${formatDateForDisplay(r.endDate)}</div>
+                                    <div class="text-xs text-slate-400">${escapeHtml(r.reason || '')}</div>
+                                </div>
+                                <div class="flex flex-col items-end gap-1">
+                                    <span class="px-3 py-1 rounded-full text-sm ${statusClass}">${r.status}</span>
+                                    ${r.status === 'pending' ? `<button onclick="approveRequest('${r.id}')" class="bg-green-600 text-white px-3 py-1 rounded text-sm">Approve</button>
+                                    <button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-3 py-1 rounded text-sm">Reject</button>` : ''}
+                                </div>
+                            </div>
+                        </div>`;
+                    }).join('');
+                }
+            }
+
+            // Pending approvals
+            const pendingContainer = document.getElementById('pendingApprovalsList');
+            if (pendingContainer) {
+                const pendingReqs = allRequests.filter(r => r.status === 'pending' &&
+                    (fullPrivilegedEmails.includes(currentUser?.email) || currentUserRole === 'admin' ||
+                        currentUserRole === 'hr' || currentUserRole === 'moderator'));
+
+                if (pendingReqs.length === 0) {
+                    pendingContainer.innerHTML = '<div class="text-center text-slate-500 dark:text-slate-400 py-8">No pending approvals</div>';
+                } else {
+                    pendingContainer.innerHTML = pendingReqs.map(r => {
+                        return `<div class="card-bg p-4 rounded-xl shadow-sm">
+                            <div class="flex justify-between items-start flex-wrap gap-2">
+                                <div>
+                                    <div class="font-bold">${escapeHtml(r.userName)}</div>
+                                    <div class="text-sm">${escapeHtml(r.type)}</div>
+                                    <div class="text-xs text-slate-500">${formatDateForDisplay(r.startDate)} - ${formatDateForDisplay(r.endDate)}</div>
+                                    <div class="text-xs text-slate-400">${escapeHtml(r.reason || '')}</div>
+                                </div>
+                                <div class="flex gap-2">
+                                    <button onclick="approveRequest('${r.id}')" class="bg-green-600 text-white px-4 py-1 rounded text-sm">Approve</button>
+                                    <button onclick="rejectRequest('${r.id}')" class="bg-red-600 text-white px-4 py-1 rounded text-sm">Reject</button>
+                                </div>
+                            </div>
+                        </div>`;
+                    }).join('');
+                }
+            }
+        }
+
+        async function approveRequest(requestId) {
+            if (!confirm('Approve this request?')) return;
+
+            try {
+                await db.collection('requests').doc(requestId).update({
+                    status: 'approved',
+                    approvedBy: currentUser.email,
+                    approvedAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                });
+
+                const idx = allRequests.findIndex(r => r.id === requestId);
+                if (idx !== -1) {
+                    allRequests[idx].status = 'approved';
+                    allRequests[idx].approvedBy = currentUser.email;
+                    allRequests[idx].approvedAt = new Date().toISOString();
+                }
+
+                refreshMyRequests();
+                refreshDashboard();
+                alert('Request approved successfully!');
+            } catch (error) {
+                console.error('Error approving request:', error);
+                alert('Error approving request: ' + error.message);
+            }
+        }
+
+        async function rejectRequest(requestId) {
+            if (!confirm('Reject this request?')) return;
+
+            try {
+                await db.collection('requests').doc(requestId).update({
+                    status: 'rejected',
+                    rejectedBy: currentUser.email,
+                    rejectedAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                });
+
+                const idx = allRequests.findIndex(r => r.id === requestId);
+                if (idx !== -1) {
+                    allRequests[idx].status = 'rejected';
+                    allRequests[idx].rejectedBy = currentUser.email;
+                    allRequests[idx].rejectedAt = new Date().toISOString();
+                }
+
+                refreshMyRequests();
+                refreshDashboard();
+                alert('Request rejected.');
+            } catch (error) {
+                console.error('Error rejecting request:', error);
+                alert('Error rejecting request: ' + error.message);
+            }
+        }
 
         // ===== DEVICE MANAGEMENT =====
         async function isDeviceAuthorized(userId, deviceId) {
@@ -1982,7 +2325,6 @@
                 }
                 return { authorized: false, reason: 'Device not registered' };
             } catch (e) {
-                console.error('Device authorization error:', e);
                 return { authorized: false, reason: 'Error checking device authorization' };
             }
         }
@@ -2601,17 +2943,11 @@
             const today = new Date().toISOString().split('T')[0];
             let deptAtt = allAttendance.filter(a => a.date === today).length;
             setText('deptAttendance', deptAtt);
-            let pendingCount = 0;
-            if (currentUserRole === 'approver') pendingCount = allRequests.filter(r => r.approverEmail === currentUser
-                ?.email && r.status === "pending_secondary").length;
-            else if (currentUser.email === 'hrd@equiprime.ph') pendingCount = allRequests.filter(r => r.status ===
-                "pending_final").length;
-            else if (fullPrivilegedEmails.includes(currentUser.email)) pendingCount = allRequests.filter(r => r
-                .approverEmail === currentUser?.email && (r.status === "pending_secondary" || r.status ===
-                "pending_final")).length;
+            let pendingCount = allRequests.filter(r => r.status === 'pending').length;
             setText('pendingApprovals', pendingCount);
             setText('myLeaveBalance', currentUserData?.leaveBalance || 15);
             renderNavigation();
+            refreshMyRequests();
             feather.replace();
         }
 
@@ -2954,11 +3290,10 @@
             }
 
             cont.innerHTML = allAnnouncements.map(a => {
-                // Properly escape for JavaScript string
                 const safeId = a.id || '';
                 const safeTitle = (a.title || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g, '\\"');
                 const safeContent = (a.content || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/"/g,
-                '\\"');
+                    '\\"');
 
                 const editBtnHtml = canEdit ?
                     '<button onclick="editAnnouncement(\'' + safeId + '\', \'' + safeTitle + '\', \'' +
@@ -3030,7 +3365,6 @@
 
         function deleteAnnouncement(id) {
             if (!id) {
-                // If called from the modal with the hidden input
                 const idFromInput = document.getElementById('announcementId')?.value || '';
                 if (idFromInput) {
                     id = idFromInput;
@@ -3222,6 +3556,7 @@
             db.collection('requests').onSnapshot(snap => {
                 allRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                 refreshDashboard();
+                refreshMyRequests();
             });
             db.collection('attendance').onSnapshot(snap => {
                 allAttendance = snap.docs.map(d => ({ id: d.id, ...d.data() }));
