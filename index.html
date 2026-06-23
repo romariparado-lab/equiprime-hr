@@ -159,14 +159,14 @@
             }
         }
 
-        /* ===== DESKTOP SIDEBAR ===== */
+        /* ===== DESKTOP SIDEBAR - COMPACT WITH LABELS BELOW ICONS ===== */
         .desktop-sidebar {
-            width: 64px;
+            width: 72px;
             background: #011F7B;
             height: 100vh;
             position: sticky;
             top: 0;
-            padding: 0.75rem 0.5rem;
+            padding: 0.5rem 0.25rem;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -175,7 +175,7 @@
             flex-shrink: 0;
         }
         .desktop-sidebar:hover {
-            width: 200px;
+            width: 160px;
         }
         .desktop-sidebar nav {
             width: 100%;
@@ -183,35 +183,49 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 0.25rem;
+            gap: 0.15rem;
+            padding: 0 0.25rem;
         }
         .desktop-sidebar nav button {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.65rem 0.75rem;
-            border-radius: 0.75rem;
+            justify-content: center;
+            gap: 0.15rem;
+            padding: 0.4rem 0.25rem;
+            border-radius: 0.5rem;
             width: 100%;
             color: rgba(255, 255, 255, 0.7);
             background: transparent;
             border: none;
-            font-size: 0.9rem;
+            font-size: 0.7rem;
             font-weight: 500;
             cursor: pointer;
             transition: background 0.15s, color 0.15s;
-            white-space: nowrap;
             position: relative;
+            min-height: 48px;
         }
         .desktop-sidebar nav button i {
             flex-shrink: 0;
-            font-size: 1.3rem;
-            width: 24px;
+            font-size: 1.1rem;
+            width: 22px;
             text-align: center;
         }
         .desktop-sidebar nav button .tab-label {
-            display: none;
-            font-size: 0.85rem;
-            font-weight: 500;
+            display: block;
+            font-size: 0.6rem;
+            font-weight: 400;
+            text-align: center;
+            line-height: 1.2;
+            opacity: 0.8;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .desktop-sidebar:hover nav button .tab-label {
+            font-size: 0.65rem;
+            white-space: normal;
         }
         .desktop-sidebar nav button:hover {
             background: rgba(255, 255, 255, 0.08);
@@ -222,16 +236,19 @@
             color: #0f172a !important;
         }
         .desktop-sidebar nav button.tab-active .tab-label {
-            display: inline;
+            color: #0f172a !important;
         }
         .desktop-sidebar nav button .tab-badge {
             background-color: #ef4444;
             color: white;
-            font-size: 0.6rem;
+            font-size: 0.5rem;
             font-weight: bold;
-            padding: 0.1rem 0.4rem;
+            padding: 0.05rem 0.3rem;
             border-radius: 9999px;
             margin-left: auto;
+            position: absolute;
+            top: 2px;
+            right: 4px;
         }
         body.dark .desktop-sidebar nav button.tab-active {
             background: #FFBA09;
@@ -250,16 +267,16 @@
         .desktop-sidebar .footer-actions {
             width: 100%;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 0.75rem;
-            margin-top: 0.5rem;
+            padding-top: 0.4rem;
+            margin-top: 0.25rem;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.25rem;
+            gap: 0.1rem;
         }
         .desktop-sidebar .footer-actions .user-icon {
-            width: 36px;
-            height: 36px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background: #FFBA09;
             color: #0f172a;
@@ -267,78 +284,54 @@
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.7rem;
             flex-shrink: 0;
         }
         .desktop-sidebar .footer-actions button {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 0.75rem;
-            padding: 0.5rem 0.75rem;
-            border-radius: 0.75rem;
+            gap: 0.1rem;
+            padding: 0.3rem 0.25rem;
+            border-radius: 0.5rem;
             width: 100%;
             color: rgba(255, 255, 255, 0.6);
             background: transparent;
             border: none;
-            font-size: 0.85rem;
+            font-size: 0.6rem;
             cursor: pointer;
             transition: background 0.15s, color 0.15s;
-            white-space: nowrap;
         }
         .desktop-sidebar .footer-actions button i {
-            font-size: 1.2rem;
-            width: 24px;
+            font-size: 1rem;
+            width: 20px;
             text-align: center;
             flex-shrink: 0;
         }
         .desktop-sidebar .footer-actions button .action-label {
-            display: none;
+            display: block;
+            font-size: 0.55rem;
+            opacity: 0.7;
         }
         .desktop-sidebar .footer-actions button:hover {
             background: rgba(255, 255, 255, 0.08);
             color: white;
         }
-        .desktop-sidebar:hover .footer-actions button .action-label,
+        .desktop-sidebar .footer-actions .user-name {
+            display: none;
+            font-size: 0.6rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
         .desktop-sidebar:hover .footer-actions .user-name {
             display: inline;
         }
         .desktop-sidebar:hover .footer-actions .user-icon {
-            width: 32px;
-            height: 32px;
-            font-size: 0.8rem;
-        }
-        .desktop-sidebar .footer-actions .user-name {
-            display: none;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.8);
+            width: 24px;
+            height: 24px;
+            font-size: 0.6rem;
         }
 
         .desktop-sidebar nav button::after {
-            content: attr(data-tip);
-            position: absolute;
-            left: calc(100% + 10px);
-            top: 50%;
-            transform: translateY(-50%);
-            background: #0f172a;
-            color: white;
-            padding: 0.2rem 0.6rem;
-            border-radius: 0.4rem;
-            font-size: 0.7rem;
-            font-weight: 500;
-            white-space: nowrap;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.15s ease;
-            z-index: 100;
-        }
-        body.dark .desktop-sidebar nav button::after {
-            background: #1e293b;
-            color: #e2e8f0;
-        }
-        .desktop-sidebar nav button:hover::after {
-            opacity: 1;
-        }
-        .desktop-sidebar nav button.tab-active::after {
             display: none;
         }
 
@@ -372,9 +365,9 @@
         .tab-badge {
             background-color: #ef4444;
             color: white;
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             font-weight: bold;
-            padding: 0.125rem 0.5rem;
+            padding: 0.1rem 0.4rem;
             border-radius: 9999px;
             margin-left: auto;
             white-space: nowrap;
@@ -1022,21 +1015,43 @@
         body.dark .main-content::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.3), rgba(255, 186, 9, 0.3));
         }
+        /* Firefox scrollbar support */
+        .main-content {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(1, 31, 123, 0.3) transparent;
+        }
+        body.dark .main-content {
+            scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+        }
 
-        /* Announcements - wider on desktop */
+        /* Announcements - wider on desktop, fully visible */
         .announcement-item {
             width: 100%;
             max-width: 100%;
         }
         @media (min-width: 1024px) {
             .announcement-item {
-                padding: 1.25rem 1.5rem !important;
+                padding: 1rem 1.25rem !important;
             }
+        }
+        #announcementsList {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        #announcementsList::-webkit-scrollbar {
+            width: 4px;
+        }
+        #announcementsList::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        #announcementsList::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, rgba(1, 31, 123, 0.2), rgba(255, 186, 9, 0.2));
+            border-radius: 10px;
         }
 
         /* Payslip preview with scroll */
         #payslipPreviewContent {
-            max-height: 70vh;
+            max-height: 55vh;
             overflow-y: auto;
             padding-right: 0.5rem;
         }
@@ -1058,6 +1073,14 @@
         }
         body.dark #payslipPreviewContent::-webkit-scrollbar-thumb:hover {
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.25), rgba(255, 186, 9, 0.25));
+        }
+        /* Firefox scrollbar for payslip */
+        #payslipPreviewContent {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(1, 31, 123, 0.2) transparent;
+        }
+        body.dark #payslipPreviewContent {
+            scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
         }
 
         /* Scrollable containers in other tabs */
@@ -1108,13 +1131,34 @@
             max-height: none;
             overflow: visible;
         }
-        #payslipPreviewContent {
-            max-height: 60vh;
-            overflow-y: auto;
-        }
+
         /* Reset button fix */
         #resetButtonContainer button {
             cursor: pointer;
+        }
+
+        /* Compact sidebar - label below icon */
+        .desktop-sidebar nav button .tab-label {
+            display: block;
+        }
+        .desktop-sidebar .footer-actions .action-label {
+            display: block;
+        }
+        .desktop-sidebar:not(:hover) nav button .tab-label {
+            font-size: 0.55rem;
+        }
+        .desktop-sidebar:not(:hover) .footer-actions .action-label {
+            font-size: 0.5rem;
+        }
+
+        /* Mobile adjustments */
+        @media (max-width: 1023px) {
+            .desktop-sidebar {
+                display: none;
+            }
+            .mobile-header {
+                display: flex !important;
+            }
         }
     </style>
 </head>
@@ -1210,15 +1254,15 @@
 
         <!-- DESKTOP SIDEBAR -->
         <div class="desktop-sidebar">
-            <nav id="desktopNavMenu" class="flex flex-col gap-1 flex-1" role="navigation" aria-label="Main navigation"></nav>
+            <nav id="desktopNavMenu" class="flex flex-col gap-0.5 flex-1" role="navigation" aria-label="Main navigation"></nav>
             <div class="footer-actions">
-                <div class="flex items-center gap-2 w-full px-2">
+                <div class="flex items-center gap-1 w-full px-1">
                     <div class="user-icon" id="userInitialsSidebar" aria-hidden="true">HR</div>
                     <span class="user-name" id="userNameSidebar">User</span>
                 </div>
                 <button onclick="toggleNightMode()" title="Toggle night mode" data-tip="Night Mode" aria-label="Toggle night mode">
                     <i data-feather="moon" aria-hidden="true"></i>
-                    <span class="action-label">Night Mode</span>
+                    <span class="action-label">Night</span>
                 </button>
                 <button onclick="handleLogout()" title="Logout from your account" data-tip="Logout" aria-label="Logout">
                     <i data-feather="log-out" aria-hidden="true"></i>
@@ -1347,7 +1391,7 @@
                 </div>
                 <div class="mt-6 card-bg rounded-2xl p-6 shadow-sm">
                     <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Announcements</h3><div id="announcementAddButton"></div></div>
-                    <div id="announcementsList" class="space-y-3 w-full max-h-96 overflow-y-auto"></div>
+                    <div id="announcementsList" class="space-y-3 w-full"></div>
                 </div>
             </div>
 
@@ -2068,62 +2112,62 @@
                 '</span>' : '';
 
             let html = `
-                <button onclick="switchTab('dashboard')" data-tab="dashboard" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Dashboard" title="Dashboard">
+                <button onclick="switchTab('dashboard')" data-tab="dashboard" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="Dashboard" title="Dashboard">
                     <i data-feather="home" aria-hidden="true"></i><span class="tab-label">Dashboard</span>
                 </button>
-                <button onclick="switchTab('my-attendance')" data-tab="my-attendance" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="My Attendance" title="My Attendance">
-                    <i data-feather="clock" aria-hidden="true"></i><span class="tab-label">My Attendance</span>
+                <button onclick="switchTab('my-attendance')" data-tab="my-attendance" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="My Attendance" title="My Attendance">
+                    <i data-feather="clock" aria-hidden="true"></i><span class="tab-label">Attendance</span>
                 </button>
-                <button onclick="switchTab('my-requests')" data-tab="my-requests" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="My Request" title="My Request">
+                <button onclick="switchTab('my-requests')" data-tab="my-requests" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="My Request" title="My Request">
                     <i data-feather="file-text" aria-hidden="true"></i><span class="tab-label">My Request</span>
                 </button>`;
             if (canAccessEmployees) {
                 html += `
-                <button onclick="switchTab('employees')" data-tab="employees" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Employees" title="Employees">
+                <button onclick="switchTab('employees')" data-tab="employees" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="Employees" title="Employees">
                     <i data-feather="users" aria-hidden="true"></i><span class="tab-label">Employees</span>
                 </button>`;
             }
             if (isFull) {
                 html += `
-                <button onclick="switchTab('hr-requests')" data-tab="hr-requests" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="All Requests" title="All Requests">
-                    <i data-feather="clipboard" aria-hidden="true"></i><span class="tab-label">All Requests</span>
+                <button onclick="switchTab('hr-requests')" data-tab="hr-requests" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="All Requests" title="All Requests">
+                    <i data-feather="clipboard" aria-hidden="true"></i><span class="tab-label">Requests</span>
                 </button>
-                <button onclick="switchTab('attendance-summary')" data-tab="attendance-summary" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Attendance Summary" title="Attendance Summary">
-                    <i data-feather="bar-chart-2" aria-hidden="true"></i><span class="tab-label">Attendance Summary</span>
+                <button onclick="switchTab('attendance-summary')" data-tab="attendance-summary" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="Attendance Summary" title="Attendance Summary">
+                    <i data-feather="bar-chart-2" aria-hidden="true"></i><span class="tab-label">Summary</span>
                 </button>
-                <button onclick="switchTab('approvals')" data-tab="approvals" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Pending Approval" title="Pending Approval">
-                    <i data-feather="clock" aria-hidden="true"></i><span class="tab-label">Pending Approval</span>${pendingBadge}
+                <button onclick="switchTab('approvals')" data-tab="approvals" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="Pending Approval" title="Pending Approval">
+                    <i data-feather="clock" aria-hidden="true"></i><span class="tab-label">Approvals</span>${pendingBadge}
                 </button>
-                <button onclick="switchTab('hr-guard-schedule')" data-tab="hr-guard-schedule" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Guard Schedule" title="Guard Schedule">
-                    <i data-feather="calendar" aria-hidden="true"></i><span class="tab-label">Guard Schedule</span>
+                <button onclick="switchTab('hr-guard-schedule')" data-tab="hr-guard-schedule" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="Guard Schedule" title="Guard Schedule">
+                    <i data-feather="calendar" aria-hidden="true"></i><span class="tab-label">Guard</span>
                 </button>
-                <button onclick="switchTab('payslip')" data-tab="payslip" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="My Payslip" title="My Payslip">
-                    <i data-feather="file-text" aria-hidden="true"></i><span class="tab-label">My Payslip</span>
+                <button onclick="switchTab('payslip')" data-tab="payslip" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="My Payslip" title="My Payslip">
+                    <i data-feather="file-text" aria-hidden="true"></i><span class="tab-label">Payslip</span>
                 </button>
-                <button onclick="switchTab('hr-payslip')" data-tab="hr-payslip" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Payslip Management" title="Payslip Management">
-                    <i data-feather="file-text" aria-hidden="true"></i><span class="tab-label">Payslip Management</span>
+                <button onclick="switchTab('hr-payslip')" data-tab="hr-payslip" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="Payslip Management" title="Payslip Management">
+                    <i data-feather="file-text" aria-hidden="true"></i><span class="tab-label">Payroll</span>
                 </button>
-                <button onclick="switchTab('device-management')" data-tab="device-management" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Device Management" title="Device Management">
-                    <i data-feather="smartphone" aria-hidden="true"></i><span class="tab-label">Device Management</span>
+                <button onclick="switchTab('device-management')" data-tab="device-management" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="Device Management" title="Device Management">
+                    <i data-feather="smartphone" aria-hidden="true"></i><span class="tab-label">Devices</span>
                 </button>
-                <button onclick="switchTab('admin-helpdesk')" data-tab="admin-helpdesk" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Admin Helpdesk" title="Admin Helpdesk">
-                    <i data-feather="shield" aria-hidden="true"></i><span class="tab-label">Admin Helpdesk</span>
+                <button onclick="switchTab('admin-helpdesk')" data-tab="admin-helpdesk" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="Admin Helpdesk" title="Admin Helpdesk">
+                    <i data-feather="shield" aria-hidden="true"></i><span class="tab-label">Helpdesk</span>
                 </button>
-                <button onclick="switchTab('hr-settings')" data-tab="hr-settings" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Settings" title="Settings">
+                <button onclick="switchTab('hr-settings')" data-tab="hr-settings" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="Settings" title="Settings">
                     <i data-feather="settings" aria-hidden="true"></i><span class="tab-label">Settings</span>
                 </button>`;
             } else {
                 html += `
-                <button onclick="switchTab('payslip')" data-tab="payslip" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="My Payslip" title="My Payslip">
-                    <i data-feather="file-text" aria-hidden="true"></i><span class="tab-label">My Payslip</span>
+                <button onclick="switchTab('payslip')" data-tab="payslip" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="My Payslip" title="My Payslip">
+                    <i data-feather="file-text" aria-hidden="true"></i><span class="tab-label">Payslip</span>
                 </button>
-                <button onclick="switchTab('helpdesk')" data-tab="helpdesk" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="HR Helpdesk" title="HR Helpdesk">
-                    <i data-feather="help-circle" aria-hidden="true"></i><span class="tab-label">HR Helpdesk</span>
+                <button onclick="switchTab('helpdesk')" data-tab="helpdesk" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="HR Helpdesk" title="HR Helpdesk">
+                    <i data-feather="help-circle" aria-hidden="true"></i><span class="tab-label">Helpdesk</span>
                 </button>`;
                 if (currentUserRole === 'approver' || currentUserRole === 'supervisor' || currentUserRole === 'manager') {
                     html += `
-                <button onclick="switchTab('approvals')" data-tab="approvals" class="tab-inactive w-full flex items-center gap-3 px-4 py-3 rounded-xl" data-tip="Pending Approval" title="Pending Approval">
-                    <i data-feather="clock" aria-hidden="true"></i><span class="tab-label">Pending Approval</span>${pendingBadge}
+                <button onclick="switchTab('approvals')" data-tab="approvals" class="tab-inactive w-full flex flex-col items-center gap-0.5 px-1 py-1.5 rounded-lg" data-tip="Pending Approval" title="Pending Approval">
+                    <i data-feather="clock" aria-hidden="true"></i><span class="tab-label">Approvals</span>${pendingBadge}
                 </button>`;
                 }
             }
