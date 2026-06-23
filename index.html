@@ -1096,6 +1096,26 @@
             border-radius: 0.5rem;
             font-size: 0.85rem;
         }
+
+        /* Dashboard layout fix - ensure announcements and payslip are visible */
+        #dashboard-tab .card-bg:last-child {
+            margin-bottom: 2rem;
+        }
+        #hr-payslip-tab .card-bg {
+            overflow: visible;
+        }
+        #payslipPreviewContainer {
+            max-height: none;
+            overflow: visible;
+        }
+        #payslipPreviewContent {
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        /* Reset button fix */
+        #resetButtonContainer button {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -1327,7 +1347,7 @@
                 </div>
                 <div class="mt-6 card-bg rounded-2xl p-6 shadow-sm">
                     <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Announcements</h3><div id="announcementAddButton"></div></div>
-                    <div id="announcementsList" class="space-y-3 w-full"></div>
+                    <div id="announcementsList" class="space-y-3 w-full max-h-96 overflow-y-auto"></div>
                 </div>
             </div>
 
@@ -3365,7 +3385,9 @@
                 container.innerHTML = '<div class="text-center text-slate-500 py-4">No employees</div>';
                 return;
             }
-            container.innerHTML = regularEmps.map(emp =>
+            // Sort employees alphabetically by name
+            const sortedEmps = [...regularEmps].sort((a, b) => a.name.localeCompare(b.name));
+            container.innerHTML = sortedEmps.map(emp =>
                 '<div class="employee-item cursor-pointer p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" data-id="' +
                 emp.id + '" data-name="' + emp.name + '" role="button" tabindex="0">' + emp.name + '</div>'
             ).join('');
@@ -3662,6 +3684,37 @@
                 refreshDashboard();
             } catch (err) {
                 alert('Error updating leave balance: ' + err.message);
+            }
+        }
+
+        // ===== RESET SYSTEM DATA =====
+        async function resetAllSystemData() {
+            const pin = prompt('Enter security PIN to reset all system data:');
+            if (pin !== '123456') {
+                alert('❌ Invalid PIN. System reset cancelled.');
+                return;
+            }
+            if (!confirm('⚠️ WARNING: This will delete ALL data from the system. This action cannot be undone. Are you sure?'))
+                return;
+            if (!confirm('⚠️ FINAL WARNING: Are you absolutely sure you want to delete ALL data?')) return;
+
+            try {
+                const collections = ['employees', 'requests', 'attendance', 'payslips', 'announcements',
+                    'guardWeeklySchedules', 'employeeSupportRequests', 'userDevices', 'auditLogs'
+                ];
+                for (const collection of collections) {
+                    const snapshot = await db.collection(collection).get();
+                    const batch = db.batch();
+                    snapshot.docs.forEach(doc => {
+                        batch.delete(doc.ref);
+                    });
+                    await batch.commit();
+                }
+                alert('✅ All system data has been reset successfully.');
+                location.reload();
+            } catch (err) {
+                console.error('Reset error:', err);
+                alert('❌ Error resetting data: ' + err.message);
             }
         }
 
