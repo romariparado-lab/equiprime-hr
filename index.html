@@ -24,6 +24,7 @@
     <style>
         * {
             font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
         }
         body {
             background: #f3f6fb;
@@ -793,6 +794,8 @@
             width: 100%;
             max-width: 100%;
             box-sizing: border-box;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
         }
         body.dark .payslip-container {
             background: #0f172a;
@@ -806,6 +809,7 @@
             margin-bottom: 1rem;
             border-bottom: 1px solid #cbd5e1;
             padding-bottom: 0.5rem;
+            flex-wrap: wrap;
         }
         .payslip-logo {
             height: 50px;
@@ -829,12 +833,14 @@
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 0.5rem;
+            table-layout: fixed;
         }
         .payslip-table td,
         .payslip-table th {
             border: 1px solid #cbd5e1;
             padding: 0.3rem 0.5rem;
             vertical-align: top;
+            word-break: break-word;
         }
         .payslip-table th {
             background-color: #f1f5f9;
@@ -916,6 +922,7 @@
             flex: 1;
             overflow-y: auto;
             padding: 0.75rem 1rem;
+            height: 100vh;
         }
         .mobile-dropdown-menu {
             position: absolute;
@@ -1062,11 +1069,12 @@
             background: #3b82f6;
         }
 
-        /* Payslip preview with scroll */
+        /* Payslip preview with scroll - FIXED to show all data */
         #payslipPreviewContent {
-            max-height: 50vh;
+            max-height: 60vh;
             overflow-y: auto;
             padding-right: 0.5rem;
+            padding-bottom: 0.5rem;
         }
         #payslipPreviewContent::-webkit-scrollbar {
             width: 5px;
@@ -1094,6 +1102,11 @@
         }
         body.dark #payslipPreviewContent {
             scrollbar-color: #3b82f6 #334155;
+        }
+
+        #payslipPreviewContainer {
+            max-height: none;
+            overflow: visible;
         }
 
         /* Scrollable containers in other tabs */
@@ -1134,18 +1147,6 @@
             font-size: 0.85rem;
         }
 
-        /* Dashboard layout fix - ensure announcements and payslip are visible */
-        #dashboard-tab .card-bg:last-child {
-            margin-bottom: 1rem;
-        }
-        #hr-payslip-tab .card-bg {
-            overflow: visible;
-        }
-        #payslipPreviewContainer {
-            max-height: none;
-            overflow: visible;
-        }
-
         /* Reset button fix */
         #resetButtonContainer button {
             cursor: pointer;
@@ -1173,10 +1174,25 @@
             .mobile-header {
                 display: flex !important;
             }
+            .main-content {
+                padding: 0.5rem 0.5rem !important;
+                height: 100vh;
+            }
+            #payslipPreviewContent {
+                max-height: 50vh !important;
+            }
+            .payslip-table td,
+            .payslip-table th {
+                padding: 0.2rem 0.3rem !important;
+                font-size: 0.65rem !important;
+            }
+            .payslip-container {
+                padding: 0.5rem !important;
+            }
         }
 
         /* ===== COMPACT LAYOUT FOR LAPTOP SCREENS ===== */
-        @media (max-width: 1366px) {
+        @media (max-width: 1366px) and (min-width: 1024px) {
             .main-content {
                 padding: 0.5rem 0.75rem !important;
             }
@@ -1317,6 +1333,129 @@
             .gap-3 {
                 gap: 0.3rem !important;
             }
+        }
+
+        /* ===== RESPONSIVE PAYSLIP TABLES ===== */
+        @media (max-width: 768px) {
+            .payslip-table td,
+            .payslip-table th {
+                display: block;
+                width: 100% !important;
+                text-align: left !important;
+                border: none !important;
+                border-bottom: 1px solid #cbd5e1 !important;
+                padding: 0.3rem 0.5rem !important;
+            }
+            .payslip-table tr {
+                display: block;
+                margin-bottom: 0.5rem;
+                border: 1px solid #cbd5e1;
+                border-radius: 0.5rem;
+                padding: 0.25rem;
+            }
+            .payslip-table thead {
+                display: none;
+            }
+            .payslip-table td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                display: inline-block;
+                width: 40%;
+                margin-right: 5%;
+            }
+            body.dark .payslip-table td {
+                border-bottom-color: #475569 !important;
+            }
+            body.dark .payslip-table tr {
+                border-color: #475569 !important;
+            }
+        }
+
+        /* ===== HR PAYSLIP TAB - FIX LAYOUT ===== */
+        #hr-payslip-tab .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        @media (max-width: 1024px) {
+            #hr-payslip-tab .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Payroll form fields scroll */
+        #payrollFormFields {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        #payrollFormFields::-webkit-scrollbar {
+            width: 4px;
+        }
+        #payrollFormFields::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 4px;
+        }
+        #payrollFormFields::-webkit-scrollbar-thumb {
+            background: #011F7B;
+            border-radius: 4px;
+        }
+        body.dark #payrollFormFields::-webkit-scrollbar-track {
+            background: #334155;
+        }
+        body.dark #payrollFormFields::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+        }
+
+        /* Payslip history scroll */
+        #payslipHistory {
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+        #payslipHistory::-webkit-scrollbar {
+            width: 4px;
+        }
+        #payslipHistory::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 4px;
+        }
+        #payslipHistory::-webkit-scrollbar-thumb {
+            background: #011F7B;
+            border-radius: 4px;
+        }
+        body.dark #payslipHistory::-webkit-scrollbar-track {
+            background: #334155;
+        }
+        body.dark #payslipHistory::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+        }
+
+        /* Ensure all tab content fits */
+        .tab-content {
+            padding-bottom: 2rem;
+        }
+
+        /* Employee list container scroll */
+        #employeeListContainer {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        #employeeListContainer::-webkit-scrollbar {
+            width: 4px;
+        }
+        #employeeListContainer::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 4px;
+        }
+        #employeeListContainer::-webkit-scrollbar-thumb {
+            background: #011F7B;
+            border-radius: 4px;
+        }
+        body.dark #employeeListContainer::-webkit-scrollbar-track {
+            background: #334155;
+        }
+        body.dark #employeeListContainer::-webkit-scrollbar-thumb {
+            background: #3b82f6;
         }
     </style>
 </head>
@@ -1617,7 +1756,7 @@
                         </div>
                     </div>
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-1"><h3 class="font-bold mb-3">Employees</h3><div id="employeeListContainer" class="space-y-2 max-h-96 overflow-y-auto"></div></div>
+                        <div class="lg:col-span-1"><h3 class="font-bold mb-3">Employees</h3><div id="employeeListContainer" class="space-y-2 overflow-y-auto"></div></div>
                         <div class="lg:col-span-2">
                             <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
                                 <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Completed Days</small><h3 id="completedCount" class="text-2xl font-bold">0</h3></div>
@@ -1672,7 +1811,7 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="card-bg rounded-2xl p-6">
                         <h3 class="text-xl font-bold mb-4">Payroll Entry (2026 Compliant)</h3>
-                        <div class="space-y-3 max-h-[70vh] overflow-y-auto pr-2" id="payrollFormFields">
+                        <div class="space-y-3 max-h-[60vh] overflow-y-auto pr-2" id="payrollFormFields">
                             <label for="payslipEmployee" class="sr-only">Select Employee</label>
                             <select id="payslipEmployee" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select employee"><option value="">Select Employee</option></select>
                             <label for="payslipMonth" class="sr-only">Select month</label>
@@ -1727,18 +1866,26 @@
                             <label for="wtax" class="sr-only">WTAX</label>
                             <input type="number" id="wtax" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="WTAX (auto-computed)" title="WTAX (auto-calculated)" />
                         </div>
-                        <div class="flex gap-3 mt-5"><button id="computePayrollBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl flex-1" title="Compute payroll">Compute Payroll (2026 Rules)</button><button id="generatePayslipBtn" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Generate payslip">Generate Payslip</button></div>
+                        <div class="flex flex-wrap gap-3 mt-5">
+                            <button id="computePayrollBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl flex-1 min-w-[120px]" title="Compute payroll">Compute Payroll (2026 Rules)</button>
+                            <button id="generatePayslipBtn" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 min-w-[120px]" title="Generate payslip">Generate Payslip</button>
+                        </div>
                         <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">SSS, SSS MPF, PhilHealth, Pag-IBIG, Add. Pag-IBIG deducted only on 2nd cutoff | WTAX with centavos</p>
                     </div>
-                    <div class="card-bg rounded-2xl p-6"><h3 class="text-xl font-bold mb-4">Payroll Summary & History</h3><div id="payrollSummary" class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl mb-4 hidden"><h4 class="font-bold mb-2">Computed Summary</h4><div class="space-y-1 text-sm"><p><strong>Gross Pay (Cutoff):</strong> <span id="grossPayDisplay">0.00</span></p><p><strong>Total Deductions:</strong> <span id="totalDeductionsDisplay">0.00</span></p><p><strong>Net Pay:</strong> <span id="netPayDisplay" class="text-green-600 font-bold">0.00</span></p></div></div><h3 class="text-xl font-bold mb-2">All Payslips History</h3><div id="payslipHistory" class="space-y-3 max-h-96 overflow-y-auto"></div></div>
+                    <div class="card-bg rounded-2xl p-6">
+                        <h3 class="text-xl font-bold mb-4">Payroll Summary & History</h3>
+                        <div id="payrollSummary" class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl mb-4 hidden"><h4 class="font-bold mb-2">Computed Summary</h4><div class="space-y-1 text-sm"><p><strong>Gross Pay (Cutoff):</strong> <span id="grossPayDisplay">0.00</span></p><p><strong>Total Deductions:</strong> <span id="totalDeductionsDisplay">0.00</span></p><p><strong>Net Pay:</strong> <span id="netPayDisplay" class="text-green-600 font-bold">0.00</span></p></div></div>
+                        <h3 class="text-xl font-bold mb-2">All Payslips History</h3>
+                        <div id="payslipHistory" class="space-y-3 max-h-[50vh] overflow-y-auto"></div>
+                    </div>
                 </div>
                 <div id="payslipPreviewContainer" class="card-bg rounded-2xl p-4 mt-6 hidden">
-                    <div class="flex justify-between items-center mb-3 no-print">
+                    <div class="flex justify-between items-center mb-3 no-print flex-wrap gap-2">
                         <h3 class="text-lg font-bold">📄 Generated Payslip</h3>
                         <button onclick="closePayslipPreview()" class="text-red-500 hover:text-red-700 text-sm" title="Close payslip preview"><i data-feather="x-circle" aria-hidden="true"></i> Close</button>
                     </div>
                     <div id="payslipPreviewContent" class="scrollable-content"></div>
-                    <div class="text-right mt-3 no-print">
+                    <div class="text-right mt-3 no-print flex flex-wrap justify-end gap-2">
                         <button onclick="downloadInlinePayslipPDF()" class="bg-[#011F7B] text-white px-4 py-1 rounded-lg text-sm" title="Download payslip as PDF">Download PDF</button>
                         <button onclick="window.print()" class="bg-gray-600 text-white px-4 py-1 rounded-lg text-sm ml-2" title="Print payslip">Print</button>
                     </div>
@@ -1747,20 +1894,20 @@
 
             <!-- DEVICE MANAGEMENT TAB -->
             <div id="device-management-tab" class="tab-content hidden">
-                <div class="flex justify-between items-center mb-5">
+                <div class="flex justify-between items-center mb-5 flex-wrap gap-2">
                     <h2 class="text-2xl font-bold text-yellow-600 flex items-center gap-2"><i data-feather="smartphone" aria-hidden="true"></i> Mobile Device Management</h2>
                     <button onclick="refreshDeviceList()" class="bg-blue-600 text-white px-4 py-2 rounded-xl flex items-center gap-2 hover:bg-blue-700" title="Refresh device list"><i data-feather="refresh-cw" aria-hidden="true"></i> Refresh</button>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                     <div class="stat-card"><div><p>Total Devices</p><h3 class="text-3xl font-bold" id="totalDevices">0</h3></div><i data-feather="smartphone" class="text-blue-600 dark:text-blue-400 w-6 h-6" aria-hidden="true"></i></div>
                     <div class="stat-card"><div><p>Active</p><h3 class="text-3xl font-bold" id="activeDevices">0</h3></div><i data-feather="check-circle" class="text-green-600 dark:text-green-400 w-6 h-6" aria-hidden="true"></i></div>
                     <div class="stat-card"><div><p>Blocked</p><h3 class="text-3xl font-bold" id="blockedDevices">0</h3></div><i data-feather="x-circle" class="text-red-600 dark:text-red-400 w-6 h-6" aria-hidden="true"></i></div>
                     <div class="stat-card"><div><p>Users</p><h3 class="text-3xl font-bold" id="usersWithDevices">0</h3></div><i data-feather="users" class="text-purple-600 dark:text-purple-400 w-6 h-6" aria-hidden="true"></i></div>
                 </div>
                 <div class="card-bg rounded-2xl p-6 shadow-sm">
-                    <div class="flex gap-4 mb-4 flex-wrap">
+                    <div class="flex flex-wrap gap-4 mb-4">
                         <label for="deviceSearch" class="sr-only">Search devices</label>
-                        <input type="text" id="deviceSearch" placeholder="Search by employee or device..." class="flex-1 p-2 border rounded-lg dark:bg-slate-700 min-w-[200px]" onkeyup="filterDevices()" title="Search devices by employee name or device name" />
+                        <input type="text" id="deviceSearch" placeholder="Search by employee or device..." class="flex-1 p-2 border rounded-lg dark:bg-slate-700 min-w-[150px]" onkeyup="filterDevices()" title="Search devices by employee name or device name" />
                         <label for="deviceStatusFilter" class="sr-only">Filter by status</label>
                         <select id="deviceStatusFilter" class="p-2 border rounded-lg dark:bg-slate-700" onchange="filterDevices()" title="Filter devices by status">
                             <option value="all">All Status</option>
@@ -1832,7 +1979,7 @@
 
             <!-- EMPLOYEES TAB -->
             <div id="employees-tab" class="tab-content hidden">
-                <div class="flex justify-between items-center mb-5">
+                <div class="flex justify-between items-center mb-5 flex-wrap gap-2">
                     <h2 class="text-2xl font-bold text-yellow-600">Employees Management</h2>
                     <button onclick="showAddEmployeeModal()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex items-center gap-2" title="Add a new employee"><i data-feather="plus" aria-hidden="true"></i> Add Employee</button>
                 </div>
@@ -3411,21 +3558,29 @@
                     <div class="payslip-header">
                         <div class="payslip-title"><h2>EQUIPRIME HR</h2><p>Payslip Statement</p></div>
                     </div>
-                    <table class="payslip-table"><tr><td><strong>Name:</strong> ${p.employeeName}</td><td><strong>Period:</strong> ${p.month} (${p.cutOff})</td><td><strong>Date:</strong> ${p.payrollDate}</td></tr></table>
-                    <table class="payslip-table"><thead><tr><th colspan="2">Salary Details</th></tr></thead><tbody>
-                        <tr><td>Basic Pay:</td><td>₱ ${p.basicSalary.toFixed(2)}</td></tr>
-                        <tr><td>Overtime Pay:</td><td>₱ ${p.overtimePay.toFixed(2)}</td></tr>
-                        <tr><td>Holiday Pay:</td><td>₱ ${p.holidayPay.toFixed(2)}</td></tr>
-                        <tr><td>Gross Pay:</td><td><strong>₱ ${p.grossPayCutoff.toFixed(2)}</strong></td></tr>
-                    </tbody></table>
-                    <table class="payslip-table"><thead><tr><th>Deductions</th><th>Amount</th></tr></thead><tbody>
-                        <tr><td>SSS:</td><td>₱ ${p.sss.toFixed(2)}</td></tr>
-                        <tr><td>PhilHealth:</td><td>₱ ${p.philhealth.toFixed(2)}</td></tr>
-                        <tr><td>Pag-IBIG:</td><td>₱ ${p.pagibig.toFixed(2)}</td></tr>
-                        <tr><td>WTAX:</td><td>₱ ${p.wtax.toFixed(2)}</td></tr>
-                        <tr><td><strong>Total Deductions:</strong></td><td><strong>₱ ${p.totalDeductions.toFixed(2)}</strong></td></tr>
-                        <tr><td><strong>NET PAY:</strong></td><td class="netpay-value"><strong>₱ ${p.netPay.toFixed(2)}</strong></td></tr>
-                    </tbody></table>
+                    <table class="payslip-table">
+                        <tr><td><strong>Name:</strong> ${p.employeeName}</td><td><strong>Period:</strong> ${p.month} (${p.cutOff})</td><td><strong>Date:</strong> ${p.payrollDate}</td></tr>
+                    </table>
+                    <table class="payslip-table">
+                        <thead><tr><th colspan="2">Salary Details</th></tr></thead>
+                        <tbody>
+                            <tr><td data-label="Basic Pay">Basic Pay:</td><td>₱ ${p.basicSalary.toFixed(2)}</td></tr>
+                            <tr><td data-label="Overtime Pay">Overtime Pay:</td><td>₱ ${p.overtimePay.toFixed(2)}</td></tr>
+                            <tr><td data-label="Holiday Pay">Holiday Pay:</td><td>₱ ${p.holidayPay.toFixed(2)}</td></tr>
+                            <tr><td data-label="Gross Pay"><strong>Gross Pay:</strong></td><td><strong>₱ ${p.grossPayCutoff.toFixed(2)}</strong></td></tr>
+                        </tbody>
+                    </table>
+                    <table class="payslip-table">
+                        <thead><tr><th>Deductions</th><th>Amount</th></tr></thead>
+                        <tbody>
+                            <tr><td data-label="SSS">SSS:</td><td>₱ ${p.sss.toFixed(2)}</td></tr>
+                            <tr><td data-label="PhilHealth">PhilHealth:</td><td>₱ ${p.philhealth.toFixed(2)}</td></tr>
+                            <tr><td data-label="Pag-IBIG">Pag-IBIG:</td><td>₱ ${p.pagibig.toFixed(2)}</td></tr>
+                            <tr><td data-label="WTAX">WTAX:</td><td>₱ ${p.wtax.toFixed(2)}</td></tr>
+                            <tr><td data-label="Total Deductions"><strong>Total Deductions:</strong></td><td><strong>₱ ${p.totalDeductions.toFixed(2)}</strong></td></tr>
+                            <tr><td data-label="NET PAY"><strong>NET PAY:</strong></td><td class="netpay-value"><strong>₱ ${p.netPay.toFixed(2)}</strong></td></tr>
+                        </tbody>
+                    </table>
                     <div class="signature-line">Certified True Copy<br>Signature</div>
                 </div>`;
             document.getElementById('payslipPreviewContent').innerHTML = content;
@@ -3457,13 +3612,11 @@
         function closePayslipPreview() { document.getElementById('payslipPreviewContainer').classList.add('hidden'); }
 
         function downloadInlinePayslipPDF() {
-            if (!window.currentInlinePayslip) return;
             const element = document.getElementById('payslipPreviewContent');
             if (!element) return;
             html2pdf().from(element).set({
                 margin: 0.2,
-                filename: 'payslip_' + window.currentInlinePayslip.employeeName + '_' + window.currentInlinePayslip
-                    .month + '.pdf',
+                filename: 'payslip_' + Date.now() + '.pdf',
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
             }).save();
