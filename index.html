@@ -1457,6 +1457,33 @@
         body.dark #employeeListContainer::-webkit-scrollbar-thumb {
             background: #3b82f6;
         }
+
+        /* Print styles for payslip */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #payslipPreviewContainer,
+            #payslipPreviewContainer * {
+                visibility: visible;
+            }
+            #payslipPreviewContainer {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                margin: 0;
+                padding: 1rem;
+                background: white !important;
+            }
+            #payslipPreviewContainer .no-print {
+                display: none !important;
+            }
+            #payslipPreviewContent {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -3548,13 +3575,15 @@
             await db.collection('payslips').add(payslipData);
             allPayslips.push(payslipData);
             refreshHrPayslip();
+            // Store the payslip data globally for PDF download
+            window.currentPayslipData = payslipData;
             renderInlinePayslip(payslipData);
             alert('Payslip generated for ' + employee.name);
         }
 
         function renderInlinePayslip(p) {
             const content = `
-                <div class="payslip-container">
+                <div class="payslip-container" id="payslipPrintContent">
                     <div class="payslip-header">
                         <div class="payslip-title"><h2>EQUIPRIME HR</h2><p>Payslip Statement</p></div>
                     </div>
@@ -3567,6 +3596,14 @@
                             <tr><td data-label="Basic Pay">Basic Pay:</td><td>₱ ${p.basicSalary.toFixed(2)}</td></tr>
                             <tr><td data-label="Overtime Pay">Overtime Pay:</td><td>₱ ${p.overtimePay.toFixed(2)}</td></tr>
                             <tr><td data-label="Holiday Pay">Holiday Pay:</td><td>₱ ${p.holidayPay.toFixed(2)}</td></tr>
+                            <tr><td data-label="ND (Night Differential)">ND (Night Differential):</td><td>₱ ${p.nd.toFixed(2)}</td></tr>
+                            <tr><td data-label="NDOT">NDOT:</td><td>₱ ${p.ndot.toFixed(2)}</td></tr>
+                            <tr><td data-label="LH-ND">LH-ND:</td><td>₱ ${p.lhNd.toFixed(2)}</td></tr>
+                            <tr><td data-label="Rest Day">Rest Day:</td><td>₱ ${p.restday.toFixed(2)}</td></tr>
+                            <tr><td data-label="Other Taxable Earnings">Other Taxable Earnings:</td><td>₱ ${p.otherTaxableEarnings.toFixed(2)}</td></tr>
+                            <tr><td data-label="De Minimis">De Minimis:</td><td>₱ ${p.deMinimis.toFixed(2)}</td></tr>
+                            <tr><td data-label="Other Non-Taxable">Other Non-Taxable:</td><td>₱ ${p.otherNonTaxableEarnings.toFixed(2)}</td></tr>
+                            <tr><td data-label="Absences/Late">Absences/Late:</td><td>₱ ${p.absencesLate.toFixed(2)}</td></tr>
                             <tr><td data-label="Gross Pay"><strong>Gross Pay:</strong></td><td><strong>₱ ${p.grossPayCutoff.toFixed(2)}</strong></td></tr>
                         </tbody>
                     </table>
@@ -3576,6 +3613,7 @@
                             <tr><td data-label="SSS">SSS:</td><td>₱ ${p.sss.toFixed(2)}</td></tr>
                             <tr><td data-label="PhilHealth">PhilHealth:</td><td>₱ ${p.philhealth.toFixed(2)}</td></tr>
                             <tr><td data-label="Pag-IBIG">Pag-IBIG:</td><td>₱ ${p.pagibig.toFixed(2)}</td></tr>
+                            <tr><td data-label="Additional Pag-IBIG">Additional Pag-IBIG:</td><td>₱ ${p.additionalPagibig.toFixed(2)}</td></tr>
                             <tr><td data-label="WTAX">WTAX:</td><td>₱ ${p.wtax.toFixed(2)}</td></tr>
                             <tr><td data-label="Total Deductions"><strong>Total Deductions:</strong></td><td><strong>₱ ${p.totalDeductions.toFixed(2)}</strong></td></tr>
                             <tr><td data-label="NET PAY"><strong>NET PAY:</strong></td><td class="netpay-value"><strong>₱ ${p.netPay.toFixed(2)}</strong></td></tr>
@@ -3609,14 +3647,25 @@
             ).join('') || '<div>No payslips</div>';
         }
 
-        function closePayslipPreview() { document.getElementById('payslipPreviewContainer').classList.add('hidden'); }
+        function closePayslipPreview() { 
+            document.getElementById('payslipPreviewContainer').classList.add('hidden');
+            window.currentPayslipData = null;
+        }
 
         function downloadInlinePayslipPDF() {
-            const element = document.getElementById('payslipPreviewContent');
-            if (!element) return;
+            const element = document.getElementById('payslipPrintContent');
+            if (!element) {
+                alert('No payslip data available to download.');
+                return;
+            }
+            const payslipData = window.currentPayslipData;
+            if (!payslipData) {
+                alert('No payslip data available. Please generate a payslip first.');
+                return;
+            }
             html2pdf().from(element).set({
                 margin: 0.2,
-                filename: 'payslip_' + Date.now() + '.pdf',
+                filename: 'payslip_' + payslipData.employeeName.replace(/\s/g, '_') + '_' + payslipData.month + '.pdf',
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
             }).save();
