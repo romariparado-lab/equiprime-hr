@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>EQUIPRIME HR - Payroll 2026</title>
-    <!-- Favicon -->
     <link rel="icon" href="favicon.ico" />
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -41,7 +40,6 @@
             background: #0f172a;
         }
 
-        /* ===== LOGIN SCREEN ===== */
         .login-split {
             display: flex;
             min-height: 100vh;
@@ -54,7 +52,6 @@
             z-index: 9999;
         }
 
-        /* ===== BRANDING HALF WITH IMAGE ===== */
         .branding-half {
             background-image: url('branding-image.jpg');
             background-size: cover;
@@ -163,7 +160,6 @@
             }
         }
 
-        /* ===== DESKTOP SIDEBAR - COMPACT WITH LABELS BELOW ICONS ===== */
         .desktop-sidebar {
             width: 72px;
             background: #011F7B;
@@ -591,11 +587,6 @@
                 display: none !important;
             }
         }
-        @media print {
-            .no-print {
-                display: none;
-            }
-        }
 
         .mobile-header {
             position: relative;
@@ -870,31 +861,6 @@
             font-weight: 800;
             font-size: 0.9rem;
         }
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #payslipPreviewContainer,
-            #payslipPreviewContainer * {
-                visibility: visible;
-            }
-            #payslipPreviewContainer {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                margin: 0;
-                padding: 1rem;
-                background: white !important;
-            }
-            #payslipPreviewContainer .no-print {
-                display: none !important;
-            }
-            #payslipPreviewContent {
-                max-height: none !important;
-                overflow: visible !important;
-            }
-        }
         .card-bg .grid button span {
             color: #fbc300;
         }
@@ -1006,13 +972,11 @@
         body.dark .profile-info-item {
             border-bottom-color: #334155;
         }
-        /* Fix for text-size-adjust compatibility */
         html {
             -webkit-text-size-adjust: 100%;
             text-size-adjust: 100%;
         }
 
-        /* ===== CUSTOM SCROLLBAR - VISIBLE ON ALL SCREENS ===== */
         .main-content::-webkit-scrollbar {
             width: 8px;
         }
@@ -1036,7 +1000,6 @@
         body.dark .main-content::-webkit-scrollbar-thumb:hover {
             background: #60a5fa;
         }
-        /* Firefox scrollbar support */
         .main-content {
             scrollbar-width: thin;
             scrollbar-color: #011F7B #e2e8f0;
@@ -1045,7 +1008,6 @@
             scrollbar-color: #3b82f6 #1e293b;
         }
 
-        /* Announcements - wider on desktop, fully visible */
         .announcement-item {
             width: 100%;
             max-width: 100%;
@@ -1077,7 +1039,6 @@
             background: #3b82f6;
         }
 
-        /* Payslip preview with scroll - FIXED to show all data */
         #payslipPreviewContent {
             max-height: 60vh;
             overflow-y: auto;
@@ -1117,7 +1078,6 @@
             overflow: visible;
         }
 
-        /* Scrollable containers in other tabs */
         .overflow-y-auto {
             scrollbar-width: thin;
         }
@@ -1142,7 +1102,6 @@
             background: #3b82f6;
         }
 
-        /* Calendar grid improvement */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -1155,12 +1114,10 @@
             font-size: 0.85rem;
         }
 
-        /* Reset button fix */
         #resetButtonContainer button {
             cursor: pointer;
         }
 
-        /* Compact sidebar - label below icon */
         .desktop-sidebar nav button .tab-label {
             display: block;
         }
@@ -1174,7 +1131,6 @@
             font-size: 0.45rem;
         }
 
-        /* Mobile adjustments */
         @media (max-width: 1023px) {
             .desktop-sidebar {
                 display: none;
@@ -1199,7 +1155,6 @@
             }
         }
 
-        /* ===== COMPACT LAYOUT FOR LAPTOP SCREENS ===== */
         @media (max-width: 1366px) and (min-width: 1024px) {
             .main-content {
                 padding: 0.5rem 0.75rem !important;
@@ -1243,7 +1198,6 @@
                 width: 1.25rem !important;
                 height: 1.25rem !important;
             }
-            /* Quick filing buttons */
             .grid.grid-cols-2.sm\:grid-cols-4.lg\:grid-cols-7 {
                 gap: 0.25rem !important;
             }
@@ -1258,7 +1212,6 @@
             .grid.grid-cols-2.sm\:grid-cols-4.lg\:grid-cols-7 button span {
                 font-size: 0.6rem !important;
             }
-            /* Announcements */
             #announcementsList {
                 max-height: 150px !important;
             }
@@ -1271,7 +1224,6 @@
             .announcement-item p {
                 font-size: 0.75rem !important;
             }
-            /* My Requests and Login Status */
             .grid.grid-cols-1.lg\:grid-cols-2 {
                 gap: 0.5rem !important;
             }
@@ -1285,7 +1237,6 @@
                 font-size: 0.75rem !important;
                 padding: 0.3rem 0.5rem !important;
             }
-            /* Welcome heading */
             .text-3xl {
                 font-size: 1.5rem !important;
             }
@@ -1295,7 +1246,6 @@
             .text-xl {
                 font-size: 1rem !important;
             }
-            /* Profile */
             .profile-trigger {
                 padding: 0.3rem 0.6rem !important;
             }
@@ -1306,23 +1256,18 @@
             .profile-trigger span {
                 font-size: 0.8rem !important;
             }
-            /* Filters label */
             .dashboard-filters label {
                 font-size: 0.75rem !important;
             }
-            /* Quick filing section */
             .card-bg .grid button span {
                 font-size: 0.55rem !important;
             }
-            /* My Recent Requests - reduce height */
             #myRequestsList {
                 max-height: 150px !important;
             }
-            /* Login Status - reduce height */
             .space-y-4 .max-h-40 {
                 max-height: 80px !important;
             }
-            /* Margin reductions */
             .mb-6 {
                 margin-bottom: 0.5rem !important;
             }
@@ -1343,7 +1288,6 @@
             }
         }
 
-        /* ===== RESPONSIVE PAYSLIP TABLES ===== */
         @media (max-width: 768px) {
             .payslip-table td,
             .payslip-table th {
@@ -1379,7 +1323,6 @@
             }
         }
 
-        /* ===== HR PAYSLIP TAB - FIX LAYOUT ===== */
         #hr-payslip-tab .grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1391,7 +1334,6 @@
             }
         }
 
-        /* Payroll form fields scroll */
         #payrollFormFields {
             max-height: 60vh;
             overflow-y: auto;
@@ -1415,7 +1357,6 @@
             background: #3b82f6;
         }
 
-        /* Payslip history scroll */
         #payslipHistory {
             max-height: 50vh;
             overflow-y: auto;
@@ -1438,12 +1379,10 @@
             background: #3b82f6;
         }
 
-        /* Ensure all tab content fits */
         .tab-content {
             padding-bottom: 2rem;
         }
 
-        /* Employee list container scroll */
         #employeeListContainer {
             max-height: 70vh;
             overflow-y: auto;
@@ -1464,6 +1403,36 @@
         }
         body.dark #employeeListContainer::-webkit-scrollbar-thumb {
             background: #3b82f6;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #payslipPreviewContainer,
+            #payslipPreviewContainer * {
+                visibility: visible;
+            }
+            #payslipPreviewContainer {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                margin: 0;
+                padding: 1rem;
+                background: white !important;
+                z-index: 9999;
+            }
+            #payslipPreviewContainer .no-print {
+                display: none !important;
+            }
+            #payslipPreviewContent {
+                max-height: none !important;
+                overflow: visible !important;
+            }
+            #payslipPrintContent {
+                background: white !important;
+            }
         }
     </style>
 </head>
@@ -2007,8 +1976,199 @@
     </div><!-- /mainApp -->
 
     <!-- MODALS -->
-    <!-- All modals remain the same as before -->
-    <!-- [MODALS SECTION - SAME AS PREVIOUS CODE] -->
+    <div id="addEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Add Employee">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
+            <div class="space-y-3">
+                <label for="newEmpName" class="sr-only">Full Name</label>
+                <input type="text" id="newEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter full name" />
+                <label for="newEmpEmail" class="sr-only">Email</label>
+                <input type="email" id="newEmpEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter email address" />
+                <label for="newEmpEmployeeNumber" class="sr-only">Employee Number</label>
+                <input type="text" id="newEmpEmployeeNumber" placeholder="Employee Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter employee number" />
+                <label for="newEmpDateHired" class="sr-only">Date Hired</label>
+                <input type="date" id="newEmpDateHired" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select date hired" />
+                <label for="newEmpGender" class="sr-only">Gender</label>
+                <select id="newEmpGender" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select gender"><option value="">Gender</option><option>Male</option><option>Female</option></select>
+                <label for="newEmpCivilStatus" class="sr-only">Civil Status</label>
+                <select id="newEmpCivilStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select civil status"><option value="">Civil Status</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select>
+                <label for="newEmpPhone" class="sr-only">Contact Number</label>
+                <input type="text" id="newEmpPhone" placeholder="Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter contact number" />
+                <label for="newEmpAddress" class="sr-only">Address</label>
+                <input type="text" id="newEmpAddress" placeholder="Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter address" />
+                <label for="newEmpEmergencyName" class="sr-only">Emergency Contact Name</label>
+                <input type="text" id="newEmpEmergencyName" placeholder="Emergency Contact Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency contact name" />
+                <label for="newEmpEmergencyRelation" class="sr-only">Relationship</label>
+                <input type="text" id="newEmpEmergencyRelation" placeholder="Relationship" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter relationship" />
+                <label for="newEmpEmergencyPhone" class="sr-only">Emergency Contact Number</label>
+                <input type="text" id="newEmpEmergencyPhone" placeholder="Emergency Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency contact number" />
+                <label for="newEmpEmergencyAddress" class="sr-only">Emergency Address</label>
+                <input type="text" id="newEmpEmergencyAddress" placeholder="Emergency Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency address" />
+                <div class="relative"><label for="newEmpSSS" class="sr-only">SSS Number</label><input type="text" id="newEmpSSS" placeholder="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter SSS number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <div class="relative"><label for="newEmpPhilHealth" class="sr-only">PhilHealth Number</label><input type="text" id="newEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter PhilHealth number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <div class="relative"><label for="newEmpPagIBIG" class="sr-only">Pag-IBIG Number</label><input type="text" id="newEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter Pag-IBIG number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <label for="newEmpDept" class="sr-only">Department</label>
+                <input type="text" id="newEmpDept" placeholder="Department" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter department" />
+                <label for="newEmpRole" class="sr-only">Role</label>
+                <select id="newEmpRole" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select role"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select>
+                <div class="border-t pt-4 mt-4"><h4 class="font-bold mb-3 text-sm flex items-center gap-2"><i data-feather="smartphone" class="w-4 h-4" aria-hidden="true"></i> Device Access Control</h4><label for="newEmpDeviceRestriction" class="sr-only">Device Restriction</label><select id="newEmpDeviceRestriction" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select device restriction"><option value="enabled">Enable device restriction (recommended)</option><option value="disabled">Disable device restriction</option></select></div>
+                <label for="newEmpPin" class="sr-only">PIN</label>
+                <input type="text" id="newEmpPin" placeholder="PIN" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter PIN" />
+                <label for="newEmpPass" class="sr-only">Password</label>
+                <input type="password" id="newEmpPass" placeholder="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter password" />
+            </div>
+            <div class="flex gap-3 mt-5"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Save employee">Save</button><button onclick="closeModal('addEmployeeModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
+        </div>
+    </div>
+
+    <div id="editEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Edit Employee">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Employee</h3><button onclick="closeModal('editEmployeeModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
+            <input type="hidden" id="editEmpId" />
+            <div class="space-y-3">
+                <label for="editEmpName" class="sr-only">Full Name</label>
+                <input type="text" id="editEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter full name" />
+                <label for="editEmpEmail" class="sr-only">Email</label>
+                <input type="email" id="editEmpEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter email address" />
+                <label for="editEmpEmployeeNumber" class="sr-only">Employee Number</label>
+                <input type="text" id="editEmpEmployeeNumber" placeholder="Employee Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter employee number" />
+                <label for="editEmpDateHired" class="sr-only">Date Hired</label>
+                <input type="date" id="editEmpDateHired" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select date hired" />
+                <label for="editEmpGender" class="sr-only">Gender</label>
+                <select id="editEmpGender" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select gender"><option value="">Gender</option><option>Male</option><option>Female</option></select>
+                <label for="editEmpCivilStatus" class="sr-only">Civil Status</label>
+                <select id="editEmpCivilStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select civil status"><option value="">Civil Status</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select>
+                <label for="editEmpPhone" class="sr-only">Contact Number</label>
+                <input type="text" id="editEmpPhone" placeholder="Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter contact number" />
+                <label for="editEmpAddress" class="sr-only">Address</label>
+                <input type="text" id="editEmpAddress" placeholder="Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter address" />
+                <label for="editEmpEmergencyName" class="sr-only">Emergency Contact Name</label>
+                <input type="text" id="editEmpEmergencyName" placeholder="Emergency Contact Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency contact name" />
+                <label for="editEmpEmergencyRelation" class="sr-only">Relationship</label>
+                <input type="text" id="editEmpEmergencyRelation" placeholder="Relationship" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter relationship" />
+                <label for="editEmpEmergencyPhone" class="sr-only">Emergency Contact Number</label>
+                <input type="text" id="editEmpEmergencyPhone" placeholder="Emergency Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency contact number" />
+                <label for="editEmpEmergencyAddress" class="sr-only">Emergency Address</label>
+                <input type="text" id="editEmpEmergencyAddress" placeholder="Emergency Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency address" />
+                <div class="relative"><label for="editEmpSSS" class="sr-only">SSS Number</label><input type="text" id="editEmpSSS" placeholder="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter SSS number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <div class="relative"><label for="editEmpPhilHealth" class="sr-only">PhilHealth Number</label><input type="text" id="editEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter PhilHealth number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <div class="relative"><label for="editEmpPagIBIG" class="sr-only">Pag-IBIG Number</label><input type="text" id="editEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter Pag-IBIG number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <label for="editEmpDept" class="sr-only">Department</label>
+                <select id="editEmpDept" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select department"><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select>
+                <label for="editEmpRole" class="sr-only">Role</label>
+                <select id="editEmpRole" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select role"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select>
+                <label for="editEmpStatus" class="sr-only">Status</label>
+                <select id="editEmpStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select status"><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option></select>
+                <div class="border-t pt-4 mt-4"><h4 class="font-bold mb-3 text-sm flex items-center gap-2"><i data-feather="smartphone" class="w-4 h-4" aria-hidden="true"></i> Device Access Control</h4><label for="editEmpDeviceRestriction" class="sr-only">Device Restriction</label><select id="editEmpDeviceRestriction" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select device restriction"><option value="enabled">Enable device restriction</option><option value="disabled">Disable device restriction</option></select></div>
+                <label for="editLeaveBalance" class="sr-only">Leave Balance</label>
+                <input type="number" id="editLeaveBalance" placeholder="Leave Balance" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter leave balance" />
+                <label for="editEmpPin" class="sr-only">PIN</label>
+                <input type="text" id="editEmpPin" placeholder="PIN" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter PIN" />
+                <label for="editEmpPassword" class="sr-only">New Password (optional)</label>
+                <input type="password" id="editEmpPassword" placeholder="New Password (optional)" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter new password (optional)" />
+            </div>
+            <div class="flex gap-3 mt-5"><button onclick="saveEmployeeEdit()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Save changes">Save Changes</button><button onclick="closeModal('editEmployeeModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
+        </div>
+    </div>
+
+    <div id="requestModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Submit Request">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
+            <input type="hidden" id="requestTypeValue" />
+            <div class="space-y-3">
+                <label for="reqStartDate" class="sr-only">Start Date</label>
+                <input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select start date" />
+                <label for="reqEndDate" class="sr-only">End Date</label>
+                <input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select end date" />
+                <label for="reqReason" class="sr-only">Reason</label>
+                <textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Reason..." title="Enter reason for request"></textarea>
+            </div>
+            <div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Submit request">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
+        </div>
+    </div>
+
+    <div id="leaveModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Select Leave Type">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
+            <div class="space-y-3">
+                <button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 dark:bg-red-900/30 rounded-xl text-left" title="Select Sick Leave">Sick Leave</button>
+                <button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 dark:bg-orange-900/30 rounded-xl text-left" title="Select Emergency Leave">Emergency Leave</button>
+                <button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-left" title="Select Vacation Leave">Vacation Leave</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="offsetsModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Request Offsets">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeModal('offsetsModalOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
+            <div class="space-y-3">
+                <label for="offsetsDate" class="sr-only">Date</label>
+                <input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select date" />
+                <label for="offsetsHours" class="sr-only">Hours to Offset</label>
+                <input type="number" id="offsetsHours" step="0.5" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Hours to Offset" title="Enter hours to offset" />
+                <label for="offsetsReasonText" class="sr-only">Reason</label>
+                <textarea id="offsetsReasonText" rows="2" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Reason" title="Enter reason"></textarea>
+            </div>
+            <div class="flex gap-3 mt-5"><button onclick="submitOffsets()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Submit offsets">Submit</button><button onclick="closeModal('offsetsModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
+        </div>
+    </div>
+
+    <div id="newRequestMenuOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Select Request Type">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Request Type</h3><button onclick="closeModal('newRequestMenuOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
+            <div class="space-y-3">
+                <button onclick="openRequestModal('Official Business')" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left" title="Official Business">Official Business</button>
+                <button onclick="openRequestModal('Overtime')" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left" title="Overtime">Overtime</button>
+                <button onclick="openRequestModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left" title="Certificate of Attendance">Certificate of Attendance</button>
+                <button onclick="closeModal('newRequestMenuOverlay'); openLeaveModal()" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left" title="Leave">Leave</button>
+                <button onclick="closeModal('newRequestMenuOverlay'); openOffsetsModal()" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left" title="Offsets">Offsets</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="clockRequestModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Request Clock">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Clock In</h3><button onclick="closeModal('clockRequestModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
+            <input type="hidden" id="clockRequestType" />
+            <div class="space-y-3">
+                <label for="clockDate" class="sr-only">Date</label>
+                <input type="date" id="clockDate" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select date" />
+                <label for="clockTime" class="sr-only">Time</label>
+                <input type="time" id="clockTime" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select time" />
+                <label for="clockReason" class="sr-only">Reason for request</label>
+                <textarea id="clockReason" rows="2" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Reason for request" title="Enter reason"></textarea>
+            </div>
+            <div class="flex gap-3 mt-5"><button onclick="submitClockRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Submit request">Submit Request</button><button onclick="closeModal('clockRequestModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
+        </div>
+    </div>
+
+    <div id="announcementModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Announcement">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 id="announcementModalTitle" class="text-xl font-bold">Edit Announcement</h3><button onclick="closeModal('announcementModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
+            <input type="hidden" id="announcementId" />
+            <div class="space-y-4">
+                <label for="announcementTitle" class="sr-only">Title</label>
+                <input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Title" title="Enter announcement title" />
+                <label for="announcementContent" class="sr-only">Content</label>
+                <textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Content" title="Enter announcement content"></textarea>
+            </div>
+            <div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Save announcement">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn" title="Delete announcement">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
+        </div>
+    </div>
+
+    <div id="editLeaveModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Edit Leave Balance">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
+            <input type="hidden" id="editEmployeeId" />
+            <div class="space-y-4">
+                <label for="editEmployeeName" class="sr-only">Employee Name</label>
+                <input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl dark:bg-slate-700" readonly title="Employee name" />
+                <label for="editLeaveBalanceSimple" class="sr-only">Leave Balance</label>
+                <input type="number" id="editLeaveBalanceSimple" class="w-full p-3 border rounded-xl dark:bg-slate-700" step="1" title="Enter leave balance" />
+            </div>
+            <div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Save leave balance">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
+        </div>
+    </div>
 
     <script>
         // ===== FIREBASE CONFIG =====
@@ -2158,7 +2318,6 @@
             if (dropdown) dropdown.classList.add('hidden');
         }
 
-        // Close dropdowns when clicking outside
         document.addEventListener('click', function(e) {
             const dropdown = document.getElementById('profileDropdown');
             const trigger = document.querySelector('.profile-trigger');
@@ -2204,7 +2363,6 @@
                 }
             });
 
-            // Refresh content based on tab
             if (tabName === 'payslip') refreshEmployeePayslip();
             if (tabName === 'hr-payslip') { refreshHrPayslip();
                 closePayslipPreview(); }
@@ -2347,269 +2505,6 @@
 
         function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit',
                 hour12: false }); }
-
-        // ===== AUTH FUNCTIONS =====
-        async function handleLogin() {
-            const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
-            const errDiv = document.getElementById('authError');
-            try {
-                const cred = await auth.signInWithEmailAndPassword(email, password);
-            } catch (e) {
-                errDiv.textContent = e.message;
-                errDiv.classList.remove('hidden');
-            }
-        }
-
-        async function handleSignup() {
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const role = document.getElementById('signupRole').value;
-            const dept = document.getElementById('signupDepartment').value;
-            const errDiv = document.getElementById('authError');
-            const sucDiv = document.getElementById('authSuccess');
-            if (!name || !email || !password || !dept) {
-                errDiv.textContent = "Please fill all fields";
-                errDiv.classList.remove('hidden');
-                return;
-            }
-            try {
-                const cred = await auth.createUserWithEmailAndPassword(email, password);
-                const uid = cred.user.uid;
-                await db.collection('employees').doc(uid).set({
-                    name,
-                    email,
-                    dept,
-                    role,
-                    status: 'active',
-                    deviceRestriction: 'enabled',
-                    createdAt: new Date().toISOString()
-                });
-                sucDiv.textContent = "Account created! Please login.";
-                sucDiv.classList.remove('hidden');
-                showLogin();
-            } catch (e) {
-                errDiv.textContent = e.message;
-                errDiv.classList.remove('hidden');
-            }
-        }
-
-        async function handleLogout() {
-            closeMobileMenu();
-            closeProfileMenu();
-            if (sessionTimeoutTimer) clearTimeout(sessionTimeoutTimer);
-            await auth.signOut();
-            location.reload();
-        }
-
-        function showSignup() {
-            document.getElementById('loginForm').classList.add('hidden');
-            document.getElementById('signupForm').classList.remove('hidden');
-            document.getElementById('authError').classList.add('hidden');
-            document.getElementById('authSuccess').classList.add('hidden');
-        }
-
-        function showLogin() {
-            document.getElementById('signupForm').classList.add('hidden');
-            document.getElementById('loginForm').classList.remove('hidden');
-            document.getElementById('authError').classList.add('hidden');
-            document.getElementById('authSuccess').classList.add('hidden');
-        }
-
-        async function uploadAvatar() {
-            const fileInput = document.getElementById('avatarUpload');
-            if (!fileInput.files || !fileInput.files[0]) { alert("Select an image first."); return; }
-            const file = fileInput.files[0];
-            const storageRef = storage.ref('avatars/' + currentUser.uid);
-            const uploadTask = storageRef.put(file);
-            uploadTask.on('state_changed', null, (error) => { alert("Upload failed: " + error.message); }, async () => {
-                const downloadURL = await storageRef.getDownloadURL();
-                await db.collection('employees').doc(currentUser.uid).update({ photoURL: downloadURL });
-                currentUserData.photoURL = downloadURL;
-                updateProfileDropdown();
-                alert("Profile picture updated!");
-            });
-        }
-
-        // ===== AUTH STATE LISTENER WITH FIX =====
-        auth.onAuthStateChanged(async function(user) {
-            if (user) {
-                console.log('✅ User authenticated:', user.email);
-                currentUser = user;
-                try {
-                    const doc = await db.collection('employees').doc(user.uid).get();
-                    if (doc.exists) {
-                        currentUserData = doc.data();
-                        currentUserRole = currentUserData.role;
-                        console.log('✅ Employee data loaded:', currentUserData);
-
-                        document.getElementById('authScreen').style.display = 'none';
-                        document.getElementById('mainApp').classList.remove('hidden');
-
-                        const resetContainer = document.getElementById('resetButtonContainer');
-                        if (resetContainer && currentUser.email === resetAuthorizedEmail) resetContainer.innerHTML =
-                            '<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full" title="Reset all system data">⚠️ Reset All System Data (PIN required)</button>';
-
-                        await loadAllData();
-                        document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
-                        document.getElementById('dashboard-tab').classList.remove('hidden');
-                        renderNavigation();
-                        updateProfileDropdown();
-                        resetSessionTimer();
-                    } else {
-                        console.warn('⚠️ Employee document not found for user:', user.uid);
-                        // Create the employee document automatically
-                        await firebase.firestore().collection('employees').doc(user.uid).set({
-                            name: user.displayName || 'Employee',
-                            email: user.email,
-                            role: 'employee',
-                            dept: 'Unassigned',
-                            status: 'active',
-                            leaveBalance: 15,
-                            deviceRestriction: 'enabled',
-                            createdAt: new Date().toISOString()
-                        });
-                        console.log('✅ Employee document created for user:', user.uid);
-                        location.reload();
-                    }
-                } catch (err) {
-                    console.error('❌ Error loading user data:', err);
-                    // Try to create the document if it doesn't exist
-                    if (err.code === 'not-found') {
-                        try {
-                            await firebase.firestore().collection('employees').doc(user.uid).set({
-                                name: user.displayName || 'Employee',
-                                email: user.email,
-                                role: 'employee',
-                                dept: 'Unassigned',
-                                status: 'active',
-                                leaveBalance: 15,
-                                deviceRestriction: 'enabled',
-                                createdAt: new Date().toISOString()
-                            });
-                            console.log('✅ Employee document created');
-                            location.reload();
-                        } catch (createErr) {
-                            alert('Error creating employee record: ' + createErr.message);
-                            await auth.signOut();
-                            location.reload();
-                        }
-                    } else {
-                        alert('Error loading user data: ' + err.message);
-                        await auth.signOut();
-                        location.reload();
-                    }
-                }
-            } else {
-                console.log('❌ Not authenticated');
-                document.getElementById('authScreen').style.display = 'flex';
-                document.getElementById('mainApp').classList.add('hidden');
-            }
-        });
-
-        // ===== LOAD DATA =====
-        async function loadAllData() {
-            try {
-                const empSnap = await db.collection('employees').get();
-                allEmployees = empSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            } catch (err) { console.warn('Error loading employees:', err); }
-
-            try {
-                const reqSnap = await db.collection('requests').get();
-                allRequests = reqSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            } catch (err) { console.warn('Error loading requests:', err); }
-
-            try {
-                const attSnap = await db.collection('attendance').get();
-                allAttendance = attSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            } catch (err) { console.warn('Error loading attendance:', err); }
-
-            try {
-                const paySnap = await db.collection('payslips').get();
-                allPayslips = paySnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            } catch (err) { console.warn('Error loading payslips:', err); }
-
-            try {
-                const annSnap = await db.collection('announcements').get();
-                allAnnouncements = annSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            } catch (err) { console.warn('Error loading announcements:', err); }
-
-            try {
-                const guardSnap = await db.collection('guardWeeklySchedules').get();
-                guardWeeklySchedules = guardSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            } catch (err) { console.warn('Error loading guard schedules:', err); }
-
-            try {
-                const helpdeskSnap = await db.collection('employeeSupportRequests').get();
-                allHelpdeskRequests = helpdeskSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            } catch (err) { console.warn('Error loading helpdesk:', err); }
-
-            try {
-                const deviceSnap = await db.collection('userDevices').get();
-                allUserDevices = deviceSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            } catch (err) { console.warn('Error loading devices:', err); }
-
-            await loadGuardSelect();
-            renderGuardSchedules();
-            renderAnnouncements();
-            renderMyRequests();
-            renderAllRequests();
-            refreshDashboard();
-            refreshHelpdesk();
-            refreshDeviceList();
-            loadRegisteredDevices();
-            updateProfileDropdown();
-            renderNavigation();
-        }
-
-        // ===== FIREBASE REAL-TIME LISTENERS WITH ERROR HANDLING =====
-        db.collection('employees').onSnapshot(snap => {
-            allEmployees = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            refreshDashboard();
-            renderEmployeesTable();
-            if (document.getElementById('employeeListContainer')) loadEmployeeListForSummary();
-        }, err => console.warn('Employees listener:', err.message));
-
-        db.collection('requests').onSnapshot(snap => {
-            allRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            renderMyRequests();
-            renderAllRequests();
-            refreshDashboard();
-        }, err => console.warn('Requests listener:', err.message));
-
-        db.collection('attendance').onSnapshot(snap => {
-            allAttendance = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            refreshDashboard();
-            refreshMyAttendanceTab();
-        }, err => console.warn('Attendance listener:', err.message));
-
-        db.collection('payslips').onSnapshot(snap => {
-            allPayslips = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            refreshHrPayslip();
-            refreshEmployeePayslip();
-        }, err => console.warn('Payslips listener:', err.message));
-
-        db.collection('announcements').onSnapshot(snap => {
-            allAnnouncements = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            renderAnnouncements();
-        }, err => console.warn('Announcements listener:', err.message));
-
-        db.collection('guardWeeklySchedules').onSnapshot(snap => {
-            guardWeeklySchedules = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            renderGuardSchedules();
-        }, err => console.warn('Guard schedules listener:', err.message));
-
-        db.collection('employeeSupportRequests').onSnapshot(snap => {
-            allHelpdeskRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            refreshHelpdesk();
-        }, err => console.warn('Helpdesk listener:', err.message));
-
-        db.collection('userDevices').onSnapshot(snap => {
-            allUserDevices = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            refreshDeviceList();
-            loadRegisteredDevices();
-        }, err => console.warn('Devices listener:', err.message));
 
         // ===== DEVICE MANAGEMENT =====
         async function isDeviceAuthorized(userId, deviceId) {
@@ -2898,6 +2793,90 @@
                     timestamp: firebase.firestore.FieldValue.serverTimestamp()
                 });
             } catch (e) { console.error('Audit log failed:', e); }
+        }
+
+        // ===== AUTH FUNCTIONS =====
+        async function handleLogin() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errDiv = document.getElementById('authError');
+            try {
+                const cred = await auth.signInWithEmailAndPassword(email, password);
+            } catch (e) {
+                errDiv.textContent = e.message;
+                errDiv.classList.remove('hidden');
+            }
+        }
+
+        async function handleSignup() {
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const role = document.getElementById('signupRole').value;
+            const dept = document.getElementById('signupDepartment').value;
+            const errDiv = document.getElementById('authError');
+            const sucDiv = document.getElementById('authSuccess');
+            if (!name || !email || !password || !dept) {
+                errDiv.textContent = "Please fill all fields";
+                errDiv.classList.remove('hidden');
+                return;
+            }
+            try {
+                const cred = await auth.createUserWithEmailAndPassword(email, password);
+                const uid = cred.user.uid;
+                await db.collection('employees').doc(uid).set({
+                    name,
+                    email,
+                    dept,
+                    role,
+                    status: 'active',
+                    deviceRestriction: 'enabled',
+                    createdAt: new Date().toISOString()
+                });
+                sucDiv.textContent = "Account created! Please login.";
+                sucDiv.classList.remove('hidden');
+                showLogin();
+            } catch (e) {
+                errDiv.textContent = e.message;
+                errDiv.classList.remove('hidden');
+            }
+        }
+
+        async function handleLogout() {
+            closeMobileMenu();
+            closeProfileMenu();
+            if (sessionTimeoutTimer) clearTimeout(sessionTimeoutTimer);
+            await auth.signOut();
+            location.reload();
+        }
+
+        function showSignup() {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('signupForm').classList.remove('hidden');
+            document.getElementById('authError').classList.add('hidden');
+            document.getElementById('authSuccess').classList.add('hidden');
+        }
+
+        function showLogin() {
+            document.getElementById('signupForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+            document.getElementById('authError').classList.add('hidden');
+            document.getElementById('authSuccess').classList.add('hidden');
+        }
+
+        async function uploadAvatar() {
+            const fileInput = document.getElementById('avatarUpload');
+            if (!fileInput.files || !fileInput.files[0]) { alert("Select an image first."); return; }
+            const file = fileInput.files[0];
+            const storageRef = storage.ref('avatars/' + currentUser.uid);
+            const uploadTask = storageRef.put(file);
+            uploadTask.on('state_changed', null, (error) => { alert("Upload failed: " + error.message); }, async () => {
+                const downloadURL = await storageRef.getDownloadURL();
+                await db.collection('employees').doc(currentUser.uid).update({ photoURL: downloadURL });
+                currentUserData.photoURL = downloadURL;
+                updateProfileDropdown();
+                alert("Profile picture updated!");
+            });
         }
 
         // ===== EMPLOYEE MANAGEMENT =====
@@ -3555,7 +3534,7 @@
                         <div class="payslip-title"><h2>EQUIPRIME HR</h2><p>Payslip Statement</p></div>
                     </div>
                     <table class="payslip-table">
-                        <tr><td><strong>Name:</strong> ${p.employeeName}</td><td><strong>Period:</strong> ${p.month} (${p.cutOff})</td><td><strong>Date:</strong> ${p.payrollDate}</td></tr>
+                        <tr><td><strong>Name:</strong> ${escapeHtml(p.employeeName)}</td><td><strong>Period:</strong> ${escapeHtml(p.month)} (${escapeHtml(p.cutOff)})</td><td><strong>Date:</strong> ${escapeHtml(p.payrollDate)}</td></tr>
                     </table>
                     <table class="payslip-table">
                         <thead><tr><th colspan="2">Salary Details</th></tr></thead>
@@ -3595,12 +3574,13 @@
         function refreshHrPayslip() {
             const sel = document.getElementById('payslipEmployee');
             if (sel) sel.innerHTML = '<option value="">Select Employee</option>' + allEmployees.filter(e => !isSystemAdmin(e
-                .email)).map(e => '<option value="' + e.id + '">' + e.name + ' - ' + e.dept + '</option>').join('');
+                .email)).map(e => '<option value="' + e.id + '">' + escapeHtml(e.name) + ' - ' + escapeHtml(e.dept) +
+                '</option>').join('');
             const hist = document.getElementById('payslipHistory');
             if (hist) hist.innerHTML = allPayslips.slice().reverse().map(p =>
-                '<div class="card-bg p-2 rounded mb-1 shadow-sm text-sm"><b>' + p.employeeName + '</b> - ' + p
-                .month + ' (' + p.cutOff + ')<br><span class="text-green-600 font-bold">Net: ₱' + p.netPay.toFixed(
-                    2) + '</span></div>'
+                '<div class="card-bg p-2 rounded mb-1 shadow-sm text-sm"><b>' + escapeHtml(p.employeeName) +
+                '</b> - ' + escapeHtml(p.month) + ' (' + escapeHtml(p.cutOff) +
+                ')<br><span class="text-green-600 font-bold">Net: ₱' + p.netPay.toFixed(2) + '</span></div>'
             ).join('') || '<div>No payslips</div>';
         }
 
@@ -3608,7 +3588,7 @@
             const my = allPayslips.filter(p => p.employeeEmail === currentUser?.email);
             const container = document.getElementById('employeePayslipList');
             if (container) container.innerHTML = my.map(p =>
-                '<div class="card-bg p-3 rounded shadow">' + p.month + ' (' + p.cutOff +
+                '<div class="card-bg p-3 rounded shadow">' + escapeHtml(p.month) + ' (' + escapeHtml(p.cutOff) +
                 ')<br><span class="text-green-600 dark:text-green-400 font-bold">Net: ₱' + p.netPay.toFixed(2) +
                 '</span></div>'
             ).join('') || '<div>No payslips</div>';
@@ -4088,6 +4068,188 @@
             }
         }
 
+        // ===== AUTH STATE LISTENER =====
+        auth.onAuthStateChanged(async function(user) {
+            if (user) {
+                console.log('✅ User authenticated:', user.email);
+                currentUser = user;
+                try {
+                    const doc = await db.collection('employees').doc(user.uid).get();
+                    if (doc.exists) {
+                        currentUserData = doc.data();
+                        currentUserRole = currentUserData.role;
+                        console.log('✅ Employee data loaded:', currentUserData);
+
+                        document.getElementById('authScreen').style.display = 'none';
+                        document.getElementById('mainApp').classList.remove('hidden');
+
+                        const resetContainer = document.getElementById('resetButtonContainer');
+                        if (resetContainer && currentUser.email === resetAuthorizedEmail) resetContainer
+                            .innerHTML =
+                            '<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full" title="Reset all system data">⚠️ Reset All System Data (PIN required)</button>';
+
+                        await loadAllData();
+                        document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+                        document.getElementById('dashboard-tab').classList.remove('hidden');
+                        renderNavigation();
+                        updateProfileDropdown();
+                        resetSessionTimer();
+                    } else {
+                        console.warn('⚠️ Employee document not found for user:', user.uid);
+                        // Create document with appropriate role
+                        const isPrivileged = SYSTEM_ADMIN_EMAILS.includes(user.email);
+                        await firebase.firestore().collection('employees').doc(user.uid).set({
+                            name: isPrivileged ? 'HR Director' : user.displayName || 'Employee',
+                            email: user.email,
+                            role: isPrivileged ? 'hr' : 'employee',
+                            dept: isPrivileged ? 'HR Department' : 'Unassigned',
+                            status: 'active',
+                            leaveBalance: 15,
+                            deviceRestriction: 'enabled',
+                            createdAt: new Date().toISOString()
+                        });
+                        console.log('✅ Employee document created for user:', user.uid);
+                        location.reload();
+                    }
+                } catch (err) {
+                    console.error('❌ Error loading user data:', err);
+                    // Try to create the document if it doesn't exist
+                    if (err.code === 'not-found') {
+                        try {
+                            const isPrivileged = SYSTEM_ADMIN_EMAILS.includes(user.email);
+                            await firebase.firestore().collection('employees').doc(user.uid).set({
+                                name: isPrivileged ? 'HR Director' : user.displayName || 'Employee',
+                                email: user.email,
+                                role: isPrivileged ? 'hr' : 'employee',
+                                dept: isPrivileged ? 'HR Department' : 'Unassigned',
+                                status: 'active',
+                                leaveBalance: 15,
+                                deviceRestriction: 'enabled',
+                                createdAt: new Date().toISOString()
+                            });
+                            console.log('✅ Employee document created');
+                            location.reload();
+                        } catch (createErr) {
+                            alert('Error creating employee record: ' + createErr.message);
+                            await auth.signOut();
+                            location.reload();
+                        }
+                    } else {
+                        alert('Error loading user data: ' + err.message);
+                        await auth.signOut();
+                        location.reload();
+                    }
+                }
+            } else {
+                console.log('❌ Not authenticated');
+                document.getElementById('authScreen').style.display = 'flex';
+                document.getElementById('mainApp').classList.add('hidden');
+            }
+        });
+
+        // ===== LOAD DATA =====
+        async function loadAllData() {
+            try {
+                const empSnap = await db.collection('employees').get();
+                allEmployees = empSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading employees:', err); }
+
+            try {
+                const reqSnap = await db.collection('requests').get();
+                allRequests = reqSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading requests:', err); }
+
+            try {
+                const attSnap = await db.collection('attendance').get();
+                allAttendance = attSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading attendance:', err); }
+
+            try {
+                const paySnap = await db.collection('payslips').get();
+                allPayslips = paySnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading payslips:', err); }
+
+            try {
+                const annSnap = await db.collection('announcements').get();
+                allAnnouncements = annSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading announcements:', err); }
+
+            try {
+                const guardSnap = await db.collection('guardWeeklySchedules').get();
+                guardWeeklySchedules = guardSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading guard schedules:', err); }
+
+            try {
+                const helpdeskSnap = await db.collection('employeeSupportRequests').get();
+                allHelpdeskRequests = helpdeskSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading helpdesk:', err); }
+
+            try {
+                const deviceSnap = await db.collection('userDevices').get();
+                allUserDevices = deviceSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading devices:', err); }
+
+            await loadGuardSelect();
+            renderGuardSchedules();
+            renderAnnouncements();
+            renderMyRequests();
+            renderAllRequests();
+            refreshDashboard();
+            refreshHelpdesk();
+            refreshDeviceList();
+            loadRegisteredDevices();
+            updateProfileDropdown();
+            renderNavigation();
+        }
+
+        // ===== FIREBASE REAL-TIME LISTENERS =====
+        db.collection('employees').onSnapshot(snap => {
+            allEmployees = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            refreshDashboard();
+            renderEmployeesTable();
+            if (document.getElementById('employeeListContainer')) loadEmployeeListForSummary();
+        }, err => console.warn('Employees listener:', err.message));
+
+        db.collection('requests').onSnapshot(snap => {
+            allRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            renderMyRequests();
+            renderAllRequests();
+            refreshDashboard();
+        }, err => console.warn('Requests listener:', err.message));
+
+        db.collection('attendance').onSnapshot(snap => {
+            allAttendance = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            refreshDashboard();
+            refreshMyAttendanceTab();
+        }, err => console.warn('Attendance listener:', err.message));
+
+        db.collection('payslips').onSnapshot(snap => {
+            allPayslips = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            refreshHrPayslip();
+            refreshEmployeePayslip();
+        }, err => console.warn('Payslips listener:', err.message));
+
+        db.collection('announcements').onSnapshot(snap => {
+            allAnnouncements = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            renderAnnouncements();
+        }, err => console.warn('Announcements listener:', err.message));
+
+        db.collection('guardWeeklySchedules').onSnapshot(snap => {
+            guardWeeklySchedules = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            renderGuardSchedules();
+        }, err => console.warn('Guard schedules listener:', err.message));
+
+        db.collection('employeeSupportRequests').onSnapshot(snap => {
+            allHelpdeskRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            refreshHelpdesk();
+        }, err => console.warn('Helpdesk listener:', err.message));
+
+        db.collection('userDevices').onSnapshot(snap => {
+            allUserDevices = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+            refreshDeviceList();
+            loadRegisteredDevices();
+        }, err => console.warn('Devices listener:', err.message));
+
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
             if (localStorage.getItem('nightMode') === 'enabled') document.body.classList.add('dark');
@@ -4116,8 +4278,6 @@
             document.getElementById('refreshSummaryBtn').addEventListener('click', function() {
                 loadEmployeeListForSummary();
             });
-
-            // All Firebase listeners are set up above
         });
     </script>
 </body>
