@@ -53,10 +53,7 @@
 
         /* ===== BRANDING HALF - NO OVERLAY ===== */
         .branding-half {
-            background-image: url('branding-image.jpg');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
+            background: linear-gradient(135deg, #011F7B, #1a3a8a);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -882,9 +879,14 @@
                 width: 100%;
                 margin: 0;
                 padding: 1rem;
+                background: white !important;
             }
-            .no-print {
+            #payslipPreviewContainer .no-print {
                 display: none !important;
+            }
+            #payslipPreviewContent {
+                max-height: none !important;
+                overflow: visible !important;
             }
         }
         .card-bg .grid button span {
@@ -1457,33 +1459,6 @@
         body.dark #employeeListContainer::-webkit-scrollbar-thumb {
             background: #3b82f6;
         }
-
-        /* Print styles for payslip */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #payslipPreviewContainer,
-            #payslipPreviewContainer * {
-                visibility: visible;
-            }
-            #payslipPreviewContainer {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                margin: 0;
-                padding: 1rem;
-                background: white !important;
-            }
-            #payslipPreviewContainer .no-print {
-                display: none !important;
-            }
-            #payslipPreviewContent {
-                max-height: none !important;
-                overflow: visible !important;
-            }
-        }
     </style>
 </head>
 <body>
@@ -1508,7 +1483,7 @@
         <div class="login-half">
             <div class="w-full max-w-md">
                 <div class="text-center mb-8">
-                    <img src="logo.png" class="h-12 mx-auto" alt="EQUIPRIME HR Logo" onerror="this.style.display='none'" />
+                    <div style="width:48px;height:48px;background:#011F7B;border-radius:12px;margin:0 auto;display:flex;align-items:center;justify-content:center;color:white;font-weight:900;font-size:1.2rem;">EH</div>
                     <h1 class="text-3xl font-extrabold text-slate-800 dark:text-white"><span style="color: #3b82f6;">EQUIPRIME</span><span style="color: #f4df17;">HR</span></h1>
                     <p class="text-slate-500 dark:text-slate-400">smart choices · smarter results</p>
                     <div class="mt-2">
@@ -2235,6 +2210,11 @@
         const auth = firebase.auth();
         const db = firebase.firestore();
         const storage = firebase.storage();
+
+        // Enable offline persistence for better performance
+        db.enablePersistence({ synchronizeTabs: true }).catch(function(err) {
+            console.warn('Firestore persistence:', err.message);
+        });
 
         // ===== ENCRYPTION =====
         const ENCRYPTION_KEY = "EQUIPRIME_2026_SECURE_KEY_PLEASE_CHANGE_IN_PRODUCTION";
@@ -4124,22 +4104,46 @@
 
         // ===== LOAD DATA =====
         async function loadAllData() {
-            const empSnap = await db.collection('employees').get();
-            allEmployees = empSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            const reqSnap = await db.collection('requests').get();
-            allRequests = reqSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            const attSnap = await db.collection('attendance').get();
-            allAttendance = attSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            const paySnap = await db.collection('payslips').get();
-            allPayslips = paySnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            const annSnap = await db.collection('announcements').get();
-            allAnnouncements = annSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            const guardSnap = await db.collection('guardWeeklySchedules').get();
-            guardWeeklySchedules = guardSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            const helpdeskSnap = await db.collection('employeeSupportRequests').get();
-            allHelpdeskRequests = helpdeskSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            const deviceSnap = await db.collection('userDevices').get();
-            allUserDevices = deviceSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            try {
+                const empSnap = await db.collection('employees').get();
+                allEmployees = empSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading employees:', err); }
+
+            try {
+                const reqSnap = await db.collection('requests').get();
+                allRequests = reqSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading requests:', err); }
+
+            try {
+                const attSnap = await db.collection('attendance').get();
+                allAttendance = attSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading attendance:', err); }
+
+            try {
+                const paySnap = await db.collection('payslips').get();
+                allPayslips = paySnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading payslips:', err); }
+
+            try {
+                const annSnap = await db.collection('announcements').get();
+                allAnnouncements = annSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading announcements:', err); }
+
+            try {
+                const guardSnap = await db.collection('guardWeeklySchedules').get();
+                guardWeeklySchedules = guardSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading guard schedules:', err); }
+
+            try {
+                const helpdeskSnap = await db.collection('employeeSupportRequests').get();
+                allHelpdeskRequests = helpdeskSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading helpdesk:', err); }
+
+            try {
+                const deviceSnap = await db.collection('userDevices').get();
+                allUserDevices = deviceSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            } catch (err) { console.warn('Error loading devices:', err); }
+
             await loadGuardSelect();
             renderGuardSchedules();
             renderAnnouncements();
@@ -4182,73 +4186,89 @@
                 loadEmployeeListForSummary();
             });
 
+            // Initialize real-time listeners with error handling
             db.collection('employees').onSnapshot(snap => {
                 allEmployees = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                 refreshDashboard();
                 renderEmployeesTable();
                 if (document.getElementById('employeeListContainer')) loadEmployeeListForSummary();
-            });
+            }, err => console.warn('Employees listener error:', err));
+
             db.collection('requests').onSnapshot(snap => {
                 allRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                 renderMyRequests();
                 renderAllRequests();
                 refreshDashboard();
-            });
+            }, err => console.warn('Requests listener error:', err));
+
             db.collection('attendance').onSnapshot(snap => {
                 allAttendance = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                 refreshDashboard();
                 refreshMyAttendanceTab();
-            });
+            }, err => console.warn('Attendance listener error:', err));
+
             db.collection('payslips').onSnapshot(snap => {
                 allPayslips = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                 refreshHrPayslip();
                 refreshEmployeePayslip();
-            });
+            }, err => console.warn('Payslips listener error:', err));
+
             db.collection('announcements').onSnapshot(snap => {
                 allAnnouncements = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                 renderAnnouncements();
-            });
+            }, err => console.warn('Announcements listener error:', err));
+
             db.collection('guardWeeklySchedules').onSnapshot(snap => {
                 guardWeeklySchedules = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                 renderGuardSchedules();
-            });
+            }, err => console.warn('Guard schedules listener error:', err));
+
             db.collection('employeeSupportRequests').onSnapshot(snap => {
                 allHelpdeskRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                 refreshHelpdesk();
-            });
+            }, err => console.warn('Helpdesk listener error:', err));
+
             db.collection('userDevices').onSnapshot(snap => {
                 allUserDevices = snap.docs.map(d => ({ id: d.id, ...d.data() }));
                 refreshDeviceList();
                 loadRegisteredDevices();
-            });
+            }, err => console.warn('Devices listener error:', err));
 
             auth.onAuthStateChanged(async function(user) {
                 if (user) {
+                    console.log('✅ User authenticated:', user.email);
                     currentUser = user;
-                    const doc = await db.collection('employees').doc(user.uid).get();
-                    if (doc.exists) {
-                        currentUserData = doc.data();
-                        currentUserRole = currentUserData.role;
+                    try {
+                        const doc = await db.collection('employees').doc(user.uid).get();
+                        if (doc.exists) {
+                            currentUserData = doc.data();
+                            currentUserRole = currentUserData.role;
+                            console.log('✅ Employee data loaded:', currentUserData);
 
-                        const deviceInfo = getDeviceFingerprint();
-                        const authResult = await isDeviceAuthorized(user.uid, deviceInfo.deviceId);
-                        if (!authResult.authorized) {
-                            if (authResult.reason === 'Device is blocked by HR') {
-                                alert('❌ This device has been blocked by HR. Please contact support.');
-                                await auth.signOut();
-                                location.reload();
-                                return;
-                            }
-                            const shouldRegister = confirm(
-                                '📱 New device detected. Would you like to register this device?'
+                            const deviceInfo = getDeviceFingerprint();
+                            const authResult = await isDeviceAuthorized(user.uid, deviceInfo.deviceId);
+                            if (!authResult.authorized && authResult.reason !== 'Device restriction disabled') {
+                                if (authResult.reason === 'Device is blocked by HR') {
+                                    alert('❌ This device has been blocked by HR. Please contact support.');
+                                    await auth.signOut();
+                                    location.reload();
+                                    return;
+                                }
+                                const shouldRegister = confirm(
+                                    '📱 New device detected. Would you like to register this device?'
                                 );
-                            if (shouldRegister) {
-                                const deviceName = prompt('Name this device:', 'My Phone');
-                                if (deviceName) {
-                                    const result = await registerDeviceForUser(user.uid, deviceInfo,
-                                        deviceName);
-                                    if (!result.success) {
-                                        alert('❌ ' + result.error);
+                                if (shouldRegister) {
+                                    const deviceName = prompt('Name this device:', 'My Phone');
+                                    if (deviceName) {
+                                        const result = await registerDeviceForUser(user.uid, deviceInfo,
+                                            deviceName);
+                                        if (!result.success) {
+                                            alert('❌ ' + result.error);
+                                            await auth.signOut();
+                                            location.reload();
+                                            return;
+                                        }
+                                    } else {
                                         await auth.signOut();
                                         location.reload();
                                         return;
@@ -4258,28 +4278,35 @@
                                     location.reload();
                                     return;
                                 }
-                            } else {
-                                await auth.signOut();
-                                location.reload();
-                                return;
                             }
+
+                            document.getElementById('authScreen').style.display = 'none';
+                            document.getElementById('mainApp').classList.remove('hidden');
+
+                            const resetContainer = document.getElementById('resetButtonContainer');
+                            if (resetContainer && currentUser.email === resetAuthorizedEmail) resetContainer
+                                .innerHTML =
+                                '<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full" title="Reset all system data">⚠️ Reset All System Data (PIN required)</button>';
+
+                            await loadAllData();
+                            document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
+                            document.getElementById('dashboard-tab').classList.remove('hidden');
+                            renderNavigation();
+                            resetSessionTimer();
+                        } else {
+                            console.warn('⚠️ Employee document not found for user:', user.uid);
+                            alert('⚠️ User account exists but employee record not found. Please contact HR or sign up.');
+                            await auth.signOut();
+                            location.reload();
                         }
-
-                        document.getElementById('authScreen').style.display = 'none';
-                        document.getElementById('mainApp').classList.remove('hidden');
-
-                        const resetContainer = document.getElementById('resetButtonContainer');
-                        if (resetContainer && currentUser.email === resetAuthorizedEmail) resetContainer
-                            .innerHTML =
-                            '<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full" title="Reset all system data">⚠️ Reset All System Data (PIN required)</button>';
-
-                        await loadAllData();
-                        document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
-                        document.getElementById('dashboard-tab').classList.remove('hidden');
-                        renderNavigation();
-                        resetSessionTimer();
+                    } catch (err) {
+                        console.error('❌ Error loading user data:', err);
+                        alert('Error loading user data: ' + err.message);
+                        await auth.signOut();
+                        location.reload();
                     }
                 } else {
+                    console.log('❌ Not authenticated');
                     document.getElementById('authScreen').style.display = 'flex';
                     document.getElementById('mainApp').classList.add('hidden');
                 }
