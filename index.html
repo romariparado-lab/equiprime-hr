@@ -331,10 +331,6 @@
             font-size: 0.55rem;
         }
 
-        .desktop-sidebar nav button::after {
-            display: none;
-        }
-
         .mobile-dropdown-menu nav button .tab-label {
             display: inline !important;
         }
@@ -1858,7 +1854,7 @@
                 </div>
                 <div id="payslipPreviewContainer" class="card-bg rounded-2xl p-4 mt-6 hidden">
                     <div class="flex justify-between items-center mb-3 no-print flex-wrap gap-2">
-                        <h3 class="text-lg font-bold">📄 Generated Payslip</h3>
+                        <h3 class="text-lg font-bold"> Generated Payslip</h3>
                         <button onclick="closePayslipPreview()" class="text-red-500 hover:text-red-700 text-sm" title="Close payslip preview"><i data-feather="x-circle" aria-hidden="true"></i> Close</button>
                     </div>
                     <div id="payslipPreviewContent" class="scrollable-content"></div>
@@ -2590,26 +2586,26 @@
             if (!existing.empty) {
                 const data = existing.docs[0].data();
                 if (data.status === 'blocked') {
-                    alert('❌ This device has been blocked by HR and cannot be registered.');
+                    alert(' This device has been blocked by HR and cannot be registered.');
                     return;
                 }
-                alert('✅ This device is already registered.');
+                alert(' This device is already registered.');
                 loadRegisteredDevices();
                 return;
             }
 
-            const deviceName = prompt('📱 Name this device (e.g., "My Work Phone"):', 'My Phone');
+            const deviceName = prompt(' Name this device (e.g., "My Work Phone"):', 'My Phone');
             if (!deviceName) return;
 
             const result = await registerDeviceForUser(currentUser.uid, deviceInfo, deviceName);
             if (result.success) {
                 sessionStorage.setItem('deviceId', deviceInfo.deviceId);
                 sessionStorage.setItem('deviceRegistered', 'true');
-                alert('✅ Device registered successfully!');
+                alert(' Device registered successfully!');
                 loadRegisteredDevices();
                 refreshDeviceList();
             } else {
-                alert('❌ ' + result.error);
+                alert(' ' + result.error);
             }
         }
 
@@ -2643,12 +2639,12 @@
         }
 
         async function removeUserDevice(deviceDocId) {
-            if (!confirm('⚠️ Are you sure you want to remove this device?')) return;
+            if (!confirm(' Are you sure you want to remove this device?')) return;
             await db.collection('userDevices').doc(deviceDocId).delete();
             await auditLog('DEVICE_REMOVED', 'Device removed by user', deviceDocId);
             loadRegisteredDevices();
             refreshDeviceList();
-            alert('✅ Device removed successfully.');
+            alert(' Device removed successfully.');
         }
 
         async function refreshDeviceList() {
@@ -2718,7 +2714,7 @@
         async function toggleDeviceStatus(deviceId, currentStatus) {
             const newStatus = currentStatus === 'active' ? 'blocked' : 'active';
             const action = newStatus === 'active' ? 'unblock' : 'block';
-            if (!confirm('⚠️ Are you sure you want to ' + action + ' this device?')) return;
+            if (!confirm(' Are you sure you want to ' + action + ' this device?')) return;
 
             await db.collection('userDevices').doc(deviceId).update({
                 status: newStatus,
@@ -2731,7 +2727,7 @@
             if (newStatus === 'blocked') {
                 const device = allUserDevices.find(d => d.id === deviceId);
                 if (device && device.userId === currentUser.uid) {
-                    alert('⚠️ Your current device has been blocked. You will be logged out.');
+                    alert(' Your current device has been blocked. You will be logged out.');
                     await handleLogout();
                     return;
                 }
@@ -2739,11 +2735,11 @@
 
             refreshDeviceList();
             loadRegisteredDevices();
-            alert('✅ Device ' + action + 'ed successfully!');
+            alert(' Device ' + action + 'ed successfully!');
         }
 
         async function deleteDeviceRecord(deviceId) {
-            if (!confirm('⚠️ Are you sure you want to permanently delete this device record?\n\nThis action cannot be undone.'))
+            if (!confirm(' Are you sure you want to permanently delete this device record?\n\nThis action cannot be undone.'))
                 return;
 
             const device = allUserDevices.find(d => d.id === deviceId);
@@ -2753,7 +2749,7 @@
             if (device && device.userId === currentUser.uid) {
                 const currentDeviceId = getDeviceFingerprint().deviceId;
                 if (device.deviceId === currentDeviceId) {
-                    alert('⚠️ Your current device has been removed. You will be logged out.');
+                    alert(' Your current device has been removed. You will be logged out.');
                     await handleLogout();
                     return;
                 }
@@ -2761,7 +2757,7 @@
 
             refreshDeviceList();
             loadRegisteredDevices();
-            alert('✅ Device record permanently deleted.');
+            alert(' Device record permanently deleted.');
         }
 
         function exportDeviceReport() {
@@ -3124,7 +3120,7 @@
                 .date));
             const todayRec = userAtt.find(a => a.date === today);
             const statusIcon = document.getElementById('todayStatusIcon');
-            if (statusIcon) statusIcon.innerHTML = todayRec?.timeIn ? '✅' : '⏰';
+            if (statusIcon) statusIcon.innerHTML = todayRec?.timeIn ? '' : '';
             const statusText = document.getElementById('todayStatusText');
             if (statusText) statusText.innerHTML = todayRec?.timeIn ? (todayRec.timeOut ? 'Completed' : 'Clocked In') :
                 'Not clocked in yet';
@@ -3230,7 +3226,7 @@
                 document.getElementById('reqEndDate').value = '';
                 document.getElementById('reqReason').value = '';
 
-                alert('✅ Request submitted successfully!');
+                alert(' Request submitted successfully!');
                 refreshDashboard();
                 renderMyRequests();
                 renderAllRequests();
@@ -3317,7 +3313,7 @@
                 const idx = allRequests.findIndex(r => r.id === requestId);
                 if (idx !== -1) allRequests[idx].status = 'approved';
                 await auditLog('REQUEST_APPROVED', 'Request ' + requestId + ' approved by ' + currentUser.email, requestId);
-                alert('✅ Request approved!');
+                alert(' Request approved!');
                 refreshDashboard();
                 renderMyRequests();
                 renderAllRequests();
@@ -3338,7 +3334,7 @@
                 const idx = allRequests.findIndex(r => r.id === requestId);
                 if (idx !== -1) allRequests[idx].status = 'rejected';
                 await auditLog('REQUEST_REJECTED', 'Request ' + requestId + ' rejected by ' + currentUser.email, requestId);
-                alert('❌ Request rejected.');
+                alert(' Request rejected.');
                 refreshDashboard();
                 renderMyRequests();
                 renderAllRequests();
@@ -3390,7 +3386,7 @@
 
                 closeModal('clockRequestModal');
                 document.getElementById('clockReason').value = '';
-                alert('✅ Clock request submitted successfully!');
+                alert(' Clock request submitted successfully!');
                 refreshDashboard();
                 renderMyRequests();
             } catch (err) {
@@ -3432,7 +3428,7 @@
                 document.getElementById('offsetsDate').value = '';
                 document.getElementById('offsetsHours').value = '';
                 document.getElementById('offsetsReasonText').value = '';
-                alert('✅ Offsets request submitted successfully!');
+                alert(' Offsets request submitted successfully!');
                 refreshDashboard();
                 renderMyRequests();
             } catch (err) {
@@ -4012,12 +4008,15 @@
                 document.getElementById('profileAvatarLarge').src = currentUserData.photoURL;
                 document.getElementById('mobileAvatarSmall').src = currentUserData.photoURL;
             }
-            document.getElementById('profileName').textContent = currentUserData.name.split(' ')[0];
-            document.getElementById('mobileUserName').textContent = currentUserData.name.split(' ')[0];
-            document.getElementById('welcomeName').textContent = currentUserData.name.split(' ')[0];
-            const initials = currentUserData.name.split(' ').map(n => n[0]).join('');
+
+            const fullName = currentUserData.name || 'User';
+            document.getElementById('welcomeName').textContent = fullName;
+            const firstName = fullName.split(' ')[0];
+            document.getElementById('profileName').textContent = firstName;
+            document.getElementById('mobileUserName').textContent = firstName;
+            const initials = fullName.split(' ').map(n => n[0]).join('');
             document.getElementById('userInitialsSidebar').textContent = initials;
-            document.getElementById('userNameSidebar').textContent = currentUserData.name;
+            document.getElementById('userNameSidebar').textContent = fullName;
         }
 
         // ===== SAVE LEAVE BALANCE =====
@@ -4030,7 +4029,7 @@
                 const idx = allEmployees.findIndex(e => e.id === id);
                 if (idx !== -1) allEmployees[idx].leaveBalance = balance;
                 closeModal('editLeaveModal');
-                alert('✅ Leave balance updated!');
+                alert(' Leave balance updated!');
                 refreshDashboard();
             } catch (err) {
                 alert('Error updating leave balance: ' + err.message);
@@ -4041,12 +4040,12 @@
         async function resetAllSystemData() {
             const pin = prompt('Enter security PIN to reset all system data:');
             if (pin !== '123456') {
-                alert('❌ Invalid PIN. System reset cancelled.');
+                alert(' Invalid PIN. System reset cancelled.');
                 return;
             }
-            if (!confirm('⚠️ WARNING: This will delete ALL data from the system. This action cannot be undone. Are you sure?'))
+            if (!confirm(' WARNING: This will delete ALL data from the system. This action cannot be undone. Are you sure?'))
                 return;
-            if (!confirm('⚠️ FINAL WARNING: Are you absolutely sure you want to delete ALL data?')) return;
+            if (!confirm(' FINAL WARNING: Are you absolutely sure you want to delete ALL data?')) return;
 
             try {
                 const collections = ['employees', 'requests', 'attendance', 'payslips', 'announcements',
@@ -4060,25 +4059,25 @@
                     });
                     await batch.commit();
                 }
-                alert('✅ All system data has been reset successfully.');
+                alert(' All system data has been reset successfully.');
                 location.reload();
             } catch (err) {
                 console.error('Reset error:', err);
-                alert('❌ Error resetting data: ' + err.message);
+                alert(' Error resetting data: ' + err.message);
             }
         }
 
         // ===== AUTH STATE LISTENER =====
         auth.onAuthStateChanged(async function(user) {
             if (user) {
-                console.log('✅ User authenticated:', user.email);
+                console.log(' User authenticated:', user.email);
                 currentUser = user;
                 try {
                     const doc = await db.collection('employees').doc(user.uid).get();
                     if (doc.exists) {
                         currentUserData = doc.data();
                         currentUserRole = currentUserData.role;
-                        console.log('✅ Employee data loaded:', currentUserData);
+                        console.log(' Employee data loaded:', currentUserData);
 
                         document.getElementById('authScreen').style.display = 'none';
                         document.getElementById('mainApp').classList.remove('hidden');
@@ -4086,7 +4085,7 @@
                         const resetContainer = document.getElementById('resetButtonContainer');
                         if (resetContainer && currentUser.email === resetAuthorizedEmail) resetContainer
                             .innerHTML =
-                            '<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full" title="Reset all system data">⚠️ Reset All System Data (PIN required)</button>';
+                            '<button onclick="resetAllSystemData()" class="bg-red-600 text-white px-5 py-2 rounded-xl w-full" title="Reset all system data"> Reset All System Data (PIN required)</button>';
 
                         await loadAllData();
                         document.querySelectorAll('.tab-content').forEach(t => t.classList.add('hidden'));
@@ -4095,8 +4094,7 @@
                         updateProfileDropdown();
                         resetSessionTimer();
                     } else {
-                        console.warn('⚠️ Employee document not found for user:', user.uid);
-                        // Create document with appropriate role
+                        console.warn(' Employee document not found for user:', user.uid);
                         const isPrivileged = SYSTEM_ADMIN_EMAILS.includes(user.email);
                         await firebase.firestore().collection('employees').doc(user.uid).set({
                             name: isPrivileged ? 'HR Director' : user.displayName || 'Employee',
@@ -4108,12 +4106,11 @@
                             deviceRestriction: 'enabled',
                             createdAt: new Date().toISOString()
                         });
-                        console.log('✅ Employee document created for user:', user.uid);
+                        console.log(' Employee document created for user:', user.uid);
                         location.reload();
                     }
                 } catch (err) {
-                    console.error('❌ Error loading user data:', err);
-                    // Try to create the document if it doesn't exist
+                    console.error(' Error loading user data:', err);
                     if (err.code === 'not-found') {
                         try {
                             const isPrivileged = SYSTEM_ADMIN_EMAILS.includes(user.email);
@@ -4127,7 +4124,7 @@
                                 deviceRestriction: 'enabled',
                                 createdAt: new Date().toISOString()
                             });
-                            console.log('✅ Employee document created');
+                            console.log(' Employee document created');
                             location.reload();
                         } catch (createErr) {
                             alert('Error creating employee record: ' + createErr.message);
@@ -4141,7 +4138,7 @@
                     }
                 }
             } else {
-                console.log('❌ Not authenticated');
+                console.log(' Not authenticated');
                 document.getElementById('authScreen').style.display = 'flex';
                 document.getElementById('mainApp').classList.add('hidden');
             }
