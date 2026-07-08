@@ -53,10 +53,7 @@
         }
 
         .branding-half {
-            background-image: url('branding-image.jpg');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
+            background: linear-gradient(135deg, #011F7B 0%, #1a3a8a 50%, #2a4a9a 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1854,7 +1851,7 @@
                 </div>
                 <div id="payslipPreviewContainer" class="card-bg rounded-2xl p-4 mt-6 hidden">
                     <div class="flex justify-between items-center mb-3 no-print flex-wrap gap-2">
-                        <h3 class="text-lg font-bold"> Generated Payslip</h3>
+                        <h3 class="text-lg font-bold">📄 Generated Payslip</h3>
                         <button onclick="closePayslipPreview()" class="text-red-500 hover:text-red-700 text-sm" title="Close payslip preview"><i data-feather="x-circle" aria-hidden="true"></i> Close</button>
                     </div>
                     <div id="payslipPreviewContent" class="scrollable-content"></div>
@@ -2821,12 +2818,13 @@
                 const cred = await auth.createUserWithEmailAndPassword(email, password);
                 const uid = cred.user.uid;
                 await db.collection('employees').doc(uid).set({
-                    name,
-                    email,
-                    dept,
-                    role,
+                    name: name,
+                    email: email,
+                    dept: dept,
+                    role: role,
                     status: 'active',
                     deviceRestriction: 'enabled',
+                    leaveBalance: 15,
                     createdAt: new Date().toISOString()
                 });
                 sucDiv.textContent = "Account created! Please login.";
@@ -3120,7 +3118,7 @@
                 .date));
             const todayRec = userAtt.find(a => a.date === today);
             const statusIcon = document.getElementById('todayStatusIcon');
-            if (statusIcon) statusIcon.innerHTML = todayRec?.timeIn ? '' : '';
+            if (statusIcon) statusIcon.innerHTML = todayRec?.timeIn ? '✅' : '⏰';
             const statusText = document.getElementById('todayStatusText');
             if (statusText) statusText.innerHTML = todayRec?.timeIn ? (todayRec.timeOut ? 'Completed' : 'Clocked In') :
                 'Not clocked in yet';
@@ -4009,7 +4007,8 @@
                 document.getElementById('mobileAvatarSmall').src = currentUserData.photoURL;
             }
 
-            const fullName = currentUserData.name || 'User';
+            // FIX: Use the actual name from Firestore
+            const fullName = currentUserData.name && currentUserData.name.trim() !== '' ? currentUserData.name : 'User';
             document.getElementById('welcomeName').textContent = fullName;
             const firstName = fullName.split(' ')[0];
             document.getElementById('profileName').textContent = firstName;
