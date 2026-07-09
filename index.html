@@ -272,7 +272,6 @@
             gap: 0.3rem;
         }
         
-        /* User profile section in sidebar - centered */
         .sidebar-user-section {
             width: 100%;
             display: flex;
@@ -559,6 +558,10 @@
         }
         .day.leave {
             background: #8b5cf6;
+            color: white;
+        }
+        .day.certificate {
+            background: #3b82f6;
             color: white;
         }
 
@@ -1142,7 +1145,6 @@
             font-size: 0.45rem;
         }
 
-        /* Migration status styles */
         .migration-status {
             padding: 0.5rem 1rem;
             border-radius: 0.5rem;
@@ -1175,6 +1177,54 @@
         body.dark .migration-pending {
             background: #78350f;
             color: #fcd34d;
+        }
+
+        /* Attendance Period Selector */
+        .period-selector {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .period-selector button {
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+        }
+        .period-selector button:hover {
+            background: #e2e8f0;
+        }
+        .period-selector button.active {
+            background: #011F7B;
+            color: white;
+            border-color: #011F7B;
+        }
+        body.dark .period-selector button {
+            background: #1e293b;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+        body.dark .period-selector button:hover {
+            background: #334155;
+        }
+        body.dark .period-selector button.active {
+            background: #FFBA09;
+            color: #0f172a;
+            border-color: #FFBA09;
+        }
+
+        .summary-period-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #011F7B;
+            margin-bottom: 0.5rem;
+        }
+        body.dark .summary-period-label {
+            color: #FFBA09;
         }
 
         @media (max-width: 1023px) {
@@ -1576,7 +1626,6 @@
         <div class="desktop-sidebar">
             <nav id="desktopNavMenu" class="flex flex-col gap-0.5 flex-1" role="navigation" aria-label="Main navigation"></nav>
             <div class="footer-actions">
-                <!-- Centered User Section -->
                 <div class="sidebar-user-section">
                     <div class="user-icon" id="userInitialsSidebar" aria-hidden="true">HR</div>
                     <span class="user-name" id="userNameSidebar">User</span>
@@ -1623,10 +1672,9 @@
                         <h1 class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">EQUIPRIME<span class="text-blue-600 dark:text-blue-400">HR</span></h1>
                         <h2 class="text-3xl font-extrabold text-slate-800 dark:text-white">Welcome Back, <span id="welcomeName">User</span></h2>
                         <p class="text-slate-500 dark:text-slate-400" id="welcomeSubtitle"></p>
-                        <!-- Migration Status Display -->
                         <div id="migrationStatusDisplay" class="mt-2"></div>
                     </div>
-                    <!-- Profile dropdown (desktop) -->
+                    <!-- Profile dropdown -->
                     <div class="profile-dropdown relative">
                         <div class="profile-trigger cursor-pointer flex items-center gap-2 bg-white dark:bg-slate-800 p-2 rounded-full shadow" onclick="toggleProfileMenu(event)" role="button" tabindex="0" aria-label="Open profile menu">
                             <img id="profileAvatarImg" class="avatar-img w-8 h-8 rounded-full object-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile" />
@@ -1660,7 +1708,6 @@
                     </div>
                 </div>
                 <div class="dashboard-filters grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-                    <label for="dashboardFilterDepartment" class="sr-only">Filter by Department</label>
                     <select id="dashboardFilterDepartment" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white" onchange="applyFilters()" title="Filter by department">
                         <option value="all">All Departments</option>
                         <option>Service Department</option>
@@ -1673,14 +1720,12 @@
                         <option>Security Guard Department</option>
                         <option>Accounting Department</option>
                     </select>
-                    <label for="dashboardFilterStatus" class="sr-only">Filter by Status</label>
                     <select id="dashboardFilterStatus" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white" onchange="applyFilters()" title="Filter by employment status">
                         <option value="all">All Status</option>
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                         <option value="resigned">Resigned</option>
                     </select>
-                    <label for="dashboardFilterLeaveType" class="sr-only">Filter by Leave Type</label>
                     <select id="dashboardFilterLeaveType" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white" onchange="applyFilters()" title="Filter by leave type">
                         <option value="all">All Leave Types</option>
                         <option>Official Business</option>
@@ -1763,12 +1808,12 @@
                 <div id="allRequestsList" class="space-y-4"><div class="text-center text-slate-500 dark:text-slate-400 py-8">No requests found</div></div>
             </div>
 
-            <!-- ATTENDANCE SUMMARY TAB -->
+            <!-- ATTENDANCE SUMMARY TAB (UPDATED WITH 15-DAY CUT-OFF) -->
             <div id="attendance-summary-tab" class="tab-content hidden">
                 <div class="card-bg rounded-2xl p-6 shadow-sm">
                     <div class="flex justify-between items-center flex-wrap gap-4 mb-4">
                         <h2 class="text-2xl font-bold text-yellow-600">Attendance Summary</h2>
-                        <div class="flex gap-2">
+                        <div class="flex gap-2 flex-wrap">
                             <label for="summaryYear" class="sr-only">Select year</label>
                             <select id="summaryYear" class="border rounded-lg p-2 dark:bg-slate-700" title="Select year"></select>
                             <label for="summaryMonth" class="sr-only">Select month</label>
@@ -1781,6 +1826,13 @@
                             <button id="refreshSummaryBtn" class="bg-[#011F7B] text-white px-4 py-2 rounded-xl" title="Load attendance summary">Load</button>
                         </div>
                     </div>
+                    <!-- Period Selector (15-day cut-off) -->
+                    <div class="period-selector" id="periodSelector">
+                        <button class="active" data-period="current" onclick="selectPeriod('current')">Current Period</button>
+                        <button data-period="previous" onclick="selectPeriod('previous')">Previous Period</button>
+                        <button data-period="all" onclick="selectPeriod('all')">All Periods</button>
+                    </div>
+                    <div id="periodLabel" class="summary-period-label">Current Period: Loading...</div>
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-1"><h3 class="font-bold mb-3">Employees</h3><div id="employeeListContainer" class="space-y-2 overflow-y-auto"></div></div>
                         <div class="lg:col-span-2">
@@ -1788,10 +1840,10 @@
                                 <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Completed Days</small><h3 id="completedCount" class="text-2xl font-bold">0</h3></div>
                                 <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Late</small><h3 id="lateCountSummary" class="text-2xl font-bold">0</h3></div>
                                 <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Incomplete</small><h3 id="missingCountSummary" class="text-2xl font-bold">0</h3></div>
-                                <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Leave</small><h3 id="leaveCountSummary" class="text-2xl font-bold">0</h3></div>
+                                <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Certificate</small><h3 id="certCountSummary" class="text-2xl font-bold">0</h3></div>
                             </div>
                             <div class="calendar-box"><h3 class="mb-4">Attendance Calendar</h3><div id="calendarGrid" class="grid grid-cols-7 gap-2"></div></div>
-                            <div class="details-box mt-4"><h3 class="mb-4">Details</h3><table class="details-table w-full" aria-label="Attendance details"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-2 text-left">Date</th><th class="p-2 text-left">Clock In</th><th class="p-2 text-left">Clock Out</th><th class="p-2 text-left">Status</th></tr></thead><tbody id="attendanceDetails"></tbody></table></div>
+                            <div class="details-box mt-4"><h3 class="mb-4">Details <span class="text-sm font-normal text-slate-500">(Latest first)</span></h3><table class="details-table w-full" aria-label="Attendance details"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-2 text-left">Date</th><th class="p-2 text-left">Clock In</th><th class="p-2 text-left">Clock Out</th><th class="p-2 text-left">Status</th><th class="p-2 text-left">Source</th></tr></thead><tbody id="attendanceDetails"></tbody></table></div>
                         </div>
                     </div>
                 </div>
@@ -1812,13 +1864,13 @@
                         <label for="guardEmployee" class="sr-only">Select Guard</label>
                         <select id="guardEmployee" class="w-full p-3 border rounded-xl mb-4 dark:bg-slate-700" title="Select a guard"><option value="">Select Guard</option></select>
                         <div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 dark:border-slate-600">
-                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayMonday" /> <label for="dayMonday" class="flex-1">Monday</label> <label for="shiftMonday" class="sr-only">Shift for Monday</label><select id="shiftMonday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Monday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
-                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayTuesday" /> <label for="dayTuesday" class="flex-1">Tuesday</label> <label for="shiftTuesday" class="sr-only">Shift for Tuesday</label><select id="shiftTuesday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Tuesday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
-                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayWednesday" /> <label for="dayWednesday" class="flex-1">Wednesday</label> <label for="shiftWednesday" class="sr-only">Shift for Wednesday</label><select id="shiftWednesday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Wednesday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
-                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayThursday" /> <label for="dayThursday" class="flex-1">Thursday</label> <label for="shiftThursday" class="sr-only">Shift for Thursday</label><select id="shiftThursday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Thursday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
-                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayFriday" /> <label for="dayFriday" class="flex-1">Friday</label> <label for="shiftFriday" class="sr-only">Shift for Friday</label><select id="shiftFriday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Friday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
-                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="daySaturday" /> <label for="daySaturday" class="flex-1">Saturday</label> <label for="shiftSaturday" class="sr-only">Shift for Saturday</label><select id="shiftSaturday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Saturday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
-                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="daySunday" /> <label for="daySunday" class="flex-1">Sunday</label> <label for="shiftSunday" class="sr-only">Shift for Sunday</label><select id="shiftSunday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Sunday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayMonday" /> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Monday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayTuesday" /> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Tuesday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayWednesday" /> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Wednesday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayThursday" /> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Thursday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayFriday" /> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Friday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="daySaturday" /> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Saturday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="daySunday" /> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Sunday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
                         </div>
                         <button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#011F7B] text-white py-3 rounded-xl mt-4" title="Assign the weekly schedule">Assign Schedule</button>
                     </div>
@@ -1842,54 +1894,30 @@
                             <select id="payslipEmployee" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select employee"><option value="">Select Employee</option></select>
                             <label for="payslipMonth" class="sr-only">Select month</label>
                             <input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select payroll month" />
-                            <label for="cutOffPeriod" class="sr-only">Select cut-off period</label>
                             <select id="cutOffPeriod" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select cut-off period"><option value="first">1st cut-off (27th – 10th)</option><option value="second">2nd cut-off (11th – 26th)</option></select>
-                            <label for="basicSalary" class="sr-only">Basic Pay</label>
                             <input type="number" id="basicSalary" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Basic Pay (₱) - Bi-monthly" step="0.01" title="Enter basic pay" />
-                            <label for="overtimePay" class="sr-only">Overtime Pay</label>
                             <input type="number" id="overtimePay" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Overtime Pay (₱)" title="Enter overtime pay" />
-                            <label for="holidayPay" class="sr-only">Legal Holiday Pay</label>
                             <input type="number" id="holidayPay" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Legal Holiday Pay (₱)" title="Enter legal holiday pay" />
-                            <label for="nd" class="sr-only">Night Differential</label>
                             <input type="number" id="nd" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="ND (Night Differential)" title="Enter night differential" />
-                            <label for="ndot" class="sr-only">NDOT</label>
                             <input type="number" id="ndot" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="NDOT" title="Enter NDOT" />
-                            <label for="lhNd" class="sr-only">LH-ND</label>
                             <input type="number" id="lhNd" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="LH-ND" title="Enter LH-ND" />
-                            <label for="restday" class="sr-only">Rest Day</label>
                             <input type="number" id="restday" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Rest Day" title="Enter rest day pay" />
-                            <label for="otherTaxableEarnings" class="sr-only">Other Taxable Earnings</label>
                             <input type="number" id="otherTaxableEarnings" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Other Taxable Earnings (₱)" title="Enter other taxable earnings" />
-                            <label for="deMinimis" class="sr-only">De Minimis</label>
                             <input type="number" id="deMinimis" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="De Minimis (non-taxable)" title="Enter de minimis" />
-                            <label for="otherNonTaxableEarnings" class="sr-only">Other Non-Taxable Earnings</label>
                             <input type="number" id="otherNonTaxableEarnings" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Other Non-Taxable Earnings (₱)" title="Enter other non-taxable earnings" />
-                            <label for="absencesLate" class="sr-only">Absences and Late</label>
                             <input type="number" id="absencesLate" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Absences and Late (₱)" title="Enter absences and late deductions" />
                             <hr class="dark:border-slate-600" role="separator" />
-                            <label for="sssContribution" class="sr-only">SSS Contribution</label>
                             <input type="number" id="sssContribution" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="SSS Contribution (auto)" readonly disabled title="SSS contribution (auto-calculated)" />
-                            <label for="sssMpf" class="sr-only">SSS MPF</label>
                             <input type="number" id="sssMpf" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="SSS MPF (auto)" readonly disabled title="SSS MPF (auto-calculated)" />
-                            <label for="philhealthContribution" class="sr-only">PhilHealth Contribution</label>
                             <input type="number" id="philhealthContribution" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="PhilHealth Contribution (auto)" readonly disabled title="PhilHealth contribution (auto-calculated)" />
-                            <label for="pagibigContribution" class="sr-only">Pag-IBIG Contribution</label>
                             <input type="number" id="pagibigContribution" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Pag-IBIG Contribution (auto)" readonly disabled title="Pag-IBIG contribution (auto-calculated)" />
-                            <label for="additionalPagibig" class="sr-only">Additional Pag-IBIG</label>
                             <input type="number" id="additionalPagibig" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Additional Pag-IBIG (₱)" title="Enter additional Pag-IBIG" />
-                            <label for="sssLoans" class="sr-only">SSS Loans</label>
                             <input type="number" id="sssLoans" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="SSS Loans (₱)" title="Enter SSS loans" />
-                            <label for="sssCl" class="sr-only">SSS CL</label>
                             <input type="number" id="sssCl" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="SSS CL (₱)" title="Enter SSS CL" />
-                            <label for="hdmfLoans" class="sr-only">HDMF Loans</label>
                             <input type="number" id="hdmfLoans" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="HDMF Loans (₱)" title="Enter HDMF loans" />
-                            <label for="hdmfCl" class="sr-only">HDMF CL</label>
                             <input type="number" id="hdmfCl" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="HDMF CL (₱)" title="Enter HDMF CL" />
-                            <label for="salaryLoan" class="sr-only">Salary Loan</label>
                             <input type="number" id="salaryLoan" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Salary Loan (₱)" title="Enter salary loan" />
-                            <label for="otherDeductions" class="sr-only">Other Deductions</label>
                             <input type="number" id="otherDeductions" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Other Deductions (₱)" title="Enter other deductions" />
-                            <label for="wtax" class="sr-only">WTAX</label>
                             <input type="number" id="wtax" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="WTAX (auto-computed)" title="WTAX (auto-calculated)" />
                         </div>
                         <div class="flex flex-wrap gap-3 mt-5">
@@ -1932,9 +1960,7 @@
                 </div>
                 <div class="card-bg rounded-2xl p-6 shadow-sm">
                     <div class="flex flex-wrap gap-4 mb-4">
-                        <label for="deviceSearch" class="sr-only">Search devices</label>
                         <input type="text" id="deviceSearch" placeholder="Search by employee or device..." class="flex-1 p-2 border rounded-lg dark:bg-slate-700 min-w-[150px]" onkeyup="filterDevices()" title="Search devices by employee name or device name" />
-                        <label for="deviceStatusFilter" class="sr-only">Filter by status</label>
                         <select id="deviceStatusFilter" class="p-2 border rounded-lg dark:bg-slate-700" onchange="filterDevices()" title="Filter devices by status">
                             <option value="all">All Status</option>
                             <option value="active">Active</option>
@@ -1975,18 +2001,16 @@
                     </div>
                     <hr class="dark:border-slate-600" role="separator" />
                     <div id="resetButtonContainer"></div>
-                    <!-- Migration Status Section -->
                     <div id="migrationStatusContainer" class="mt-4"></div>
                 </div>
             </div>
 
-            <!-- HELPDESK TAB (EMPLOYEE) -->
+            <!-- HELPDESK TAB -->
             <div id="helpdesk-tab" class="tab-content hidden">
                 <h2 class="text-2xl font-bold mb-5 text-yellow-600">HR Helpdesk</h2>
                 <div class="card-bg rounded-2xl p-6 shadow-sm mb-6">
                     <h3 class="text-xl font-bold mb-4">Submit a Request</h3>
                     <div class="space-y-4">
-                        <label for="helpdeskType" class="sr-only">Request type</label>
                         <select id="helpdeskType" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select request type">
                             <option value="PIN Reset">PIN Reset Request</option>
                             <option value="Password Reset">Password Reset Request</option>
@@ -1994,7 +2018,6 @@
                             <option value="Attendance Correction">Attendance Correction</option>
                             <option value="General Inquiry">General Inquiry</option>
                         </select>
-                        <label for="helpdeskMessage" class="sr-only">Message</label>
                         <textarea id="helpdeskMessage" rows="4" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Please provide details..." title="Enter your request details"></textarea>
                         <button onclick="submitHelpdeskRequest()" class="bg-[#011F7B] text-white px-6 py-2 rounded-xl font-semibold" title="Submit helpdesk request">Submit Request</button>
                     </div>
@@ -2012,7 +2035,6 @@
                     <button onclick="showAddEmployeeModal()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex items-center gap-2" title="Add a new employee"><i data-feather="plus" aria-hidden="true"></i> Add Employee</button>
                 </div>
                 <div class="card-bg rounded-2xl p-6 shadow-sm">
-                    <label for="employeeSearch" class="sr-only">Search employees</label>
                     <input type="text" id="employeeSearch" class="search-input w-full max-w-md p-2 border rounded-lg mb-4 dark:bg-slate-700" placeholder="Search by name, email, department..." onkeyup="filterEmployeesTable()" title="Search employees" />
                     <div class="overflow-x-auto">
                         <table class="employees-table w-full" aria-label="Employee list">
@@ -2031,41 +2053,25 @@
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <div class="space-y-3">
-                <label for="newEmpName" class="sr-only">Full Name</label>
                 <input type="text" id="newEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter full name" />
-                <label for="newEmpEmail" class="sr-only">Email</label>
                 <input type="email" id="newEmpEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter email address" />
-                <label for="newEmpEmployeeNumber" class="sr-only">Employee Number</label>
                 <input type="text" id="newEmpEmployeeNumber" placeholder="Employee Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter employee number" />
-                <label for="newEmpDateHired" class="sr-only">Date Hired</label>
                 <input type="date" id="newEmpDateHired" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select date hired" />
-                <label for="newEmpGender" class="sr-only">Gender</label>
                 <select id="newEmpGender" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select gender"><option value="">Gender</option><option>Male</option><option>Female</option></select>
-                <label for="newEmpCivilStatus" class="sr-only">Civil Status</label>
                 <select id="newEmpCivilStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select civil status"><option value="">Civil Status</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select>
-                <label for="newEmpPhone" class="sr-only">Contact Number</label>
                 <input type="text" id="newEmpPhone" placeholder="Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter contact number" />
-                <label for="newEmpAddress" class="sr-only">Address</label>
                 <input type="text" id="newEmpAddress" placeholder="Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter address" />
-                <label for="newEmpEmergencyName" class="sr-only">Emergency Contact Name</label>
                 <input type="text" id="newEmpEmergencyName" placeholder="Emergency Contact Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency contact name" />
-                <label for="newEmpEmergencyRelation" class="sr-only">Relationship</label>
                 <input type="text" id="newEmpEmergencyRelation" placeholder="Relationship" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter relationship" />
-                <label for="newEmpEmergencyPhone" class="sr-only">Emergency Contact Number</label>
                 <input type="text" id="newEmpEmergencyPhone" placeholder="Emergency Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency contact number" />
-                <label for="newEmpEmergencyAddress" class="sr-only">Emergency Address</label>
                 <input type="text" id="newEmpEmergencyAddress" placeholder="Emergency Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency address" />
-                <div class="relative"><label for="newEmpSSS" class="sr-only">SSS Number</label><input type="text" id="newEmpSSS" placeholder="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter SSS number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
-                <div class="relative"><label for="newEmpPhilHealth" class="sr-only">PhilHealth Number</label><input type="text" id="newEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter PhilHealth number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
-                <div class="relative"><label for="newEmpPagIBIG" class="sr-only">Pag-IBIG Number</label><input type="text" id="newEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter Pag-IBIG number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
-                <label for="newEmpDept" class="sr-only">Department</label>
+                <div class="relative"><input type="text" id="newEmpSSS" placeholder="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter SSS number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <div class="relative"><input type="text" id="newEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter PhilHealth number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <div class="relative"><input type="text" id="newEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter Pag-IBIG number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
                 <input type="text" id="newEmpDept" placeholder="Department" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter department" />
-                <label for="newEmpRole" class="sr-only">Role</label>
                 <select id="newEmpRole" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select role"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select>
-                <div class="border-t pt-4 mt-4"><h4 class="font-bold mb-3 text-sm flex items-center gap-2"><i data-feather="smartphone" class="w-4 h-4" aria-hidden="true"></i> Device Access Control</h4><label for="newEmpDeviceRestriction" class="sr-only">Device Restriction</label><select id="newEmpDeviceRestriction" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select device restriction"><option value="enabled">Enable device restriction (recommended)</option><option value="disabled">Disable device restriction</option></select></div>
-                <label for="newEmpPin" class="sr-only">PIN</label>
+                <div class="border-t pt-4 mt-4"><h4 class="font-bold mb-3 text-sm flex items-center gap-2"><i data-feather="smartphone" class="w-4 h-4" aria-hidden="true"></i> Device Access Control</h4><select id="newEmpDeviceRestriction" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select device restriction"><option value="enabled">Enable device restriction (recommended)</option><option value="disabled">Disable device restriction</option></select></div>
                 <input type="text" id="newEmpPin" placeholder="PIN" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter PIN" />
-                <label for="newEmpPass" class="sr-only">Password</label>
                 <input type="password" id="newEmpPass" placeholder="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter password" />
             </div>
             <div class="flex gap-3 mt-5"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Save employee">Save</button><button onclick="closeModal('addEmployeeModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
@@ -2077,45 +2083,27 @@
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Employee</h3><button onclick="closeModal('editEmployeeModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="editEmpId" />
             <div class="space-y-3">
-                <label for="editEmpName" class="sr-only">Full Name</label>
                 <input type="text" id="editEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter full name" />
-                <label for="editEmpEmail" class="sr-only">Email</label>
                 <input type="email" id="editEmpEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter email address" />
-                <label for="editEmpEmployeeNumber" class="sr-only">Employee Number</label>
                 <input type="text" id="editEmpEmployeeNumber" placeholder="Employee Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter employee number" />
-                <label for="editEmpDateHired" class="sr-only">Date Hired</label>
                 <input type="date" id="editEmpDateHired" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select date hired" />
-                <label for="editEmpGender" class="sr-only">Gender</label>
                 <select id="editEmpGender" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select gender"><option value="">Gender</option><option>Male</option><option>Female</option></select>
-                <label for="editEmpCivilStatus" class="sr-only">Civil Status</label>
                 <select id="editEmpCivilStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select civil status"><option value="">Civil Status</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select>
-                <label for="editEmpPhone" class="sr-only">Contact Number</label>
                 <input type="text" id="editEmpPhone" placeholder="Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter contact number" />
-                <label for="editEmpAddress" class="sr-only">Address</label>
                 <input type="text" id="editEmpAddress" placeholder="Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter address" />
-                <label for="editEmpEmergencyName" class="sr-only">Emergency Contact Name</label>
                 <input type="text" id="editEmpEmergencyName" placeholder="Emergency Contact Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency contact name" />
-                <label for="editEmpEmergencyRelation" class="sr-only">Relationship</label>
                 <input type="text" id="editEmpEmergencyRelation" placeholder="Relationship" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter relationship" />
-                <label for="editEmpEmergencyPhone" class="sr-only">Emergency Contact Number</label>
                 <input type="text" id="editEmpEmergencyPhone" placeholder="Emergency Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency contact number" />
-                <label for="editEmpEmergencyAddress" class="sr-only">Emergency Address</label>
                 <input type="text" id="editEmpEmergencyAddress" placeholder="Emergency Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency address" />
-                <div class="relative"><label for="editEmpSSS" class="sr-only">SSS Number</label><input type="text" id="editEmpSSS" placeholder="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter SSS number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
-                <div class="relative"><label for="editEmpPhilHealth" class="sr-only">PhilHealth Number</label><input type="text" id="editEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter PhilHealth number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
-                <div class="relative"><label for="editEmpPagIBIG" class="sr-only">Pag-IBIG Number</label><input type="text" id="editEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter Pag-IBIG number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
-                <label for="editEmpDept" class="sr-only">Department</label>
+                <div class="relative"><input type="text" id="editEmpSSS" placeholder="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter SSS number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <div class="relative"><input type="text" id="editEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter PhilHealth number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <div class="relative"><input type="text" id="editEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter Pag-IBIG number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
                 <select id="editEmpDept" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select department"><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select>
-                <label for="editEmpRole" class="sr-only">Role</label>
                 <select id="editEmpRole" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select role"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select>
-                <label for="editEmpStatus" class="sr-only">Status</label>
                 <select id="editEmpStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select status"><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option></select>
-                <div class="border-t pt-4 mt-4"><h4 class="font-bold mb-3 text-sm flex items-center gap-2"><i data-feather="smartphone" class="w-4 h-4" aria-hidden="true"></i> Device Access Control</h4><label for="editEmpDeviceRestriction" class="sr-only">Device Restriction</label><select id="editEmpDeviceRestriction" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select device restriction"><option value="enabled">Enable device restriction</option><option value="disabled">Disable device restriction</option></select></div>
-                <label for="editLeaveBalance" class="sr-only">Leave Balance</label>
+                <div class="border-t pt-4 mt-4"><h4 class="font-bold mb-3 text-sm flex items-center gap-2"><i data-feather="smartphone" class="w-4 h-4" aria-hidden="true"></i> Device Access Control</h4><select id="editEmpDeviceRestriction" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select device restriction"><option value="enabled">Enable device restriction</option><option value="disabled">Disable device restriction</option></select></div>
                 <input type="number" id="editLeaveBalance" placeholder="Leave Balance" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter leave balance" />
-                <label for="editEmpPin" class="sr-only">PIN</label>
                 <input type="text" id="editEmpPin" placeholder="PIN" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter PIN" />
-                <label for="editEmpPassword" class="sr-only">New Password (optional)</label>
                 <input type="password" id="editEmpPassword" placeholder="New Password (optional)" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter new password (optional)" />
             </div>
             <div class="flex gap-3 mt-5"><button onclick="saveEmployeeEdit()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Save changes">Save Changes</button><button onclick="closeModal('editEmployeeModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
@@ -2127,11 +2115,8 @@
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="requestTypeValue" />
             <div class="space-y-3">
-                <label for="reqStartDate" class="sr-only">Start Date</label>
                 <input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select start date" />
-                <label for="reqEndDate" class="sr-only">End Date</label>
                 <input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select end date" />
-                <label for="reqReason" class="sr-only">Reason</label>
                 <textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Reason..." title="Enter reason for request"></textarea>
             </div>
             <div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Submit request">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
@@ -2153,11 +2138,8 @@
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeModal('offsetsModalOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <div class="space-y-3">
-                <label for="offsetsDate" class="sr-only">Date</label>
                 <input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select date" />
-                <label for="offsetsHours" class="sr-only">Hours to Offset</label>
                 <input type="number" id="offsetsHours" step="0.5" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Hours to Offset" title="Enter hours to offset" />
-                <label for="offsetsReasonText" class="sr-only">Reason</label>
                 <textarea id="offsetsReasonText" rows="2" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Reason" title="Enter reason"></textarea>
             </div>
             <div class="flex gap-3 mt-5"><button onclick="submitOffsets()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Submit offsets">Submit</button><button onclick="closeModal('offsetsModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
@@ -2182,11 +2164,8 @@
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Clock In</h3><button onclick="closeModal('clockRequestModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="clockRequestType" />
             <div class="space-y-3">
-                <label for="clockDate" class="sr-only">Date</label>
                 <input type="date" id="clockDate" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select date" />
-                <label for="clockTime" class="sr-only">Time</label>
                 <input type="time" id="clockTime" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select time" />
-                <label for="clockReason" class="sr-only">Reason for request</label>
                 <textarea id="clockReason" rows="2" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Reason for request" title="Enter reason"></textarea>
             </div>
             <div class="flex gap-3 mt-5"><button onclick="submitClockRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Submit request">Submit Request</button><button onclick="closeModal('clockRequestModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
@@ -2198,9 +2177,7 @@
             <div class="flex justify-between items-center mb-4"><h3 id="announcementModalTitle" class="text-xl font-bold">Edit Announcement</h3><button onclick="closeModal('announcementModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="announcementId" />
             <div class="space-y-4">
-                <label for="announcementTitle" class="sr-only">Title</label>
                 <input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Title" title="Enter announcement title" />
-                <label for="announcementContent" class="sr-only">Content</label>
                 <textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Content" title="Enter announcement content"></textarea>
             </div>
             <div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Save announcement">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn" title="Delete announcement">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
@@ -2212,9 +2189,7 @@
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="editEmployeeId" />
             <div class="space-y-4">
-                <label for="editEmployeeName" class="sr-only">Employee Name</label>
                 <input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl dark:bg-slate-700" readonly title="Employee name" />
-                <label for="editLeaveBalanceSimple" class="sr-only">Leave Balance</label>
                 <input type="number" id="editLeaveBalanceSimple" class="w-full p-3 border rounded-xl dark:bg-slate-700" step="1" title="Enter leave balance" />
             </div>
             <div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Save leave balance">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
@@ -2236,7 +2211,6 @@
         const db = firebase.firestore();
         const storage = firebase.storage();
 
-        // Enable offline persistence
         db.enablePersistence({ synchronizeTabs: true }).catch(function(err) {
             console.warn('Firestore persistence:', err.message);
         });
@@ -2313,20 +2287,18 @@
         let currentComputedPayroll = null;
         let sessionTimeoutTimer = null;
         const SESSION_TIMEOUT = 30 * 60 * 1000;
-        
-        // ===== MIGRATION SYSTEM =====
         const CURRENT_VERSION = '2.0.0';
         let migrationStatus = null;
+        let selectedPeriod = 'current';
 
+        // ===== MIGRATION SYSTEM =====
         async function checkMigrationStatus() {
             try {
                 const doc = await db.collection('system').doc('migration').get();
                 if (doc.exists) {
-                    const data = doc.data();
-                    migrationStatus = data;
-                    return data;
+                    migrationStatus = doc.data();
+                    return migrationStatus;
                 } else {
-                    // First time - need migration
                     migrationStatus = { version: '0.0.0', status: 'pending', timestamp: new Date().toISOString() };
                     return migrationStatus;
                 }
@@ -2354,26 +2326,23 @@
                     return;
                 }
 
-                // Perform migration tasks here
-                // Example: Add new fields to existing documents
                 const employeesSnap = await db.collection('employees').get();
                 const batch = db.batch();
                 let count = 0;
 
                 for (const doc of employeesSnap.docs) {
                     const data = doc.data();
-                    // Add any new fields or transformations here
-                    // For example, adding a new field 'migratedAt'
                     batch.update(doc.ref, {
                         migratedAt: new Date().toISOString(),
-                        migrationVersion: CURRENT_VERSION
+                        migrationVersion: CURRENT_VERSION,
+                        // Ensure all employees have leaveBalance field
+                        leaveBalance: data.leaveBalance || 15
                     });
                     count++;
                 }
 
                 await batch.commit();
 
-                // Record migration completion
                 await db.collection('system').doc('migration').set({
                     version: CURRENT_VERSION,
                     status: 'completed',
@@ -2391,12 +2360,11 @@
                 };
 
                 updateMigrationDisplay();
-                alert('✅ Migration completed successfully! ' + count + ' records updated.');
+                alert('✅ Migration completed successfully! ' + count + ' employees updated.');
             } catch (e) {
                 console.error('Migration error:', e);
                 alert('❌ Migration failed: ' + e.message);
                 
-                // Mark as failed
                 await db.collection('system').doc('migration').set({
                     version: CURRENT_VERSION,
                     status: 'failed',
@@ -2436,7 +2404,6 @@
                     await batch.commit();
                 }
 
-                // Reset migration status
                 await db.collection('system').doc('migration').set({
                     version: '0.0.0',
                     status: 'pending',
@@ -2710,9 +2677,7 @@
 
         // ===== HELPER FUNCTIONS =====
         function setText(id, text) { const el = document.getElementById(id); if (el) el.innerText = text; }
-
         function setHTML(id, html) { const el = document.getElementById(id); if (el) el.innerHTML = html; }
-
         function isSystemAdmin(email) { return SYSTEM_ADMIN_EMAILS.includes(email); }
 
         function escapeHtml(str) {
@@ -2724,22 +2689,17 @@
 
         function openModal(id) { const el = document.getElementById(id); if (el) { el.classList.remove('hidden');
                 el.classList.add('flex'); } }
-
         function closeModal(id) { const el = document.getElementById(id); if (el) { el.classList.add('hidden');
                 el.classList.remove('flex'); } }
 
         function openNewRequestMenu() { openModal('newRequestMenuOverlay'); }
-
         function openLeaveModal() { closeModal('newRequestMenuOverlay');
             openModal('leaveModalOverlay'); }
-
         function openOffsetsModal() { closeModal('newRequestMenuOverlay');
             openModal('offsetsModalOverlay'); }
-
         function openRequestModal(type) { closeModal('newRequestMenuOverlay');
             document.getElementById('requestTypeValue').value = type;
             openModal('requestModalOverlay'); }
-
         function selectLeaveType(type) { closeModal('leaveModalOverlay');
             openRequestModal(type); }
 
@@ -2753,39 +2713,157 @@
         function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit',
                 hour12: false }); }
 
-        // ===== DEVICE MANAGEMENT =====
-        async function isDeviceAuthorized(userId, deviceId) {
-            try {
-                const empDoc = await db.collection('employees').doc(userId).get();
-                const empData = empDoc.data();
-                if (empData.deviceRestriction === 'disabled') {
-                    return { authorized: true, reason: 'Device restriction disabled' };
-                }
-                const deviceQuery = await db.collection('userDevices')
-                    .where('userId', '==', userId)
-                    .where('deviceId', '==', deviceId)
-                    .where('status', '==', 'active')
-                    .get();
-                if (!deviceQuery.empty) {
-                    const doc = deviceQuery.docs[0];
-                    await db.collection('userDevices').doc(doc.id).update({ lastUsed: new Date().toISOString() });
-                    return { authorized: true, reason: 'Device authorized' };
-                }
-                const blockedQuery = await db.collection('userDevices')
-                    .where('userId', '==', userId)
-                    .where('deviceId', '==', deviceId)
-                    .where('status', '==', 'blocked')
-                    .get();
-                if (!blockedQuery.empty) {
-                    return { authorized: false, reason: 'Device is blocked by HR' };
-                }
-                return { authorized: false, reason: 'Device not registered' };
-            } catch (e) {
-                console.error('Device authorization error:', e);
-                return { authorized: false, reason: 'Error checking device authorization' };
+        // ===== ATTENDANCE PERIOD FUNCTIONS (15-day cut-off) =====
+        function getPayPeriods(year, month) {
+            // First period: 26th of previous month to 10th of current month
+            // Second period: 11th to 25th of current month
+            const periods = [];
+            
+            // Previous month
+            const prevMonth = month === 0 ? 11 : month - 1;
+            const prevYear = month === 0 ? year - 1 : year;
+            
+            // Current period 1: 26th of previous month to 10th of current month
+            const start1 = new Date(prevYear, prevMonth, 26);
+            const end1 = new Date(year, month, 10);
+            
+            // Period 2: 11th to 25th of current month
+            const start2 = new Date(year, month, 11);
+            const end2 = new Date(year, month, 25);
+            
+            // Period 3: 26th to end of current month (partial)
+            const start3 = new Date(year, month, 26);
+            const end3 = new Date(year, month + 1, 0);
+            
+            periods.push({ 
+                name: 'Period 1 (26th - 10th)', 
+                start: start1, 
+                end: end1,
+                startStr: formatDateForDisplay(start1.toISOString()),
+                endStr: formatDateForDisplay(end1.toISOString())
+            });
+            
+            periods.push({ 
+                name: 'Period 2 (11th - 25th)', 
+                start: start2, 
+                end: end2,
+                startStr: formatDateForDisplay(start2.toISOString()),
+                endStr: formatDateForDisplay(end2.toISOString())
+            });
+            
+            periods.push({ 
+                name: 'Period 3 (26th - End)', 
+                start: start3, 
+                end: end3,
+                startStr: formatDateForDisplay(start3.toISOString()),
+                endStr: formatDateForDisplay(end3.toISOString())
+            });
+            
+            return periods;
+        }
+
+        function getCurrentPeriod() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const day = now.getDate();
+            
+            if (day >= 26) {
+                // Current is period 3 (26th to end)
+                const start = new Date(year, month, 26);
+                const end = new Date(year, month + 1, 0);
+                return { 
+                    name: 'Current Period (26th - End)', 
+                    start: start, 
+                    end: end,
+                    startStr: formatDateForDisplay(start.toISOString()),
+                    endStr: formatDateForDisplay(end.toISOString())
+                };
+            } else if (day >= 11) {
+                // Current is period 2 (11th - 25th)
+                const start = new Date(year, month, 11);
+                const end = new Date(year, month, 25);
+                return { 
+                    name: 'Current Period (11th - 25th)', 
+                    start: start, 
+                    end: end,
+                    startStr: formatDateForDisplay(start.toISOString()),
+                    endStr: formatDateForDisplay(end.toISOString())
+                };
+            } else {
+                // Current is period 1 (26th previous - 10th current)
+                const prevMonth = month === 0 ? 11 : month - 1;
+                const prevYear = month === 0 ? year - 1 : year;
+                const start = new Date(prevYear, prevMonth, 26);
+                const end = new Date(year, month, 10);
+                return { 
+                    name: 'Current Period (26th - 10th)', 
+                    start: start, 
+                    end: end,
+                    startStr: formatDateForDisplay(start.toISOString()),
+                    endStr: formatDateForDisplay(end.toISOString())
+                };
             }
         }
 
+        function getPreviousPeriod() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const day = now.getDate();
+            
+            if (day >= 26) {
+                // Previous is period 2 (11th - 25th)
+                const start = new Date(year, month, 11);
+                const end = new Date(year, month, 25);
+                return { 
+                    name: 'Previous Period (11th - 25th)', 
+                    start: start, 
+                    end: end,
+                    startStr: formatDateForDisplay(start.toISOString()),
+                    endStr: formatDateForDisplay(end.toISOString())
+                };
+            } else if (day >= 11) {
+                // Previous is period 1 (26th previous - 10th current)
+                const prevMonth = month === 0 ? 11 : month - 1;
+                const prevYear = month === 0 ? year - 1 : year;
+                const start = new Date(prevYear, prevMonth, 26);
+                const end = new Date(year, month, 10);
+                return { 
+                    name: 'Previous Period (26th - 10th)', 
+                    start: start, 
+                    end: end,
+                    startStr: formatDateForDisplay(start.toISOString()),
+                    endStr: formatDateForDisplay(end.toISOString())
+                };
+            } else {
+                // Previous is period 3 (26th previous - end previous)
+                const prevMonth = month === 0 ? 11 : month - 1;
+                const prevYear = month === 0 ? year - 1 : year;
+                const start = new Date(prevYear, prevMonth, 26);
+                const end = new Date(prevYear, prevMonth + 1, 0);
+                return { 
+                    name: 'Previous Period (26th - End)', 
+                    start: start, 
+                    end: end,
+                    startStr: formatDateForDisplay(start.toISOString()),
+                    endStr: formatDateForDisplay(end.toISOString())
+                };
+            }
+        }
+
+        function selectPeriod(period) {
+            selectedPeriod = period;
+            document.querySelectorAll('.period-selector button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.period === period) {
+                    btn.classList.add('active');
+                }
+            });
+            loadEmployeeCalendar(document.querySelector('.employee-item.active')?.dataset.id || '');
+        }
+
+        // ===== DEVICE MANAGEMENT =====
         async function registerDeviceForUser(userId, deviceInfo, deviceName) {
             try {
                 const existing = await db.collection('userDevices')
@@ -3069,7 +3147,6 @@
                 return;
             }
             
-            // Auto-assign role based on email
             let role = document.getElementById('signupRole').value;
             if (email === 'hrd@equiprime.ph') {
                 role = 'hr';
@@ -3303,7 +3380,6 @@
         }
 
         function filterEmployeesTable() { renderEmployeesTable(); }
-
         function showAddEmployeeModal() { openModal('addEmployeeModal'); }
 
         // ===== ATTENDANCE FUNCTIONS =====
@@ -3324,11 +3400,12 @@
                 const newAtt = {
                     userId: currentUser.uid,
                     userName: currentUserData.name,
-                    userDepartment: currentUserData.department || "Unassigned",
+                    userDepartment: currentUserData.dept || "Unassigned",
                     date: today,
                     timeIn: time,
                     timeOut: null,
                     status: "Present",
+                    source: "Manual Clock In",
                     createdAt: new Date().toISOString()
                 };
                 const docRef = await db.collection('attendance').add(newAtt);
@@ -3565,21 +3642,105 @@
         async function approveRequest(requestId) {
             if (!confirm('Approve this request?')) return;
             try {
-                await db.collection('requests').doc(requestId).update({
+                const requestRef = db.collection('requests').doc(requestId);
+                const doc = await requestRef.get();
+                const requestData = doc.data();
+                
+                await requestRef.update({
                     status: 'approved',
                     updatedAt: new Date().toISOString(),
                     approvedBy: currentUser.email,
                     approvedAt: new Date().toISOString()
                 });
+                
                 const idx = allRequests.findIndex(r => r.id === requestId);
                 if (idx !== -1) allRequests[idx].status = 'approved';
+                
+                // Auto-add to attendance if it's Certificate of Attendance or Clock Request
+                if (requestData.type === 'Certificate of Attendance' || requestData.type.includes('Clock')) {
+                    await addAttendanceFromRequest(requestData);
+                }
+                
                 await auditLog('REQUEST_APPROVED', 'Request ' + requestId + ' approved by ' + currentUser.email, requestId);
                 alert(' Request approved!');
                 refreshDashboard();
                 renderMyRequests();
                 renderAllRequests();
+                loadEmployeeListForSummary();
             } catch (err) {
                 alert('Error approving request: ' + err.message);
+            }
+        }
+
+        // ===== ADD ATTENDANCE FROM APPROVED REQUEST =====
+        async function addAttendanceFromRequest(requestData) {
+            try {
+                const today = new Date().toISOString().split('T')[0];
+                const date = requestData.startDate || today;
+                
+                let status = 'Certificate';
+                let source = 'Certificate Request';
+                let timeIn = '08:00';
+                let timeOut = '17:00';
+                
+                if (requestData.type === 'Certificate of Attendance') {
+                    status = 'Certificate';
+                    source = 'Certificate of Attendance Request';
+                } else if (requestData.type.includes('Clock In')) {
+                    status = 'Present';
+                    source = 'Clock In Request';
+                    timeIn = requestData.time || '08:00';
+                    timeOut = null;
+                } else if (requestData.type.includes('Clock Out')) {
+                    // Find existing attendance record
+                    const existing = allAttendance.find(a => a.userId === requestData.userId && a.date === date);
+                    if (existing) {
+                        await db.collection('attendance').doc(existing.id).update({
+                            timeOut: requestData.time || '17:00',
+                            source: 'Clock Out Request Approved'
+                        });
+                        existing.timeOut = requestData.time || '17:00';
+                        existing.source = 'Clock Out Request Approved';
+                        return;
+                    }
+                    status = 'Present';
+                    source = 'Clock Out Request';
+                    timeOut = requestData.time || '17:00';
+                }
+                
+                // Check if attendance already exists
+                const existing = allAttendance.find(a => a.userId === requestData.userId && a.date === date);
+                if (existing) {
+                    await db.collection('attendance').doc(existing.id).update({
+                        status: status,
+                        source: source,
+                        timeIn: timeIn,
+                        timeOut: timeOut
+                    });
+                    existing.status = status;
+                    existing.source = source;
+                    existing.timeIn = timeIn;
+                    existing.timeOut = timeOut;
+                    return;
+                }
+                
+                const newAtt = {
+                    userId: requestData.userId,
+                    userName: requestData.userName,
+                    userDepartment: requestData.userDepartment || 'Unassigned',
+                    date: date,
+                    timeIn: timeIn,
+                    timeOut: timeOut,
+                    status: status,
+                    source: source,
+                    createdAt: new Date().toISOString()
+                };
+                
+                const docRef = await db.collection('attendance').add(newAtt);
+                allAttendance.push({ id: docRef.id, ...newAtt });
+                await auditLog('ATTENDANCE_FROM_REQUEST', 'Attendance added from approved ' + requestData.type + ' request', docRef.id);
+            } catch (err) {
+                console.error('Error adding attendance from request:', err);
             }
         }
 
@@ -3630,9 +3791,11 @@
                     userId: currentUser.uid,
                     userName: currentUserData.name,
                     userEmail: currentUser.email,
+                    userDepartment: currentUserData.dept || 'Unassigned',
                     type: 'Clock ' + (type === 'in' ? 'In' : 'Out') + ' Request',
                     requestType: 'clock_' + type,
-                    date: date,
+                    startDate: date,
+                    endDate: date,
                     time: time,
                     reason: reason,
                     status: 'pending',
@@ -3671,6 +3834,7 @@
                     userId: currentUser.uid,
                     userName: currentUserData.name,
                     userEmail: currentUser.email,
+                    userDepartment: currentUserData.dept || 'Unassigned',
                     type: 'Offset Request',
                     startDate: date,
                     endDate: date,
@@ -3970,7 +4134,7 @@
             alert("Request updated.");
         }
 
-        // ===== ATTENDANCE SUMMARY =====
+        // ===== ATTENDANCE SUMMARY (UPDATED WITH 15-DAY CUT-OFF) =====
         function populateYearDropdown() {
             const yearSelect = document.getElementById('summaryYear');
             if (!yearSelect) return;
@@ -4018,37 +4182,119 @@
         }
 
         async function loadEmployeeCalendar(employeeId) {
-            const year = parseInt(document.getElementById('summaryYear').value);
-            const month = parseInt(document.getElementById('summaryMonth').value);
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const firstDay = new Date(year, month, 1).getDay();
-
+            if (!employeeId) return;
+            
+            let period;
+            if (selectedPeriod === 'current') {
+                period = getCurrentPeriod();
+            } else if (selectedPeriod === 'previous') {
+                period = getPreviousPeriod();
+            } else {
+                // 'all' - use the selected month/year
+                const year = parseInt(document.getElementById('summaryYear').value);
+                const month = parseInt(document.getElementById('summaryMonth').value);
+                period = {
+                    start: new Date(year, month, 1),
+                    end: new Date(year, month + 1, 0),
+                    startStr: formatDateForDisplay(new Date(year, month, 1).toISOString()),
+                    endStr: formatDateForDisplay(new Date(year, month + 1, 0).toISOString())
+                };
+            }
+            
+            // Update period label
+            const label = document.getElementById('periodLabel');
+            if (label) {
+                label.textContent = selectedPeriod === 'all' ? 
+                    `All: ${period.startStr} to ${period.endStr}` :
+                    `${period.name}: ${period.startStr} to ${period.endStr}`;
+            }
+            
+            const startDate = period.start;
+            const endDate = period.end;
+            
+            // Get all attendance for this employee in the period
+            const employeeAtt = allAttendance.filter(a => {
+                if (a.userId !== employeeId) return false;
+                const attDate = new Date(a.date);
+                return attDate >= startDate && attDate <= endDate;
+            });
+            
+            // Calculate stats
+            const completed = employeeAtt.filter(a => a.timeIn && a.timeOut && a.status !== 'Certificate').length;
+            const certificate = employeeAtt.filter(a => a.status === 'Certificate' || a.source?.includes('Certificate')).length;
+            const incomplete = employeeAtt.filter(a => a.timeIn && !a.timeOut && a.status !== 'Certificate').length;
+            const late = employeeAtt.filter(a => a.status === 'Late').length;
+            
+            document.getElementById('completedCount').textContent = completed;
+            document.getElementById('lateCountSummary').textContent = late;
+            document.getElementById('missingCountSummary').textContent = incomplete;
+            document.getElementById('certCountSummary').textContent = certificate;
+            
+            // Build calendar
+            const daysInMonth = endDate.getDate();
+            const firstDay = startDate.getDay();
+            
             let calendarHTML = '';
             const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             days.forEach(d => {
-                calendarHTML += '<div class="calendar-header bg-slate-200 dark:bg-slate-700 p-2 text-center font-bold rounded">' +
-                    d + '</div>';
+                calendarHTML += '<div class="calendar-header bg-slate-200 dark:bg-slate-700 p-2 text-center font-bold rounded">' + d + '</div>';
             });
+            
             for (let i = 0; i < firstDay; i++) {
                 calendarHTML += '<div class="day bg-gray-200 dark:bg-gray-700 p-2 rounded text-center"></div>';
             }
-            for (let d = 1; d <= daysInMonth; d++) {
-                const dateStr = year + '-' + String(month + 1).padStart(2, '0') + '-' + String(d).padStart(2, '0');
-                const attRecord = allAttendance.find(a => a.userId === employeeId && a.date === dateStr);
+            
+            // Show all days in the period
+            let currentDate = new Date(startDate);
+            while (currentDate <= endDate) {
+                const dateStr = currentDate.toISOString().split('T')[0];
+                const attRecord = employeeAtt.find(a => a.date === dateStr);
+                
                 let statusClass = 'incomplete';
                 let statusText = 'No record';
-                if (attRecord && attRecord.timeIn && attRecord.timeOut) {
-                    statusClass = 'completed';
-                    statusText = 'Completed';
-                } else if (attRecord && attRecord.timeIn && !attRecord.timeOut) {
-                    statusClass = 'incomplete';
-                    statusText = 'In Progress';
+                if (attRecord) {
+                    if (attRecord.status === 'Certificate') {
+                        statusClass = 'certificate';
+                        statusText = '📜 Cert';
+                    } else if (attRecord.timeIn && attRecord.timeOut) {
+                        statusClass = 'completed';
+                        statusText = '✅';
+                    } else if (attRecord.timeIn && !attRecord.timeOut) {
+                        statusClass = 'incomplete';
+                        statusText = '⏳';
+                    } else if (attRecord.status === 'Late') {
+                        statusClass = 'late';
+                        statusText = '⌛';
+                    } else if (attRecord.status === 'Leave') {
+                        statusClass = 'leave';
+                        statusText = '🌴';
+                    }
                 }
-                calendarHTML += '<div class="day ' + statusClass +
-                    ' p-2 rounded text-center text-white"><div class="font-bold">' + d +
-                    '</div><div class="text-xs">' + statusText + '</div></div>';
+                
+                calendarHTML += `<div class="day ${statusClass} p-2 rounded text-center text-white">
+                    <div class="font-bold">${currentDate.getDate()}</div>
+                    <div class="text-xs">${statusText}</div>
+                </div>`;
+                
+                currentDate.setDate(currentDate.getDate() + 1);
             }
+            
             document.getElementById('calendarGrid').innerHTML = calendarHTML;
+            
+            // Build details table - show latest first
+            const sortedAtt = [...employeeAtt].sort((a, b) => b.date.localeCompare(a.date));
+            const detailsBody = document.getElementById('attendanceDetails');
+            if (detailsBody) {
+                detailsBody.innerHTML = sortedAtt.map(a => `
+                    <tr>
+                        <td class="p-2">${a.date}</td>
+                        <td class="p-2">${a.timeIn || '--'}</td>
+                        <td class="p-2">${a.timeOut || '--'}</td>
+                        <td class="p-2"><span class="px-2 py-1 rounded-full text-xs ${a.status === 'Certificate' ? 'bg-blue-100 text-blue-800' : a.timeIn && a.timeOut ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">${a.status || 'Present'}</span></td>
+                        <td class="p-2 text-sm">${a.source || 'Manual'}</td>
+                    </tr>
+                `).join('') || '<tr><td colspan="5" class="p-4 text-center">No records for this period</td></tr>';
+            }
         }
 
         // ===== ANNOUNCEMENTS =====
@@ -4270,7 +4516,6 @@
                 document.getElementById('mobileAvatarSmall').src = currentUserData.photoURL;
             }
 
-            // Use the actual name from Firestore
             const fullName = currentUserData.name && currentUserData.name.trim() !== '' ? currentUserData.name : 'User';
             document.getElementById('welcomeName').textContent = fullName;
             const firstName = fullName.split(' ')[0];
@@ -4318,11 +4563,8 @@
                         document.getElementById('dashboard-tab').classList.remove('hidden');
                         renderNavigation();
                         updateProfileDropdown();
-                        
-                        // Check migration status
                         await checkMigrationStatus();
                         updateMigrationDisplay();
-                        
                         resetSessionTimer();
                     } else {
                         console.warn(' Employee document not found for user:', user.uid);
@@ -4449,6 +4691,7 @@
             allAttendance = snap.docs.map(d => ({ id: d.id, ...d.data() }));
             refreshDashboard();
             refreshMyAttendanceTab();
+            if (document.getElementById('employeeListContainer')) loadEmployeeListForSummary();
         }, err => console.warn('Attendance listener:', err.message));
 
         db.collection('payslips').onSnapshot(snap => {
