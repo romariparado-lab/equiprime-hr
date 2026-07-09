@@ -55,7 +55,10 @@
         }
 
         .branding-half {
-            background: linear-gradient(135deg, #011F7B 0%, #1a3a8a 50%, #2a4a9a 100%);
+            background-image: url('branding-image.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1245,16 +1248,6 @@
             border-color: #FFBA09;
         }
 
-        .summary-period-label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #011F7B;
-            margin-bottom: 0.5rem;
-        }
-        body.dark .summary-period-label {
-            color: #FFBA09;
-        }
-
         /* Date range picker */
         .date-range-picker {
             display: flex;
@@ -1603,6 +1596,28 @@
                 background: white !important;
             }
         }
+
+        /* Request type badges for attendance */
+        .attendance-type-official-business {
+            background: #3b82f6;
+            color: white;
+        }
+        .attendance-type-overtime {
+            background: #f59e0b;
+            color: white;
+        }
+        .attendance-type-leave {
+            background: #8b5cf6;
+            color: white;
+        }
+        .attendance-type-offset {
+            background: #ec4899;
+            color: white;
+        }
+        .attendance-type-certificate {
+            background: #22c55e;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -1627,7 +1642,7 @@
         <div class="login-half">
             <div class="w-full max-w-md">
                 <div class="text-center mb-8">
-                    <img src="icon-512.png" class="h-16 mx-auto" alt="EQUIPRIME HR Logo" onerror="this.style.display='none'" />
+                    <img src="logo.png" class="h-16 mx-auto" alt="EQUIPRIME HR Logo" onerror="this.style.display='none'" />
                     <h1 class="text-3xl font-extrabold text-slate-800 dark:text-white"><span style="color: #3b82f6;">EQUIPRIME</span><span style="color: #f4df17;">HR</span></h1>
                     <p class="text-slate-500 dark:text-slate-400">smart choices · smarter results</p>
                     <div class="mt-2">
@@ -1881,7 +1896,7 @@
                 <div id="allRequestsList" class="space-y-4"><div class="text-center text-slate-500 dark:text-slate-400 py-8">No requests found</div></div>
             </div>
 
-            <!-- ATTENDANCE SUMMARY TAB (UPDATED WITH DATE RANGE PICKER) -->
+            <!-- ATTENDANCE SUMMARY TAB -->
             <div id="attendance-summary-tab" class="tab-content hidden">
                 <div class="card-bg rounded-2xl p-6 shadow-sm">
                     <div class="flex justify-between items-center flex-wrap gap-4 mb-4">
@@ -1904,16 +1919,16 @@
                         <button data-period="previous" onclick="selectPeriod('previous')">Previous Period</button>
                         <button data-period="all" onclick="selectPeriod('all')">All Time</button>
                     </div>
-                    <div id="periodLabel" class="summary-period-label">Current Period: Loading...</div>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-1"><h3 class="font-bold mb-3">Employees</h3><div id="employeeListContainer" class="space-y-2 overflow-y-auto"></div></div>
                         <div class="lg:col-span-2">
-                            <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-                                <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Completed Days</small><h3 id="completedCount" class="text-2xl font-bold">0</h3></div>
+                            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
+                                <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Completed</small><h3 id="completedCount" class="text-2xl font-bold">0</h3></div>
                                 <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Late</small><h3 id="lateCountSummary" class="text-2xl font-bold">0</h3></div>
                                 <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Incomplete</small><h3 id="missingCountSummary" class="text-2xl font-bold">0</h3></div>
                                 <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Certificate</small><h3 id="certCountSummary" class="text-2xl font-bold">0</h3></div>
+                                <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Requests</small><h3 id="requestCountSummary" class="text-2xl font-bold">0</h3></div>
                             </div>
                             <div class="calendar-box"><h3 class="mb-4">Attendance Calendar</h3><div id="calendarGrid" class="grid grid-cols-7 gap-2"></div></div>
                             <div class="details-box mt-4"><h3 class="mb-4">Details <span class="text-sm font-normal text-slate-500">(Latest first)</span></h3><table class="details-table w-full" aria-label="Attendance details"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-2 text-left">Date</th><th class="p-2 text-left">Clock In</th><th class="p-2 text-left">Clock Out</th><th class="p-2 text-left">Status</th><th class="p-2 text-left">Source</th></tr></thead><tbody id="attendanceDetails"></tbody></table></div>
@@ -2828,16 +2843,17 @@
         function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit',
                 hour12: false }); }
 
-        // ===== ATTENDANCE PERIOD FUNCTIONS (UPDATED WITH DATE RANGE) =====
+        // ===== ATTENDANCE PERIOD FUNCTIONS =====
         function populateDateRange() {
             const now = new Date();
             const startInput = document.getElementById('dateRangeStart');
             const endInput = document.getElementById('dateRangeEnd');
             
-            // Set default to current period
             const current = getCurrentPeriod();
-            startInput.value = current.startStr;
-            endInput.value = current.endStr;
+            if (startInput && endInput) {
+                startInput.value = current.startStr;
+                endInput.value = current.endStr;
+            }
             customDateRange = null;
         }
 
@@ -2846,9 +2862,17 @@
             const endInput = document.getElementById('dateRangeEnd');
             
             if (startInput.value && endInput.value) {
+                const startDate = new Date(startInput.value);
+                const endDate = new Date(endInput.value);
+                
+                if (startDate > endDate) {
+                    alert('Start date cannot be after end date.');
+                    return;
+                }
+                
                 customDateRange = {
-                    start: new Date(startInput.value),
-                    end: new Date(endInput.value),
+                    start: startDate,
+                    end: endDate,
                     startStr: startInput.value,
                     endStr: endInput.value
                 };
@@ -2885,7 +2909,7 @@
                 const start = new Date(year, month, 26);
                 const end = new Date(year, month + 1, 0);
                 return { 
-                    name: 'Current Period (26th - End)', 
+                    name: 'Current Period', 
                     start: start, 
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
@@ -2895,7 +2919,7 @@
                 const start = new Date(year, month, 11);
                 const end = new Date(year, month, 25);
                 return { 
-                    name: 'Current Period (11th - 25th)', 
+                    name: 'Current Period', 
                     start: start, 
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
@@ -2907,7 +2931,7 @@
                 const start = new Date(prevYear, prevMonth, 26);
                 const end = new Date(year, month, 10);
                 return { 
-                    name: 'Current Period (26th - 10th)', 
+                    name: 'Current Period', 
                     start: start, 
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
@@ -2926,7 +2950,7 @@
                 const start = new Date(year, month, 11);
                 const end = new Date(year, month, 25);
                 return { 
-                    name: 'Previous Period (11th - 25th)', 
+                    name: 'Previous Period', 
                     start: start, 
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
@@ -2938,7 +2962,7 @@
                 const start = new Date(prevYear, prevMonth, 26);
                 const end = new Date(year, month, 10);
                 return { 
-                    name: 'Previous Period (26th - 10th)', 
+                    name: 'Previous Period', 
                     start: start, 
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
@@ -2950,7 +2974,7 @@
                 const start = new Date(prevYear, prevMonth, 26);
                 const end = new Date(prevYear, prevMonth + 1, 0);
                 return { 
-                    name: 'Previous Period (26th - End)', 
+                    name: 'Previous Period', 
                     start: start, 
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
@@ -2969,7 +2993,6 @@
                 }
             });
             
-            // Update date range inputs to reflect the selected period
             if (period === 'current') {
                 const current = getCurrentPeriod();
                 document.getElementById('dateRangeStart').value = current.startStr;
@@ -2979,7 +3002,6 @@
                 document.getElementById('dateRangeStart').value = previous.startStr;
                 document.getElementById('dateRangeEnd').value = previous.endStr;
             } else if (period === 'all') {
-                // Set to a wide range (e.g., start of year to today)
                 const now = new Date();
                 const start = new Date(now.getFullYear(), 0, 1);
                 const end = now;
@@ -4054,6 +4076,7 @@
             `).join('');
         }
 
+        // ===== REQUEST APPROVAL WITH ATTENDANCE UPDATE =====
         async function approveRequest(requestId) {
             if (!confirm('Approve this request?')) return;
             try {
@@ -4071,12 +4094,11 @@
                 const idx = allRequests.findIndex(r => r.id === requestId);
                 if (idx !== -1) allRequests[idx].status = 'approved';
                 
-                if (requestData.type === 'Certificate of Attendance' || requestData.type.includes('Clock')) {
-                    await addAttendanceFromRequest(requestData);
-                }
+                // Add to attendance for ALL request types
+                await addAttendanceFromRequest(requestData);
                 
                 await auditLog('REQUEST_APPROVED', 'Request ' + requestId + ' approved by ' + currentUser.email, requestId);
-                alert(' Request approved!');
+                alert(' Request approved and added to attendance!');
                 refreshDashboard();
                 renderMyRequests();
                 renderAllRequests();
@@ -4088,24 +4110,57 @@
 
         async function addAttendanceFromRequest(requestData) {
             try {
-                const today = new Date().toISOString().split('T')[0];
-                const date = requestData.startDate || today;
+                const startDate = requestData.startDate || new Date().toISOString().split('T')[0];
+                const endDate = requestData.endDate || startDate;
                 
-                let status = 'Certificate';
-                let source = 'Certificate Request';
+                // Handle date range for multi-day requests
+                const start = new Date(startDate);
+                const end = new Date(endDate);
+                const dates = [];
+                const current = new Date(start);
+                while (current <= end) {
+                    dates.push(current.toISOString().split('T')[0]);
+                    current.setDate(current.getDate() + 1);
+                }
+                
+                let status = 'Present';
+                let source = requestData.type + ' Request';
                 let timeIn = '08:00';
                 let timeOut = '17:00';
                 
+                // Determine status based on request type
                 if (requestData.type === 'Certificate of Attendance') {
                     status = 'Certificate';
-                    source = 'Certificate of Attendance Request';
+                    source = 'Certificate Request';
+                } else if (requestData.type === 'Official Business') {
+                    status = 'Official Business';
+                    source = 'Official Business Request';
+                    timeIn = '08:00';
+                    timeOut = '17:00';
+                } else if (requestData.type === 'Overtime') {
+                    status = 'Overtime';
+                    source = 'Overtime Request';
+                    timeIn = '08:00';
+                    timeOut = '20:00'; // Overtime example
+                } else if (requestData.type === 'Offset Request') {
+                    status = 'Offset';
+                    source = 'Offset Request';
+                    timeIn = '08:00';
+                    timeOut = '17:00';
+                } else if (requestData.type === 'Sick Leave' || requestData.type === 'Vacation Leave' || 
+                           requestData.type === 'Emergency Leave' || requestData.type === 'Leave') {
+                    status = 'Leave';
+                    source = 'Leave Request';
+                    timeIn = '--';
+                    timeOut = '--';
                 } else if (requestData.type.includes('Clock In')) {
                     status = 'Present';
                     source = 'Clock In Request';
                     timeIn = requestData.time || '08:00';
                     timeOut = null;
                 } else if (requestData.type.includes('Clock Out')) {
-                    const existing = allAttendance.find(a => a.userId === requestData.userId && a.date === date);
+                    // Find existing attendance record
+                    const existing = allAttendance.find(a => a.userId === requestData.userId && a.date === dates[0]);
                     if (existing) {
                         await db.collection('attendance').doc(existing.id).update({
                             timeOut: requestData.time || '17:00',
@@ -4120,36 +4175,39 @@
                     timeOut = requestData.time || '17:00';
                 }
                 
-                const existing = allAttendance.find(a => a.userId === requestData.userId && a.date === date);
-                if (existing) {
-                    await db.collection('attendance').doc(existing.id).update({
+                for (const date of dates) {
+                    // Check if attendance already exists for this date
+                    const existing = allAttendance.find(a => a.userId === requestData.userId && a.date === date);
+                    if (existing) {
+                        await db.collection('attendance').doc(existing.id).update({
+                            status: status,
+                            source: source,
+                            timeIn: timeIn !== '--' ? timeIn : existing.timeIn || '08:00',
+                            timeOut: timeOut !== '--' ? timeOut : existing.timeOut || '17:00'
+                        });
+                        existing.status = status;
+                        existing.source = source;
+                        if (timeIn !== '--') existing.timeIn = timeIn;
+                        if (timeOut !== '--') existing.timeOut = timeOut;
+                        continue;
+                    }
+                    
+                    const newAtt = {
+                        userId: requestData.userId,
+                        userName: requestData.userName,
+                        userDepartment: requestData.userDepartment || 'Unassigned',
+                        date: date,
+                        timeIn: timeIn !== '--' ? timeIn : null,
+                        timeOut: timeOut !== '--' ? timeOut : null,
                         status: status,
                         source: source,
-                        timeIn: timeIn,
-                        timeOut: timeOut
-                    });
-                    existing.status = status;
-                    existing.source = source;
-                    existing.timeIn = timeIn;
-                    existing.timeOut = timeOut;
-                    return;
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    const docRef = await db.collection('attendance').add(newAtt);
+                    allAttendance.push({ id: docRef.id, ...newAtt });
+                    await auditLog('ATTENDANCE_FROM_REQUEST', 'Attendance added from approved ' + requestData.type + ' request for ' + date, docRef.id);
                 }
-                
-                const newAtt = {
-                    userId: requestData.userId,
-                    userName: requestData.userName,
-                    userDepartment: requestData.userDepartment || 'Unassigned',
-                    date: date,
-                    timeIn: timeIn,
-                    timeOut: timeOut,
-                    status: status,
-                    source: source,
-                    createdAt: new Date().toISOString()
-                };
-                
-                const docRef = await db.collection('attendance').add(newAtt);
-                allAttendance.push({ id: docRef.id, ...newAtt });
-                await auditLog('ATTENDANCE_FROM_REQUEST', 'Attendance added from approved ' + requestData.type + ' request', docRef.id);
             } catch (err) {
                 console.error('Error adding attendance from request:', err);
             }
@@ -4545,7 +4603,7 @@
             alert("Request updated.");
         }
 
-        // ===== ATTENDANCE SUMMARY (UPDATED WITH DATE RANGE) =====
+        // ===== ATTENDANCE SUMMARY =====
         function populateDateRange() {
             const now = new Date();
             const startInput = document.getElementById('dateRangeStart');
@@ -4611,7 +4669,7 @@
                 const start = new Date(year, month, 26);
                 const end = new Date(year, month + 1, 0);
                 return { 
-                    name: 'Current Period (26th - End)', 
+                    name: 'Current Period', 
                     start: start, 
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
@@ -4621,7 +4679,7 @@
                 const start = new Date(year, month, 11);
                 const end = new Date(year, month, 25);
                 return { 
-                    name: 'Current Period (11th - 25th)', 
+                    name: 'Current Period', 
                     start: start, 
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
@@ -4633,7 +4691,7 @@
                 const start = new Date(prevYear, prevMonth, 26);
                 const end = new Date(year, month, 10);
                 return { 
-                    name: 'Current Period (26th - 10th)', 
+                    name: 'Current Period', 
                     start: start, 
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
@@ -4652,7 +4710,7 @@
                 const start = new Date(year, month, 11);
                 const end = new Date(year, month, 25);
                 return { 
-                    name: 'Previous Period (11th - 25th)', 
+                    name: 'Previous Period', 
                     start: start, 
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
@@ -4664,7 +4722,7 @@
                 const start = new Date(prevYear, prevMonth, 26);
                 const end = new Date(year, month, 10);
                 return { 
-                    name: 'Previous Period (26th - 10th)', 
+                    name: 'Previous Period', 
                     start: start, 
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
@@ -4676,7 +4734,7 @@
                 const start = new Date(prevYear, prevMonth, 26);
                 const end = new Date(prevYear, prevMonth + 1, 0);
                 return { 
-                    name: 'Previous Period (26th - End)', 
+                    name: 'Previous Period', 
                     start: start, 
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
@@ -4769,10 +4827,7 @@
                 period = getCurrentPeriod();
             }
             
-            const label = document.getElementById('periodLabel');
-            if (label) {
-                label.textContent = `${period.name || 'Custom Range'}: ${period.startStr} to ${period.endStr}`;
-            }
+            // Remove the period label display - just show dates in the calendar
             
             const startDate = period.start;
             const endDate = period.end;
@@ -4789,15 +4844,17 @@
                 return attDate >= startDate && attDate <= endDate;
             });
             
-            const completed = employeeAtt.filter(a => a.timeIn && a.timeOut && a.status !== 'Certificate').length;
-            const certificate = employeeAtt.filter(a => a.status === 'Certificate' || a.source?.includes('Certificate')).length;
-            const incomplete = employeeAtt.filter(a => a.timeIn && !a.timeOut && a.status !== 'Certificate').length;
+            const completed = employeeAtt.filter(a => a.timeIn && a.timeOut && a.status !== 'Certificate' && a.status !== 'Official Business' && a.status !== 'Overtime' && a.status !== 'Offset' && a.status !== 'Leave').length;
+            const certificate = employeeAtt.filter(a => a.status === 'Certificate').length;
+            const incomplete = employeeAtt.filter(a => a.timeIn && !a.timeOut && a.status !== 'Certificate' && a.status !== 'Official Business' && a.status !== 'Overtime' && a.status !== 'Offset' && a.status !== 'Leave').length;
             const late = employeeAtt.filter(a => a.status === 'Late').length;
+            const requests = employeeAtt.filter(a => a.status === 'Official Business' || a.status === 'Overtime' || a.status === 'Offset' || a.status === 'Leave').length;
             
             document.getElementById('completedCount').textContent = completed;
             document.getElementById('lateCountSummary').textContent = late;
             document.getElementById('missingCountSummary').textContent = incomplete;
             document.getElementById('certCountSummary').textContent = certificate;
+            document.getElementById('requestCountSummary').textContent = requests;
             
             // Build calendar
             const daysInMonth = endDate.getDate();
@@ -4824,6 +4881,18 @@
                     if (attRecord.status === 'Certificate') {
                         statusClass = 'certificate';
                         statusText = '📜 Cert';
+                    } else if (attRecord.status === 'Official Business') {
+                        statusClass = 'attendance-type-official-business';
+                        statusText = '📋 OB';
+                    } else if (attRecord.status === 'Overtime') {
+                        statusClass = 'attendance-type-overtime';
+                        statusText = '⏰ OT';
+                    } else if (attRecord.status === 'Offset') {
+                        statusClass = 'attendance-type-offset';
+                        statusText = '🔄 Off';
+                    } else if (attRecord.status === 'Leave') {
+                        statusClass = 'attendance-type-leave';
+                        statusText = '🌴 Leave';
                     } else if (attRecord.timeIn && attRecord.timeOut) {
                         statusClass = 'completed';
                         statusText = '✅';
@@ -4833,9 +4902,6 @@
                     } else if (attRecord.status === 'Late') {
                         statusClass = 'late';
                         statusText = '⌛';
-                    } else if (attRecord.status === 'Leave') {
-                        statusClass = 'leave';
-                        statusText = '🌴';
                     }
                 }
                 
@@ -4853,15 +4919,25 @@
             const sortedAtt = [...employeeAtt].sort((a, b) => b.date.localeCompare(a.date));
             const detailsBody = document.getElementById('attendanceDetails');
             if (detailsBody) {
-                detailsBody.innerHTML = sortedAtt.map(a => `
+                detailsBody.innerHTML = sortedAtt.map(a => {
+                    let statusColor = '';
+                    if (a.status === 'Certificate') statusColor = 'bg-blue-100 text-blue-800';
+                    else if (a.status === 'Official Business') statusColor = 'bg-indigo-100 text-indigo-800';
+                    else if (a.status === 'Overtime') statusColor = 'bg-yellow-100 text-yellow-800';
+                    else if (a.status === 'Offset') statusColor = 'bg-pink-100 text-pink-800';
+                    else if (a.status === 'Leave') statusColor = 'bg-purple-100 text-purple-800';
+                    else if (a.timeIn && a.timeOut) statusColor = 'bg-green-100 text-green-800';
+                    else statusColor = 'bg-yellow-100 text-yellow-800';
+                    
+                    return `
                     <tr>
                         <td class="p-2">${a.date}</td>
                         <td class="p-2">${a.timeIn || '--'}</td>
                         <td class="p-2">${a.timeOut || '--'}</td>
-                        <td class="p-2"><span class="px-2 py-1 rounded-full text-xs ${a.status === 'Certificate' ? 'bg-blue-100 text-blue-800' : a.timeIn && a.timeOut ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">${a.status || 'Present'}</span></td>
+                        <td class="p-2"><span class="px-2 py-1 rounded-full text-xs ${statusColor}">${a.status || 'Present'}</span></td>
                         <td class="p-2 text-sm">${a.source || 'Manual'}</td>
                     </tr>
-                `).join('') || '<tr><td colspan="5" class="p-4 text-center">No records for this period</td></tr>';
+                `}).join('') || '<tr><td colspan="5" class="p-4 text-center">No records for this period</td></tr>';
             }
         }
 
