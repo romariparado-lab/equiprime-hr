@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>EQUIPRIME HR - Payroll 2026</title>
+    <title>EQUIPRIME HR - Employee Import Migration</title>
     <link rel="icon" href="favicon.ico" />
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -22,6 +22,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js">
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js">
     </script>
     <style>
         * {
@@ -508,61 +510,121 @@
             background-color: #334155;
         }
 
-        .status-badge-approved {
-            color: #22c55e;
-            font-weight: 600;
+        .migration-status {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
         }
-        .status-badge-rejected {
-            color: #ef4444;
-            font-weight: 600;
+        .migration-success {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
         }
-        .status-badge-pending {
-            color: #f97316;
-            font-weight: 600;
+        .migration-failed {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
         }
-        .status-badge-under_review {
-            color: #3b82f6;
-            font-weight: 600;
+        .migration-pending {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
         }
-        .status-badge-completed {
-            color: #8b5cf6;
-            font-weight: 600;
+        body.dark .migration-success {
+            background: #064e3b;
+            color: #86efac;
         }
-        body.dark .status-badge-approved {
-            color: #4ade80;
+        body.dark .migration-failed {
+            background: #7f1d1d;
+            color: #fca5a5;
         }
-        body.dark .status-badge-rejected {
-            color: #f87171;
-        }
-        body.dark .status-badge-pending {
-            color: #fb923c;
-        }
-        body.dark .status-badge-under_review {
-            color: #60a5fa;
-        }
-        body.dark .status-badge-completed {
-            color: #a78bfa;
+        body.dark .migration-pending {
+            background: #78350f;
+            color: #fcd34d;
         }
 
-        .day.completed {
+        .import-preview-table {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .import-preview-table::-webkit-scrollbar {
+            width: 6px;
+        }
+        .import-preview-table::-webkit-scrollbar-track {
+            background: #e2e8f0;
+            border-radius: 4px;
+        }
+        .import-preview-table::-webkit-scrollbar-thumb {
+            background: #011F7B;
+            border-radius: 4px;
+        }
+        body.dark .import-preview-table::-webkit-scrollbar-track {
+            background: #334155;
+        }
+        body.dark .import-preview-table::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            transition: width 0.3s ease;
+        }
+        .progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #22c55e);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .upload-zone {
+            border: 2px dashed #cbd5e1;
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .upload-zone:hover {
+            border-color: #3b82f6;
+            background: #f0f4ff;
+        }
+        body.dark .upload-zone:hover {
+            border-color: #60a5fa;
+            background: #1e293b;
+        }
+        .upload-zone.dragover {
+            border-color: #22c55e;
+            background: #f0fdf4;
+        }
+        body.dark .upload-zone.dragover {
+            border-color: #4ade80;
+            background: #064e3b;
+        }
+
+        .status-badge-imported {
             background: #22c55e;
             color: white;
+            padding: 0.15rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.65rem;
         }
-        .day.late {
-            background: #f59e0b;
-            color: white;
-        }
-        .day.incomplete {
+        .status-badge-error {
             background: #ef4444;
             color: white;
+            padding: 0.15rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.65rem;
         }
-        .day.leave {
-            background: #8b5cf6;
+        .status-badge-skipped {
+            background: #f59e0b;
             color: white;
-        }
-        .day.certificate {
-            background: #3b82f6;
-            color: white;
+            padding: 0.15rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.65rem;
         }
 
         .avatar-img {
@@ -1143,88 +1205,6 @@
         }
         .desktop-sidebar:not(:hover) .footer-actions .action-label {
             font-size: 0.45rem;
-        }
-
-        .migration-status {
-            padding: 0.5rem 1rem;
-            border-radius: 0.5rem;
-            font-size: 0.8rem;
-            margin-bottom: 0.5rem;
-        }
-        .migration-success {
-            background: #dcfce7;
-            color: #166534;
-            border: 1px solid #86efac;
-        }
-        .migration-failed {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fca5a5;
-        }
-        .migration-pending {
-            background: #fef3c7;
-            color: #92400e;
-            border: 1px solid #fcd34d;
-        }
-        body.dark .migration-success {
-            background: #064e3b;
-            color: #86efac;
-        }
-        body.dark .migration-failed {
-            background: #7f1d1d;
-            color: #fca5a5;
-        }
-        body.dark .migration-pending {
-            background: #78350f;
-            color: #fcd34d;
-        }
-
-        /* Attendance Period Selector */
-        .period-selector {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            margin-bottom: 1rem;
-        }
-        .period-selector button {
-            padding: 0.4rem 0.8rem;
-            border-radius: 0.5rem;
-            border: 1px solid #cbd5e1;
-            background: white;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.8rem;
-        }
-        .period-selector button:hover {
-            background: #e2e8f0;
-        }
-        .period-selector button.active {
-            background: #011F7B;
-            color: white;
-            border-color: #011F7B;
-        }
-        body.dark .period-selector button {
-            background: #1e293b;
-            border-color: #475569;
-            color: #e2e8f0;
-        }
-        body.dark .period-selector button:hover {
-            background: #334155;
-        }
-        body.dark .period-selector button.active {
-            background: #FFBA09;
-            color: #0f172a;
-            border-color: #FFBA09;
-        }
-
-        .summary-period-label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #011F7B;
-            margin-bottom: 0.5rem;
-        }
-        body.dark .summary-period-label {
-            color: #FFBA09;
         }
 
         @media (max-width: 1023px) {
@@ -1808,15 +1788,13 @@
                 <div id="allRequestsList" class="space-y-4"><div class="text-center text-slate-500 dark:text-slate-400 py-8">No requests found</div></div>
             </div>
 
-            <!-- ATTENDANCE SUMMARY TAB (UPDATED WITH 15-DAY CUT-OFF) -->
+            <!-- ATTENDANCE SUMMARY TAB -->
             <div id="attendance-summary-tab" class="tab-content hidden">
                 <div class="card-bg rounded-2xl p-6 shadow-sm">
                     <div class="flex justify-between items-center flex-wrap gap-4 mb-4">
                         <h2 class="text-2xl font-bold text-yellow-600">Attendance Summary</h2>
                         <div class="flex gap-2 flex-wrap">
-                            <label for="summaryYear" class="sr-only">Select year</label>
                             <select id="summaryYear" class="border rounded-lg p-2 dark:bg-slate-700" title="Select year"></select>
-                            <label for="summaryMonth" class="sr-only">Select month</label>
                             <select id="summaryMonth" class="border rounded-lg p-2 dark:bg-slate-700" title="Select month">
                                 <option value="0">January</option><option value="1">February</option><option value="2">March</option>
                                 <option value="3">April</option><option value="4">May</option><option value="5">June</option>
@@ -1826,7 +1804,6 @@
                             <button id="refreshSummaryBtn" class="bg-[#011F7B] text-white px-4 py-2 rounded-xl" title="Load attendance summary">Load</button>
                         </div>
                     </div>
-                    <!-- Period Selector (15-day cut-off) -->
                     <div class="period-selector" id="periodSelector">
                         <button class="active" data-period="current" onclick="selectPeriod('current')">Current Period</button>
                         <button data-period="previous" onclick="selectPeriod('previous')">Previous Period</button>
@@ -1861,7 +1838,6 @@
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="card-bg rounded-2xl p-6">
                         <h3 class="text-xl font-bold mb-4">Assign Weekly Schedule</h3>
-                        <label for="guardEmployee" class="sr-only">Select Guard</label>
                         <select id="guardEmployee" class="w-full p-3 border rounded-xl mb-4 dark:bg-slate-700" title="Select a guard"><option value="">Select Guard</option></select>
                         <div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 dark:border-slate-600">
                             <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayMonday" /> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Monday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
@@ -1890,9 +1866,7 @@
                     <div class="card-bg rounded-2xl p-6">
                         <h3 class="text-xl font-bold mb-4">Payroll Entry (2026 Compliant)</h3>
                         <div class="space-y-3 max-h-[60vh] overflow-y-auto pr-2" id="payrollFormFields">
-                            <label for="payslipEmployee" class="sr-only">Select Employee</label>
                             <select id="payslipEmployee" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select employee"><option value="">Select Employee</option></select>
-                            <label for="payslipMonth" class="sr-only">Select month</label>
                             <input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select payroll month" />
                             <select id="cutOffPeriod" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select cut-off period"><option value="first">1st cut-off (27th – 10th)</option><option value="second">2nd cut-off (11th – 26th)</option></select>
                             <input type="number" id="basicSalary" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Basic Pay (₱) - Bi-monthly" step="0.01" title="Enter basic pay" />
@@ -2002,6 +1976,45 @@
                     <hr class="dark:border-slate-600" role="separator" />
                     <div id="resetButtonContainer"></div>
                     <div id="migrationStatusContainer" class="mt-4"></div>
+                    
+                    <!-- EMPLOYEE IMPORT SECTION -->
+                    <div class="border-t pt-4 mt-4">
+                        <h3 class="text-xl font-bold mb-4 text-yellow-600 flex items-center gap-2"><i data-feather="upload" aria-hidden="true"></i> Employee Data Import (Migration)</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Upload an Excel or CSV file with employee data. The system will create accounts for all employees.</p>
+                        
+                        <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+                            <i data-feather="upload-cloud" class="w-12 h-12 text-slate-400 mx-auto mb-2" aria-hidden="true"></i>
+                            <p class="text-slate-600 dark:text-slate-300">Click or drag & drop your Excel/CSV file here</p>
+                            <p class="text-xs text-slate-400 mt-1">Supported formats: .xlsx, .xls, .csv</p>
+                            <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" class="hidden" onchange="handleFileUpload(event)" />
+                        </div>
+                        
+                        <div id="importPreview" class="hidden mt-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-bold">Import Preview (<span id="previewCount">0</span> records)</h4>
+                                <div class="flex gap-2">
+                                    <button onclick="confirmImport()" id="confirmImportBtn" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700" title="Confirm import">Confirm Import</button>
+                                    <button onclick="cancelImport()" class="bg-gray-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-600" title="Cancel import">Cancel</button>
+                                </div>
+                            </div>
+                            <div class="import-preview-table overflow-x-auto">
+                                <table class="w-full text-sm" id="previewTable">
+                                    <thead class="bg-slate-100 dark:bg-slate-700">
+                                        <tr id="previewHeader"></tr>
+                                    </thead>
+                                    <tbody id="previewBody"></tbody>
+                                </table>
+                            </div>
+                            <div id="importProgress" class="mt-3 hidden">
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span id="progressText">Importing...</span>
+                                    <span id="progressPercent">0%</span>
+                                </div>
+                                <div class="progress-bar"><div class="fill" id="progressFill" style="width:0%"></div></div>
+                            </div>
+                            <div id="importResults" class="mt-3"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -2291,6 +2304,10 @@
         let migrationStatus = null;
         let selectedPeriod = 'current';
 
+        // ===== IMPORT STATE =====
+        let importedData = [];
+        let importResults = [];
+
         // ===== MIGRATION SYSTEM =====
         async function checkMigrationStatus() {
             try {
@@ -2335,7 +2352,6 @@
                     batch.update(doc.ref, {
                         migratedAt: new Date().toISOString(),
                         migrationVersion: CURRENT_VERSION,
-                        // Ensure all employees have leaveBalance field
                         leaveBalance: data.leaveBalance || 15
                     });
                     count++;
@@ -2713,55 +2729,308 @@
         function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit',
                 hour12: false }); }
 
-        // ===== ATTENDANCE PERIOD FUNCTIONS (15-day cut-off) =====
-        function getPayPeriods(year, month) {
-            // First period: 26th of previous month to 10th of current month
-            // Second period: 11th to 25th of current month
-            const periods = [];
+        // ===== EMPLOYEE IMPORT FUNCTIONS =====
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
             
-            // Previous month
-            const prevMonth = month === 0 ? 11 : month - 1;
-            const prevYear = month === 0 ? year - 1 : year;
-            
-            // Current period 1: 26th of previous month to 10th of current month
-            const start1 = new Date(prevYear, prevMonth, 26);
-            const end1 = new Date(year, month, 10);
-            
-            // Period 2: 11th to 25th of current month
-            const start2 = new Date(year, month, 11);
-            const end2 = new Date(year, month, 25);
-            
-            // Period 3: 26th to end of current month (partial)
-            const start3 = new Date(year, month, 26);
-            const end3 = new Date(year, month + 1, 0);
-            
-            periods.push({ 
-                name: 'Period 1 (26th - 10th)', 
-                start: start1, 
-                end: end1,
-                startStr: formatDateForDisplay(start1.toISOString()),
-                endStr: formatDateForDisplay(end1.toISOString())
-            });
-            
-            periods.push({ 
-                name: 'Period 2 (11th - 25th)', 
-                start: start2, 
-                end: end2,
-                startStr: formatDateForDisplay(start2.toISOString()),
-                endStr: formatDateForDisplay(end2.toISOString())
-            });
-            
-            periods.push({ 
-                name: 'Period 3 (26th - End)', 
-                start: start3, 
-                end: end3,
-                startStr: formatDateForDisplay(start3.toISOString()),
-                endStr: formatDateForDisplay(end3.toISOString())
-            });
-            
-            return periods;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+                    
+                    if (jsonData.length === 0) {
+                        alert('No data found in the file.');
+                        return;
+                    }
+                    
+                    importedData = jsonData;
+                    showImportPreview(jsonData);
+                } catch (err) {
+                    alert('Error reading file: ' + err.message);
+                }
+            };
+            reader.readAsArrayBuffer(file);
         }
 
+        function showImportPreview(data) {
+            const preview = document.getElementById('importPreview');
+            const count = document.getElementById('previewCount');
+            const header = document.getElementById('previewHeader');
+            const body = document.getElementById('previewBody');
+            
+            preview.classList.remove('hidden');
+            count.textContent = data.length;
+            
+            // Build header
+            const columns = Object.keys(data[0]);
+            header.innerHTML = columns.map(col => `<th class="p-2 text-left">${escapeHtml(col)}</th>`).join('');
+            
+            // Build body (show first 10 rows)
+            const rows = data.slice(0, 10);
+            body.innerHTML = rows.map(row => {
+                return `<tr>${columns.map(col => `<td class="p-2 border-b dark:border-slate-600">${escapeHtml(String(row[col] || ''))}</td>`).join('')}</tr>`;
+            }).join('');
+            
+            if (data.length > 10) {
+                body.innerHTML += `<tr><td colspan="${columns.length}" class="p-2 text-center text-slate-500">... and ${data.length - 10} more rows</td></tr>`;
+            }
+            
+            document.getElementById('importProgress').classList.add('hidden');
+            document.getElementById('importResults').innerHTML = '';
+            document.getElementById('confirmImportBtn').disabled = false;
+        }
+
+        function cancelImport() {
+            importedData = [];
+            document.getElementById('importPreview').classList.add('hidden');
+            document.getElementById('fileInput').value = '';
+            document.getElementById('importResults').innerHTML = '';
+        }
+
+        async function confirmImport() {
+            if (importedData.length === 0) {
+                alert('No data to import.');
+                return;
+            }
+            
+            if (!confirm(`⚠️ This will import ${importedData.length} employees. Continue?`)) {
+                return;
+            }
+            
+            const progressDiv = document.getElementById('importProgress');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const progressPercent = document.getElementById('progressPercent');
+            const resultsDiv = document.getElementById('importResults');
+            const confirmBtn = document.getElementById('confirmImportBtn');
+            
+            progressDiv.classList.remove('hidden');
+            confirmBtn.disabled = true;
+            importResults = [];
+            
+            let success = 0;
+            let errors = 0;
+            let skipped = 0;
+            
+            // Column mapping
+            const colMap = {
+                'name': ['name', 'fullname', 'employee name', 'full name'],
+                'email': ['email', 'e-mail', 'email address'],
+                'employeeNumber': ['employeenumber', 'employee number', 'emp #', 'emp_no', 'employee_no'],
+                'department': ['department', 'dept', 'division'],
+                'role': ['role', 'position', 'job title'],
+                'dateHired': ['datehired', 'hired date', 'date hired', 'start date'],
+                'gender': ['gender', 'sex'],
+                'civilStatus': ['civilstatus', 'civil status', 'marital status'],
+                'phone': ['phone', 'contact', 'mobile', 'contact number'],
+                'address': ['address', 'home address'],
+                'emergencyName': ['emergencyname', 'emergency contact name', 'emergency name'],
+                'emergencyRelation': ['emergencyrelation', 'emergency contact relation', 'emergency relationship'],
+                'emergencyPhone': ['emergencyphone', 'emergency contact number', 'emergency contact'],
+                'emergencyAddress': ['emergencyaddress', 'emergency address'],
+                'sssNumber': ['sss', 'sss number', 'sss_no'],
+                'philhealthNumber': ['philhealth', 'philhealth number', 'phic'],
+                'pagibigNumber': ['pagibig', 'pag-ibig', 'hdmf', 'pagibig number']
+            };
+            
+            // Find actual column names in the data
+            const columns = Object.keys(importedData[0]);
+            const mapping = {};
+            
+            for (const [field, possibleNames] of Object.entries(colMap)) {
+                for (const col of columns) {
+                    if (possibleNames.some(name => col.toLowerCase().includes(name) || col.toLowerCase() === name)) {
+                        mapping[field] = col;
+                        break;
+                    }
+                }
+            }
+            
+            // Check required fields
+            if (!mapping.name || !mapping.email) {
+                alert('❌ Required columns "Name" and "Email" not found in the file. Please check column names.');
+                progressDiv.classList.add('hidden');
+                confirmBtn.disabled = false;
+                return;
+            }
+            
+            for (let i = 0; i < importedData.length; i++) {
+                const row = importedData[i];
+                const rowNum = i + 2; // +2 for header and 0-index
+                
+                try {
+                    const name = String(row[mapping.name] || '').trim();
+                    const email = String(row[mapping.email] || '').trim().toLowerCase();
+                    const employeeNumber = String(row[mapping.employeeNumber] || '').trim();
+                    const department = String(row[mapping.department] || 'Unassigned').trim();
+                    const role = String(row[mapping.role] || 'employee').trim().toLowerCase();
+                    const dateHired = row[mapping.dateHired] ? new Date(row[mapping.dateHired]).toISOString().split('T')[0] : '';
+                    const gender = String(row[mapping.gender] || '').trim();
+                    const civilStatus = String(row[mapping.civilStatus] || '').trim();
+                    const phone = String(row[mapping.phone] || '').trim();
+                    const address = String(row[mapping.address] || '').trim();
+                    const emergencyName = String(row[mapping.emergencyName] || '').trim();
+                    const emergencyRelation = String(row[mapping.emergencyRelation] || '').trim();
+                    const emergencyPhone = String(row[mapping.emergencyPhone] || '').trim();
+                    const emergencyAddress = String(row[mapping.emergencyAddress] || '').trim();
+                    const sssNumber = String(row[mapping.sssNumber] || '').trim();
+                    const philhealthNumber = String(row[mapping.philhealthNumber] || '').trim();
+                    const pagibigNumber = String(row[mapping.pagibigNumber] || '').trim();
+                    
+                    // Validate
+                    if (!name) {
+                        errors++;
+                        importResults.push({ row: rowNum, name: 'Unknown', status: 'error', message: 'Name is required' });
+                        continue;
+                    }
+                    
+                    if (!email || !email.includes('@')) {
+                        errors++;
+                        importResults.push({ row: rowNum, name: name, status: 'error', message: 'Valid email is required' });
+                        continue;
+                    }
+                    
+                    // Check if employee already exists
+                    const existing = allEmployees.find(e => e.email === email);
+                    if (existing) {
+                        skipped++;
+                        importResults.push({ row: rowNum, name: name, status: 'skipped', message: 'Email already exists' });
+                        continue;
+                    }
+                    
+                    // Generate password (default: employee number or random)
+                    const password = employeeNumber || 'password123';
+                    const pin = employeeNumber || '123456';
+                    
+                    // Create user
+                    const userCred = await auth.createUserWithEmailAndPassword(email, password);
+                    const uid = userCred.user.uid;
+                    
+                    // Create employee document
+                    const empData = {
+                        name: name,
+                        email: email,
+                        employeeNumber: employeeNumber,
+                        department: department,
+                        role: role || 'employee',
+                        status: 'active',
+                        dateHired: dateHired,
+                        gender: gender,
+                        civilStatus: civilStatus,
+                        phone: phone,
+                        address: address,
+                        emergencyContactName: emergencyName,
+                        emergencyContactRelationship: emergencyRelation,
+                        emergencyContactNumber: emergencyPhone,
+                        emergencyContactAddress: emergencyAddress,
+                        sssNumber: encryptData(sssNumber),
+                        philhealthNumber: encryptData(philhealthNumber),
+                        pagibigNumber: encryptData(pagibigNumber),
+                        pin: encryptData(pin),
+                        leaveBalance: 15,
+                        deviceRestriction: 'enabled',
+                        photoURL: '',
+                        imported: true,
+                        importedAt: new Date().toISOString(),
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    await db.collection('employees').doc(uid).set(empData);
+                    allEmployees.push({ id: uid, ...empData });
+                    
+                    success++;
+                    importResults.push({ row: rowNum, name: name, status: 'success', message: 'Imported successfully' });
+                    
+                    // Update progress
+                    const progress = ((i + 1) / importedData.length) * 100;
+                    progressFill.style.width = progress + '%';
+                    progressPercent.textContent = Math.round(progress) + '%';
+                    progressText.textContent = `Importing ${i + 1} of ${importedData.length}...`;
+                    
+                } catch (err) {
+                    errors++;
+                    importResults.push({ row: rowNum, name: String(row[mapping.name] || 'Unknown'), status: 'error', message: err.message });
+                }
+            }
+            
+            // Show results
+            progressFill.style.width = '100%';
+            progressPercent.textContent = '100%';
+            progressText.textContent = 'Import completed!';
+            
+            resultsDiv.innerHTML = `
+                <div class="grid grid-cols-4 gap-2 mt-2">
+                    <div class="p-2 bg-green-100 dark:bg-green-900/30 rounded text-center">
+                        <div class="text-2xl font-bold text-green-600">${success}</div>
+                        <div class="text-xs text-green-600">Imported</div>
+                    </div>
+                    <div class="p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded text-center">
+                        <div class="text-2xl font-bold text-yellow-600">${skipped}</div>
+                        <div class="text-xs text-yellow-600">Skipped</div>
+                    </div>
+                    <div class="p-2 bg-red-100 dark:bg-red-900/30 rounded text-center">
+                        <div class="text-2xl font-bold text-red-600">${errors}</div>
+                        <div class="text-xs text-red-600">Errors</div>
+                    </div>
+                    <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded text-center">
+                        <div class="text-2xl font-bold text-blue-600">${importedData.length}</div>
+                        <div class="text-xs text-blue-600">Total</div>
+                    </div>
+                </div>
+                ${importResults.length > 0 ? `
+                    <div class="mt-3 max-h-40 overflow-y-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-slate-100 dark:bg-slate-700">
+                                <tr><th class="p-1 text-left">Row</th><th class="p-1 text-left">Name</th><th class="p-1 text-left">Status</th><th class="p-1 text-left">Message</th></tr>
+                            </thead>
+                            <tbody>
+                                ${importResults.map(r => `
+                                    <tr class="border-b dark:border-slate-600">
+                                        <td class="p-1">${r.row}</td>
+                                        <td class="p-1">${escapeHtml(r.name)}</td>
+                                        <td class="p-1"><span class="status-badge-${r.status}">${r.status}</span></td>
+                                        <td class="p-1 text-xs">${escapeHtml(r.message)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                ` : ''}
+                <button onclick="cancelImport()" class="mt-3 bg-[#011F7B] text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-800" title="Close import">Close</button>
+            `;
+            
+            refreshDashboard();
+            renderEmployeesTable();
+            
+            // Update migration status if employees were imported
+            if (success > 0) {
+                await db.collection('system').doc('migration').set({
+                    version: CURRENT_VERSION,
+                    status: 'completed',
+                    timestamp: new Date().toISOString(),
+                    migratedBy: currentUser.email,
+                    recordsMigrated: success,
+                    importType: 'excel'
+                });
+                migrationStatus = {
+                    version: CURRENT_VERSION,
+                    status: 'completed',
+                    timestamp: new Date().toISOString(),
+                    migratedBy: currentUser.email,
+                    recordsMigrated: success,
+                    importType: 'excel'
+                };
+                updateMigrationDisplay();
+            }
+            
+            confirmBtn.disabled = false;
+        }
+
+        // ===== ATTENDANCE PERIOD FUNCTIONS =====
         function getCurrentPeriod() {
             const now = new Date();
             const year = now.getFullYear();
@@ -2769,7 +3038,6 @@
             const day = now.getDate();
             
             if (day >= 26) {
-                // Current is period 3 (26th to end)
                 const start = new Date(year, month, 26);
                 const end = new Date(year, month + 1, 0);
                 return { 
@@ -2780,7 +3048,6 @@
                     endStr: formatDateForDisplay(end.toISOString())
                 };
             } else if (day >= 11) {
-                // Current is period 2 (11th - 25th)
                 const start = new Date(year, month, 11);
                 const end = new Date(year, month, 25);
                 return { 
@@ -2791,7 +3058,6 @@
                     endStr: formatDateForDisplay(end.toISOString())
                 };
             } else {
-                // Current is period 1 (26th previous - 10th current)
                 const prevMonth = month === 0 ? 11 : month - 1;
                 const prevYear = month === 0 ? year - 1 : year;
                 const start = new Date(prevYear, prevMonth, 26);
@@ -2813,7 +3079,6 @@
             const day = now.getDate();
             
             if (day >= 26) {
-                // Previous is period 2 (11th - 25th)
                 const start = new Date(year, month, 11);
                 const end = new Date(year, month, 25);
                 return { 
@@ -2824,7 +3089,6 @@
                     endStr: formatDateForDisplay(end.toISOString())
                 };
             } else if (day >= 11) {
-                // Previous is period 1 (26th previous - 10th current)
                 const prevMonth = month === 0 ? 11 : month - 1;
                 const prevYear = month === 0 ? year - 1 : year;
                 const start = new Date(prevYear, prevMonth, 26);
@@ -2837,7 +3101,6 @@
                     endStr: formatDateForDisplay(end.toISOString())
                 };
             } else {
-                // Previous is period 3 (26th previous - end previous)
                 const prevMonth = month === 0 ? 11 : month - 1;
                 const prevYear = month === 0 ? year - 1 : year;
                 const start = new Date(prevYear, prevMonth, 26);
@@ -3656,7 +3919,6 @@
                 const idx = allRequests.findIndex(r => r.id === requestId);
                 if (idx !== -1) allRequests[idx].status = 'approved';
                 
-                // Auto-add to attendance if it's Certificate of Attendance or Clock Request
                 if (requestData.type === 'Certificate of Attendance' || requestData.type.includes('Clock')) {
                     await addAttendanceFromRequest(requestData);
                 }
@@ -3672,7 +3934,6 @@
             }
         }
 
-        // ===== ADD ATTENDANCE FROM APPROVED REQUEST =====
         async function addAttendanceFromRequest(requestData) {
             try {
                 const today = new Date().toISOString().split('T')[0];
@@ -3692,7 +3953,6 @@
                     timeIn = requestData.time || '08:00';
                     timeOut = null;
                 } else if (requestData.type.includes('Clock Out')) {
-                    // Find existing attendance record
                     const existing = allAttendance.find(a => a.userId === requestData.userId && a.date === date);
                     if (existing) {
                         await db.collection('attendance').doc(existing.id).update({
@@ -3708,7 +3968,6 @@
                     timeOut = requestData.time || '17:00';
                 }
                 
-                // Check if attendance already exists
                 const existing = allAttendance.find(a => a.userId === requestData.userId && a.date === date);
                 if (existing) {
                     await db.collection('attendance').doc(existing.id).update({
@@ -4134,7 +4393,7 @@
             alert("Request updated.");
         }
 
-        // ===== ATTENDANCE SUMMARY (UPDATED WITH 15-DAY CUT-OFF) =====
+        // ===== ATTENDANCE SUMMARY =====
         function populateYearDropdown() {
             const yearSelect = document.getElementById('summaryYear');
             if (!yearSelect) return;
@@ -4190,7 +4449,6 @@
             } else if (selectedPeriod === 'previous') {
                 period = getPreviousPeriod();
             } else {
-                // 'all' - use the selected month/year
                 const year = parseInt(document.getElementById('summaryYear').value);
                 const month = parseInt(document.getElementById('summaryMonth').value);
                 period = {
@@ -4201,7 +4459,6 @@
                 };
             }
             
-            // Update period label
             const label = document.getElementById('periodLabel');
             if (label) {
                 label.textContent = selectedPeriod === 'all' ? 
@@ -4212,14 +4469,12 @@
             const startDate = period.start;
             const endDate = period.end;
             
-            // Get all attendance for this employee in the period
             const employeeAtt = allAttendance.filter(a => {
                 if (a.userId !== employeeId) return false;
                 const attDate = new Date(a.date);
                 return attDate >= startDate && attDate <= endDate;
             });
             
-            // Calculate stats
             const completed = employeeAtt.filter(a => a.timeIn && a.timeOut && a.status !== 'Certificate').length;
             const certificate = employeeAtt.filter(a => a.status === 'Certificate' || a.source?.includes('Certificate')).length;
             const incomplete = employeeAtt.filter(a => a.timeIn && !a.timeOut && a.status !== 'Certificate').length;
@@ -4230,7 +4485,6 @@
             document.getElementById('missingCountSummary').textContent = incomplete;
             document.getElementById('certCountSummary').textContent = certificate;
             
-            // Build calendar
             const daysInMonth = endDate.getDate();
             const firstDay = startDate.getDay();
             
@@ -4244,7 +4498,6 @@
                 calendarHTML += '<div class="day bg-gray-200 dark:bg-gray-700 p-2 rounded text-center"></div>';
             }
             
-            // Show all days in the period
             let currentDate = new Date(startDate);
             while (currentDate <= endDate) {
                 const dateStr = currentDate.toISOString().split('T')[0];
@@ -4281,7 +4534,6 @@
             
             document.getElementById('calendarGrid').innerHTML = calendarHTML;
             
-            // Build details table - show latest first
             const sortedAtt = [...employeeAtt].sort((a, b) => b.date.localeCompare(a.date));
             const detailsBody = document.getElementById('attendanceDetails');
             if (detailsBody) {
@@ -4749,6 +5001,28 @@
             document.getElementById('refreshSummaryBtn').addEventListener('click', function() {
                 loadEmployeeListForSummary();
             });
+
+            // Drag and drop for file upload
+            const uploadZone = document.getElementById('uploadZone');
+            if (uploadZone) {
+                uploadZone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.classList.add('dragover');
+                });
+                uploadZone.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('dragover');
+                });
+                uploadZone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.classList.remove('dragover');
+                    const file = e.dataTransfer.files[0];
+                    if (file) {
+                        document.getElementById('fileInput').files = e.dataTransfer.files;
+                        handleFileUpload({ target: { files: [file] } });
+                    }
+                });
+            }
         });
     </script>
 </body>
