@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <title>EQUIPRIME HR - Employee Import Migration</title>
+    <title>EQUIPRIME HR - Payroll 2026</title>
     <link rel="icon" href="favicon.ico" />
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -1207,6 +1207,99 @@
             font-size: 0.45rem;
         }
 
+        /* Period selector for attendance summary */
+        .period-selector {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        .period-selector button {
+            padding: 0.4rem 0.8rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+        }
+        .period-selector button:hover {
+            background: #e2e8f0;
+        }
+        .period-selector button.active {
+            background: #011F7B;
+            color: white;
+            border-color: #011F7B;
+        }
+        body.dark .period-selector button {
+            background: #1e293b;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+        body.dark .period-selector button:hover {
+            background: #334155;
+        }
+        body.dark .period-selector button.active {
+            background: #FFBA09;
+            color: #0f172a;
+            border-color: #FFBA09;
+        }
+
+        .summary-period-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #011F7B;
+            margin-bottom: 0.5rem;
+        }
+        body.dark .summary-period-label {
+            color: #FFBA09;
+        }
+
+        /* Date range picker */
+        .date-range-picker {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        .date-range-picker label {
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .date-range-picker input[type="date"] {
+            padding: 0.3rem 0.6rem;
+            border-radius: 0.5rem;
+            border: 1px solid #cbd5e1;
+            background: white;
+            font-size: 0.8rem;
+        }
+        body.dark .date-range-picker input[type="date"] {
+            background: #1e293b;
+            border-color: #475569;
+            color: #e2e8f0;
+        }
+        .date-range-picker button {
+            padding: 0.3rem 0.8rem;
+            border-radius: 0.5rem;
+            border: none;
+            background: #011F7B;
+            color: white;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+        .date-range-picker button:hover {
+            background: #1a3a8a;
+        }
+        body.dark .date-range-picker button {
+            background: #FFBA09;
+            color: #0f172a;
+        }
+        body.dark .date-range-picker button:hover {
+            background: #e6a800;
+        }
+
         @media (max-width: 1023px) {
             .desktop-sidebar {
                 display: none;
@@ -1534,7 +1627,7 @@
         <div class="login-half">
             <div class="w-full max-w-md">
                 <div class="text-center mb-8">
-                    <img src="EquiPrime Logo crop.png" class="h-12 mx-auto" alt="EQUIPRIME HR Logo" onerror="this.style.display='none'" />
+                    <img src="icon-512.png" class="h-16 mx-auto" alt="EQUIPRIME HR Logo" onerror="this.style.display='none'" />
                     <h1 class="text-3xl font-extrabold text-slate-800 dark:text-white"><span style="color: #3b82f6;">EQUIPRIME</span><span style="color: #f4df17;">HR</span></h1>
                     <p class="text-slate-500 dark:text-slate-400">smart choices · smarter results</p>
                     <div class="mt-2">
@@ -1788,28 +1881,31 @@
                 <div id="allRequestsList" class="space-y-4"><div class="text-center text-slate-500 dark:text-slate-400 py-8">No requests found</div></div>
             </div>
 
-            <!-- ATTENDANCE SUMMARY TAB -->
+            <!-- ATTENDANCE SUMMARY TAB (UPDATED WITH DATE RANGE PICKER) -->
             <div id="attendance-summary-tab" class="tab-content hidden">
                 <div class="card-bg rounded-2xl p-6 shadow-sm">
                     <div class="flex justify-between items-center flex-wrap gap-4 mb-4">
                         <h2 class="text-2xl font-bold text-yellow-600">Attendance Summary</h2>
-                        <div class="flex gap-2 flex-wrap">
-                            <select id="summaryYear" class="border rounded-lg p-2 dark:bg-slate-700" title="Select year"></select>
-                            <select id="summaryMonth" class="border rounded-lg p-2 dark:bg-slate-700" title="Select month">
-                                <option value="0">January</option><option value="1">February</option><option value="2">March</option>
-                                <option value="3">April</option><option value="4">May</option><option value="5">June</option>
-                                <option value="6">July</option><option value="7">August</option><option value="8">September</option>
-                                <option value="9">October</option><option value="10">November</option><option value="11">December</option>
-                            </select>
-                            <button id="refreshSummaryBtn" class="bg-[#011F7B] text-white px-4 py-2 rounded-xl" title="Load attendance summary">Load</button>
-                        </div>
                     </div>
+                    
+                    <!-- Date Range Picker -->
+                    <div class="date-range-picker">
+                        <label>From:</label>
+                        <input type="date" id="dateRangeStart" />
+                        <label>To:</label>
+                        <input type="date" id="dateRangeEnd" />
+                        <button onclick="applyDateRange()">Apply Range</button>
+                        <button onclick="resetDateRange()" class="bg-gray-500 hover:bg-gray-600">Reset to Current</button>
+                    </div>
+                    
+                    <!-- Period Selector (Quick buttons) -->
                     <div class="period-selector" id="periodSelector">
                         <button class="active" data-period="current" onclick="selectPeriod('current')">Current Period</button>
                         <button data-period="previous" onclick="selectPeriod('previous')">Previous Period</button>
-                        <button data-period="all" onclick="selectPeriod('all')">All Periods</button>
+                        <button data-period="all" onclick="selectPeriod('all')">All Time</button>
                     </div>
                     <div id="periodLabel" class="summary-period-label">Current Period: Loading...</div>
+                    
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-1"><h3 class="font-bold mb-3">Employees</h3><div id="employeeListContainer" class="space-y-2 overflow-y-auto"></div></div>
                         <div class="lg:col-span-2">
@@ -2303,6 +2399,7 @@
         const CURRENT_VERSION = '2.0.0';
         let migrationStatus = null;
         let selectedPeriod = 'current';
+        let customDateRange = null;
 
         // ===== IMPORT STATE =====
         let importedData = [];
@@ -2594,8 +2691,10 @@
             if (tabName === 'hr-payslip') { refreshHrPayslip();
                 closePayslipPreview(); }
             if (tabName === 'my-attendance') refreshMyAttendanceTab();
-            if (tabName === 'attendance-summary') { populateYearDropdown();
-                loadEmployeeListForSummary(); }
+            if (tabName === 'attendance-summary') { 
+                populateDateRange();
+                loadEmployeeListForSummary(); 
+            }
             if (tabName === 'helpdesk' || tabName === 'admin-helpdesk') refreshHelpdesk();
             if (tabName === 'employees') renderEmployeesTable();
             if (tabName === 'device-management') refreshDeviceList();
@@ -2729,308 +2828,53 @@
         function getCurrentTime24() { return new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit',
                 hour12: false }); }
 
-        // ===== EMPLOYEE IMPORT FUNCTIONS =====
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
+        // ===== ATTENDANCE PERIOD FUNCTIONS (UPDATED WITH DATE RANGE) =====
+        function populateDateRange() {
+            const now = new Date();
+            const startInput = document.getElementById('dateRangeStart');
+            const endInput = document.getElementById('dateRangeEnd');
             
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const data = new Uint8Array(e.target.result);
-                    const workbook = XLSX.read(data, { type: 'array' });
-                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
-                    const jsonData = XLSX.utils.sheet_to_json(firstSheet);
-                    
-                    if (jsonData.length === 0) {
-                        alert('No data found in the file.');
-                        return;
-                    }
-                    
-                    importedData = jsonData;
-                    showImportPreview(jsonData);
-                } catch (err) {
-                    alert('Error reading file: ' + err.message);
-                }
-            };
-            reader.readAsArrayBuffer(file);
+            // Set default to current period
+            const current = getCurrentPeriod();
+            startInput.value = current.startStr;
+            endInput.value = current.endStr;
+            customDateRange = null;
         }
 
-        function showImportPreview(data) {
-            const preview = document.getElementById('importPreview');
-            const count = document.getElementById('previewCount');
-            const header = document.getElementById('previewHeader');
-            const body = document.getElementById('previewBody');
+        function applyDateRange() {
+            const startInput = document.getElementById('dateRangeStart');
+            const endInput = document.getElementById('dateRangeEnd');
             
-            preview.classList.remove('hidden');
-            count.textContent = data.length;
-            
-            // Build header
-            const columns = Object.keys(data[0]);
-            header.innerHTML = columns.map(col => `<th class="p-2 text-left">${escapeHtml(col)}</th>`).join('');
-            
-            // Build body (show first 10 rows)
-            const rows = data.slice(0, 10);
-            body.innerHTML = rows.map(row => {
-                return `<tr>${columns.map(col => `<td class="p-2 border-b dark:border-slate-600">${escapeHtml(String(row[col] || ''))}</td>`).join('')}</tr>`;
-            }).join('');
-            
-            if (data.length > 10) {
-                body.innerHTML += `<tr><td colspan="${columns.length}" class="p-2 text-center text-slate-500">... and ${data.length - 10} more rows</td></tr>`;
-            }
-            
-            document.getElementById('importProgress').classList.add('hidden');
-            document.getElementById('importResults').innerHTML = '';
-            document.getElementById('confirmImportBtn').disabled = false;
-        }
-
-        function cancelImport() {
-            importedData = [];
-            document.getElementById('importPreview').classList.add('hidden');
-            document.getElementById('fileInput').value = '';
-            document.getElementById('importResults').innerHTML = '';
-        }
-
-        async function confirmImport() {
-            if (importedData.length === 0) {
-                alert('No data to import.');
-                return;
-            }
-            
-            if (!confirm(`⚠️ This will import ${importedData.length} employees. Continue?`)) {
-                return;
-            }
-            
-            const progressDiv = document.getElementById('importProgress');
-            const progressFill = document.getElementById('progressFill');
-            const progressText = document.getElementById('progressText');
-            const progressPercent = document.getElementById('progressPercent');
-            const resultsDiv = document.getElementById('importResults');
-            const confirmBtn = document.getElementById('confirmImportBtn');
-            
-            progressDiv.classList.remove('hidden');
-            confirmBtn.disabled = true;
-            importResults = [];
-            
-            let success = 0;
-            let errors = 0;
-            let skipped = 0;
-            
-            // Column mapping
-            const colMap = {
-                'name': ['name', 'fullname', 'employee name', 'full name'],
-                'email': ['email', 'e-mail', 'email address'],
-                'employeeNumber': ['employeenumber', 'employee number', 'emp #', 'emp_no', 'employee_no'],
-                'department': ['department', 'dept', 'division'],
-                'role': ['role', 'position', 'job title'],
-                'dateHired': ['datehired', 'hired date', 'date hired', 'start date'],
-                'gender': ['gender', 'sex'],
-                'civilStatus': ['civilstatus', 'civil status', 'marital status'],
-                'phone': ['phone', 'contact', 'mobile', 'contact number'],
-                'address': ['address', 'home address'],
-                'emergencyName': ['emergencyname', 'emergency contact name', 'emergency name'],
-                'emergencyRelation': ['emergencyrelation', 'emergency contact relation', 'emergency relationship'],
-                'emergencyPhone': ['emergencyphone', 'emergency contact number', 'emergency contact'],
-                'emergencyAddress': ['emergencyaddress', 'emergency address'],
-                'sssNumber': ['sss', 'sss number', 'sss_no'],
-                'philhealthNumber': ['philhealth', 'philhealth number', 'phic'],
-                'pagibigNumber': ['pagibig', 'pag-ibig', 'hdmf', 'pagibig number']
-            };
-            
-            // Find actual column names in the data
-            const columns = Object.keys(importedData[0]);
-            const mapping = {};
-            
-            for (const [field, possibleNames] of Object.entries(colMap)) {
-                for (const col of columns) {
-                    if (possibleNames.some(name => col.toLowerCase().includes(name) || col.toLowerCase() === name)) {
-                        mapping[field] = col;
-                        break;
-                    }
-                }
-            }
-            
-            // Check required fields
-            if (!mapping.name || !mapping.email) {
-                alert('❌ Required columns "Name" and "Email" not found in the file. Please check column names.');
-                progressDiv.classList.add('hidden');
-                confirmBtn.disabled = false;
-                return;
-            }
-            
-            for (let i = 0; i < importedData.length; i++) {
-                const row = importedData[i];
-                const rowNum = i + 2; // +2 for header and 0-index
-                
-                try {
-                    const name = String(row[mapping.name] || '').trim();
-                    const email = String(row[mapping.email] || '').trim().toLowerCase();
-                    const employeeNumber = String(row[mapping.employeeNumber] || '').trim();
-                    const department = String(row[mapping.department] || 'Unassigned').trim();
-                    const role = String(row[mapping.role] || 'employee').trim().toLowerCase();
-                    const dateHired = row[mapping.dateHired] ? new Date(row[mapping.dateHired]).toISOString().split('T')[0] : '';
-                    const gender = String(row[mapping.gender] || '').trim();
-                    const civilStatus = String(row[mapping.civilStatus] || '').trim();
-                    const phone = String(row[mapping.phone] || '').trim();
-                    const address = String(row[mapping.address] || '').trim();
-                    const emergencyName = String(row[mapping.emergencyName] || '').trim();
-                    const emergencyRelation = String(row[mapping.emergencyRelation] || '').trim();
-                    const emergencyPhone = String(row[mapping.emergencyPhone] || '').trim();
-                    const emergencyAddress = String(row[mapping.emergencyAddress] || '').trim();
-                    const sssNumber = String(row[mapping.sssNumber] || '').trim();
-                    const philhealthNumber = String(row[mapping.philhealthNumber] || '').trim();
-                    const pagibigNumber = String(row[mapping.pagibigNumber] || '').trim();
-                    
-                    // Validate
-                    if (!name) {
-                        errors++;
-                        importResults.push({ row: rowNum, name: 'Unknown', status: 'error', message: 'Name is required' });
-                        continue;
-                    }
-                    
-                    if (!email || !email.includes('@')) {
-                        errors++;
-                        importResults.push({ row: rowNum, name: name, status: 'error', message: 'Valid email is required' });
-                        continue;
-                    }
-                    
-                    // Check if employee already exists
-                    const existing = allEmployees.find(e => e.email === email);
-                    if (existing) {
-                        skipped++;
-                        importResults.push({ row: rowNum, name: name, status: 'skipped', message: 'Email already exists' });
-                        continue;
-                    }
-                    
-                    // Generate password (default: employee number or random)
-                    const password = employeeNumber || 'password123';
-                    const pin = employeeNumber || '123456';
-                    
-                    // Create user
-                    const userCred = await auth.createUserWithEmailAndPassword(email, password);
-                    const uid = userCred.user.uid;
-                    
-                    // Create employee document
-                    const empData = {
-                        name: name,
-                        email: email,
-                        employeeNumber: employeeNumber,
-                        department: department,
-                        role: role || 'employee',
-                        status: 'active',
-                        dateHired: dateHired,
-                        gender: gender,
-                        civilStatus: civilStatus,
-                        phone: phone,
-                        address: address,
-                        emergencyContactName: emergencyName,
-                        emergencyContactRelationship: emergencyRelation,
-                        emergencyContactNumber: emergencyPhone,
-                        emergencyContactAddress: emergencyAddress,
-                        sssNumber: encryptData(sssNumber),
-                        philhealthNumber: encryptData(philhealthNumber),
-                        pagibigNumber: encryptData(pagibigNumber),
-                        pin: encryptData(pin),
-                        leaveBalance: 15,
-                        deviceRestriction: 'enabled',
-                        photoURL: '',
-                        imported: true,
-                        importedAt: new Date().toISOString(),
-                        createdAt: new Date().toISOString()
-                    };
-                    
-                    await db.collection('employees').doc(uid).set(empData);
-                    allEmployees.push({ id: uid, ...empData });
-                    
-                    success++;
-                    importResults.push({ row: rowNum, name: name, status: 'success', message: 'Imported successfully' });
-                    
-                    // Update progress
-                    const progress = ((i + 1) / importedData.length) * 100;
-                    progressFill.style.width = progress + '%';
-                    progressPercent.textContent = Math.round(progress) + '%';
-                    progressText.textContent = `Importing ${i + 1} of ${importedData.length}...`;
-                    
-                } catch (err) {
-                    errors++;
-                    importResults.push({ row: rowNum, name: String(row[mapping.name] || 'Unknown'), status: 'error', message: err.message });
-                }
-            }
-            
-            // Show results
-            progressFill.style.width = '100%';
-            progressPercent.textContent = '100%';
-            progressText.textContent = 'Import completed!';
-            
-            resultsDiv.innerHTML = `
-                <div class="grid grid-cols-4 gap-2 mt-2">
-                    <div class="p-2 bg-green-100 dark:bg-green-900/30 rounded text-center">
-                        <div class="text-2xl font-bold text-green-600">${success}</div>
-                        <div class="text-xs text-green-600">Imported</div>
-                    </div>
-                    <div class="p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded text-center">
-                        <div class="text-2xl font-bold text-yellow-600">${skipped}</div>
-                        <div class="text-xs text-yellow-600">Skipped</div>
-                    </div>
-                    <div class="p-2 bg-red-100 dark:bg-red-900/30 rounded text-center">
-                        <div class="text-2xl font-bold text-red-600">${errors}</div>
-                        <div class="text-xs text-red-600">Errors</div>
-                    </div>
-                    <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded text-center">
-                        <div class="text-2xl font-bold text-blue-600">${importedData.length}</div>
-                        <div class="text-xs text-blue-600">Total</div>
-                    </div>
-                </div>
-                ${importResults.length > 0 ? `
-                    <div class="mt-3 max-h-40 overflow-y-auto">
-                        <table class="w-full text-sm">
-                            <thead class="bg-slate-100 dark:bg-slate-700">
-                                <tr><th class="p-1 text-left">Row</th><th class="p-1 text-left">Name</th><th class="p-1 text-left">Status</th><th class="p-1 text-left">Message</th></tr>
-                            </thead>
-                            <tbody>
-                                ${importResults.map(r => `
-                                    <tr class="border-b dark:border-slate-600">
-                                        <td class="p-1">${r.row}</td>
-                                        <td class="p-1">${escapeHtml(r.name)}</td>
-                                        <td class="p-1"><span class="status-badge-${r.status}">${r.status}</span></td>
-                                        <td class="p-1 text-xs">${escapeHtml(r.message)}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                ` : ''}
-                <button onclick="cancelImport()" class="mt-3 bg-[#011F7B] text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-800" title="Close import">Close</button>
-            `;
-            
-            refreshDashboard();
-            renderEmployeesTable();
-            
-            // Update migration status if employees were imported
-            if (success > 0) {
-                await db.collection('system').doc('migration').set({
-                    version: CURRENT_VERSION,
-                    status: 'completed',
-                    timestamp: new Date().toISOString(),
-                    migratedBy: currentUser.email,
-                    recordsMigrated: success,
-                    importType: 'excel'
-                });
-                migrationStatus = {
-                    version: CURRENT_VERSION,
-                    status: 'completed',
-                    timestamp: new Date().toISOString(),
-                    migratedBy: currentUser.email,
-                    recordsMigrated: success,
-                    importType: 'excel'
+            if (startInput.value && endInput.value) {
+                customDateRange = {
+                    start: new Date(startInput.value),
+                    end: new Date(endInput.value),
+                    startStr: startInput.value,
+                    endStr: endInput.value
                 };
-                updateMigrationDisplay();
+                selectedPeriod = 'custom';
+                document.querySelectorAll('.period-selector button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                loadEmployeeCalendar(document.querySelector('.employee-item.active')?.dataset.id || '');
+            } else {
+                alert('Please select both start and end dates.');
             }
-            
-            confirmBtn.disabled = false;
         }
 
-        // ===== ATTENDANCE PERIOD FUNCTIONS =====
+        function resetDateRange() {
+            customDateRange = null;
+            selectedPeriod = 'current';
+            populateDateRange();
+            document.querySelectorAll('.period-selector button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.period === 'current') {
+                    btn.classList.add('active');
+                }
+            });
+            loadEmployeeCalendar(document.querySelector('.employee-item.active')?.dataset.id || '');
+        }
+
         function getCurrentPeriod() {
             const now = new Date();
             const year = now.getFullYear();
@@ -3117,13 +2961,321 @@
 
         function selectPeriod(period) {
             selectedPeriod = period;
+            customDateRange = null;
             document.querySelectorAll('.period-selector button').forEach(btn => {
                 btn.classList.remove('active');
                 if (btn.dataset.period === period) {
                     btn.classList.add('active');
                 }
             });
+            
+            // Update date range inputs to reflect the selected period
+            if (period === 'current') {
+                const current = getCurrentPeriod();
+                document.getElementById('dateRangeStart').value = current.startStr;
+                document.getElementById('dateRangeEnd').value = current.endStr;
+            } else if (period === 'previous') {
+                const previous = getPreviousPeriod();
+                document.getElementById('dateRangeStart').value = previous.startStr;
+                document.getElementById('dateRangeEnd').value = previous.endStr;
+            } else if (period === 'all') {
+                // Set to a wide range (e.g., start of year to today)
+                const now = new Date();
+                const start = new Date(now.getFullYear(), 0, 1);
+                const end = now;
+                document.getElementById('dateRangeStart').value = formatDateForDisplay(start.toISOString());
+                document.getElementById('dateRangeEnd').value = formatDateForDisplay(end.toISOString());
+            }
+            
             loadEmployeeCalendar(document.querySelector('.employee-item.active')?.dataset.id || '');
+        }
+
+        // ===== EMPLOYEE IMPORT FUNCTIONS =====
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const jsonData = XLSX.utils.sheet_to_json(firstSheet);
+                    
+                    if (jsonData.length === 0) {
+                        alert('No data found in the file.');
+                        return;
+                    }
+                    
+                    importedData = jsonData;
+                    showImportPreview(jsonData);
+                } catch (err) {
+                    alert('Error reading file: ' + err.message);
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function showImportPreview(data) {
+            const preview = document.getElementById('importPreview');
+            const count = document.getElementById('previewCount');
+            const header = document.getElementById('previewHeader');
+            const body = document.getElementById('previewBody');
+            
+            preview.classList.remove('hidden');
+            count.textContent = data.length;
+            
+            const columns = Object.keys(data[0]);
+            header.innerHTML = columns.map(col => `<th class="p-2 text-left">${escapeHtml(col)}</th>`).join('');
+            
+            const rows = data.slice(0, 10);
+            body.innerHTML = rows.map(row => {
+                return `<tr>${columns.map(col => `<td class="p-2 border-b dark:border-slate-600">${escapeHtml(String(row[col] || ''))}</td>`).join('')}</tr>`;
+            }).join('');
+            
+            if (data.length > 10) {
+                body.innerHTML += `<tr><td colspan="${columns.length}" class="p-2 text-center text-slate-500">... and ${data.length - 10} more rows</td></tr>`;
+            }
+            
+            document.getElementById('importProgress').classList.add('hidden');
+            document.getElementById('importResults').innerHTML = '';
+            document.getElementById('confirmImportBtn').disabled = false;
+        }
+
+        function cancelImport() {
+            importedData = [];
+            document.getElementById('importPreview').classList.add('hidden');
+            document.getElementById('fileInput').value = '';
+            document.getElementById('importResults').innerHTML = '';
+        }
+
+        async function confirmImport() {
+            if (importedData.length === 0) {
+                alert('No data to import.');
+                return;
+            }
+            
+            if (!confirm(`⚠️ This will import ${importedData.length} employees. Continue?`)) {
+                return;
+            }
+            
+            const progressDiv = document.getElementById('importProgress');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('progressText');
+            const progressPercent = document.getElementById('progressPercent');
+            const resultsDiv = document.getElementById('importResults');
+            const confirmBtn = document.getElementById('confirmImportBtn');
+            
+            progressDiv.classList.remove('hidden');
+            confirmBtn.disabled = true;
+            importResults = [];
+            
+            let success = 0;
+            let errors = 0;
+            let skipped = 0;
+            
+            const colMap = {
+                'name': ['name', 'fullname', 'employee name', 'full name'],
+                'email': ['email', 'e-mail', 'email address'],
+                'employeeNumber': ['employeenumber', 'employee number', 'emp #', 'emp_no', 'employee_no'],
+                'department': ['department', 'dept', 'division'],
+                'role': ['role', 'position', 'job title'],
+                'dateHired': ['datehired', 'hired date', 'date hired', 'start date'],
+                'gender': ['gender', 'sex'],
+                'civilStatus': ['civilstatus', 'civil status', 'marital status'],
+                'phone': ['phone', 'contact', 'mobile', 'contact number'],
+                'address': ['address', 'home address'],
+                'emergencyName': ['emergencyname', 'emergency contact name', 'emergency name'],
+                'emergencyRelation': ['emergencyrelation', 'emergency contact relation', 'emergency relationship'],
+                'emergencyPhone': ['emergencyphone', 'emergency contact number', 'emergency contact'],
+                'emergencyAddress': ['emergencyaddress', 'emergency address'],
+                'sssNumber': ['sss', 'sss number', 'sss_no'],
+                'philhealthNumber': ['philhealth', 'philhealth number', 'phic'],
+                'pagibigNumber': ['pagibig', 'pag-ibig', 'hdmf', 'pagibig number']
+            };
+            
+            const columns = Object.keys(importedData[0]);
+            const mapping = {};
+            
+            for (const [field, possibleNames] of Object.entries(colMap)) {
+                for (const col of columns) {
+                    if (possibleNames.some(name => col.toLowerCase().includes(name) || col.toLowerCase() === name)) {
+                        mapping[field] = col;
+                        break;
+                    }
+                }
+            }
+            
+            if (!mapping.name || !mapping.email) {
+                alert('❌ Required columns "Name" and "Email" not found in the file. Please check column names.');
+                progressDiv.classList.add('hidden');
+                confirmBtn.disabled = false;
+                return;
+            }
+            
+            for (let i = 0; i < importedData.length; i++) {
+                const row = importedData[i];
+                const rowNum = i + 2;
+                
+                try {
+                    const name = String(row[mapping.name] || '').trim();
+                    const email = String(row[mapping.email] || '').trim().toLowerCase();
+                    const employeeNumber = String(row[mapping.employeeNumber] || '').trim();
+                    const department = String(row[mapping.department] || 'Unassigned').trim();
+                    const role = String(row[mapping.role] || 'employee').trim().toLowerCase();
+                    const dateHired = row[mapping.dateHired] ? new Date(row[mapping.dateHired]).toISOString().split('T')[0] : '';
+                    const gender = String(row[mapping.gender] || '').trim();
+                    const civilStatus = String(row[mapping.civilStatus] || '').trim();
+                    const phone = String(row[mapping.phone] || '').trim();
+                    const address = String(row[mapping.address] || '').trim();
+                    const emergencyName = String(row[mapping.emergencyName] || '').trim();
+                    const emergencyRelation = String(row[mapping.emergencyRelation] || '').trim();
+                    const emergencyPhone = String(row[mapping.emergencyPhone] || '').trim();
+                    const emergencyAddress = String(row[mapping.emergencyAddress] || '').trim();
+                    const sssNumber = String(row[mapping.sssNumber] || '').trim();
+                    const philhealthNumber = String(row[mapping.philhealthNumber] || '').trim();
+                    const pagibigNumber = String(row[mapping.pagibigNumber] || '').trim();
+                    
+                    if (!name) {
+                        errors++;
+                        importResults.push({ row: rowNum, name: 'Unknown', status: 'error', message: 'Name is required' });
+                        continue;
+                    }
+                    
+                    if (!email || !email.includes('@')) {
+                        errors++;
+                        importResults.push({ row: rowNum, name: name, status: 'error', message: 'Valid email is required' });
+                        continue;
+                    }
+                    
+                    const existing = allEmployees.find(e => e.email === email);
+                    if (existing) {
+                        skipped++;
+                        importResults.push({ row: rowNum, name: name, status: 'skipped', message: 'Email already exists' });
+                        continue;
+                    }
+                    
+                    const password = employeeNumber || 'password123';
+                    const pin = employeeNumber || '123456';
+                    
+                    const userCred = await auth.createUserWithEmailAndPassword(email, password);
+                    const uid = userCred.user.uid;
+                    
+                    const empData = {
+                        name: name,
+                        email: email,
+                        employeeNumber: employeeNumber,
+                        department: department,
+                        role: role || 'employee',
+                        status: 'active',
+                        dateHired: dateHired,
+                        gender: gender,
+                        civilStatus: civilStatus,
+                        phone: phone,
+                        address: address,
+                        emergencyContactName: emergencyName,
+                        emergencyContactRelationship: emergencyRelation,
+                        emergencyContactNumber: emergencyPhone,
+                        emergencyContactAddress: emergencyAddress,
+                        sssNumber: encryptData(sssNumber),
+                        philhealthNumber: encryptData(philhealthNumber),
+                        pagibigNumber: encryptData(pagibigNumber),
+                        pin: encryptData(pin),
+                        leaveBalance: 15,
+                        deviceRestriction: 'enabled',
+                        photoURL: '',
+                        imported: true,
+                        importedAt: new Date().toISOString(),
+                        createdAt: new Date().toISOString()
+                    };
+                    
+                    await db.collection('employees').doc(uid).set(empData);
+                    allEmployees.push({ id: uid, ...empData });
+                    
+                    success++;
+                    importResults.push({ row: rowNum, name: name, status: 'success', message: 'Imported successfully' });
+                    
+                    const progress = ((i + 1) / importedData.length) * 100;
+                    progressFill.style.width = progress + '%';
+                    progressPercent.textContent = Math.round(progress) + '%';
+                    progressText.textContent = `Importing ${i + 1} of ${importedData.length}...`;
+                    
+                } catch (err) {
+                    errors++;
+                    importResults.push({ row: rowNum, name: String(row[mapping.name] || 'Unknown'), status: 'error', message: err.message });
+                }
+            }
+            
+            progressFill.style.width = '100%';
+            progressPercent.textContent = '100%';
+            progressText.textContent = 'Import completed!';
+            
+            resultsDiv.innerHTML = `
+                <div class="grid grid-cols-4 gap-2 mt-2">
+                    <div class="p-2 bg-green-100 dark:bg-green-900/30 rounded text-center">
+                        <div class="text-2xl font-bold text-green-600">${success}</div>
+                        <div class="text-xs text-green-600">Imported</div>
+                    </div>
+                    <div class="p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded text-center">
+                        <div class="text-2xl font-bold text-yellow-600">${skipped}</div>
+                        <div class="text-xs text-yellow-600">Skipped</div>
+                    </div>
+                    <div class="p-2 bg-red-100 dark:bg-red-900/30 rounded text-center">
+                        <div class="text-2xl font-bold text-red-600">${errors}</div>
+                        <div class="text-xs text-red-600">Errors</div>
+                    </div>
+                    <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded text-center">
+                        <div class="text-2xl font-bold text-blue-600">${importedData.length}</div>
+                        <div class="text-xs text-blue-600">Total</div>
+                    </div>
+                </div>
+                ${importResults.length > 0 ? `
+                    <div class="mt-3 max-h-40 overflow-y-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-slate-100 dark:bg-slate-700">
+                                <tr><th class="p-1 text-left">Row</th><th class="p-1 text-left">Name</th><th class="p-1 text-left">Status</th><th class="p-1 text-left">Message</th></tr>
+                            </thead>
+                            <tbody>
+                                ${importResults.map(r => `
+                                    <tr class="border-b dark:border-slate-600">
+                                        <td class="p-1">${r.row}</td>
+                                        <td class="p-1">${escapeHtml(r.name)}</td>
+                                        <td class="p-1"><span class="status-badge-${r.status}">${r.status}</span></td>
+                                        <td class="p-1 text-xs">${escapeHtml(r.message)}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                ` : ''}
+                <button onclick="cancelImport()" class="mt-3 bg-[#011F7B] text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-800" title="Close import">Close</button>
+            `;
+            
+            refreshDashboard();
+            renderEmployeesTable();
+            
+            if (success > 0) {
+                await db.collection('system').doc('migration').set({
+                    version: CURRENT_VERSION,
+                    status: 'completed',
+                    timestamp: new Date().toISOString(),
+                    migratedBy: currentUser.email,
+                    recordsMigrated: success,
+                    importType: 'excel'
+                });
+                migrationStatus = {
+                    version: CURRENT_VERSION,
+                    status: 'completed',
+                    timestamp: new Date().toISOString(),
+                    migratedBy: currentUser.email,
+                    recordsMigrated: success,
+                    importType: 'excel'
+                };
+                updateMigrationDisplay();
+            }
+            
+            confirmBtn.disabled = false;
         }
 
         // ===== DEVICE MANAGEMENT =====
@@ -4393,22 +4545,176 @@
             alert("Request updated.");
         }
 
-        // ===== ATTENDANCE SUMMARY =====
-        function populateYearDropdown() {
-            const yearSelect = document.getElementById('summaryYear');
-            if (!yearSelect) return;
-            const currentYear = new Date().getFullYear();
-            yearSelect.innerHTML = '';
-            for (let y = currentYear - 2; y <= currentYear + 1; y++) {
-                const option = document.createElement('option');
-                option.value = y;
-                option.textContent = y;
-                if (y === currentYear) option.selected = true;
-                yearSelect.appendChild(option);
+        // ===== ATTENDANCE SUMMARY (UPDATED WITH DATE RANGE) =====
+        function populateDateRange() {
+            const now = new Date();
+            const startInput = document.getElementById('dateRangeStart');
+            const endInput = document.getElementById('dateRangeEnd');
+            
+            const current = getCurrentPeriod();
+            if (startInput && endInput) {
+                startInput.value = current.startStr;
+                endInput.value = current.endStr;
+            }
+            customDateRange = null;
+        }
+
+        function applyDateRange() {
+            const startInput = document.getElementById('dateRangeStart');
+            const endInput = document.getElementById('dateRangeEnd');
+            
+            if (startInput.value && endInput.value) {
+                const startDate = new Date(startInput.value);
+                const endDate = new Date(endInput.value);
+                
+                if (startDate > endDate) {
+                    alert('Start date cannot be after end date.');
+                    return;
+                }
+                
+                customDateRange = {
+                    start: startDate,
+                    end: endDate,
+                    startStr: startInput.value,
+                    endStr: endInput.value
+                };
+                selectedPeriod = 'custom';
+                document.querySelectorAll('.period-selector button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                loadEmployeeCalendar(document.querySelector('.employee-item.active')?.dataset.id || '');
+            } else {
+                alert('Please select both start and end dates.');
             }
         }
 
-        async function loadEmployeeListForSummary() {
+        function resetDateRange() {
+            customDateRange = null;
+            selectedPeriod = 'current';
+            populateDateRange();
+            document.querySelectorAll('.period-selector button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.period === 'current') {
+                    btn.classList.add('active');
+                }
+            });
+            loadEmployeeCalendar(document.querySelector('.employee-item.active')?.dataset.id || '');
+        }
+
+        function getCurrentPeriod() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const day = now.getDate();
+            
+            if (day >= 26) {
+                const start = new Date(year, month, 26);
+                const end = new Date(year, month + 1, 0);
+                return { 
+                    name: 'Current Period (26th - End)', 
+                    start: start, 
+                    end: end,
+                    startStr: formatDateForDisplay(start.toISOString()),
+                    endStr: formatDateForDisplay(end.toISOString())
+                };
+            } else if (day >= 11) {
+                const start = new Date(year, month, 11);
+                const end = new Date(year, month, 25);
+                return { 
+                    name: 'Current Period (11th - 25th)', 
+                    start: start, 
+                    end: end,
+                    startStr: formatDateForDisplay(start.toISOString()),
+                    endStr: formatDateForDisplay(end.toISOString())
+                };
+            } else {
+                const prevMonth = month === 0 ? 11 : month - 1;
+                const prevYear = month === 0 ? year - 1 : year;
+                const start = new Date(prevYear, prevMonth, 26);
+                const end = new Date(year, month, 10);
+                return { 
+                    name: 'Current Period (26th - 10th)', 
+                    start: start, 
+                    end: end,
+                    startStr: formatDateForDisplay(start.toISOString()),
+                    endStr: formatDateForDisplay(end.toISOString())
+                };
+            }
+        }
+
+        function getPreviousPeriod() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const day = now.getDate();
+            
+            if (day >= 26) {
+                const start = new Date(year, month, 11);
+                const end = new Date(year, month, 25);
+                return { 
+                    name: 'Previous Period (11th - 25th)', 
+                    start: start, 
+                    end: end,
+                    startStr: formatDateForDisplay(start.toISOString()),
+                    endStr: formatDateForDisplay(end.toISOString())
+                };
+            } else if (day >= 11) {
+                const prevMonth = month === 0 ? 11 : month - 1;
+                const prevYear = month === 0 ? year - 1 : year;
+                const start = new Date(prevYear, prevMonth, 26);
+                const end = new Date(year, month, 10);
+                return { 
+                    name: 'Previous Period (26th - 10th)', 
+                    start: start, 
+                    end: end,
+                    startStr: formatDateForDisplay(start.toISOString()),
+                    endStr: formatDateForDisplay(end.toISOString())
+                };
+            } else {
+                const prevMonth = month === 0 ? 11 : month - 1;
+                const prevYear = month === 0 ? year - 1 : year;
+                const start = new Date(prevYear, prevMonth, 26);
+                const end = new Date(prevYear, prevMonth + 1, 0);
+                return { 
+                    name: 'Previous Period (26th - End)', 
+                    start: start, 
+                    end: end,
+                    startStr: formatDateForDisplay(start.toISOString()),
+                    endStr: formatDateForDisplay(end.toISOString())
+                };
+            }
+        }
+
+        function selectPeriod(period) {
+            selectedPeriod = period;
+            customDateRange = null;
+            document.querySelectorAll('.period-selector button').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.period === period) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            if (period === 'current') {
+                const current = getCurrentPeriod();
+                document.getElementById('dateRangeStart').value = current.startStr;
+                document.getElementById('dateRangeEnd').value = current.endStr;
+            } else if (period === 'previous') {
+                const previous = getPreviousPeriod();
+                document.getElementById('dateRangeStart').value = previous.startStr;
+                document.getElementById('dateRangeEnd').value = previous.endStr;
+            } else if (period === 'all') {
+                const now = new Date();
+                const start = new Date(now.getFullYear(), 0, 1);
+                const end = now;
+                document.getElementById('dateRangeStart').value = formatDateForDisplay(start.toISOString());
+                document.getElementById('dateRangeEnd').value = formatDateForDisplay(end.toISOString());
+            }
+            
+            loadEmployeeCalendar(document.querySelector('.employee-item.active')?.dataset.id || '');
+        }
+
+        function loadEmployeeListForSummary() {
             const container = document.getElementById('employeeListContainer');
             if (!container) return;
             const regularEmps = allEmployees.filter(e => !isSystemAdmin(e.email));
@@ -4444,30 +4750,38 @@
             if (!employeeId) return;
             
             let period;
-            if (selectedPeriod === 'current') {
+            if (customDateRange) {
+                period = customDateRange;
+            } else if (selectedPeriod === 'current') {
                 period = getCurrentPeriod();
             } else if (selectedPeriod === 'previous') {
                 period = getPreviousPeriod();
-            } else {
-                const year = parseInt(document.getElementById('summaryYear').value);
-                const month = parseInt(document.getElementById('summaryMonth').value);
+            } else if (selectedPeriod === 'all') {
+                const now = new Date();
+                const start = new Date(now.getFullYear(), 0, 1);
                 period = {
-                    start: new Date(year, month, 1),
-                    end: new Date(year, month + 1, 0),
-                    startStr: formatDateForDisplay(new Date(year, month, 1).toISOString()),
-                    endStr: formatDateForDisplay(new Date(year, month + 1, 0).toISOString())
+                    start: start,
+                    end: now,
+                    startStr: formatDateForDisplay(start.toISOString()),
+                    endStr: formatDateForDisplay(now.toISOString())
                 };
+            } else {
+                period = getCurrentPeriod();
             }
             
             const label = document.getElementById('periodLabel');
             if (label) {
-                label.textContent = selectedPeriod === 'all' ? 
-                    `All: ${period.startStr} to ${period.endStr}` :
-                    `${period.name}: ${period.startStr} to ${period.endStr}`;
+                label.textContent = `${period.name || 'Custom Range'}: ${period.startStr} to ${period.endStr}`;
             }
             
             const startDate = period.start;
             const endDate = period.end;
+            
+            // Update date inputs to reflect the current period
+            if (!customDateRange) {
+                document.getElementById('dateRangeStart').value = period.startStr;
+                document.getElementById('dateRangeEnd').value = period.endStr;
+            }
             
             const employeeAtt = allAttendance.filter(a => {
                 if (a.userId !== employeeId) return false;
@@ -4485,6 +4799,7 @@
             document.getElementById('missingCountSummary').textContent = incomplete;
             document.getElementById('certCountSummary').textContent = certificate;
             
+            // Build calendar
             const daysInMonth = endDate.getDate();
             const firstDay = startDate.getDay();
             
@@ -4534,6 +4849,7 @@
             
             document.getElementById('calendarGrid').innerHTML = calendarHTML;
             
+            // Build details table - show latest first
             const sortedAtt = [...employeeAtt].sort((a, b) => b.date.localeCompare(a.date));
             const detailsBody = document.getElementById('attendanceDetails');
             if (detailsBody) {
