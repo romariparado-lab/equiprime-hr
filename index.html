@@ -70,17 +70,17 @@
             flex-shrink: 0;
         }
         .branding-content {
-        position: relative;
-        z-index: 1;
-        background: transparent;
-        border-radius: 0;
-        padding: 2.5rem 3rem;
-        -webkit-backdrop-filter: none;
-        backdrop-filter: none;
-        border: none;
-        box-shadow: none;
-        max-width: 600px;
-        width: 100%;
+            position: relative;
+            z-index: 1;
+            background: transparent;
+            border-radius: 0;
+            padding: 2.5rem 3rem;
+            -webkit-backdrop-filter: none;
+            backdrop-filter: none;
+            border: none;
+            box-shadow: none;
+            max-width: 600px;
+            width: 100%;
         }
         .branding-content h1 {
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
@@ -129,57 +129,60 @@
             z-index: 10;
         }
 
-         @media (max-width: 768px) {
+        @media (max-width: 768px) {
             .login-split {
-            flex-direction: column;
-            overflow-y: auto;
-            height: 100%;
-            position: relative;
+                flex-direction: column;
+                overflow-y: auto;
+                height: 100%;
+                position: relative;
+            }
+            .branding-half {
+                width: 100%;
+                min-height: 22vh;
+                padding: 0.75rem;
+                flex-shrink: 0;
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+            }
+            .branding-content {
+                padding: 0.75rem 1rem;
+                border-radius: 0.75rem;
+            }
+            .branding-content h1 {
+                font-size: 1.4rem !important;
+                margin-bottom: 0.05rem !important;
+                line-height: 1.1 !important;
+            }
+            .branding-content p {
+                font-size: 0.7rem !important;
+                margin-top: 0.05rem !important;
+                margin-bottom: 0.1rem !important;
+                line-height: 1.2 !important;
+            }
+            .branding-content .mt-8 {
+                margin-top: 0.2rem !important;
+            }
+            .branding-content .mt-6 {
+                margin-top: 0.1rem !important;
+            }
+            .branding-content .gap-6 {
+                gap: 0.4rem !important;
+            }
+            .branding-content .w-6.h-6 {
+                width: 0.9rem !important;
+                height: 0.9rem !important;
+            }
+            .login-half {
+                width: 100%;
+                padding: 1rem 0.75rem;
+                min-height: 78vh;
+                flex-shrink: 0;
+            }
+            .login-half .w-full.max-w-md {
+                max-width: 100%;
+            }
         }
-        .branding-half {
-        width: 100%;
-        min-height: 22vh;       
-        padding: 0.75rem;
-        flex-shrink: 0;
-        }
-        .branding-content {
-        padding: 0.75rem 1rem;
-        border-radius: 0.75rem;
-        }
-        .branding-content h1 {
-        font-size: 1.4rem !important;
-        margin-bottom: 0.05rem !important; 
-        line-height: 1.1 !important;   
-        }
-        .branding-content p {
-        ffont-size: 0.7rem !important;
-        margin-top: 0.05rem !important;     
-        margin-bottom: 0.1rem !important;    
-        line-height: 1.2 !important;
-        }
-        .branding-content .mt-8 {
-        margin-top: 0.2rem !important;
-        }
-        .branding-content .mt-6 {
-        margin-top: 0.1rem !important;
-        }
-        .branding-content .gap-6 {
-        gap: 0.4rem !important;
-        }
-        .branding-content .w-6.h-6 {
-        width: 0.9rem !important;
-        height: 0.9rem !important;
-        }
-        .login-half {
-        width: 100%;
-        padding: 1rem 0.75rem;
-        min-height: 78vh;
-        flex-shrink: 0;
-        }
-        .login-half .w-full.max-w-md {
-        max-width: 100%;
-        }
-    }
 
         @media (max-width: 480px) {
             .branding-half {
@@ -338,7 +341,7 @@
             align-items: center;
             gap: 0.3rem;
         }
-        
+
         .sidebar-user-section {
             width: 100%;
             display: flex;
@@ -1770,7 +1773,7 @@
                     <div class="flex justify-between items-center flex-wrap gap-4 mb-4">
                         <h2 class="text-2xl font-bold text-yellow-600">Attendance Summary</h2>
                     </div>
-                    
+
                     <div class="date-range-picker">
                         <label>From:</label>
                         <input type="date" id="dateRangeStart" />
@@ -1779,13 +1782,13 @@
                         <button onclick="applyDateRange()">Apply Range</button>
                         <button onclick="resetDateRange()" class="bg-gray-500 hover:bg-gray-600">Reset to Current</button>
                     </div>
-                    
+
                     <div class="period-selector" id="periodSelector">
                         <button class="active" data-period="current" onclick="selectPeriod('current')">Current Period</button>
                         <button data-period="previous" onclick="selectPeriod('previous')">Previous Period</button>
                         <button data-period="all" onclick="selectPeriod('all')">All Time</button>
                     </div>
-                    
+
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="lg:col-span-1"><h3 class="font-bold mb-3">Employees</h3><div id="employeeListContainer" class="space-y-2 overflow-y-auto"></div></div>
                         <div class="lg:col-span-2">
@@ -1953,19 +1956,19 @@
                     <hr class="dark:border-slate-600" role="separator" />
                     <div id="resetButtonContainer"></div>
                     <div id="migrationStatusContainer" class="mt-4"></div>
-                    
+
                     <!-- EMPLOYEE IMPORT SECTION -->
                     <div class="border-t pt-4 mt-4">
                         <h3 class="text-xl font-bold mb-4 text-yellow-600 flex items-center gap-2"><i data-feather="upload" aria-hidden="true"></i> Employee Data Import (Migration)</h3>
                         <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Upload an Excel or CSV file with employee data. The system will create accounts for all employees.</p>
-                        
+
                         <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
                             <i data-feather="upload-cloud" class="w-12 h-12 text-slate-400 mx-auto mb-2" aria-hidden="true"></i>
                             <p class="text-slate-600 dark:text-slate-300">Click or drag & drop your Excel/CSV file here</p>
                             <p class="text-xs text-slate-400 mt-1">Supported formats: .xlsx, .xls, .csv</p>
                             <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" class="hidden" onchange="handleFileUpload(event)" />
                         </div>
-                        
+
                         <div id="importPreview" class="hidden mt-4">
                             <div class="flex justify-between items-center mb-3">
                                 <h4 class="font-bold">Import Preview (<span id="previewCount">0</span> records)</h4>
@@ -2359,7 +2362,7 @@
             } catch (e) {
                 console.error('Migration error:', e);
                 alert('❌ Migration failed: ' + e.message);
-                
+
                 await db.collection('system').doc('migration').set({
                     version: CURRENT_VERSION,
                     status: 'failed',
@@ -2417,17 +2420,17 @@
         }
 
         function isModeratorOrHR() {
-            return currentUser?.email === 'hrd@equiprime.ph' || 
-                   currentUser?.email === 'mod.rom@equiprime.ph' || 
-                   currentUser?.email === 'mod.dex@equiprime.ph' ||
-                   currentUserRole === 'hr' || 
-                   currentUserRole === 'moderator';
+            return currentUser?.email === 'hrd@equiprime.ph' ||
+                currentUser?.email === 'mod.rom@equiprime.ph' ||
+                currentUser?.email === 'mod.dex@equiprime.ph' ||
+                currentUserRole === 'hr' ||
+                currentUserRole === 'moderator';
         }
 
         function updateMigrationDisplay() {
             const display = document.getElementById('migrationStatusDisplay');
             const container = document.getElementById('migrationStatusContainer');
-            
+
             if (!migrationStatus) {
                 if (display) display.innerHTML = '';
                 if (container) container.innerHTML = '';
@@ -2573,9 +2576,9 @@
             if (tabName === 'hr-payslip') { refreshHrPayslip();
                 closePayslipPreview(); }
             if (tabName === 'my-attendance') refreshMyAttendanceTab();
-            if (tabName === 'attendance-summary') { 
+            if (tabName === 'attendance-summary') {
                 populateDateRange();
-                loadEmployeeListForSummary(); 
+                loadEmployeeListForSummary();
             }
             if (tabName === 'helpdesk' || tabName === 'admin-helpdesk') refreshHelpdesk();
             if (tabName === 'employees') renderEmployeesTable();
@@ -2715,7 +2718,7 @@
             const now = new Date();
             const startInput = document.getElementById('dateRangeStart');
             const endInput = document.getElementById('dateRangeEnd');
-            
+
             const current = getCurrentPeriod();
             if (startInput && endInput) {
                 startInput.value = current.startStr;
@@ -2727,16 +2730,16 @@
         function applyDateRange() {
             const startInput = document.getElementById('dateRangeStart');
             const endInput = document.getElementById('dateRangeEnd');
-            
+
             if (startInput.value && endInput.value) {
                 const startDate = new Date(startInput.value);
                 const endDate = new Date(endInput.value);
-                
+
                 if (startDate > endDate) {
                     alert('Start date cannot be after end date.');
                     return;
                 }
-                
+
                 customDateRange = {
                     start: startDate,
                     end: endDate,
@@ -2771,13 +2774,13 @@
             const year = now.getFullYear();
             const month = now.getMonth();
             const day = now.getDate();
-            
+
             if (day >= 26) {
                 const start = new Date(year, month, 26);
                 const end = new Date(year, month + 1, 0);
-                return { 
-                    name: 'Current Period', 
-                    start: start, 
+                return {
+                    name: 'Current Period',
+                    start: start,
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
                     endStr: formatDateForDisplay(end.toISOString())
@@ -2785,9 +2788,9 @@
             } else if (day >= 11) {
                 const start = new Date(year, month, 11);
                 const end = new Date(year, month, 25);
-                return { 
-                    name: 'Current Period', 
-                    start: start, 
+                return {
+                    name: 'Current Period',
+                    start: start,
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
                     endStr: formatDateForDisplay(end.toISOString())
@@ -2797,9 +2800,9 @@
                 const prevYear = month === 0 ? year - 1 : year;
                 const start = new Date(prevYear, prevMonth, 26);
                 const end = new Date(year, month, 10);
-                return { 
-                    name: 'Current Period', 
-                    start: start, 
+                return {
+                    name: 'Current Period',
+                    start: start,
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
                     endStr: formatDateForDisplay(end.toISOString())
@@ -2812,13 +2815,13 @@
             const year = now.getFullYear();
             const month = now.getMonth();
             const day = now.getDate();
-            
+
             if (day >= 26) {
                 const start = new Date(year, month, 11);
                 const end = new Date(year, month, 25);
-                return { 
-                    name: 'Previous Period', 
-                    start: start, 
+                return {
+                    name: 'Previous Period',
+                    start: start,
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
                     endStr: formatDateForDisplay(end.toISOString())
@@ -2828,9 +2831,9 @@
                 const prevYear = month === 0 ? year - 1 : year;
                 const start = new Date(prevYear, prevMonth, 26);
                 const end = new Date(year, month, 10);
-                return { 
-                    name: 'Previous Period', 
-                    start: start, 
+                return {
+                    name: 'Previous Period',
+                    start: start,
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
                     endStr: formatDateForDisplay(end.toISOString())
@@ -2840,9 +2843,9 @@
                 const prevYear = month === 0 ? year - 1 : year;
                 const start = new Date(prevYear, prevMonth, 26);
                 const end = new Date(prevYear, prevMonth + 1, 0);
-                return { 
-                    name: 'Previous Period', 
-                    start: start, 
+                return {
+                    name: 'Previous Period',
+                    start: start,
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
                     endStr: formatDateForDisplay(end.toISOString())
@@ -2859,7 +2862,7 @@
                     btn.classList.add('active');
                 }
             });
-            
+
             if (period === 'current') {
                 const current = getCurrentPeriod();
                 document.getElementById('dateRangeStart').value = current.startStr;
@@ -2875,7 +2878,7 @@
                 document.getElementById('dateRangeStart').value = formatDateForDisplay(start.toISOString());
                 document.getElementById('dateRangeEnd').value = formatDateForDisplay(end.toISOString());
             }
-            
+
             loadEmployeeCalendar(document.querySelector('.employee-item.active')?.dataset.id || '');
         }
 
@@ -2883,7 +2886,7 @@
         function handleFileUpload(event) {
             const file = event.target.files[0];
             if (!file) return;
-            
+
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
@@ -2891,12 +2894,12 @@
                     const workbook = XLSX.read(data, { type: 'array' });
                     const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
                     const jsonData = XLSX.utils.sheet_to_json(firstSheet);
-                    
+
                     if (jsonData.length === 0) {
                         alert('No data found in the file.');
                         return;
                     }
-                    
+
                     importedData = jsonData;
                     showImportPreview(jsonData);
                 } catch (err) {
@@ -2911,22 +2914,22 @@
             const count = document.getElementById('previewCount');
             const header = document.getElementById('previewHeader');
             const body = document.getElementById('previewBody');
-            
+
             preview.classList.remove('hidden');
             count.textContent = data.length;
-            
+
             const columns = Object.keys(data[0]);
             header.innerHTML = columns.map(col => `<th class="p-2 text-left">${escapeHtml(col)}</th>`).join('');
-            
+
             const rows = data.slice(0, 10);
             body.innerHTML = rows.map(row => {
                 return `<tr>${columns.map(col => `<td class="p-2 border-b dark:border-slate-600">${escapeHtml(String(row[col] || ''))}</td>`).join('')}</tr>`;
             }).join('');
-            
+
             if (data.length > 10) {
                 body.innerHTML += `<tr><td colspan="${columns.length}" class="p-2 text-center text-slate-500">... and ${data.length - 10} more rows</td></tr>`;
             }
-            
+
             document.getElementById('importProgress').classList.add('hidden');
             document.getElementById('importResults').innerHTML = '';
             document.getElementById('confirmImportBtn').disabled = false;
@@ -2959,26 +2962,26 @@
                 alert('No data to import.');
                 return;
             }
-            
+
             if (!confirm(`⚠️ This will import ${importedData.length} employees. Continue?`)) {
                 return;
             }
-            
+
             const progressDiv = document.getElementById('importProgress');
             const progressFill = document.getElementById('progressFill');
             const progressText = document.getElementById('progressText');
             const progressPercent = document.getElementById('progressPercent');
             const resultsDiv = document.getElementById('importResults');
             const confirmBtn = document.getElementById('confirmImportBtn');
-            
+
             progressDiv.classList.remove('hidden');
             confirmBtn.disabled = true;
             importResults = [];
-            
+
             let success = 0;
             let errors = 0;
             let skipped = 0;
-            
+
             const colMap = {
                 'name': ['name', 'fullname', 'employee name', 'full name'],
                 'email': ['email', 'e-mail', 'email address'],
@@ -2998,10 +3001,10 @@
                 'philhealthNumber': ['philhealth', 'philhealth number', 'phic'],
                 'pagibigNumber': ['pagibig', 'pag-ibig', 'hdmf', 'pagibig number']
             };
-            
+
             const columns = Object.keys(importedData[0]);
             const mapping = {};
-            
+
             for (const [field, possibleNames] of Object.entries(colMap)) {
                 for (const col of columns) {
                     if (possibleNames.some(name => col.toLowerCase().includes(name) || col.toLowerCase() === name)) {
@@ -3010,18 +3013,18 @@
                     }
                 }
             }
-            
+
             if (!mapping.name || !mapping.email) {
                 alert('❌ Required columns "Name" and "Email" not found in the file. Please check column names.');
                 progressDiv.classList.add('hidden');
                 confirmBtn.disabled = false;
                 return;
             }
-            
+
             for (let i = 0; i < importedData.length; i++) {
                 const row = importedData[i];
                 const rowNum = i + 2;
-                
+
                 try {
                     const name = String(row[mapping.name] || '').trim();
                     const email = String(row[mapping.email] || '').trim().toLowerCase();
@@ -3040,32 +3043,32 @@
                     const sssNumber = String(row[mapping.sssNumber] || '').trim();
                     const philhealthNumber = String(row[mapping.philhealthNumber] || '').trim();
                     const pagibigNumber = String(row[mapping.pagibigNumber] || '').trim();
-                    
+
                     if (!name) {
                         errors++;
                         importResults.push({ row: rowNum, name: 'Unknown', status: 'error', message: 'Name is required' });
                         continue;
                     }
-                    
+
                     if (!email || !email.includes('@')) {
                         errors++;
                         importResults.push({ row: rowNum, name: name, status: 'error', message: 'Valid email is required' });
                         continue;
                     }
-                    
+
                     const existing = allEmployees.find(e => e.email === email);
                     if (existing) {
                         skipped++;
                         importResults.push({ row: rowNum, name: name, status: 'skipped', message: 'Email already exists' });
                         continue;
                     }
-                    
+
                     const password = generateUniquePassword();
                     const pin = generateUniquePin();
-                    
+
                     const userCred = await auth.createUserWithEmailAndPassword(email, password);
                     const uid = userCred.user.uid;
-                    
+
                     const empData = {
                         name: name,
                         email: email,
@@ -3094,33 +3097,33 @@
                         createdAt: new Date().toISOString(),
                         generatedPassword: password
                     };
-                    
+
                     await db.collection('employees').doc(uid).set(empData);
                     allEmployees.push({ id: uid, ...empData });
-                    
+
                     success++;
-                    importResults.push({ 
-                        row: rowNum, 
-                        name: name, 
-                        status: 'success', 
-                        message: `Imported - Password: ${password}` 
+                    importResults.push({
+                        row: rowNum,
+                        name: name,
+                        status: 'success',
+                        message: `Imported - Password: ${password}`
                     });
-                    
+
                     const progress = ((i + 1) / importedData.length) * 100;
                     progressFill.style.width = progress + '%';
                     progressPercent.textContent = Math.round(progress) + '%';
                     progressText.textContent = `Importing ${i + 1} of ${importedData.length}...`;
-                    
+
                 } catch (err) {
                     errors++;
                     importResults.push({ row: rowNum, name: String(row[mapping.name] || 'Unknown'), status: 'error', message: err.message });
                 }
             }
-            
+
             progressFill.style.width = '100%';
             progressPercent.textContent = '100%';
             progressText.textContent = 'Import completed!';
-            
+
             resultsDiv.innerHTML = `
                 <div class="grid grid-cols-4 gap-2 mt-2">
                     <div class="p-2 bg-green-100 dark:bg-green-900/30 rounded text-center">
@@ -3164,10 +3167,10 @@
                 ` : ''}
                 <button onclick="cancelImport()" class="mt-3 bg-[#011F7B] text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-800" title="Close import">Close</button>
             `;
-            
+
             refreshDashboard();
             renderEmployeesTable();
-            
+
             if (success > 0) {
                 await db.collection('system').doc('migration').set({
                     version: CURRENT_VERSION,
@@ -3187,7 +3190,7 @@
                 };
                 updateMigrationDisplay();
             }
-            
+
             confirmBtn.disabled = false;
         }
 
@@ -3468,20 +3471,20 @@
             const dept = document.getElementById('signupDepartment').value;
             const errDiv = document.getElementById('authError');
             const sucDiv = document.getElementById('authSuccess');
-            
+
             if (!name || !email || !password || !dept) {
                 errDiv.textContent = "Please fill all fields";
                 errDiv.classList.remove('hidden');
                 return;
             }
-            
+
             let role = document.getElementById('signupRole').value;
             if (email === 'hrd@equiprime.ph') {
                 role = 'hr';
             } else if (email === 'mod.rom@equiprime.ph' || email === 'mod.dex@equiprime.ph') {
                 role = 'moderator';
             }
-            
+
             try {
                 const cred = await auth.createUserWithEmailAndPassword(email, password);
                 const uid = cred.user.uid;
@@ -3973,19 +3976,19 @@
                 const requestRef = db.collection('requests').doc(requestId);
                 const doc = await requestRef.get();
                 const requestData = doc.data();
-                
+
                 await requestRef.update({
                     status: 'approved',
                     updatedAt: new Date().toISOString(),
                     approvedBy: currentUser.email,
                     approvedAt: new Date().toISOString()
                 });
-                
+
                 const idx = allRequests.findIndex(r => r.id === requestId);
                 if (idx !== -1) allRequests[idx].status = 'approved';
-                
+
                 await addAttendanceFromRequest(requestData);
-                
+
                 await auditLog('REQUEST_APPROVED', 'Request ' + requestId + ' approved by ' + currentUser.email, requestId);
                 alert(' Request approved and added to attendance!');
                 refreshDashboard();
@@ -4001,7 +4004,7 @@
             try {
                 const startDate = requestData.startDate || new Date().toISOString().split('T')[0];
                 const endDate = requestData.endDate || startDate;
-                
+
                 const start = new Date(startDate);
                 const end = new Date(endDate);
                 const dates = [];
@@ -4010,12 +4013,12 @@
                     dates.push(current.toISOString().split('T')[0]);
                     current.setDate(current.getDate() + 1);
                 }
-                
+
                 let status = 'Present';
                 let source = requestData.type + ' Request';
                 let timeIn = '08:00';
                 let timeOut = '17:00';
-                
+
                 if (requestData.type === 'Certificate of Attendance') {
                     status = 'Certificate';
                     source = 'Certificate Request';
@@ -4029,9 +4032,9 @@
                 } else if (requestData.type === 'Offset Request') {
                     status = 'Offset';
                     source = 'Offset Request';
-                } else if (requestData.type === 'Sick Leave' || requestData.type === 'Vacation Leave' || 
-                           requestData.type === 'Emergency Leave' || requestData.type === 'Birthday Leave' ||
-                           requestData.type === 'Leave') {
+                } else if (requestData.type === 'Sick Leave' || requestData.type === 'Vacation Leave' ||
+                    requestData.type === 'Emergency Leave' || requestData.type === 'Birthday Leave' ||
+                    requestData.type === 'Leave') {
                     status = 'Leave';
                     source = 'Leave Request';
                     timeIn = '--';
@@ -4056,7 +4059,7 @@
                     source = 'Clock Out Request';
                     timeOut = requestData.time || '17:00';
                 }
-                
+
                 for (const date of dates) {
                     const existing = allAttendance.find(a => a.userId === requestData.userId && a.date === date);
                     if (existing) {
@@ -4072,7 +4075,7 @@
                         if (timeOut !== '--') existing.timeOut = timeOut;
                         continue;
                     }
-                    
+
                     const newAtt = {
                         userId: requestData.userId,
                         userName: requestData.userName,
@@ -4084,7 +4087,7 @@
                         source: source,
                         createdAt: new Date().toISOString()
                     };
-                    
+
                     const docRef = await db.collection('attendance').add(newAtt);
                     allAttendance.push({ id: docRef.id, ...newAtt });
                     await auditLog('ATTENDANCE_FROM_REQUEST', 'Attendance added from approved ' + requestData.type + ' request for ' + date, docRef.id);
@@ -4489,7 +4492,7 @@
             const now = new Date();
             const startInput = document.getElementById('dateRangeStart');
             const endInput = document.getElementById('dateRangeEnd');
-            
+
             const current = getCurrentPeriod();
             if (startInput && endInput) {
                 startInput.value = current.startStr;
@@ -4501,16 +4504,16 @@
         function applyDateRange() {
             const startInput = document.getElementById('dateRangeStart');
             const endInput = document.getElementById('dateRangeEnd');
-            
+
             if (startInput.value && endInput.value) {
                 const startDate = new Date(startInput.value);
                 const endDate = new Date(endInput.value);
-                
+
                 if (startDate > endDate) {
                     alert('Start date cannot be after end date.');
                     return;
                 }
-                
+
                 customDateRange = {
                     start: startDate,
                     end: endDate,
@@ -4545,13 +4548,13 @@
             const year = now.getFullYear();
             const month = now.getMonth();
             const day = now.getDate();
-            
+
             if (day >= 26) {
                 const start = new Date(year, month, 26);
                 const end = new Date(year, month + 1, 0);
-                return { 
-                    name: 'Current Period', 
-                    start: start, 
+                return {
+                    name: 'Current Period',
+                    start: start,
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
                     endStr: formatDateForDisplay(end.toISOString())
@@ -4559,9 +4562,9 @@
             } else if (day >= 11) {
                 const start = new Date(year, month, 11);
                 const end = new Date(year, month, 25);
-                return { 
-                    name: 'Current Period', 
-                    start: start, 
+                return {
+                    name: 'Current Period',
+                    start: start,
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
                     endStr: formatDateForDisplay(end.toISOString())
@@ -4571,9 +4574,9 @@
                 const prevYear = month === 0 ? year - 1 : year;
                 const start = new Date(prevYear, prevMonth, 26);
                 const end = new Date(year, month, 10);
-                return { 
-                    name: 'Current Period', 
-                    start: start, 
+                return {
+                    name: 'Current Period',
+                    start: start,
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
                     endStr: formatDateForDisplay(end.toISOString())
@@ -4586,13 +4589,13 @@
             const year = now.getFullYear();
             const month = now.getMonth();
             const day = now.getDate();
-            
+
             if (day >= 26) {
                 const start = new Date(year, month, 11);
                 const end = new Date(year, month, 25);
-                return { 
-                    name: 'Previous Period', 
-                    start: start, 
+                return {
+                    name: 'Previous Period',
+                    start: start,
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
                     endStr: formatDateForDisplay(end.toISOString())
@@ -4602,9 +4605,9 @@
                 const prevYear = month === 0 ? year - 1 : year;
                 const start = new Date(prevYear, prevMonth, 26);
                 const end = new Date(year, month, 10);
-                return { 
-                    name: 'Previous Period', 
-                    start: start, 
+                return {
+                    name: 'Previous Period',
+                    start: start,
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
                     endStr: formatDateForDisplay(end.toISOString())
@@ -4614,9 +4617,9 @@
                 const prevYear = month === 0 ? year - 1 : year;
                 const start = new Date(prevYear, prevMonth, 26);
                 const end = new Date(prevYear, prevMonth + 1, 0);
-                return { 
-                    name: 'Previous Period', 
-                    start: start, 
+                return {
+                    name: 'Previous Period',
+                    start: start,
                     end: end,
                     startStr: formatDateForDisplay(start.toISOString()),
                     endStr: formatDateForDisplay(end.toISOString())
@@ -4633,7 +4636,7 @@
                     btn.classList.add('active');
                 }
             });
-            
+
             if (period === 'current') {
                 const current = getCurrentPeriod();
                 document.getElementById('dateRangeStart').value = current.startStr;
@@ -4649,7 +4652,7 @@
                 document.getElementById('dateRangeStart').value = formatDateForDisplay(start.toISOString());
                 document.getElementById('dateRangeEnd').value = formatDateForDisplay(end.toISOString());
             }
-            
+
             loadEmployeeCalendar(document.querySelector('.employee-item.active')?.dataset.id || '');
         }
 
@@ -4687,7 +4690,7 @@
 
         async function loadEmployeeCalendar(employeeId) {
             if (!employeeId) return;
-            
+
             let period;
             if (customDateRange) {
                 period = customDateRange;
@@ -4707,51 +4710,51 @@
             } else {
                 period = getCurrentPeriod();
             }
-            
+
             const startDate = period.start;
             const endDate = period.end;
-            
+
             if (!customDateRange) {
                 document.getElementById('dateRangeStart').value = period.startStr;
                 document.getElementById('dateRangeEnd').value = period.endStr;
             }
-            
+
             const employeeAtt = allAttendance.filter(a => {
                 if (a.userId !== employeeId) return false;
                 const attDate = new Date(a.date);
                 return attDate >= startDate && attDate <= endDate;
             });
-            
+
             const completed = employeeAtt.filter(a => a.timeIn && a.timeOut && a.status !== 'Certificate' && a.status !== 'Official Business' && a.status !== 'Overtime' && a.status !== 'Offset' && a.status !== 'Leave').length;
             const certificate = employeeAtt.filter(a => a.status === 'Certificate').length;
             const incomplete = employeeAtt.filter(a => a.timeIn && !a.timeOut && a.status !== 'Certificate' && a.status !== 'Official Business' && a.status !== 'Overtime' && a.status !== 'Offset' && a.status !== 'Leave').length;
             const late = employeeAtt.filter(a => a.status === 'Late').length;
             const requests = employeeAtt.filter(a => a.status === 'Official Business' || a.status === 'Overtime' || a.status === 'Offset' || a.status === 'Leave').length;
-            
+
             document.getElementById('completedCount').textContent = completed;
             document.getElementById('lateCountSummary').textContent = late;
             document.getElementById('missingCountSummary').textContent = incomplete;
             document.getElementById('certCountSummary').textContent = certificate;
             document.getElementById('requestCountSummary').textContent = requests;
-            
+
             const daysInMonth = endDate.getDate();
             const firstDay = startDate.getDay();
-            
+
             let calendarHTML = '';
             const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
             days.forEach(d => {
                 calendarHTML += '<div class="calendar-header">' + d + '</div>';
             });
-            
+
             for (let i = 0; i < firstDay; i++) {
                 calendarHTML += '<div class="day bg-gray-200 dark:bg-gray-700 p-2 rounded text-center"></div>';
             }
-            
+
             let currentDate = new Date(startDate);
             while (currentDate <= endDate) {
                 const dateStr = currentDate.toISOString().split('T')[0];
                 const attRecord = employeeAtt.find(a => a.date === dateStr);
-                
+
                 let statusClass = 'incomplete';
                 let statusText = 'No';
                 if (attRecord) {
@@ -4781,17 +4784,17 @@
                         statusText = '⌛';
                     }
                 }
-                
+
                 calendarHTML += `<div class="day ${statusClass} p-2 rounded text-center text-white">
                     <div class="font-bold">${currentDate.getDate()}</div>
                     <div class="text-xs">${statusText}</div>
                 </div>`;
-                
+
                 currentDate.setDate(currentDate.getDate() + 1);
             }
-            
+
             document.getElementById('calendarGrid').innerHTML = calendarHTML;
-            
+
             const sortedAtt = [...employeeAtt].sort((a, b) => b.date.localeCompare(a.date));
             const detailsBody = document.getElementById('attendanceDetails');
             if (detailsBody) {
@@ -4804,7 +4807,7 @@
                     else if (a.status === 'Leave') statusColor = 'bg-purple-100 text-purple-800';
                     else if (a.timeIn && a.timeOut) statusColor = 'bg-green-100 text-green-800';
                     else statusColor = 'bg-yellow-100 text-yellow-800';
-                    
+
                     return `
                     <tr>
                         <td class="p-2">${a.date}</td>
