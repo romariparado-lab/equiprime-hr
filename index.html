@@ -116,7 +116,7 @@
         .login-half select {
             position: relative;
             z-index: 10;
-            font-size: 16px !important; /* Prevents iOS zoom */
+            font-size: 16px !important; 
         }
         .login-half .w-full.max-w-md {
             position: relative;
@@ -130,53 +130,58 @@
         }
 
       @media (max-width: 768px) {
-        .login-split {
-            flex-direction: column;
-            overflow-y: auto;
-            height: 100%;
-            position: relative;
-        }
-        .branding-half {
-            width: 100%;
-            min-height: 22vh;  
-            padding: 0.75rem;
-            flex-shrink: 0;
-        }
-        .branding-content {
-            padding: 0.75rem 1rem;
-            border-radius: 0.75rem;
-        }
-        .branding-content h1 {
-            font-size: 1.3rem !important;
-        }
-        .branding-content p {
-            font-size: 0.7rem !important;
-            margin-top: 0.2rem !important;
-        }
-        .branding-content .mt-8 {
-            margin-top: 0.4rem !important;
-        }
-        .branding-content .mt-6 {
-            margin-top: 0.2rem !important;
-        }
-        .branding-content .gap-6 {
-            gap: 0.5rem !important;
-        }
-        .branding-content .w-6.h-6 {
-            width: 0.9rem !important;
-            height: 0.9rem !important;
-        }
-        .login-half {
-            width: 100%;
-            padding: 1rem 0.75rem;
-            min-height: 78vh;
-            flex-shrink: 0;
-        }
-        .login-half .w-full.max-w-md {
-            max-width: 100%;
-        }
+    .login-split {
+        flex-direction: column;
+        overflow-y: auto;
+        height: 100%;
+        position: relative;
     }
-
+    
+    .branding-half {
+        width: 100%;
+        min-height: 25vh;        
+        padding: 0.5rem 1rem;      
+        flex-shrink: 0;
+        display: flex;
+        align-items: flex-start;    
+        justify-content: center;
+    }
+    
+    .branding-content {
+        padding: 0.75rem 1rem;      
+        border-radius: 0.75rem;
+        margin-top: 0;
+    }
+    
+    .branding-content h1 {
+        font-size: 1.4rem !important;
+        margin-top: 0 !important; 
+    }
+    
+    .branding-content p {
+        font-size: 0.75rem !important;
+        margin-top: 0.2rem !important;
+    }
+    
+    .branding-content .mt-8 {
+        margin-top: 0.4rem !important;
+    }
+    
+    .branding-content .mt-6 {
+        margin-top: 0.2rem !important;
+    }
+    
+    .login-half {
+        width: 100%;
+        padding: 1rem 0.75rem;
+        min-height: 75vh;
+        flex-shrink: 0;
+    }
+    
+    .login-half .w-full.max-w-md {
+        max-width: 100%;
+    }
+}
         @media (max-width: 480px) {
             .branding-half {
                 min-height: 25vh;
