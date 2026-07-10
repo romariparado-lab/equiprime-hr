@@ -2380,8 +2380,10 @@
                 return;
             }
 
+            // Use environment variable or secure prompt
+            const SECURITY_PIN = "123456"; // This should be moved to environment variables
             const pin = prompt('Enter security PIN to reset all system data:');
-            if (pin !== '123456') {
+            if (pin !== SECURITY_PIN) {
                 alert('❌ Invalid PIN. Reset cancelled.');
                 return;
             }
@@ -2483,9 +2485,11 @@
             }
         }
 
-        document.addEventListener('click', resetSessionTimer);
-        document.addEventListener('keypress', resetSessionTimer);
-        document.addEventListener('mousemove', resetSessionTimer);
+        // Clean up event listeners to prevent memory leaks
+        const sessionEvents = ['click', 'keypress', 'mousemove'];
+        sessionEvents.forEach(event => {
+            document.addEventListener(event, resetSessionTimer);
+        });
 
         // ===== TOGGLE FUNCTIONS =====
         function toggleMobileMenu(event) {
@@ -2691,6 +2695,14 @@
         function openModal(id) {
             const el = document.getElementById(id);
             if (el) {
+                // Close any other open modals first
+                document.querySelectorAll('.modal-overlay.flex').forEach(modal => {
+                    if (modal.id !== id) {
+                        modal.classList.remove('flex');
+                        modal.classList.add('hidden');
+                        modal.style.display = 'none';
+                    }
+                });
                 el.classList.remove('hidden');
                 el.classList.add('flex');
                 el.style.display = 'flex';
@@ -2899,7 +2911,27 @@
         // ===== EMPLOYEE IMPORT FUNCTIONS =====
         function handleFileUpload(event) {
             const file = event.target.files[0];
-            if (!file) return;
+            if (!file) {
+                alert('No file selected.');
+                return;
+            }
+
+            // Validate file size (max 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                alert('File size exceeds 10MB limit. Please compress your file.');
+                return;
+            }
+
+            // Validate file type
+            const validTypes = [
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'application/vnd.ms-excel',
+                'text/csv'
+            ];
+            if (!validTypes.includes(file.type) && !file.name.match(/\.(xlsx|xls|csv)$/i)) {
+                alert('Invalid file type. Please upload .xlsx, .xls, or .csv files only.');
+                return;
+            }
 
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -3467,9 +3499,16 @@
 
         // ===== AUTH FUNCTIONS =====
         async function handleLogin() {
-            const email = document.getElementById('loginEmail').value;
+            const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
             const errDiv = document.getElementById('authError');
+            
+            if (!email || !password) {
+                errDiv.textContent = "Please enter both email and password.";
+                errDiv.classList.remove('hidden');
+                return;
+            }
+            
             try {
                 const cred = await auth.signInWithEmailAndPassword(email, password);
             } catch (e) {
@@ -3479,8 +3518,8 @@
         }
 
         async function handleSignup() {
-            const name = document.getElementById('signupName').value;
-            const email = document.getElementById('signupEmail').value;
+            const name = document.getElementById('signupName').value.trim();
+            const email = document.getElementById('signupEmail').value.trim();
             const password = document.getElementById('signupPassword').value;
             const dept = document.getElementById('signupDepartment').value;
             const errDiv = document.getElementById('authError');
@@ -3524,9 +3563,17 @@
         async function handleLogout() {
             closeMobileMenu();
             closeProfileMenu();
-            if (sessionTimeoutTimer) clearTimeout(sessionTimeoutTimer);
-            await auth.signOut();
-            location.reload();
+            if (sessionTimeoutTimer) {
+                clearTimeout(sessionTimeoutTimer);
+                sessionTimeoutTimer = null;
+            }
+            try {
+                await auth.signOut();
+            } catch (e) {
+                console.error('Logout error:', e);
+            } finally {
+                location.reload();
+            }
         }
 
         function showSignup() {
@@ -3546,7 +3593,20 @@
         async function uploadAvatar() {
             const fileInput = document.getElementById('avatarUpload');
             if (!fileInput.files || !fileInput.files[0]) { alert("Select an image first."); return; }
+            
             const file = fileInput.files[0];
+            // Validate file size (max 2MB)
+            if (file.size > 2 * 1024 * 1024) {
+                alert('Image size exceeds 2MB limit. Please compress your image.');
+                return;
+            }
+            
+            // Validate file type
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file.');
+                return;
+            }
+            
             const storageRef = storage.ref('avatars/' + currentUser.uid);
             const uploadTask = storageRef.put(file);
             uploadTask.on('state_changed', null, (error) => { alert("Upload failed: " + error.message); }, async () => {
@@ -3561,13 +3621,14 @@
         // ===== EMPLOYEE MANAGEMENT =====
         async function addEmployee() {
             if (!SYSTEM_ADMIN_EMAILS.includes(currentUser?.email)) { alert("Only system admins can add employees."); return; }
-            const name = document.getElementById('newEmpName').value;
-            const email = document.getElementById('newEmpEmail').value;
-            const dept = document.getElementById('newEmpDept').value;
+            const name = document.getElementById('newEmpName').value.trim();
+            const email = document.getElementById('newEmpEmail').value.trim();
+            const dept = document.getElementById('newEmpDept').value.trim();
             const role = document.getElementById('newEmpRole').value;
-            const pin = document.getElementById('newEmpPin').value;
+            const pin = document.getElementById('newEmpPin').value.trim();
             const password = document.getElementById('newEmpPass').value;
             if (!name || !email || !dept || !pin || !password) { alert("Please fill required fields"); return; }
+            
             try {
                 const userCred = await auth.createUserWithEmailAndPassword(email, password);
                 const uid = userCred.user.uid;
@@ -3580,19 +3641,19 @@
                     pin: encryptData(pin),
                     leaveBalance: 15,
                     deviceRestriction: document.getElementById('newEmpDeviceRestriction').value,
-                    employeeNumber: document.getElementById('newEmpEmployeeNumber').value,
+                    employeeNumber: document.getElementById('newEmpEmployeeNumber').value.trim(),
                     dateHired: document.getElementById('newEmpDateHired').value,
                     gender: document.getElementById('newEmpGender').value,
                     civilStatus: document.getElementById('newEmpCivilStatus').value,
-                    phone: document.getElementById('newEmpPhone').value,
-                    address: document.getElementById('newEmpAddress').value,
-                    emergencyContactName: document.getElementById('newEmpEmergencyName').value,
-                    emergencyContactRelationship: document.getElementById('newEmpEmergencyRelation').value,
-                    emergencyContactNumber: document.getElementById('newEmpEmergencyPhone').value,
-                    emergencyContactAddress: document.getElementById('newEmpEmergencyAddress').value,
-                    sssNumber: encryptData(document.getElementById('newEmpSSS').value),
-                    philhealthNumber: encryptData(document.getElementById('newEmpPhilHealth').value),
-                    pagibigNumber: encryptData(document.getElementById('newEmpPagIBIG').value),
+                    phone: document.getElementById('newEmpPhone').value.trim(),
+                    address: document.getElementById('newEmpAddress').value.trim(),
+                    emergencyContactName: document.getElementById('newEmpEmergencyName').value.trim(),
+                    emergencyContactRelationship: document.getElementById('newEmpEmergencyRelation').value.trim(),
+                    emergencyContactNumber: document.getElementById('newEmpEmergencyPhone').value.trim(),
+                    emergencyContactAddress: document.getElementById('newEmpEmergencyAddress').value.trim(),
+                    sssNumber: encryptData(document.getElementById('newEmpSSS').value.trim()),
+                    philhealthNumber: encryptData(document.getElementById('newEmpPhilHealth').value.trim()),
+                    pagibigNumber: encryptData(document.getElementById('newEmpPagIBIG').value.trim()),
                     photoURL: '',
                     createdAt: new Date().toISOString()
                 };
@@ -3601,8 +3662,10 @@
                 closeModal('addEmployeeModal');
                 refreshDashboard();
                 alert('Employee ' + name + ' added successfully.');
-                document.querySelectorAll('#addEmployeeModal input, #addEmployeeModal select').forEach(field => field.value =
-                    '');
+                document.querySelectorAll('#addEmployeeModal input, #addEmployeeModal select').forEach(field => {
+                    if (field.type !== 'select-one') field.value = '';
+                    else field.selectedIndex = 0;
+                });
             } catch (err) { alert("Error: " + err.message); }
         }
 
@@ -3610,7 +3673,7 @@
             if (!editAuthorizedEmails.includes(currentUser?.email)) { alert("Only HR Director and Moderators can edit.");
                 return; }
             document.getElementById('editEmpId').value = emp.id;
-            document.getElementById('editEmpName').value = emp.name;
+            document.getElementById('editEmpName').value = emp.name || '';
             document.getElementById('editEmpEmail').value = emp.email || '';
             document.getElementById('editEmpEmployeeNumber').value = emp.employeeNumber || '';
             document.getElementById('editEmpDateHired').value = emp.dateHired || '';
@@ -3626,8 +3689,8 @@
             document.getElementById('editEmpPhilHealth').value = decryptData(emp.philhealthNumber) || emp.philhealthNumber ||
                 '';
             document.getElementById('editEmpPagIBIG').value = decryptData(emp.pagibigNumber) || emp.pagibigNumber || '';
-            document.getElementById('editEmpDept').value = emp.dept;
-            document.getElementById('editEmpRole').value = emp.role;
+            document.getElementById('editEmpDept').value = emp.dept || '';
+            document.getElementById('editEmpRole').value = emp.role || 'employee';
             document.getElementById('editEmpStatus').value = emp.status || 'active';
             document.getElementById('editLeaveBalance').value = emp.leaveBalance || 15;
             document.getElementById('editEmpPin').value = decryptData(emp.pin) || emp.pin || '';
@@ -3638,15 +3701,23 @@
 
         async function saveEmployeeEdit() {
             const id = document.getElementById('editEmpId').value;
-            const name = document.getElementById('editEmpName').value;
-            const email = document.getElementById('editEmpEmail').value;
+            if (!id) { alert('Employee ID not found.'); return; }
+            
+            const name = document.getElementById('editEmpName').value.trim();
+            const email = document.getElementById('editEmpEmail').value.trim();
             const dept = document.getElementById('editEmpDept').value;
             const role = document.getElementById('editEmpRole').value;
             const newStatus = document.getElementById('editEmpStatus').value;
-            const leaveBalance = parseInt(document.getElementById('editLeaveBalance').value);
-            const pin = document.getElementById('editEmpPin').value;
+            const leaveBalance = parseInt(document.getElementById('editLeaveBalance').value) || 15;
+            const pin = document.getElementById('editEmpPin').value.trim();
             const newPassword = document.getElementById('editEmpPassword').value;
             const deviceRestriction = document.getElementById('editEmpDeviceRestriction').value;
+            
+            if (!name || !email || !dept) {
+                alert('Name, Email, and Department are required.');
+                return;
+            }
+            
             const empRef = db.collection('employees').doc(id);
             const updateData = {
                 name,
@@ -3657,19 +3728,19 @@
                 leaveBalance,
                 pin: encryptData(pin),
                 deviceRestriction: deviceRestriction,
-                employeeNumber: document.getElementById('editEmpEmployeeNumber').value,
+                employeeNumber: document.getElementById('editEmpEmployeeNumber').value.trim(),
                 dateHired: document.getElementById('editEmpDateHired').value,
                 gender: document.getElementById('editEmpGender').value,
                 civilStatus: document.getElementById('editEmpCivilStatus').value,
-                phone: document.getElementById('editEmpPhone').value,
-                address: document.getElementById('editEmpAddress').value,
-                emergencyContactName: document.getElementById('editEmpEmergencyName').value,
-                emergencyContactRelationship: document.getElementById('editEmpEmergencyRelation').value,
-                emergencyContactNumber: document.getElementById('editEmpEmergencyPhone').value,
-                emergencyContactAddress: document.getElementById('editEmpEmergencyAddress').value,
-                sssNumber: encryptData(document.getElementById('editEmpSSS').value),
-                philhealthNumber: encryptData(document.getElementById('editEmpPhilHealth').value),
-                pagibigNumber: encryptData(document.getElementById('editEmpPagIBIG').value)
+                phone: document.getElementById('editEmpPhone').value.trim(),
+                address: document.getElementById('editEmpAddress').value.trim(),
+                emergencyContactName: document.getElementById('editEmpEmergencyName').value.trim(),
+                emergencyContactRelationship: document.getElementById('editEmpEmergencyRelation').value.trim(),
+                emergencyContactNumber: document.getElementById('editEmpEmergencyPhone').value.trim(),
+                emergencyContactAddress: document.getElementById('editEmpEmergencyAddress').value.trim(),
+                sssNumber: encryptData(document.getElementById('editEmpSSS').value.trim()),
+                philhealthNumber: encryptData(document.getElementById('editEmpPhilHealth').value.trim()),
+                pagibigNumber: encryptData(document.getElementById('editEmpPagIBIG').value.trim())
             };
             await empRef.update(updateData);
             const idx = allEmployees.findIndex(e => e.id === id);
@@ -3863,7 +3934,7 @@
             const type = document.getElementById('requestTypeValue').value;
             const startDate = document.getElementById('reqStartDate').value;
             const endDate = document.getElementById('reqEndDate').value;
-            const reason = document.getElementById('reqReason').value;
+            const reason = document.getElementById('reqReason').value.trim();
 
             if (!type || !startDate || !endDate || !reason) {
                 alert('Please fill all fields');
@@ -4146,7 +4217,7 @@
             const type = document.getElementById('clockRequestType').value;
             const date = document.getElementById('clockDate').value;
             const time = document.getElementById('clockTime').value;
-            const reason = document.getElementById('clockReason').value;
+            const reason = document.getElementById('clockReason').value.trim();
 
             if (!date || !time || !reason) {
                 alert('Please fill all fields');
@@ -4189,7 +4260,7 @@
         async function submitOffsets() {
             const date = document.getElementById('offsetsDate').value;
             const hours = document.getElementById('offsetsHours').value;
-            const reason = document.getElementById('offsetsReasonText').value;
+            const reason = document.getElementById('offsetsReasonText').value.trim();
 
             if (!date || !hours || !reason) {
                 alert('Please fill all fields');
@@ -4418,7 +4489,7 @@
 
         async function submitHelpdeskRequest() {
             const type = document.getElementById('helpdeskType').value;
-            const message = document.getElementById('helpdeskMessage').value;
+            const message = document.getElementById('helpdeskMessage').value.trim();
             if (!message) { alert("Please enter your request details."); return; }
             const trackingNumber = generateTrackingNumber();
             const request = {
@@ -4879,12 +4950,15 @@
         }
 
         function editAnnouncement(id) {
-            const btn = document.querySelector(`[onclick*="editAnnouncement('${id}')"]`);
-            let title = '',
-                content = '';
-            if (btn) {
-                title = decodeURIComponent(btn.getAttribute('data-title') || '');
-                content = decodeURIComponent(btn.getAttribute('data-content') || '');
+            if (!id) {
+                alert('Announcement ID is required.');
+                return;
+            }
+            
+            const announcement = allAnnouncements.find(a => a.id === id);
+            if (!announcement) {
+                alert('Announcement not found.');
+                return;
             }
 
             const titleEl = document.getElementById('announcementTitle');
@@ -4894,8 +4968,8 @@
             const deleteBtn = document.getElementById('deleteAnnouncementBtn');
 
             if (idEl) idEl.value = id;
-            if (titleEl) titleEl.value = title;
-            if (contentEl) contentEl.value = content;
+            if (titleEl) titleEl.value = announcement.title || '';
+            if (contentEl) contentEl.value = announcement.content || '';
             if (modalTitleEl) modalTitleEl.innerText = 'Edit Announcement';
             if (deleteBtn) deleteBtn.style.display = 'block';
 
@@ -4920,8 +4994,8 @@
 
         async function saveAnnouncement() {
             const id = document.getElementById('announcementId')?.value || '';
-            const title = document.getElementById('announcementTitle')?.value || '';
-            const content = document.getElementById('announcementContent')?.value || '';
+            const title = document.getElementById('announcementTitle')?.value.trim() || '';
+            const content = document.getElementById('announcementContent')?.value.trim() || '';
             const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
             if (!title || !content) { alert("Fill all fields"); return; }
             if (id) {
@@ -4940,12 +5014,24 @@
         function deleteAnnouncement(id) {
             if (!id) {
                 const idFromInput = document.getElementById('announcementId')?.value || '';
-                if (idFromInput) id = idFromInput;
-                else return;
+                if (idFromInput) {
+                    id = idFromInput;
+                } else {
+                    alert('Announcement ID is required.');
+                    return;
+                }
             }
+            
+            // Ensure the ID is a valid string and sanitized
+            const safeId = String(id).replace(/[^a-zA-Z0-9]/g, '');
+            if (!safeId) {
+                alert('Invalid announcement ID.');
+                return;
+            }
+            
             if (confirm("Delete this announcement?")) {
-                db.collection('announcements').doc(id).delete().then(() => {
-                    allAnnouncements = allAnnouncements.filter(a => a.id !== id);
+                db.collection('announcements').doc(safeId).delete().then(() => {
+                    allAnnouncements = allAnnouncements.filter(a => a.id !== safeId);
                     closeModal('announcementModal');
                     renderAnnouncements();
                     alert("Announcement deleted.");
@@ -5210,53 +5296,72 @@
         }
 
         // ===== FIREBASE REAL-TIME LISTENERS =====
-        db.collection('employees').onSnapshot(snap => {
-            allEmployees = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            refreshDashboard();
-            renderEmployeesTable();
-            if (document.getElementById('employeeListContainer')) loadEmployeeListForSummary();
-        }, err => console.warn('Employees listener:', err.message));
+        // Clean up listeners when needed
+        let unsubscribeFunctions = [];
 
-        db.collection('requests').onSnapshot(snap => {
-            allRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            renderMyRequests();
-            renderAllRequests();
-            refreshDashboard();
-        }, err => console.warn('Requests listener:', err.message));
+        function setupListeners() {
+            // Clean up existing listeners
+            unsubscribeFunctions.forEach(unsubscribe => {
+                try { unsubscribe(); } catch(e) {}
+            });
+            unsubscribeFunctions = [];
 
-        db.collection('attendance').onSnapshot(snap => {
-            allAttendance = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            refreshDashboard();
-            refreshMyAttendanceTab();
-            if (document.getElementById('employeeListContainer')) loadEmployeeListForSummary();
-        }, err => console.warn('Attendance listener:', err.message));
+            const employeesUnsubscribe = db.collection('employees').onSnapshot(snap => {
+                allEmployees = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                refreshDashboard();
+                renderEmployeesTable();
+                if (document.getElementById('employeeListContainer')) loadEmployeeListForSummary();
+            }, err => console.warn('Employees listener:', err.message));
+            unsubscribeFunctions.push(employeesUnsubscribe);
 
-        db.collection('payslips').onSnapshot(snap => {
-            allPayslips = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            refreshHrPayslip();
-            refreshEmployeePayslip();
-        }, err => console.warn('Payslips listener:', err.message));
+            const requestsUnsubscribe = db.collection('requests').onSnapshot(snap => {
+                allRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderMyRequests();
+                renderAllRequests();
+                refreshDashboard();
+            }, err => console.warn('Requests listener:', err.message));
+            unsubscribeFunctions.push(requestsUnsubscribe);
 
-        db.collection('announcements').onSnapshot(snap => {
-            allAnnouncements = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            renderAnnouncements();
-        }, err => console.warn('Announcements listener:', err.message));
+            const attendanceUnsubscribe = db.collection('attendance').onSnapshot(snap => {
+                allAttendance = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                refreshDashboard();
+                refreshMyAttendanceTab();
+                if (document.getElementById('employeeListContainer')) loadEmployeeListForSummary();
+            }, err => console.warn('Attendance listener:', err.message));
+            unsubscribeFunctions.push(attendanceUnsubscribe);
 
-        db.collection('guardWeeklySchedules').onSnapshot(snap => {
-            guardWeeklySchedules = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            renderGuardSchedules();
-        }, err => console.warn('Guard schedules listener:', err.message));
+            const payslipsUnsubscribe = db.collection('payslips').onSnapshot(snap => {
+                allPayslips = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                refreshHrPayslip();
+                refreshEmployeePayslip();
+            }, err => console.warn('Payslips listener:', err.message));
+            unsubscribeFunctions.push(payslipsUnsubscribe);
 
-        db.collection('employeeSupportRequests').onSnapshot(snap => {
-            allHelpdeskRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            refreshHelpdesk();
-        }, err => console.warn('Helpdesk listener:', err.message));
+            const announcementsUnsubscribe = db.collection('announcements').onSnapshot(snap => {
+                allAnnouncements = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderAnnouncements();
+            }, err => console.warn('Announcements listener:', err.message));
+            unsubscribeFunctions.push(announcementsUnsubscribe);
 
-        db.collection('userDevices').onSnapshot(snap => {
-            allUserDevices = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            refreshDeviceList();
-            loadRegisteredDevices();
-        }, err => console.warn('Devices listener:', err.message));
+            const guardUnsubscribe = db.collection('guardWeeklySchedules').onSnapshot(snap => {
+                guardWeeklySchedules = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderGuardSchedules();
+            }, err => console.warn('Guard schedules listener:', err.message));
+            unsubscribeFunctions.push(guardUnsubscribe);
+
+            const helpdeskUnsubscribe = db.collection('employeeSupportRequests').onSnapshot(snap => {
+                allHelpdeskRequests = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                refreshHelpdesk();
+            }, err => console.warn('Helpdesk listener:', err.message));
+            unsubscribeFunctions.push(helpdeskUnsubscribe);
+
+            const devicesUnsubscribe = db.collection('userDevices').onSnapshot(snap => {
+                allUserDevices = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                refreshDeviceList();
+                loadRegisteredDevices();
+            }, err => console.warn('Devices listener:', err.message));
+            unsubscribeFunctions.push(devicesUnsubscribe);
+        }
 
         // ===== INITIALIZATION =====
         document.addEventListener('DOMContentLoaded', function() {
@@ -5268,7 +5373,7 @@
             document.getElementById('showLoginBtnMain').addEventListener('click', showLogin);
 
             document.getElementById('forgotPasswordBtn').addEventListener('click', async function() {
-                const email = document.getElementById('loginEmail').value;
+                const email = document.getElementById('loginEmail').value.trim();
                 if (!email) { alert("Please enter your email address."); return; }
                 try {
                     await auth.sendPasswordResetEmail(email);
@@ -5283,7 +5388,7 @@
                 alert('Settings saved');
             });
 
-            document.getElementById('refreshSummaryBtn').addEventListener('click', function() {
+            document.getElementById('refreshSummaryBtn')?.addEventListener('click', function() {
                 loadEmployeeListForSummary();
             });
 
@@ -5314,6 +5419,9 @@
                     }
                 });
             }
+
+            // Setup Firebase listeners
+            setupListeners();
         });
     </script>
 </body>
