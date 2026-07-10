@@ -43,7 +43,6 @@
             background: #0f172a;
         }
 
-        /* ===== LOGIN SCREEN ===== */
         .login-split {
             display: flex;
             min-height: 100vh;
@@ -62,9 +61,9 @@
             background-position: center center;
             background-repeat: no-repeat;
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: center;
-            padding: 1.5rem;
+            padding: 2rem;
             position: relative;
             width: 60%;
             min-height: 100vh;
@@ -73,20 +72,21 @@
         .branding-content {
             position: relative;
             z-index: 1;
-            border-radius: 0;
-            padding: 0;
-            border: none;
-            box-shadow: none;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 2rem;
+            padding: 2.5rem 3rem;
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
             max-width: 600px;
             width: 100%;
         }
         .branding-content h1 {
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-            font-size: clamp(1.8rem, 4vw, 3.5rem);
         }
         .branding-content p {
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-            font-size: clamp(0.9rem, 1.2vw, 1.1rem);
         }
         .branding-content a {
             transition: all 0.3s ease;
@@ -101,7 +101,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1.5rem;
+            padding: 2rem;
             width: 40%;
             min-height: 100vh;
             flex-shrink: 0;
@@ -116,70 +116,71 @@
         .login-half select {
             position: relative;
             z-index: 10;
-            font-size: 16px !important; 
+            font-size: 16px !important;
         }
         .login-half .w-full.max-w-md {
             position: relative;
             z-index: 10;
-            width: 100%;
             max-width: 400px;
+            width: 100%;
         }
         .login-half .text-center.mb-8 {
             position: relative;
             z-index: 10;
         }
 
-      @media (max-width: 768px) {
-    .login-split {
-        flex-direction: column;
-        overflow-y: auto;
-        height: 100%;
-        position: relative;
-    }
-    .branding-half {
+         @media (max-width: 768px) {
+            .login-split {
+            flex-direction: column;
+            overflow-y: auto;
+            height: 100%;
+            position: relative;
+        }
+        .branding-half {
         width: 100%;
         min-height: 22vh;       
         padding: 0.75rem;
         flex-shrink: 0;
-    }
-    .branding-content {
+        }
+        .branding-content {
         padding: 0.75rem 1rem;
         border-radius: 0.75rem;
-    }
-    .branding-content h1 {
+        }
+        .branding-content h1 {
         font-size: 1.4rem !important;
         margin-bottom: 0.05rem !important; 
         line-height: 1.1 !important;   
-    }
-    .branding-content p {
+        }
+        .branding-content p {
         ffont-size: 0.7rem !important;
         margin-top: 0.05rem !important;     
         margin-bottom: 0.1rem !important;    
         line-height: 1.2 !important;
-    }
-    .branding-content .mt-8 {
+        }
+        .branding-content .mt-8 {
         margin-top: 0.2rem !important;
-    }
-    .branding-content .mt-6 {
+        }
+        .branding-content .mt-6 {
         margin-top: 0.1rem !important;
-    }
-    .branding-content .gap-6 {
+        }
+        .branding-content .gap-6 {
         gap: 0.4rem !important;
-    }
-    .branding-content .w-6.h-6 {
+        }
+        .branding-content .w-6.h-6 {
         width: 0.9rem !important;
         height: 0.9rem !important;
-    }
-    .login-half {
+        }
+        .login-half {
         width: 100%;
         padding: 1rem 0.75rem;
         min-height: 78vh;
         flex-shrink: 0;
-    }
-    .login-half .w-full.max-w-md {
+        }
+        .login-half .w-full.max-w-md {
         max-width: 100%;
+        }
     }
-}
+
         @media (max-width: 480px) {
             .branding-half {
                 min-height: 25vh;
@@ -189,13 +190,14 @@
                 padding: 1rem;
             }
             .branding-content h1 {
-                font-size: 1.3rem !important;
+                font-size: 1.6rem !important;
             }
             .branding-content p {
-                font-size: 0.75rem !important;
+                font-size: 0.85rem !important;
             }
             .login-half {
                 padding: 1rem 0.75rem;
+                min-height: 75vh;
             }
         }
 
@@ -210,7 +212,6 @@
             }
         }
 
-        /* ===== SIDEBAR ===== */
         .desktop-sidebar {
             width: 72px;
             background: #011F7B;
@@ -411,7 +412,6 @@
             color: white;
         }
 
-        /* ===== MOBILE HEADER ===== */
         .mobile-header {
             position: sticky;
             top: 0;
@@ -476,7 +476,6 @@
             white-space: nowrap;
         }
 
-        /* ===== MOBILE DROPDOWN ===== */
         .mobile-dropdown-menu {
             position: absolute;
             top: 100%;
@@ -595,7 +594,6 @@
             }
         }
 
-        /* ===== MAIN CONTENT ===== */
         .app-container {
             position: relative;
             display: flex;
@@ -650,7 +648,6 @@
             width: 100%;
         }
 
-        /* ===== RESPONSIVE GRID & CARDS ===== */
         .stat-card {
             background: white;
             border-radius: 1rem;
@@ -712,7 +709,6 @@
             margin-bottom: 0.5rem;
         }
 
-        /* ===== QUICK FILING BUTTONS ===== */
         .quick-filing-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -772,7 +768,6 @@
             }
         }
 
-        /* ===== RESPONSIVE TABLES ===== */
         .table-container {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -803,7 +798,6 @@
             border-bottom-color: #475569;
         }
 
-        /* ===== MOBILE FRIENDLY MODALS ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -863,7 +857,6 @@
             }
         }
 
-        /* ===== RESPONSIVE PAYSLIP ===== */
         .payslip-container {
             background: #fdf8e7;
             padding: 0.75rem;
@@ -969,7 +962,6 @@
             }
         }
 
-        /* ===== RESPONSIVE PAYROLL FORM ===== */
         #payrollFormFields {
             max-height: 50vh;
             overflow-y: auto;
@@ -993,7 +985,6 @@
             }
         }
 
-        /* ===== RESPONSIVE DATE RANGE ===== */
         .date-range-picker {
             display: flex;
             gap: 0.3rem;
@@ -1046,7 +1037,6 @@
             background: #4b5563;
         }
 
-        /* ===== PERIOD SELECTOR ===== */
         .period-selector {
             display: flex;
             gap: 0.3rem;
@@ -1085,7 +1075,6 @@
             border-color: #FFBA09;
         }
 
-        /* ===== RESPONSIVE SUMMARY CARDS ===== */
         .summary-grid {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -1129,7 +1118,6 @@
             }
         }
 
-        /* ===== CALENDAR ===== */
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -1182,7 +1170,6 @@
             }
         }
 
-        /* ===== RESPONSIVE EMPLOYEE LIST ===== */
         .employee-item {
             padding: 0.4rem 0.5rem;
             border-radius: 0.4rem;
@@ -1204,7 +1191,6 @@
             background: #1e3a5f;
         }
 
-        /* ===== MISC ===== */
         .security-badge {
             background: #10b981;
             color: white;
@@ -1362,7 +1348,6 @@
             border-bottom-color: #334155;
         }
 
-        /* ===== ATTENDANCE TYPE COLORS ===== */
         .day.completed {
             background: #22c55e;
             color: white;
@@ -1395,8 +1380,11 @@
             background: #ec4899;
             color: white;
         }
+        .day.attendance-type-birthday {
+            background: #f472b6;
+            color: white;
+        }
 
-        /* ===== PRINT STYLES ===== */
         @media print {
             body * {
                 visibility: hidden;
@@ -1427,7 +1415,6 @@
             }
         }
 
-        /* ===== RESPONSIVE TOUCH IMPROVEMENTS ===== */
         button,
         select,
         input,
@@ -1507,64 +1494,64 @@
     <div id="authScreen" class="login-split">
         <div class="branding-half">
             <div class="branding-content text-center text-white">
-                <h1 class="font-black leading-tight">
-                    <span style="color: #004aad;">Smart Choices.</span><br>
+                <h1 class="text-4xl md:text-6xl font-black leading-tight">
+                    <span style="color: #FFBA09;">Smart Choices.</span><br>
                     <span style="color: #f4df17;">Smarter Results.</span>
                 </h1>
                 <p class="mt-4 text-lg" style="color: #004aad;">Your gateway to smarter HR processes, happier employees, and better business outcomes.</p>
                 <div class="mt-8 flex gap-6 justify-center">
-    <a href="#" class="text-[#3c3c3c] hover:text-[#FFBA09] transition-all duration-300 hover:scale-110" aria-label="Facebook"><i data-feather="facebook" class="w-6 h-6"></i></a>
-    <a href="#" class="text-[#3c3c3c] hover:text-[#FFBA09] transition-all duration-300 hover:scale-110" aria-label="Instagram"><i data-feather="instagram" class="w-6 h-6"></i></a>
-    <a href="#" class="text-[#3c3c3c] hover:text-[#FFBA09] transition-all duration-300 hover:scale-110" aria-label="Website"><i data-feather="globe" class="w-6 h-6"></i></a>
-        </div>
+                    <a href="#" class="text-[#3c3c3c] hover:text-[#FFBA09] transition-all duration-300 hover:scale-110" aria-label="Facebook"><i data-feather="facebook" class="w-6 h-6"></i></a>
+                    <a href="#" class="text-[#3c3c3c] hover:text-[#FFBA09] transition-all duration-300 hover:scale-110" aria-label="Instagram"><i data-feather="instagram" class="w-6 h-6"></i></a>
+                    <a href="#" class="text-[#3c3c3c] hover:text-[#FFBA09] transition-all duration-300 hover:scale-110" aria-label="Website"><i data-feather="globe" class="w-6 h-6"></i></a>
+                </div>
                 <div class="mt-6 text-xs" style="color: #3c3c3c;">© 2026 EQUIPRIME</div>
             </div>
         </div>
         <div class="login-half">
             <div class="w-full max-w-md">
-                <div class="text-center mb-6">
+                <div class="text-center mb-8">
                     <img src="logo.png" class="h-12 mx-auto" alt="EQUIPRIME HR Logo" onerror="this.style.display='none'" />
-                    <h1 class="text-2xl font-extrabold text-slate-800 dark:text-white"><span style="color: #3b82f6;">EQUIPRIME</span><span style="color: #f4df17;">HR</span></h1>
-                    <p class="text-slate-500 dark:text-slate-400 text-sm">smart choices · smarter results</p>
-                    <div class="mt-2 flex flex-wrap justify-center gap-1">
-                        <span class="security-badge text-xs"><i data-feather="shield" class="w-3 h-3"></i> Encrypted</span>
-                        <span class="security-badge text-xs"><i data-feather="smartphone" class="w-3 h-3"></i> Device Lock</span>
+                    <h1 class="text-3xl font-extrabold text-slate-800 dark:text-white"><span style="color: #3b82f6;">EQUIPRIME</span><span style="color: #f4df17;">HR</span></h1>
+                    <p class="text-slate-500 dark:text-slate-400">smart choices · smarter results</p>
+                    <div class="mt-2">
+                        <span class="security-badge"><i data-feather="shield"></i> Encrypted & Secure</span>
+                        <span class="security-badge ml-2"><i data-feather="smartphone"></i> Device Lock</span>
                     </div>
                 </div>
-                <div id="authError" class="bg-red-100 text-red-700 p-2 rounded-lg text-sm mb-3 hidden" role="alert"></div>
-                <div id="authSuccess" class="bg-green-100 text-green-700 p-2 rounded-lg text-sm mb-3 hidden" role="alert"></div>
+                <div id="authError" class="bg-red-100 text-red-700 p-3 rounded-lg text-sm mb-4 hidden" role="alert"></div>
+                <div id="authSuccess" class="bg-green-100 text-green-700 p-3 rounded-lg text-sm mb-4 hidden" role="alert"></div>
                 <div id="loginForm">
-                    <div class="space-y-3">
+                    <div class="space-y-4">
                         <label for="loginEmail" class="sr-only">Email address</label>
-                        <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:border-slate-600 text-base" title="Enter your email address" />
+                        <input type="email" id="loginEmail" placeholder="Email address" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:border-slate-600" title="Enter your email address" />
                         <label for="loginPassword" class="sr-only">Password</label>
-                        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:border-slate-600 text-base" title="Enter your password" />
-                        <button id="loginBtnMain" class="w-full bg-[#011F7B] text-white py-3 rounded-xl font-semibold hover:bg-blue-800 text-base" title="Login to your account">Login</button>
-                        <div class="text-center mt-1">
+                        <input type="password" id="loginPassword" placeholder="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:border-slate-600" title="Enter your password" />
+                        <button id="loginBtnMain" class="w-full bg-[#011F7B] text-white py-3 rounded-xl font-semibold hover:bg-blue-800" title="Login to your account">Login</button>
+                        <div class="text-center mt-2">
                             <button id="forgotPasswordBtn" class="text-sm text-[#011F7B] dark:text-blue-400 hover:underline" title="Reset your password">Forgot password?</button>
                         </div>
                     </div>
-                    <div class="mt-3 text-center">
+                    <div class="mt-4 text-center">
                         <button id="showSignupBtnMain" class="text-[#011F7B] dark:text-blue-400 text-sm hover:underline" title="Create a new account">Don't have an account? Sign up</button>
                     </div>
                 </div>
                 <div id="signupForm" class="hidden">
-                    <div class="space-y-2">
+                    <div class="space-y-3">
                         <label for="signupName" class="sr-only">Full Name</label>
-                        <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700 text-base" title="Enter your full name" />
+                        <input type="text" id="signupName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter your full name" />
                         <label for="signupEmail" class="sr-only">Email</label>
-                        <input type="email" id="signupEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700 text-base" title="Enter your email address" />
+                        <input type="email" id="signupEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter your email address" />
                         <label for="signupPassword" class="sr-only">Password</label>
-                        <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700 text-base" title="Create a password" />
+                        <input type="password" id="signupPassword" placeholder="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Create a password" />
                         <label for="signupRole" class="sr-only">Role</label>
-                        <select id="signupRole" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white text-base" title="Select your role">
+                        <select id="signupRole" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white" title="Select your role">
                             <option value="employee">Employee</option>
                             <option value="supervisor">Supervisor</option>
                             <option value="admin">Admin</option>
                             <option value="manager">Manager</option>
                         </select>
                         <label for="signupDepartment" class="sr-only">Department</label>
-                        <select id="signupDepartment" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white text-base" title="Select your department">
+                        <select id="signupDepartment" class="w-full p-3 border rounded-xl dark:bg-slate-700 dark:text-white" title="Select your department">
                             <option value="">Select Department</option>
                             <option>Service Department</option>
                             <option>After-sales Department</option>
@@ -1576,11 +1563,11 @@
                             <option>Security Guard Department</option>
                             <option>Accounting Department</option>
                         </select>
-                        <button id="signupBtnMain" class="w-full bg-[#011F7B] text-white py-3 rounded-xl font-semibold text-base" title="Create your account">Sign Up</button>
+                        <button id="signupBtnMain" class="w-full bg-[#011F7B] text-white py-3 rounded-xl font-semibold" title="Create your account">Sign Up</button>
                     </div>
-                    <div class="mt-3 text-center"><button id="showLoginBtnMain" class="text-[#011F7B] dark:text-blue-400 text-sm hover:underline" title="Sign in to your existing account">Already have an account? Login</button></div>
+                    <div class="mt-4 text-center"><button id="showLoginBtnMain" class="text-[#011F7B] dark:text-blue-400 text-sm hover:underline" title="Sign in to your existing account">Already have an account? Login</button></div>
                 </div>
-                <div class="mt-4 p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-xs">
+                <div class="mt-6 p-4 bg-slate-50 dark:bg-slate-700 rounded-xl text-sm">
                     <p class="font-semibold dark:text-white">Authorized Users:</p>
                     <p class="dark:text-white">HR Director: hrd@equiprime.ph | Moderators: mod.rom@equiprime.ph, mod.dex@equiprime.ph</p>
                 </div>
@@ -1611,15 +1598,15 @@
         </div>
 
         <!-- MAIN CONTENT -->
-        <div class="main-content flex-1 p-3 md:p-5 overflow-y-auto">
+        <div class="main-content flex-1 p-4 md:p-6 overflow-y-auto">
 
             <!-- MOBILE HEADER -->
-            <div class="mobile-header">
+            <div class="mobile-header items-center justify-between mb-4">
                 <button id="mobileBurgerBtn" class="burger-btn" aria-label="Toggle menu" onclick="toggleMobileMenu(event)">
                     <i data-feather="menu" aria-hidden="true"></i>
                 </button>
                 <div class="right-group">
-                    <span class="mobile-user-name" id="mobileUserName">User</span>
+                    <span id="mobileUserName" class="text-white text-sm font-medium mr-1">User</span>
                     <img id="mobileAvatarSmall" class="avatar-small" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="User avatar" onclick="toggleProfileMenu(event)" />
                 </div>
 
@@ -1636,30 +1623,30 @@
 
             <!-- DASHBOARD TAB -->
             <div id="dashboard-tab" class="tab-content">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-3">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
                     <div>
-                        <h1 class="text-xl font-bold text-yellow-600 dark:text-yellow-400">EQUIPRIME<span class="text-blue-600 dark:text-blue-400">HR</span></h1>
-                        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-800 dark:text-white">Welcome Back, <span id="welcomeName">User</span></h2>
-                        <p class="text-slate-500 dark:text-slate-400 text-sm" id="welcomeSubtitle"></p>
-                        <div id="migrationStatusDisplay" class="mt-1"></div>
+                        <h1 class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">EQUIPRIME<span class="text-blue-600 dark:text-blue-400">HR</span></h1>
+                        <h2 class="text-3xl font-extrabold text-slate-800 dark:text-white">Welcome Back, <span id="welcomeName">User</span></h2>
+                        <p class="text-slate-500 dark:text-slate-400" id="welcomeSubtitle"></p>
+                        <div id="migrationStatusDisplay" class="mt-2"></div>
                     </div>
                     <!-- Profile dropdown -->
-                    <div class="profile-dropdown relative self-end sm:self-auto">
-                        <div class="profile-trigger cursor-pointer flex items-center gap-2 bg-white dark:bg-slate-800 p-1.5 rounded-full shadow" onclick="toggleProfileMenu(event)" role="button" tabindex="0" aria-label="Open profile menu">
+                    <div class="profile-dropdown relative">
+                        <div class="profile-trigger cursor-pointer flex items-center gap-2 bg-white dark:bg-slate-800 p-2 rounded-full shadow" onclick="toggleProfileMenu(event)" role="button" tabindex="0" aria-label="Open profile menu">
                             <img id="profileAvatarImg" class="avatar-img w-8 h-8 rounded-full object-cover" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23ffffff'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile" />
                             <span class="hidden sm:inline text-sm font-medium dark:text-white" id="profileName">User</span>
                             <i data-feather="chevron-down" class="w-4 h-4" aria-hidden="true"></i>
                         </div>
-                        <div id="profileDropdown" class="profile-dropdown-content absolute right-0 mt-2 bg-white dark:bg-slate-800 rounded-xl shadow-lg hidden z-50 p-4" role="menu">
-                            <div class="font-bold text-base mb-2 border-b pb-2 dark:border-slate-600">My Profile</div>
+                        <div id="profileDropdown" class="profile-dropdown-content absolute right-0 mt-2 w-80 bg-white dark:bg-slate-800 rounded-xl shadow-lg hidden z-50 p-4" style="max-width:calc(100vw - 2rem)" role="menu">
+                            <div class="font-bold text-lg mb-2 border-b pb-2 dark:border-slate-600">My Profile</div>
                             <div class="flex flex-col items-center mb-3">
-                                <img id="profileAvatarLarge" class="avatar-large w-16 h-16 rounded-full object-cover mb-2" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230f172a'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile avatar" />
+                                <img id="profileAvatarLarge" class="avatar-large w-20 h-20 rounded-full object-cover mb-2" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230f172a'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile avatar" />
                                 <label for="avatarUpload" class="text-xs font-medium text-slate-600 dark:text-slate-300">Choose image</label>
                                 <input type="file" id="avatarUpload" accept="image/*" class="text-xs" aria-label="Upload profile picture" />
                                 <button onclick="uploadAvatar()" class="mt-1 text-xs bg-blue-600 text-white px-3 py-1 rounded" title="Upload profile picture">Upload</button>
                             </div>
                             <div id="profileInfoContainer">
-                                <div class="text-center text-slate-500 dark:text-slate-400 py-2 text-sm">Loading profile...</div>
+                                <div class="text-center text-slate-500 dark:text-slate-400 py-2">Loading profile...</div>
                             </div>
                             <hr class="my-2 dark:border-slate-600" role="separator" />
                             <div id="deviceManagementSection">
@@ -1672,14 +1659,12 @@
                                 <button onclick="registerCurrentDevice()" class="mt-2 text-blue-600 dark:text-blue-400 text-sm flex items-center gap-1 hover:underline" title="Register this device"> <i data-feather="plus" class="w-3 h-3" aria-hidden="true"></i> Register This Device</button>
                             </div>
                             <hr class="my-2 dark:border-slate-600" role="separator" />
-                            <button onclick="handleLogout()" class="w-full text-left text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 p-2 rounded-lg flex items-center gap-2 text-sm" title="Logout" role="menuitem"><i data-feather="log-out" class="w-4 h-4" aria-hidden="true"></i> Logout</button>
+                            <button onclick="handleLogout()" class="w-full text-left text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30 p-2 rounded-lg flex items-center gap-2" title="Logout" role="menuitem"><i data-feather="log-out" class="w-4 h-4" aria-hidden="true"></i> Logout</button>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Dashboard Filters -->
-                <div class="dashboard-filters grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
-                    <select id="dashboardFilterDepartment" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white text-sm" onchange="applyFilters()" title="Filter by department">
+                <div class="dashboard-filters grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                    <select id="dashboardFilterDepartment" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white" onchange="applyFilters()" title="Filter by department">
                         <option value="all">All Departments</option>
                         <option>Service Department</option>
                         <option>After-sales Department</option>
@@ -1691,13 +1676,13 @@
                         <option>Security Guard Department</option>
                         <option>Accounting Department</option>
                     </select>
-                    <select id="dashboardFilterStatus" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white text-sm" onchange="applyFilters()" title="Filter by employment status">
+                    <select id="dashboardFilterStatus" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white" onchange="applyFilters()" title="Filter by employment status">
                         <option value="all">All Status</option>
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                         <option value="resigned">Resigned</option>
                     </select>
-                    <select id="dashboardFilterLeaveType" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white text-sm" onchange="applyFilters()" title="Filter by leave type">
+                    <select id="dashboardFilterLeaveType" class="p-2 rounded-lg border dark:bg-slate-700 dark:text-white" onchange="applyFilters()" title="Filter by leave type">
                         <option value="all">All Leave Types</option>
                         <option>Official Business</option>
                         <option>Vacation Leave</option>
@@ -1707,87 +1692,58 @@
                         <option>Offset</option>
                     </select>
                 </div>
-                
-                <!-- Stats -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
-                    <div class="stat-card"><div><p>Total Employees</p><h3 id="totalEmployees">0</h3></div><i data-feather="users" class="text-blue-600 dark:text-blue-400" aria-hidden="true"></i></div>
-                    <div class="stat-card"><div><p>Dept Attendance</p><h3 id="deptAttendance">0</h3></div><i data-feather="user-check" class="text-green-600 dark:text-green-400" aria-hidden="true"></i></div>
-                    <div class="stat-card"><div><p>Pending Approvals</p><h3 id="pendingApprovals">0</h3></div><i data-feather="clock" class="text-orange-600 dark:text-orange-400" aria-hidden="true"></i></div>
-                    <div class="stat-card"><div><p>My Leave Balance</p><h3 id="myLeaveBalance">15</h3></div><i data-feather="calendar" class="text-purple-600 dark:text-purple-400" aria-hidden="true"></i></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                    <div class="stat-card"><div><p>Total Employees</p><h3 class="text-3xl font-bold" id="totalEmployees">0</h3></div><i data-feather="users" class="text-blue-600 dark:text-blue-400 w-6 h-6" aria-hidden="true"></i></div>
+                    <div class="stat-card"><div><p>Dept Attendance (Today)</p><h3 class="text-3xl font-bold" id="deptAttendance">0</h3></div><i data-feather="user-check" class="text-green-600 dark:text-green-400 w-6 h-6" aria-hidden="true"></i></div>
+                    <div class="stat-card"><div><p>Pending Approvals</p><h3 class="text-3xl font-bold" id="pendingApprovals">0</h3></div><i data-feather="clock" class="text-orange-600 dark:text-orange-400 w-6 h-6" aria-hidden="true"></i></div>
+                    <div class="stat-card"><div><p>My Leave Balance</p><h3 class="text-3xl font-bold" id="myLeaveBalance">15</h3></div><i data-feather="calendar" class="text-purple-600 dark:text-purple-400 w-6 h-6" aria-hidden="true"></i></div>
                 </div>
-                
-                <!-- Quick Filing Options -->
-                <div class="card-bg rounded-xl p-3 shadow-sm mb-3">
-                    <h3 class="text-sm font-bold mb-2 flex items-center gap-2"><i data-feather="file-text" aria-hidden="true"></i> Quick Filing</h3>
-                    <div class="quick-filing-grid">
-                        <button onclick="openRequestModal('Official Business')" title="Official Business"><i data-feather="briefcase" class="quick-icon-green"></i><span>Official Business</span></button>
-                        <button onclick="openRequestModal('Overtime')" title="Overtime"><i data-feather="clock" class="quick-icon-red"></i><span>Overtime</span></button>
-                        <button onclick="openRequestModal('Certificate of Attendance')" title="Certificate"><i data-feather="file" class="quick-icon-blue"></i><span>Certificate</span></button>
-                        <button onclick="openLeaveModal()" title="Leave"><i data-feather="calendar" class="quick-icon-yellow"></i><span>Leave</span></button>
-                        <button onclick="openOffsetsModal()" title="Offsets"><i data-feather="clock" class="quick-icon-orange"></i><span>Offsets</span></button>
-                        <button onclick="openClockRequestModal('in')" title="Clock In"><i data-feather="log-in" class="quick-icon-green"></i><span>Clock In</span></button>
-                        <button onclick="openClockRequestModal('out')" title="Clock Out"><i data-feather="log-out" class="quick-icon-red"></i><span>Clock Out</span></button>
+                <div class="card-bg rounded-2xl p-6 shadow-sm mb-4"><h3 class="text-xl font-bold mb-4 flex items-center gap-2"><i data-feather="file-text" aria-hidden="true"></i> Quick Filing Options</h3>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+                        <button onclick="openRequestModal('Official Business')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl" title="File Official Business request"><i data-feather="briefcase" class="quick-icon-green" aria-hidden="true"></i><span class="text-xs mt-1">Official Business</span></button>
+                        <button onclick="openRequestModal('Overtime')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl" title="File Overtime request"><i data-feather="clock" class="quick-icon-red" aria-hidden="true"></i><span class="text-xs mt-1">Overtime</span></button>
+                        <button onclick="openRequestModal('Certificate of Attendance')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl" title="Request Certificate of Attendance"><i data-feather="file" class="quick-icon-blue" aria-hidden="true"></i><span class="text-xs mt-1">Certificate</span></button>
+                        <button onclick="openLeaveModal()" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl" title="File Leave request"><i data-feather="calendar" class="quick-icon-yellow" aria-hidden="true"></i><span class="text-xs mt-1">Leave</span></button>
+                        <button onclick="openOffsetsModal()" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl" title="Request Offsets"><i data-feather="clock" class="quick-icon-orange" aria-hidden="true"></i><span class="text-xs mt-1">Offsets</span></button>
+                        <button onclick="openClockRequestModal('in')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl" title="Request Clock In"><i data-feather="log-in" class="quick-icon-green" aria-hidden="true"></i><span class="text-xs mt-1">Request Clock In</span></button>
+                        <button onclick="openClockRequestModal('out')" class="flex flex-col items-center p-3 bg-slate-50 dark:bg-slate-700 rounded-xl" title="Request Clock Out"><i data-feather="log-out" class="quick-icon-red" aria-hidden="true"></i><span class="text-xs mt-1">Request Clock Out</span></button>
                     </div>
                 </div>
-                
-                <!-- My Requests & Login Status -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                    <div class="card-bg rounded-xl p-3 shadow-sm">
-                        <div class="flex justify-between items-center mb-2">
-                            <h3 class="text-sm font-bold">My Recent Requests</h3>
-                            <button onclick="openNewRequestMenu()" class="text-[#011F7B] dark:text-blue-400 text-xs">+ New</button>
-                        </div>
-                        <div id="myRequestsList" class="space-y-2 max-h-60 overflow-y-auto">
-                            <div class="text-center text-slate-500 dark:text-slate-400 py-3 text-sm">No requests</div>
-                        </div>
-                        <button onclick="switchTab('my-requests')" class="mt-2 w-full bg-slate-100 dark:bg-slate-700 py-1.5 rounded-lg text-xs">View All My Requests</button>
-                    </div>
-                    <div class="card-bg rounded-xl p-3 shadow-sm">
-                        <h3 class="text-sm font-bold mb-2">Employee Login Status</h3>
-                        <div class="space-y-2">
-                            <div><div class="flex items-center gap-2"><div class="w-2 h-2 bg-green-500 rounded-full"></div><h4 class="font-semibold text-xs">Logged In Today</h4><span id="loggedInCount" class="text-xs"></span></div><div id="loggedInList" class="mt-1 space-y-1 max-h-20 overflow-y-auto"></div></div>
-                            <div><div class="flex items-center gap-2"><div class="w-2 h-2 bg-red-500 rounded-full"></div><h4 class="font-semibold text-xs">Missed Log In</h4><span id="missedCount" class="text-xs"></span></div><div id="missedList" class="mt-1 space-y-1 max-h-20 overflow-y-auto"></div></div>
-                            <div><div class="flex items-center gap-2"><div class="w-2 h-2 bg-orange-500 rounded-full"></div><h4 class="font-semibold text-xs">Late</h4><span id="lateCountDashboard" class="text-xs"></span></div><div id="lateList" class="mt-1 space-y-1 max-h-20 overflow-y-auto"></div></div>
-                            <div><div class="flex items-center gap-2"><div class="w-2 h-2 bg-yellow-500 rounded-full"></div><h4 class="font-semibold text-xs">On Leave</h4><span id="onLeaveCount" class="text-xs"></span></div><div id="onLeaveList" class="mt-1 space-y-1 max-h-20 overflow-y-auto"></div></div>
-                        </div>
-                    </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="card-bg rounded-2xl p-6 shadow-sm"><div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">My Recent Requests</h3><button onclick="openNewRequestMenu()" class="text-[#011F7B] dark:text-blue-400 text-sm" title="Create a new request">+ New Request</button></div><div id="myRequestsList" class="space-y-3 max-h-80 overflow-y-auto"><div class="text-center text-slate-500 dark:text-slate-400 py-4">No requests</div></div><button onclick="switchTab('my-requests')" class="mt-4 w-full bg-slate-100 dark:bg-slate-700 py-2 rounded-xl text-sm" title="View all my requests">View All My Requests</button></div>
+                    <div class="card-bg rounded-2xl p-6 shadow-sm"><h3 class="text-xl font-bold mb-4">Employee Login Status</h3><div class="space-y-4"><div><div class="flex items-center gap-2"><div class="w-3 h-3 bg-green-500 rounded-full" aria-hidden="true"></div><h4 class="font-semibold">Logged In Today</h4><span id="loggedInCount"></span></div><div id="loggedInList" class="mt-2 space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2"><div class="w-3 h-3 bg-red-500 rounded-full" aria-hidden="true"></div><h4 class="font-semibold">Missed Log In</h4><span id="missedCount"></span></div><div id="missedList" class="mt-2 space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2"><div class="w-3 h-3 bg-orange-500 rounded-full" aria-hidden="true"></div><h4 class="font-semibold">Late</h4><span id="lateCountDashboard"></span></div><div id="lateList" class="mt-2 space-y-2 max-h-40 overflow-y-auto"></div></div><div><div class="flex items-center gap-2"><div class="w-3 h-3 bg-yellow-500 rounded-full" aria-hidden="true"></div><h4 class="font-semibold">On Leave</h4><span id="onLeaveCount"></span></div><div id="onLeaveList" class="mt-2 space-y-2 max-h-40 overflow-y-auto"></div></div></div></div>
                 </div>
-                
-                <!-- Announcements -->
-                <div class="mt-3 card-bg rounded-xl p-3 shadow-sm">
-                    <div class="flex justify-between items-center mb-2">
-                        <h3 class="text-sm font-bold">Announcements</h3>
-                        <div id="announcementAddButton"></div>
-                    </div>
-                    <div id="announcementsList" class="space-y-2 max-h-40 overflow-y-auto"></div>
+                <div class="mt-4 card-bg rounded-2xl p-6 shadow-sm">
+                    <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Announcements</h3><div id="announcementAddButton"></div></div>
+                    <div id="announcementsList" class="space-y-3 w-full"></div>
                 </div>
             </div>
 
             <!-- MY ATTENDANCE TAB -->
             <div id="my-attendance-tab" class="tab-content hidden">
-                <div class="flex justify-between items-center mb-3 flex-wrap gap-2">
-                    <h2 class="text-lg font-bold flex items-center gap-2 text-yellow-600"><i data-feather="clock" aria-hidden="true"></i> My Attendance</h2>
-                    <div class="flex gap-2">
-                        <button id="clockInBtn" onclick="clockIn()" class="bg-green-600 text-white px-4 py-1.5 rounded-lg text-sm font-semibold"><i data-feather="log-in" aria-hidden="true"></i> Clock In</button>
-                        <button id="clockOutBtn" onclick="clockOut()" class="bg-red-600 text-white px-4 py-1.5 rounded-lg text-sm font-semibold"><i data-feather="log-out" aria-hidden="true"></i> Clock Out</button>
+                <div class="flex justify-between items-center mb-5 flex-wrap gap-4">
+                    <h2 class="text-2xl font-bold flex items-center gap-2 text-yellow-600"><i data-feather="clock" aria-hidden="true"></i> My Attendance</h2>
+                    <div class="flex gap-3">
+                        <button id="clockInBtn" onclick="clockIn()" class="bg-green-600 text-white px-6 py-2.5 rounded-xl font-semibold" title="Clock in for the day"><i data-feather="log-in" aria-hidden="true"></i> Clock In</button>
+                        <button id="clockOutBtn" onclick="clockOut()" class="bg-red-600 text-white px-6 py-2.5 rounded-xl font-semibold" title="Clock out for the day"><i data-feather="log-out" aria-hidden="true"></i> Clock Out</button>
                     </div>
                 </div>
-                <div class="card-bg rounded-xl p-3 shadow-sm mb-3">
-                    <h3 class="text-sm font-bold mb-2">Today's Attendance</h3>
-                    <div id="todayAttendanceCard" class="text-center py-3">
-                        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 dark:bg-slate-700">
-                            <span class="text-base" id="todayStatusIcon">⏰</span>
-                            <span class="text-sm font-semibold" id="todayStatusText">Not clocked in yet</span>
+                <div class="card-bg rounded-2xl p-6 shadow-sm mb-6">
+                    <h3 class="text-xl font-bold mb-4">Today's Attendance</h3>
+                    <div id="todayAttendanceCard" class="text-center py-4">
+                        <div class="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gray-100 dark:bg-slate-700">
+                            <span class="text-lg" id="todayStatusIcon" aria-hidden="true">⏰</span>
+                            <span class="font-semibold" id="todayStatusText">Not clocked in yet</span>
                         </div>
-                        <div class="mt-2 text-xs text-slate-500 dark:text-slate-400" id="todayTimeInfo"></div>
+                        <div class="mt-3 text-sm text-slate-500 dark:text-slate-400" id="todayTimeInfo"></div>
                     </div>
                 </div>
-                <div class="card-bg rounded-xl p-3 shadow-sm">
-                    <h3 class="text-sm font-bold mb-2">Attendance History</h3>
-                    <div class="table-container">
-                        <table class="attendance-history-table w-full text-xs" aria-label="Attendance history">
-                            <thead><tr><th class="p-2 text-left">Date</th><th class="p-2 text-left">In</th><th class="p-2 text-left">Out</th><th class="p-2 text-left">Hours</th><th class="p-2 text-left">Status</th></tr></thead>
-                            <tbody id="attendanceHistoryList"><tr><td colspan="5" class="p-3 text-center text-slate-500">No records</td></tr></tbody>
+                <div class="card-bg rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">Attendance History</h3>
+                    <div class="overflow-x-auto">
+                        <table class="attendance-history-table w-full" aria-label="Attendance history">
+                            <thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Date</th><th class="p-3 text-left">Clock In</th><th class="p-3 text-left">Clock Out</th><th class="p-3 text-left">Hours Worked</th><th class="p-3 text-left">Status</th></tr></thead>
+                            <tbody id="attendanceHistoryList"><tr><td colspan="5" class="p-4 text-center text-slate-500">No records</td></tr></tbody>
                         </table>
                     </div>
                 </div>
@@ -1795,61 +1751,53 @@
 
             <!-- MY REQUESTS TAB -->
             <div id="my-requests-tab" class="tab-content hidden">
-                <div class="flex justify-between items-center mb-3">
-                    <h2 class="text-lg font-bold text-yellow-600">My Requests</h2>
-                    <button onclick="openNewRequestMenu()" class="bg-[#011F7B] text-white px-3 py-1.5 rounded-lg text-sm">New Request</button>
+                <div class="flex justify-between items-center mb-5">
+                    <h2 class="text-2xl font-bold text-yellow-600">My Requests</h2>
+                    <button onclick="openNewRequestMenu()" class="bg-[#011F7B] text-white px-4 py-2 rounded-xl" title="Create a new request">New Request</button>
                 </div>
-                <div id="allMyRequestsList" class="space-y-2"><div class="text-center text-slate-500 dark:text-slate-400 py-6 text-sm">No requests found</div></div>
+                <div id="allMyRequestsList" class="space-y-3"><div class="text-center text-slate-500 dark:text-slate-400 py-8">No requests found</div></div>
             </div>
 
             <!-- HR REQUESTS TAB -->
             <div id="hr-requests-tab" class="tab-content hidden">
-                <h2 class="text-lg font-bold mb-3 text-yellow-600">All Requests</h2>
-                <div id="allRequestsList" class="space-y-3"><div class="text-center text-slate-500 dark:text-slate-400 py-6 text-sm">No requests found</div></div>
+                <h2 class="text-2xl font-bold mb-5 text-yellow-600">All Requests</h2>
+                <div id="allRequestsList" class="space-y-4"><div class="text-center text-slate-500 dark:text-slate-400 py-8">No requests found</div></div>
             </div>
 
             <!-- ATTENDANCE SUMMARY TAB -->
             <div id="attendance-summary-tab" class="tab-content hidden">
-                <div class="card-bg rounded-xl p-3 shadow-sm">
-                    <h2 class="text-lg font-bold text-yellow-600 mb-3">Attendance Summary</h2>
+                <div class="card-bg rounded-2xl p-6 shadow-sm">
+                    <div class="flex justify-between items-center flex-wrap gap-4 mb-4">
+                        <h2 class="text-2xl font-bold text-yellow-600">Attendance Summary</h2>
+                    </div>
                     
-                    <!-- Date Range Picker -->
                     <div class="date-range-picker">
                         <label>From:</label>
                         <input type="date" id="dateRangeStart" />
                         <label>To:</label>
                         <input type="date" id="dateRangeEnd" />
-                        <button onclick="applyDateRange()">Apply</button>
-                        <button onclick="resetDateRange()" class="bg-gray-500 hover:bg-gray-600">Reset</button>
+                        <button onclick="applyDateRange()">Apply Range</button>
+                        <button onclick="resetDateRange()" class="bg-gray-500 hover:bg-gray-600">Reset to Current</button>
                     </div>
                     
-                    <!-- Period Selector -->
                     <div class="period-selector" id="periodSelector">
-                        <button class="active" data-period="current" onclick="selectPeriod('current')">Current</button>
-                        <button data-period="previous" onclick="selectPeriod('previous')">Previous</button>
+                        <button class="active" data-period="current" onclick="selectPeriod('current')">Current Period</button>
+                        <button data-period="previous" onclick="selectPeriod('previous')">Previous Period</button>
                         <button data-period="all" onclick="selectPeriod('all')">All Time</button>
                     </div>
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-3">
-                        <div class="lg:col-span-1"><h3 class="font-bold text-sm mb-2">Employees</h3><div id="employeeListContainer" class="space-y-1 max-h-60 overflow-y-auto"></div></div>
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="lg:col-span-1"><h3 class="font-bold mb-3">Employees</h3><div id="employeeListContainer" class="space-y-2 overflow-y-auto"></div></div>
                         <div class="lg:col-span-2">
-                            <div class="summary-grid">
-                                <div class="summary-card"><small>Completed</small><h3 id="completedCount">0</h3></div>
-                                <div class="summary-card"><small>Late</small><h3 id="lateCountSummary">0</h3></div>
-                                <div class="summary-card"><small>Incomplete</small><h3 id="missingCountSummary">0</h3></div>
-                                <div class="summary-card"><small>Certificate</small><h3 id="certCountSummary">0</h3></div>
-                                <div class="summary-card"><small>Requests</small><h3 id="requestCountSummary">0</h3></div>
+                            <div class="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
+                                <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Completed</small><h3 id="completedCount" class="text-2xl font-bold">0</h3></div>
+                                <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Late</small><h3 id="lateCountSummary" class="text-2xl font-bold">0</h3></div>
+                                <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Incomplete</small><h3 id="missingCountSummary" class="text-2xl font-bold">0</h3></div>
+                                <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Certificate</small><h3 id="certCountSummary" class="text-2xl font-bold">0</h3></div>
+                                <div class="summary-card card-bg p-3 rounded-xl text-center shadow-sm"><small>Requests</small><h3 id="requestCountSummary" class="text-2xl font-bold">0</h3></div>
                             </div>
-                            <div class="calendar-box"><h3 class="text-sm font-bold mb-2">Calendar</h3><div id="calendarGrid" class="calendar-grid"></div></div>
-                            <div class="details-box mt-3">
-                                <h3 class="text-sm font-bold mb-2">Details <span class="text-xs font-normal text-slate-500">(Latest first)</span></h3>
-                                <div class="table-container">
-                                    <table class="details-table w-full text-xs" aria-label="Attendance details">
-                                        <thead><tr><th class="p-1 text-left">Date</th><th class="p-1 text-left">In</th><th class="p-1 text-left">Out</th><th class="p-1 text-left">Status</th><th class="p-1 text-left">Source</th></tr></thead>
-                                        <tbody id="attendanceDetails"></tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            <div class="calendar-box"><h3 class="mb-4">Attendance Calendar</h3><div id="calendarGrid" class="grid grid-cols-7 gap-2"></div></div>
+                            <div class="details-box mt-4"><h3 class="mb-4">Details <span class="text-sm font-normal text-slate-500">(Latest first)</span></h3><table class="details-table w-full" aria-label="Attendance details"><thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-2 text-left">Date</th><th class="p-2 text-left">Clock In</th><th class="p-2 text-left">Clock Out</th><th class="p-2 text-left">Status</th><th class="p-2 text-left">Source</th></tr></thead><tbody id="attendanceDetails"></tbody></table></div>
                         </div>
                     </div>
                 </div>
@@ -1857,127 +1805,124 @@
 
             <!-- APPROVALS TAB -->
             <div id="approvals-tab" class="tab-content hidden">
-                <h2 class="text-lg font-bold mb-3 text-yellow-600">Pending Approvals</h2>
-                <div id="pendingApprovalsList" class="space-y-3"><div class="text-center text-slate-500 dark:text-slate-400 py-6 text-sm">No pending approvals</div></div>
+                <h2 class="text-2xl font-bold mb-5 text-yellow-600">Pending Approvals</h2>
+                <div id="pendingApprovalsList" class="space-y-4"><div class="text-center text-slate-500 dark:text-slate-400 py-8">No pending approvals</div></div>
             </div>
 
             <!-- GUARD SCHEDULE TAB -->
             <div id="hr-guard-schedule-tab" class="tab-content hidden">
-                <h2 class="text-lg font-bold mb-3 text-yellow-600">Guard Schedule</h2>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                    <div class="card-bg rounded-xl p-3">
-                        <h3 class="text-sm font-bold mb-2">Assign Weekly Schedule</h3>
-                        <select id="guardEmployee" class="w-full p-2 border rounded-lg mb-3 dark:bg-slate-700 text-sm"><option value="">Select Guard</option></select>
-                        <div class="space-y-1 border rounded-lg p-2 dark:border-slate-600">
-                            <div class="schedule-day flex items-center gap-2 text-sm"><input type="checkbox" id="dayMonday" class="w-4 h-4" /> <label for="dayMonday" class="flex-1 text-xs">Mon</label> <select id="shiftMonday" class="p-1 border rounded-lg text-xs dark:bg-slate-700"><option value="">Off</option><option>Morning</option><option>Afternoon</option><option>Night</option></select></div>
-                            <div class="schedule-day flex items-center gap-2 text-sm"><input type="checkbox" id="dayTuesday" class="w-4 h-4" /> <label for="dayTuesday" class="flex-1 text-xs">Tue</label> <select id="shiftTuesday" class="p-1 border rounded-lg text-xs dark:bg-slate-700"><option value="">Off</option><option>Morning</option><option>Afternoon</option><option>Night</option></select></div>
-                            <div class="schedule-day flex items-center gap-2 text-sm"><input type="checkbox" id="dayWednesday" class="w-4 h-4" /> <label for="dayWednesday" class="flex-1 text-xs">Wed</label> <select id="shiftWednesday" class="p-1 border rounded-lg text-xs dark:bg-slate-700"><option value="">Off</option><option>Morning</option><option>Afternoon</option><option>Night</option></select></div>
-                            <div class="schedule-day flex items-center gap-2 text-sm"><input type="checkbox" id="dayThursday" class="w-4 h-4" /> <label for="dayThursday" class="flex-1 text-xs">Thu</label> <select id="shiftThursday" class="p-1 border rounded-lg text-xs dark:bg-slate-700"><option value="">Off</option><option>Morning</option><option>Afternoon</option><option>Night</option></select></div>
-                            <div class="schedule-day flex items-center gap-2 text-sm"><input type="checkbox" id="dayFriday" class="w-4 h-4" /> <label for="dayFriday" class="flex-1 text-xs">Fri</label> <select id="shiftFriday" class="p-1 border rounded-lg text-xs dark:bg-slate-700"><option value="">Off</option><option>Morning</option><option>Afternoon</option><option>Night</option></select></div>
-                            <div class="schedule-day flex items-center gap-2 text-sm"><input type="checkbox" id="daySaturday" class="w-4 h-4" /> <label for="daySaturday" class="flex-1 text-xs">Sat</label> <select id="shiftSaturday" class="p-1 border rounded-lg text-xs dark:bg-slate-700"><option value="">Off</option><option>Morning</option><option>Afternoon</option><option>Night</option></select></div>
-                            <div class="schedule-day flex items-center gap-2 text-sm"><input type="checkbox" id="daySunday" class="w-4 h-4" /> <label for="daySunday" class="flex-1 text-xs">Sun</label> <select id="shiftSunday" class="p-1 border rounded-lg text-xs dark:bg-slate-700"><option value="">Off</option><option>Morning</option><option>Afternoon</option><option>Night</option></select></div>
+                <h2 class="text-2xl font-bold mb-5 text-yellow-600">Guard Schedule</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="card-bg rounded-2xl p-6">
+                        <h3 class="text-xl font-bold mb-4">Assign Weekly Schedule</h3>
+                        <select id="guardEmployee" class="w-full p-3 border rounded-xl mb-4 dark:bg-slate-700" title="Select a guard"><option value="">Select Guard</option></select>
+                        <div id="weeklyScheduleContainer" class="space-y-2 border rounded-xl p-4 dark:border-slate-600">
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayMonday" /> <label for="dayMonday" class="flex-1">Monday</label> <select id="shiftMonday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Monday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayTuesday" /> <label for="dayTuesday" class="flex-1">Tuesday</label> <select id="shiftTuesday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Tuesday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayWednesday" /> <label for="dayWednesday" class="flex-1">Wednesday</label> <select id="shiftWednesday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Wednesday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayThursday" /> <label for="dayThursday" class="flex-1">Thursday</label> <select id="shiftThursday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Thursday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="dayFriday" /> <label for="dayFriday" class="flex-1">Friday</label> <select id="shiftFriday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Friday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="daySaturday" /> <label for="daySaturday" class="flex-1">Saturday</label> <select id="shiftSaturday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Saturday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
+                            <div class="schedule-day flex items-center gap-2"><input type="checkbox" id="daySunday" /> <label for="daySunday" class="flex-1">Sunday</label> <select id="shiftSunday" class="p-2 border rounded-lg w-40 dark:bg-slate-700" title="Select shift for Sunday"><option value="">Off/Rest</option><option>Morning (6AM-2PM)</option><option>Afternoon (2PM-10PM)</option><option>Night (10PM-6AM)</option></select></div>
                         </div>
-                        <button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#011F7B] text-white py-2 rounded-lg mt-3 text-sm">Assign Schedule</button>
+                        <button onclick="assignGuardWeeklySchedule()" class="w-full bg-[#011F7B] text-white py-3 rounded-xl mt-4" title="Assign the weekly schedule">Assign Schedule</button>
                     </div>
-                    <div class="card-bg rounded-xl p-3"><h3 class="text-sm font-bold mb-2">Assigned Schedules</h3><div id="guardSchedulesList" class="space-y-2 max-h-60 overflow-y-auto"></div></div>
+                    <div class="card-bg rounded-2xl p-6"><h3 class="text-xl font-bold mb-4">Assigned Schedules</h3><div id="guardSchedulesList" class="space-y-3 max-h-96 overflow-y-auto"></div></div>
                 </div>
             </div>
 
             <!-- MY PAYSLIP TAB -->
             <div id="payslip-tab" class="tab-content hidden">
-                <h2 class="text-lg font-bold mb-3 text-yellow-600">My Payslip</h2>
-                <div id="employeePayslipList" class="space-y-3"><div class="text-center text-slate-500 dark:text-slate-400 py-6 text-sm">No payslips available</div></div>
+                <h2 class="text-2xl font-bold mb-5 text-yellow-600">My Payslip</h2>
+                <div id="employeePayslipList" class="space-y-4"><div class="text-center text-slate-500 dark:text-slate-400 py-8">No payslips available</div></div>
             </div>
 
             <!-- HR PAYSLIP TAB -->
             <div id="hr-payslip-tab" class="tab-content hidden">
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                    <div class="card-bg rounded-xl p-3">
-                        <h3 class="text-sm font-bold mb-2">Payroll Entry</h3>
-                        <div class="space-y-2 max-h-[50vh] overflow-y-auto pr-1" id="payrollFormFields">
-                            <select id="payslipEmployee" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm"><option value="">Select Employee</option></select>
-                            <input type="month" id="payslipMonth" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                            <select id="cutOffPeriod" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm"><option value="first">1st cut-off (27th – 10th)</option><option value="second">2nd cut-off (11th – 26th)</option></select>
-                            <input type="number" id="basicSalary" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Basic Pay (₱)" step="0.01" />
-                            <input type="number" id="overtimePay" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Overtime Pay (₱)" />
-                            <input type="number" id="holidayPay" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Legal Holiday Pay (₱)" />
-                            <input type="number" id="nd" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="ND" />
-                            <input type="number" id="ndot" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="NDOT" />
-                            <input type="number" id="lhNd" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="LH-ND" />
-                            <input type="number" id="restday" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Rest Day" />
-                            <input type="number" id="otherTaxableEarnings" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Other Taxable (₱)" />
-                            <input type="number" id="deMinimis" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="De Minimis" />
-                            <input type="number" id="otherNonTaxableEarnings" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Other Non-Taxable (₱)" />
-                            <input type="number" id="absencesLate" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Absences/Late (₱)" />
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="card-bg rounded-2xl p-6">
+                        <h3 class="text-xl font-bold mb-4">Payroll Entry (2026 Compliant)</h3>
+                        <div class="space-y-3 max-h-[60vh] overflow-y-auto pr-2" id="payrollFormFields">
+                            <select id="payslipEmployee" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select employee"><option value="">Select Employee</option></select>
+                            <input type="month" id="payslipMonth" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select payroll month" />
+                            <select id="cutOffPeriod" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select cut-off period"><option value="first">1st cut-off (27th – 10th)</option><option value="second">2nd cut-off (11th – 26th)</option></select>
+                            <input type="number" id="basicSalary" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Basic Pay (₱) - Bi-monthly" step="0.01" title="Enter basic pay" />
+                            <input type="number" id="overtimePay" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Overtime Pay (₱)" title="Enter overtime pay" />
+                            <input type="number" id="holidayPay" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Legal Holiday Pay (₱)" title="Enter legal holiday pay" />
+                            <input type="number" id="nd" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="ND (Night Differential)" title="Enter night differential" />
+                            <input type="number" id="ndot" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="NDOT" title="Enter NDOT" />
+                            <input type="number" id="lhNd" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="LH-ND" title="Enter LH-ND" />
+                            <input type="number" id="restday" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Rest Day" title="Enter rest day pay" />
+                            <input type="number" id="otherTaxableEarnings" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Other Taxable Earnings (₱)" title="Enter other taxable earnings" />
+                            <input type="number" id="deMinimis" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="De Minimis (non-taxable)" title="Enter de minimis" />
+                            <input type="number" id="otherNonTaxableEarnings" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Other Non-Taxable Earnings (₱)" title="Enter other non-taxable earnings" />
+                            <input type="number" id="absencesLate" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Absences and Late (₱)" title="Enter absences and late deductions" />
                             <hr class="dark:border-slate-600" role="separator" />
-                            <input type="number" id="sssContribution" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="SSS (auto)" readonly disabled />
-                            <input type="number" id="sssMpf" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="SSS MPF (auto)" readonly disabled />
-                            <input type="number" id="philhealthContribution" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="PhilHealth (auto)" readonly disabled />
-                            <input type="number" id="pagibigContribution" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Pag-IBIG (auto)" readonly disabled />
-                            <input type="number" id="additionalPagibig" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Add. Pag-IBIG (₱)" />
-                            <input type="number" id="sssLoans" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="SSS Loans (₱)" />
-                            <input type="number" id="sssCl" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="SSS CL (₱)" />
-                            <input type="number" id="hdmfLoans" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="HDMF Loans (₱)" />
-                            <input type="number" id="hdmfCl" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="HDMF CL (₱)" />
-                            <input type="number" id="salaryLoan" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Salary Loan (₱)" />
-                            <input type="number" id="otherDeductions" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Other Deductions (₱)" />
-                            <input type="number" id="wtax" value="0" step="0.01" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="WTAX (auto)" />
+                            <input type="number" id="sssContribution" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="SSS Contribution (auto)" readonly disabled title="SSS contribution (auto-calculated)" />
+                            <input type="number" id="sssMpf" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="SSS MPF (auto)" readonly disabled title="SSS MPF (auto-calculated)" />
+                            <input type="number" id="philhealthContribution" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="PhilHealth Contribution (auto)" readonly disabled title="PhilHealth contribution (auto-calculated)" />
+                            <input type="number" id="pagibigContribution" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Pag-IBIG Contribution (auto)" readonly disabled title="Pag-IBIG contribution (auto-calculated)" />
+                            <input type="number" id="additionalPagibig" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Additional Pag-IBIG (₱)" title="Enter additional Pag-IBIG" />
+                            <input type="number" id="sssLoans" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="SSS Loans (₱)" title="Enter SSS loans" />
+                            <input type="number" id="sssCl" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="SSS CL (₱)" title="Enter SSS CL" />
+                            <input type="number" id="hdmfLoans" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="HDMF Loans (₱)" title="Enter HDMF loans" />
+                            <input type="number" id="hdmfCl" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="HDMF CL (₱)" title="Enter HDMF CL" />
+                            <input type="number" id="salaryLoan" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Salary Loan (₱)" title="Enter salary loan" />
+                            <input type="number" id="otherDeductions" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Other Deductions (₱)" title="Enter other deductions" />
+                            <input type="number" id="wtax" value="0" step="0.01" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="WTAX (auto-computed)" title="WTAX (auto-calculated)" />
                         </div>
-                        <div class="flex flex-wrap gap-2 mt-3">
-                            <button id="computePayrollBtn" class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm flex-1 min-w-[80px]">Compute</button>
-                            <button id="generatePayslipBtn" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm flex-1 min-w-[80px]">Generate</button>
+                        <div class="flex flex-wrap gap-3 mt-5">
+                            <button id="computePayrollBtn" class="bg-blue-600 text-white px-4 py-2 rounded-xl flex-1 min-w-[120px]" title="Compute payroll">Compute Payroll (2026 Rules)</button>
+                            <button id="generatePayslipBtn" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1 min-w-[120px]" title="Generate payslip">Generate Payslip</button>
                         </div>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">SSS, PhilHealth, Pag-IBIG deducted on 2nd cutoff</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">SSS, SSS MPF, PhilHealth, Pag-IBIG, Add. Pag-IBIG deducted only on 2nd cutoff | WTAX with centavos</p>
                     </div>
-                    <div class="card-bg rounded-xl p-3">
-                        <h3 class="text-sm font-bold mb-2">Payroll Summary & History</h3>
-                        <div id="payrollSummary" class="bg-slate-50 dark:bg-slate-700 p-2 rounded-lg mb-3 hidden">
-                            <h4 class="font-bold text-xs mb-1">Computed Summary</h4>
-                            <div class="space-y-0.5 text-xs"><p><strong>Gross Pay:</strong> <span id="grossPayDisplay">0.00</span></p><p><strong>Total Deductions:</strong> <span id="totalDeductionsDisplay">0.00</span></p><p><strong>Net Pay:</strong> <span id="netPayDisplay" class="text-green-600 font-bold">0.00</span></p></div>
-                        </div>
-                        <h3 class="text-sm font-bold mb-2">All Payslips</h3>
-                        <div id="payslipHistory" class="space-y-2 max-h-[40vh] overflow-y-auto"></div>
+                    <div class="card-bg rounded-2xl p-6">
+                        <h3 class="text-xl font-bold mb-4">Payroll Summary & History</h3>
+                        <div id="payrollSummary" class="bg-slate-50 dark:bg-slate-700 p-4 rounded-xl mb-4 hidden"><h4 class="font-bold mb-2">Computed Summary</h4><div class="space-y-1 text-sm"><p><strong>Gross Pay (Cutoff):</strong> <span id="grossPayDisplay">0.00</span></p><p><strong>Total Deductions:</strong> <span id="totalDeductionsDisplay">0.00</span></p><p><strong>Net Pay:</strong> <span id="netPayDisplay" class="text-green-600 font-bold">0.00</span></p></div></div>
+                        <h3 class="text-xl font-bold mb-2">All Payslips History</h3>
+                        <div id="payslipHistory" class="space-y-3 max-h-[50vh] overflow-y-auto"></div>
                     </div>
                 </div>
-                <div id="payslipPreviewContainer" class="card-bg rounded-xl p-3 mt-3 hidden">
-                    <div class="flex justify-between items-center mb-2 no-print flex-wrap gap-2">
-                        <h3 class="text-sm font-bold">📄 Generated Payslip</h3>
-                        <button onclick="closePayslipPreview()" class="text-red-500 hover:text-red-700 text-xs">Close</button>
+                <div id="payslipPreviewContainer" class="card-bg rounded-2xl p-4 mt-6 hidden">
+                    <div class="flex justify-between items-center mb-3 no-print flex-wrap gap-2">
+                        <h3 class="text-lg font-bold">📄 Generated Payslip</h3>
+                        <button onclick="closePayslipPreview()" class="text-red-500 hover:text-red-700 text-sm" title="Close payslip preview"><i data-feather="x-circle" aria-hidden="true"></i> Close</button>
                     </div>
                     <div id="payslipPreviewContent" class="scrollable-content"></div>
-                    <div class="text-right mt-2 no-print flex flex-wrap justify-end gap-2">
-                        <button onclick="downloadInlinePayslipPDF()" class="bg-[#011F7B] text-white px-3 py-1 rounded-lg text-xs">Download PDF</button>
-                        <button onclick="window.print()" class="bg-gray-600 text-white px-3 py-1 rounded-lg text-xs">Print</button>
+                    <div class="text-right mt-3 no-print flex flex-wrap justify-end gap-2">
+                        <button onclick="downloadInlinePayslipPDF()" class="bg-[#011F7B] text-white px-4 py-1 rounded-lg text-sm" title="Download payslip as PDF">Download PDF</button>
+                        <button onclick="window.print()" class="bg-gray-600 text-white px-4 py-1 rounded-lg text-sm ml-2" title="Print payslip">Print</button>
                     </div>
                 </div>
             </div>
 
             <!-- DEVICE MANAGEMENT TAB -->
             <div id="device-management-tab" class="tab-content hidden">
-                <div class="flex justify-between items-center mb-3 flex-wrap gap-2">
-                    <h2 class="text-lg font-bold text-yellow-600 flex items-center gap-2"><i data-feather="smartphone" aria-hidden="true"></i> Device Management</h2>
-                    <button onclick="refreshDeviceList()" class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm">Refresh</button>
+                <div class="flex justify-between items-center mb-5 flex-wrap gap-2">
+                    <h2 class="text-2xl font-bold text-yellow-600 flex items-center gap-2"><i data-feather="smartphone" aria-hidden="true"></i> Mobile Device Management</h2>
+                    <button onclick="refreshDeviceList()" class="bg-blue-600 text-white px-4 py-2 rounded-xl flex items-center gap-2 hover:bg-blue-700" title="Refresh device list"><i data-feather="refresh-cw" aria-hidden="true"></i> Refresh</button>
                 </div>
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
-                    <div class="stat-card"><div><p>Total</p><h3 id="totalDevices">0</h3></div><i data-feather="smartphone" class="text-blue-600 dark:text-blue-400" aria-hidden="true"></i></div>
-                    <div class="stat-card"><div><p>Active</p><h3 id="activeDevices">0</h3></div><i data-feather="check-circle" class="text-green-600 dark:text-green-400" aria-hidden="true"></i></div>
-                    <div class="stat-card"><div><p>Blocked</p><h3 id="blockedDevices">0</h3></div><i data-feather="x-circle" class="text-red-600 dark:text-red-400" aria-hidden="true"></i></div>
-                    <div class="stat-card"><div><p>Users</p><h3 id="usersWithDevices">0</h3></div><i data-feather="users" class="text-purple-600 dark:text-purple-400" aria-hidden="true"></i></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                    <div class="stat-card"><div><p>Total Devices</p><h3 class="text-3xl font-bold" id="totalDevices">0</h3></div><i data-feather="smartphone" class="text-blue-600 dark:text-blue-400 w-6 h-6" aria-hidden="true"></i></div>
+                    <div class="stat-card"><div><p>Active</p><h3 class="text-3xl font-bold" id="activeDevices">0</h3></div><i data-feather="check-circle" class="text-green-600 dark:text-green-400 w-6 h-6" aria-hidden="true"></i></div>
+                    <div class="stat-card"><div><p>Blocked</p><h3 class="text-3xl font-bold" id="blockedDevices">0</h3></div><i data-feather="x-circle" class="text-red-600 dark:text-red-400 w-6 h-6" aria-hidden="true"></i></div>
+                    <div class="stat-card"><div><p>Users</p><h3 class="text-3xl font-bold" id="usersWithDevices">0</h3></div><i data-feather="users" class="text-purple-600 dark:text-purple-400 w-6 h-6" aria-hidden="true"></i></div>
                 </div>
-                <div class="card-bg rounded-xl p-3 shadow-sm">
-                    <div class="flex flex-wrap gap-2 mb-2">
-                        <input type="text" id="deviceSearch" placeholder="Search..." class="flex-1 p-1.5 border rounded-lg dark:bg-slate-700 text-sm min-w-[100px]" onkeyup="filterDevices()" />
-                        <select id="deviceStatusFilter" class="p-1.5 border rounded-lg dark:bg-slate-700 text-sm" onchange="filterDevices()">
+                <div class="card-bg rounded-2xl p-6 shadow-sm">
+                    <div class="flex flex-wrap gap-4 mb-4">
+                        <input type="text" id="deviceSearch" placeholder="Search by employee or device..." class="flex-1 p-2 border rounded-lg dark:bg-slate-700 min-w-[150px]" onkeyup="filterDevices()" title="Search devices by employee name or device name" />
+                        <select id="deviceStatusFilter" class="p-2 border rounded-lg dark:bg-slate-700" onchange="filterDevices()" title="Filter devices by status">
                             <option value="all">All Status</option>
                             <option value="active">Active</option>
                             <option value="blocked">Blocked</option>
                         </select>
-                        <button onclick="exportDeviceReport()" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm">Export</button>
+                        <button onclick="exportDeviceReport()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center gap-2" title="Export device report"><i data-feather="download" aria-hidden="true"></i> Export</button>
                     </div>
-                    <div class="table-container">
-                        <table class="w-full text-xs" aria-label="Device management list">
-                            <thead><tr><th class="p-1 text-left">Employee</th><th class="p-1 text-left">Device</th><th class="p-1 text-left">Status</th><th class="p-1 text-left">Actions</th></tr></thead>
-                            <tbody id="devicesTableBody"><tr><td colspan="4" class="p-3 text-center text-slate-500">No devices</td></tr></tbody>
+                    <div class="overflow-x-auto">
+                        <table class="w-full" aria-label="Device management list">
+                            <thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Employee</th><th class="p-3 text-left">Device Name</th><th class="p-3 text-left">Device Details</th><th class="p-3 text-left">Registered</th><th class="p-3 text-left">Last Used</th><th class="p-3 text-left">Status</th><th class="p-3 text-left">Actions</th></tr></thead>
+                            <tbody id="devicesTableBody"><tr><td colspan="7" class="p-4 text-center text-slate-500">No devices registered</td></tr></tbody>
                         </table>
                     </div>
                 </div>
@@ -1985,59 +1930,66 @@
 
             <!-- ADMIN HELPDESK TAB -->
             <div id="admin-helpdesk-tab" class="tab-content hidden">
-                <h2 class="text-lg font-bold mb-3 text-yellow-600">Admin Helpdesk</h2>
-                <div id="adminHelpdeskList" class="space-y-3"><div class="text-center text-slate-500 dark:text-slate-400 py-6 text-sm">No helpdesk requests</div></div>
+                <h2 class="text-2xl font-bold mb-5 text-yellow-600">Admin Helpdesk</h2>
+                <div id="adminHelpdeskList" class="space-y-4"><div class="text-center text-slate-500 dark:text-slate-400 py-8">No helpdesk requests</div></div>
             </div>
 
             <!-- HR SETTINGS TAB -->
             <div id="hr-settings-tab" class="tab-content hidden">
-                <div class="card-bg rounded-xl p-3 space-y-3">
-                    <div><label class="font-semibold text-sm" for="deviceIp">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-2 border rounded-lg mt-1 dark:bg-slate-700 text-sm" placeholder="192.168.1.100" /></div>
-                    <button id="saveSettingsBtn" class="bg-[#011F7B] text-white px-4 py-1.5 rounded-lg text-sm">Save Settings</button>
+                <div class="card-bg rounded-2xl p-6 space-y-6">
+                    <div><label class="font-semibold" for="deviceIp">ZKTeco Device IP</label><input type="text" id="deviceIp" class="w-full p-3 border rounded-xl mt-1 dark:bg-slate-700" placeholder="192.168.1.100" title="Enter ZKTeco device IP address" /></div>
+                    <button id="saveSettingsBtn" class="bg-[#011F7B] text-white px-5 py-2 rounded-xl" title="Save settings">Save Settings</button>
                     <hr class="dark:border-slate-600" role="separator" />
-                    <div class="bg-green-50 dark:bg-green-900/20 p-3 rounded-lg border border-green-200 dark:border-green-800">
-                        <h4 class="font-bold text-green-700 dark:text-green-400 text-sm flex items-center gap-2"><i data-feather="shield" aria-hidden="true"></i> Security</h4>
-                        <div class="mt-2 space-y-1 text-sm">
-                            <div class="flex items-center justify-between"><span>Encryption</span><span class="security-badge text-xs">Active</span></div>
-                            <div class="flex items-center justify-between"><span>Data Masking</span><span class="security-badge text-xs">Enabled</span></div>
-                            <div class="flex items-center justify-between"><span>Session Timeout</span><span class="security-badge text-xs">30 min</span></div>
-                            <div class="flex items-center justify-between"><span>Audit Logging</span><span class="security-badge text-xs">Active</span></div>
-                            <div class="flex items-center justify-between"><span>Device Control</span><span class="security-badge text-xs">Active</span></div>
+                    <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-xl border border-green-200 dark:border-green-800">
+                        <h4 class="font-bold text-green-700 dark:text-green-400 flex items-center gap-2"><i data-feather="shield" aria-hidden="true"></i> Security Settings</h4>
+                        <div class="mt-3 space-y-3">
+                            <div class="flex items-center justify-between"><span class="text-sm">Data Encryption</span><span class="security-badge text-xs"><i data-feather="check" aria-hidden="true"></i> Active (AES-256)</span></div>
+                            <div class="flex items-center justify-between"><span class="text-sm">Sensitive Data Masking</span><span class="security-badge text-xs"><i data-feather="check" aria-hidden="true"></i> Enabled</span></div>
+                            <div class="flex items-center justify-between"><span class="text-sm">Session Timeout</span><span class="security-badge text-xs"><i data-feather="clock" aria-hidden="true"></i> 30 minutes</span></div>
+                            <div class="flex items-center justify-between"><span class="text-sm">Audit Logging</span><span class="security-badge text-xs"><i data-feather="check" aria-hidden="true"></i> Active</span></div>
+                            <div class="flex items-center justify-between"><span class="text-sm">Device Access Control</span><span class="security-badge text-xs"><i data-feather="smartphone" aria-hidden="true"></i> Active</span></div>
                         </div>
                     </div>
                     <hr class="dark:border-slate-600" role="separator" />
                     <div id="resetButtonContainer"></div>
-                    <div id="migrationStatusContainer" class="mt-2"></div>
+                    <div id="migrationStatusContainer" class="mt-4"></div>
                     
-                    <!-- EMPLOYEE IMPORT -->
-                    <div class="border-t pt-3 mt-3">
-                        <h3 class="text-sm font-bold mb-2 text-yellow-600 flex items-center gap-2"><i data-feather="upload" aria-hidden="true"></i> Employee Import</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">Upload Excel/CSV with employee data</p>
+                    <!-- EMPLOYEE IMPORT SECTION -->
+                    <div class="border-t pt-4 mt-4">
+                        <h3 class="text-xl font-bold mb-4 text-yellow-600 flex items-center gap-2"><i data-feather="upload" aria-hidden="true"></i> Employee Data Import (Migration)</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 mb-4">Upload an Excel or CSV file with employee data. The system will create accounts for all employees.</p>
+                        
                         <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-                            <i data-feather="upload-cloud" class="w-8 h-8 text-slate-400 mx-auto mb-1" aria-hidden="true"></i>
-                            <p class="text-slate-600 dark:text-slate-300 text-sm">Click or drag & drop file</p>
-                            <p class="text-xs text-slate-400">.xlsx, .xls, .csv</p>
+                            <i data-feather="upload-cloud" class="w-12 h-12 text-slate-400 mx-auto mb-2" aria-hidden="true"></i>
+                            <p class="text-slate-600 dark:text-slate-300">Click or drag & drop your Excel/CSV file here</p>
+                            <p class="text-xs text-slate-400 mt-1">Supported formats: .xlsx, .xls, .csv</p>
                             <input type="file" id="fileInput" accept=".xlsx,.xls,.csv" class="hidden" onchange="handleFileUpload(event)" />
                         </div>
-                        <div id="importPreview" class="hidden mt-2">
-                            <div class="flex justify-between items-center mb-2">
-                                <h4 class="font-bold text-sm">Preview (<span id="previewCount">0</span>)</h4>
+                        
+                        <div id="importPreview" class="hidden mt-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <h4 class="font-bold">Import Preview (<span id="previewCount">0</span> records)</h4>
                                 <div class="flex gap-2">
-                                    <button onclick="confirmImport()" id="confirmImportBtn" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm">Confirm</button>
-                                    <button onclick="cancelImport()" class="bg-gray-500 text-white px-3 py-1 rounded-lg text-sm">Cancel</button>
+                                    <button onclick="confirmImport()" id="confirmImportBtn" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700" title="Confirm import">Confirm Import</button>
+                                    <button onclick="cancelImport()" class="bg-gray-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-600" title="Cancel import">Cancel</button>
                                 </div>
                             </div>
-                            <div class="import-preview-table overflow-x-auto max-h-40 overflow-y-auto">
-                                <table class="w-full text-xs" id="previewTable">
-                                    <thead class="bg-slate-100 dark:bg-slate-700"><tr id="previewHeader"></tr></thead>
+                            <div class="import-preview-table overflow-x-auto">
+                                <table class="w-full text-sm" id="previewTable">
+                                    <thead class="bg-slate-100 dark:bg-slate-700">
+                                        <tr id="previewHeader"></tr>
+                                    </thead>
                                     <tbody id="previewBody"></tbody>
                                 </table>
                             </div>
-                            <div id="importProgress" class="mt-2 hidden">
-                                <div class="flex justify-between text-xs mb-1"><span id="progressText">Importing...</span><span id="progressPercent">0%</span></div>
+                            <div id="importProgress" class="mt-3 hidden">
+                                <div class="flex justify-between text-sm mb-1">
+                                    <span id="progressText">Importing...</span>
+                                    <span id="progressPercent">0%</span>
+                                </div>
                                 <div class="progress-bar"><div class="fill" id="progressFill" style="width:0%"></div></div>
                             </div>
-                            <div id="importResults" class="mt-2"></div>
+                            <div id="importResults" class="mt-3"></div>
                         </div>
                     </div>
                 </div>
@@ -2045,39 +1997,39 @@
 
             <!-- HELPDESK TAB -->
             <div id="helpdesk-tab" class="tab-content hidden">
-                <h2 class="text-lg font-bold mb-3 text-yellow-600">HR Helpdesk</h2>
-                <div class="card-bg rounded-xl p-3 shadow-sm mb-3">
-                    <h3 class="text-sm font-bold mb-2">Submit a Request</h3>
-                    <div class="space-y-2">
-                        <select id="helpdeskType" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm">
-                            <option value="PIN Reset">PIN Reset</option>
-                            <option value="Password Reset">Password Reset</option>
+                <h2 class="text-2xl font-bold mb-5 text-yellow-600">HR Helpdesk</h2>
+                <div class="card-bg rounded-2xl p-6 shadow-sm mb-6">
+                    <h3 class="text-xl font-bold mb-4">Submit a Request</h3>
+                    <div class="space-y-4">
+                        <select id="helpdeskType" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select request type">
+                            <option value="PIN Reset">PIN Reset Request</option>
+                            <option value="Password Reset">Password Reset Request</option>
                             <option value="Profile Update">Profile Update</option>
                             <option value="Attendance Correction">Attendance Correction</option>
                             <option value="General Inquiry">General Inquiry</option>
                         </select>
-                        <textarea id="helpdeskMessage" rows="3" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Details..."></textarea>
-                        <button onclick="submitHelpdeskRequest()" class="bg-[#011F7B] text-white px-4 py-1.5 rounded-lg text-sm">Submit</button>
+                        <textarea id="helpdeskMessage" rows="4" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Please provide details..." title="Enter your request details"></textarea>
+                        <button onclick="submitHelpdeskRequest()" class="bg-[#011F7B] text-white px-6 py-2 rounded-xl font-semibold" title="Submit helpdesk request">Submit Request</button>
                     </div>
                 </div>
-                <div class="card-bg rounded-xl p-3 shadow-sm">
-                    <h3 class="text-sm font-bold mb-2">My Requests</h3>
-                    <div id="myHelpdeskRequests" class="space-y-2 max-h-60 overflow-y-auto"><div class="text-center text-slate-500 dark:text-slate-400 py-3 text-sm">No requests</div></div>
+                <div class="card-bg rounded-2xl p-6 shadow-sm">
+                    <h3 class="text-xl font-bold mb-4">My Helpdesk Requests</h3>
+                    <div id="myHelpdeskRequests" class="space-y-3 max-h-96 overflow-y-auto"><div class="text-center text-slate-500 dark:text-slate-400 py-4">No requests submitted</div></div>
                 </div>
             </div>
 
             <!-- EMPLOYEES TAB -->
             <div id="employees-tab" class="tab-content hidden">
-                <div class="flex justify-between items-center mb-3 flex-wrap gap-2">
-                    <h2 class="text-lg font-bold text-yellow-600">Employees</h2>
-                    <button onclick="showAddEmployeeModal()" class="bg-green-600 text-white px-3 py-1.5 rounded-lg text-sm flex items-center gap-1"><i data-feather="plus" aria-hidden="true" class="w-4 h-4"></i> Add</button>
+                <div class="flex justify-between items-center mb-5 flex-wrap gap-2">
+                    <h2 class="text-2xl font-bold text-yellow-600">Employees Management</h2>
+                    <button onclick="showAddEmployeeModal()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex items-center gap-2" title="Add a new employee"><i data-feather="plus" aria-hidden="true"></i> Add Employee</button>
                 </div>
-                <div class="card-bg rounded-xl p-3 shadow-sm">
-                    <input type="text" id="employeeSearch" class="search-input w-full p-2 border rounded-lg mb-2 dark:bg-slate-700 text-sm" placeholder="Search..." onkeyup="filterEmployeesTable()" />
-                    <div class="table-container">
-                        <table class="employees-table w-full text-xs" aria-label="Employee list">
-                            <thead><tr><th class="p-1 text-left">Name</th><th class="p-1 text-left">Email</th><th class="p-1 text-left">Department</th><th class="p-1 text-left">Status</th><th class="p-1 text-left">Actions</th></tr></thead>
-                            <tbody id="employeesTableBody"><tr><td colspan="5" class="p-3 text-center text-slate-500">No employees</td></tr></tbody>
+                <div class="card-bg rounded-2xl p-6 shadow-sm">
+                    <input type="text" id="employeeSearch" class="search-input w-full max-w-md p-2 border rounded-lg mb-4 dark:bg-slate-700" placeholder="Search by name, email, department..." onkeyup="filterEmployeesTable()" title="Search employees" />
+                    <div class="overflow-x-auto">
+                        <table class="employees-table w-full" aria-label="Employee list">
+                            <thead><tr class="bg-slate-100 dark:bg-slate-700"><th class="p-3 text-left">Name</th><th class="p-3 text-left">Email</th><th class="p-3 text-left">Employee #</th><th class="p-3 text-left">Department</th><th class="p-3 text-left">Role</th><th class="p-3 text-left">Status</th><th class="p-3 text-left">Actions</th></tr></thead>
+                            <tbody id="employeesTableBody"><tr><td colspan="7" class="p-4 text-center text-slate-500">No employees found</td></tr></tbody>
                         </table>
                     </div>
                 </div>
@@ -2086,151 +2038,152 @@
         </div><!-- /main-content -->
     </div><!-- /mainApp -->
 
-    <!-- MODALS (Simplified for mobile) -->
-    <div id="addEmployeeModal" class="modal-overlay" role="dialog" aria-label="Add Employee">
-        <div class="modal-container">
-            <div class="flex justify-between items-center mb-3"><h3 class="text-base font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" title="Close modal"><i data-feather="x" class="w-5 h-5"></i></button></div>
-            <div class="space-y-2">
-                <input type="text" id="newEmpName" placeholder="Full Name" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="email" id="newEmpEmail" placeholder="Email" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="text" id="newEmpEmployeeNumber" placeholder="Employee Number" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="date" id="newEmpDateHired" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <select id="newEmpGender" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm"><option value="">Gender</option><option>Male</option><option>Female</option></select>
-                <select id="newEmpCivilStatus" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm"><option value="">Civil Status</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select>
-                <input type="text" id="newEmpPhone" placeholder="Contact Number" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="text" id="newEmpAddress" placeholder="Address" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="text" id="newEmpEmergencyName" placeholder="Emergency Contact" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="text" id="newEmpEmergencyRelation" placeholder="Relationship" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="text" id="newEmpEmergencyPhone" placeholder="Emergency Phone" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="text" id="newEmpEmergencyAddress" placeholder="Emergency Address" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <div class="relative"><input type="text" id="newEmpSSS" placeholder="SSS Number" class="w-full p-2 border rounded-lg dark:bg-slate-700 encrypted-field text-sm" /><span class="absolute right-3 top-2.5 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline"></i></span></div>
-                <div class="relative"><input type="text" id="newEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-2 border rounded-lg dark:bg-slate-700 encrypted-field text-sm" /><span class="absolute right-3 top-2.5 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline"></i></span></div>
-                <div class="relative"><input type="text" id="newEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-2 border rounded-lg dark:bg-slate-700 encrypted-field text-sm" /><span class="absolute right-3 top-2.5 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline"></i></span></div>
-                <input type="text" id="newEmpDept" placeholder="Department" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <select id="newEmpRole" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select>
-                <select id="newEmpDeviceRestriction" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm"><option value="enabled">Enable Device Restriction</option><option value="disabled">Disable Device Restriction</option></select>
-                <input type="text" id="newEmpPin" placeholder="PIN" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="password" id="newEmpPass" placeholder="Password" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
+    <!-- MODALS -->
+    <div id="addEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Add Employee">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
+            <div class="space-y-3">
+                <input type="text" id="newEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter full name" />
+                <input type="email" id="newEmpEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter email address" />
+                <input type="text" id="newEmpEmployeeNumber" placeholder="Employee Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter employee number" />
+                <input type="date" id="newEmpDateHired" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select date hired" />
+                <select id="newEmpGender" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select gender"><option value="">Gender</option><option>Male</option><option>Female</option></select>
+                <select id="newEmpCivilStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select civil status"><option value="">Civil Status</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select>
+                <input type="text" id="newEmpPhone" placeholder="Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter contact number" />
+                <input type="text" id="newEmpAddress" placeholder="Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter address" />
+                <input type="text" id="newEmpEmergencyName" placeholder="Emergency Contact Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency contact name" />
+                <input type="text" id="newEmpEmergencyRelation" placeholder="Relationship" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter relationship" />
+                <input type="text" id="newEmpEmergencyPhone" placeholder="Emergency Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency contact number" />
+                <input type="text" id="newEmpEmergencyAddress" placeholder="Emergency Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency address" />
+                <div class="relative"><input type="text" id="newEmpSSS" placeholder="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter SSS number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <div class="relative"><input type="text" id="newEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter PhilHealth number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <div class="relative"><input type="text" id="newEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter Pag-IBIG number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <input type="text" id="newEmpDept" placeholder="Department" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter department" />
+                <select id="newEmpRole" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select role"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select>
+                <div class="border-t pt-4 mt-4"><h4 class="font-bold mb-3 text-sm flex items-center gap-2"><i data-feather="smartphone" class="w-4 h-4" aria-hidden="true"></i> Device Access Control</h4><select id="newEmpDeviceRestriction" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select device restriction"><option value="enabled">Enable device restriction (recommended)</option><option value="disabled">Disable device restriction</option></select></div>
+                <input type="text" id="newEmpPin" placeholder="PIN" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter PIN" />
+                <input type="password" id="newEmpPass" placeholder="Password" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter password" />
             </div>
-            <div class="flex gap-2 mt-3"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-lg flex-1 text-sm">Save</button><button onclick="closeModal('addEmployeeModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-lg flex-1 text-sm">Cancel</button></div>
+            <div class="flex gap-3 mt-5"><button onclick="addEmployee()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Save employee">Save</button><button onclick="closeModal('addEmployeeModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
         </div>
     </div>
 
-    <div id="editEmployeeModal" class="modal-overlay" role="dialog" aria-label="Edit Employee">
-        <div class="modal-container">
-            <div class="flex justify-between items-center mb-3"><h3 class="text-base font-bold">Edit Employee</h3><button onclick="closeModal('editEmployeeModal')" title="Close modal"><i data-feather="x" class="w-5 h-5"></i></button></div>
+    <div id="editEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Edit Employee">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Employee</h3><button onclick="closeModal('editEmployeeModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="editEmpId" />
-            <div class="space-y-2">
-                <input type="text" id="editEmpName" placeholder="Full Name" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="email" id="editEmpEmail" placeholder="Email" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="text" id="editEmpEmployeeNumber" placeholder="Employee Number" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="date" id="editEmpDateHired" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <select id="editEmpGender" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm"><option value="">Gender</option><option>Male</option><option>Female</option></select>
-                <select id="editEmpCivilStatus" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm"><option value="">Civil Status</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select>
-                <input type="text" id="editEmpPhone" placeholder="Contact Number" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="text" id="editEmpAddress" placeholder="Address" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="text" id="editEmpEmergencyName" placeholder="Emergency Contact" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="text" id="editEmpEmergencyRelation" placeholder="Relationship" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="text" id="editEmpEmergencyPhone" placeholder="Emergency Phone" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="text" id="editEmpEmergencyAddress" placeholder="Emergency Address" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <div class="relative"><input type="text" id="editEmpSSS" placeholder="SSS Number" class="w-full p-2 border rounded-lg dark:bg-slate-700 encrypted-field text-sm" /><span class="absolute right-3 top-2.5 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline"></i></span></div>
-                <div class="relative"><input type="text" id="editEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-2 border rounded-lg dark:bg-slate-700 encrypted-field text-sm" /><span class="absolute right-3 top-2.5 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline"></i></span></div>
-                <div class="relative"><input type="text" id="editEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-2 border rounded-lg dark:bg-slate-700 encrypted-field text-sm" /><span class="absolute right-3 top-2.5 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline"></i></span></div>
-                <select id="editEmpDept" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm"><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select>
-                <select id="editEmpRole" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select>
-                <select id="editEmpStatus" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm"><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option></select>
-                <select id="editEmpDeviceRestriction" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm"><option value="enabled">Enable Device Restriction</option><option value="disabled">Disable Device Restriction</option></select>
-                <input type="number" id="editLeaveBalance" placeholder="Leave Balance" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="text" id="editEmpPin" placeholder="PIN" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="password" id="editEmpPassword" placeholder="New Password (optional)" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
+            <div class="space-y-3">
+                <input type="text" id="editEmpName" placeholder="Full Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter full name" />
+                <input type="email" id="editEmpEmail" placeholder="Email" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter email address" />
+                <input type="text" id="editEmpEmployeeNumber" placeholder="Employee Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter employee number" />
+                <input type="date" id="editEmpDateHired" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select date hired" />
+                <select id="editEmpGender" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select gender"><option value="">Gender</option><option>Male</option><option>Female</option></select>
+                <select id="editEmpCivilStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select civil status"><option value="">Civil Status</option><option>Single</option><option>Married</option><option>Divorced</option><option>Widowed</option></select>
+                <input type="text" id="editEmpPhone" placeholder="Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter contact number" />
+                <input type="text" id="editEmpAddress" placeholder="Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter address" />
+                <input type="text" id="editEmpEmergencyName" placeholder="Emergency Contact Name" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency contact name" />
+                <input type="text" id="editEmpEmergencyRelation" placeholder="Relationship" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter relationship" />
+                <input type="text" id="editEmpEmergencyPhone" placeholder="Emergency Contact Number" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency contact number" />
+                <input type="text" id="editEmpEmergencyAddress" placeholder="Emergency Address" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter emergency address" />
+                <div class="relative"><input type="text" id="editEmpSSS" placeholder="SSS Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter SSS number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <div class="relative"><input type="text" id="editEmpPhilHealth" placeholder="PhilHealth Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter PhilHealth number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <div class="relative"><input type="text" id="editEmpPagIBIG" placeholder="Pag-IBIG Number" class="w-full p-3 border rounded-xl dark:bg-slate-700 encrypted-field" title="Enter Pag-IBIG number" /><span class="absolute right-3 top-3 text-xs text-green-600 dark:text-green-400"><i data-feather="lock" class="w-3 h-3 inline" aria-hidden="true"></i> Encrypted</span></div>
+                <select id="editEmpDept" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select department"><option>Service Department</option><option>After-sales Department</option><option>Supply Chain Department</option><option>HR Department</option><option>Marketing Department</option><option>Sales Department</option><option>IT/Asset Management Department</option><option>Security Guard Department</option><option>Accounting Department</option></select>
+                <select id="editEmpRole" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select role"><option value="employee">Employee</option><option value="supervisor">Supervisor</option><option value="admin">Admin</option><option value="manager">Manager</option><option value="moderator">Moderator</option><option value="hr">HR Admin</option></select>
+                <select id="editEmpStatus" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select status"><option value="active">Active</option><option value="inactive">Inactive</option><option value="resigned">Resigned</option></select>
+                <div class="border-t pt-4 mt-4"><h4 class="font-bold mb-3 text-sm flex items-center gap-2"><i data-feather="smartphone" class="w-4 h-4" aria-hidden="true"></i> Device Access Control</h4><select id="editEmpDeviceRestriction" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select device restriction"><option value="enabled">Enable device restriction</option><option value="disabled">Disable device restriction</option></select></div>
+                <input type="number" id="editLeaveBalance" placeholder="Leave Balance" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter leave balance" />
+                <input type="text" id="editEmpPin" placeholder="PIN" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter PIN" />
+                <input type="password" id="editEmpPassword" placeholder="New Password (optional)" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Enter new password (optional)" />
             </div>
-            <div class="flex gap-2 mt-3"><button onclick="saveEmployeeEdit()" class="bg-green-600 text-white px-4 py-2 rounded-lg flex-1 text-sm">Save</button><button onclick="closeModal('editEmployeeModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-lg flex-1 text-sm">Cancel</button></div>
+            <div class="flex gap-3 mt-5"><button onclick="saveEmployeeEdit()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Save changes">Save Changes</button><button onclick="closeModal('editEmployeeModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
         </div>
     </div>
 
-    <div id="requestModalOverlay" class="modal-overlay" role="dialog" aria-label="Submit Request">
-        <div class="modal-container">
-            <div class="flex justify-between items-center mb-3"><h3 class="text-base font-bold">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" title="Close modal"><i data-feather="x" class="w-5 h-5"></i></button></div>
+    <div id="requestModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Submit Request">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="requestTypeValue" />
-            <div class="space-y-2">
-                <input type="date" id="reqStartDate" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="date" id="reqEndDate" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <textarea id="reqReason" rows="2" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Reason..."></textarea>
+            <div class="space-y-3">
+                <input type="date" id="reqStartDate" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select start date" />
+                <input type="date" id="reqEndDate" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select end date" />
+                <textarea id="reqReason" rows="3" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Reason..." title="Enter reason for request"></textarea>
             </div>
-            <div class="flex gap-2 mt-3"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-lg flex-1 text-sm">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-lg flex-1 text-sm">Cancel</button></div>
+            <div class="flex gap-3 mt-5"><button onclick="submitRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Submit request">Submit</button><button onclick="closeModal('requestModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
         </div>
     </div>
 
-    <div id="leaveModalOverlay" class="modal-overlay" role="dialog" aria-label="Select Leave Type">
-        <div class="modal-container">
-            <div class="flex justify-between items-center mb-3"><h3 class="text-base font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" title="Close modal"><i data-feather="x" class="w-5 h-5"></i></button></div>
-            <div class="space-y-2">
-                <button onclick="selectLeaveType('Sick Leave')" class="w-full p-2 bg-red-50 dark:bg-red-900/30 rounded-lg text-left text-sm">Sick Leave</button>
-                <button onclick="selectLeaveType('Emergency Leave')" class="w-full p-2 bg-orange-50 dark:bg-orange-900/30 rounded-lg text-left text-sm">Emergency Leave</button>
-                <button onclick="selectLeaveType('Vacation Leave')" class="w-full p-2 bg-blue-50 dark:bg-blue-900/30 rounded-lg text-left text-sm">Vacation Leave</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="offsetsModalOverlay" class="modal-overlay" role="dialog" aria-label="Request Offsets">
-        <div class="modal-container">
-            <div class="flex justify-between items-center mb-3"><h3 class="text-base font-bold">Request Offsets</h3><button onclick="closeModal('offsetsModalOverlay')" title="Close modal"><i data-feather="x" class="w-5 h-5"></i></button></div>
-            <div class="space-y-2">
-                <input type="date" id="offsetsDate" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="number" id="offsetsHours" step="0.5" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Hours to Offset" />
-                <textarea id="offsetsReasonText" rows="2" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Reason"></textarea>
-            </div>
-            <div class="flex gap-2 mt-3"><button onclick="submitOffsets()" class="bg-green-600 text-white px-4 py-2 rounded-lg flex-1 text-sm">Submit</button><button onclick="closeModal('offsetsModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-lg flex-1 text-sm">Cancel</button></div>
-        </div>
-    </div>
-
-    <div id="newRequestMenuOverlay" class="modal-overlay" role="dialog" aria-label="Select Request Type">
-        <div class="modal-container">
-            <div class="flex justify-between items-center mb-3"><h3 class="text-base font-bold">Select Request Type</h3><button onclick="closeModal('newRequestMenuOverlay')" title="Close modal"><i data-feather="x" class="w-5 h-5"></i></button></div>
-            <div class="space-y-2">
-                <button onclick="openRequestModal('Official Business')" class="w-full p-2 bg-slate-50 dark:bg-slate-700 rounded-lg text-left text-sm">Official Business</button>
-                <button onclick="openRequestModal('Overtime')" class="w-full p-2 bg-slate-50 dark:bg-slate-700 rounded-lg text-left text-sm">Overtime</button>
-                <button onclick="openRequestModal('Certificate of Attendance')" class="w-full p-2 bg-slate-50 dark:bg-slate-700 rounded-lg text-left text-sm">Certificate of Attendance</button>
-                <button onclick="closeModal('newRequestMenuOverlay'); openLeaveModal()" class="w-full p-2 bg-slate-50 dark:bg-slate-700 rounded-lg text-left text-sm">Leave</button>
-                <button onclick="closeModal('newRequestMenuOverlay'); openOffsetsModal()" class="w-full p-2 bg-slate-50 dark:bg-slate-700 rounded-lg text-left text-sm">Offsets</button>
+    <div id="leaveModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Select Leave Type">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
+            <div class="space-y-3">
+                <button onclick="selectLeaveType('Sick Leave')" class="w-full p-3 bg-red-50 dark:bg-red-900/30 rounded-xl text-left" title="Select Sick Leave">Sick Leave</button>
+                <button onclick="selectLeaveType('Emergency Leave')" class="w-full p-3 bg-orange-50 dark:bg-orange-900/30 rounded-xl text-left" title="Select Emergency Leave">Emergency Leave</button>
+                <button onclick="selectLeaveType('Vacation Leave')" class="w-full p-3 bg-blue-50 dark:bg-blue-900/30 rounded-xl text-left" title="Select Vacation Leave">Vacation Leave</button>
+                <button onclick="selectLeaveType('Birthday Leave')" class="w-full p-3 bg-pink-50 dark:bg-pink-900/30 rounded-xl text-left" title="Select Birthday Leave">🎂 Birthday Leave</button>
             </div>
         </div>
     </div>
 
-    <div id="clockRequestModal" class="modal-overlay" role="dialog" aria-label="Request Clock">
-        <div class="modal-container">
-            <div class="flex justify-between items-center mb-3"><h3 class="text-base font-bold">Request Clock</h3><button onclick="closeModal('clockRequestModal')" title="Close modal"><i data-feather="x" class="w-5 h-5"></i></button></div>
+    <div id="offsetsModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Request Offsets">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeModal('offsetsModalOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
+            <div class="space-y-3">
+                <input type="date" id="offsetsDate" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select date" />
+                <input type="number" id="offsetsHours" step="0.5" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Hours to Offset" title="Enter hours to offset" />
+                <textarea id="offsetsReasonText" rows="2" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Reason" title="Enter reason"></textarea>
+            </div>
+            <div class="flex gap-3 mt-5"><button onclick="submitOffsets()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Submit offsets">Submit</button><button onclick="closeModal('offsetsModalOverlay')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
+        </div>
+    </div>
+
+    <div id="newRequestMenuOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Select Request Type">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Request Type</h3><button onclick="closeModal('newRequestMenuOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
+            <div class="space-y-3">
+                <button onclick="openRequestModal('Official Business')" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left" title="Official Business">Official Business</button>
+                <button onclick="openRequestModal('Overtime')" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left" title="Overtime">Overtime</button>
+                <button onclick="openRequestModal('Certificate of Attendance')" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left" title="Certificate of Attendance">Certificate of Attendance</button>
+                <button onclick="closeModal('newRequestMenuOverlay'); openLeaveModal()" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left" title="Leave">Leave</button>
+                <button onclick="closeModal('newRequestMenuOverlay'); openOffsetsModal()" class="w-full p-3 bg-slate-50 dark:bg-slate-700 rounded-xl text-left" title="Offsets">Offsets</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="clockRequestModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Request Clock">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Clock</h3><button onclick="closeModal('clockRequestModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="clockRequestType" />
-            <div class="space-y-2">
-                <input type="date" id="clockDate" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <input type="time" id="clockTime" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" />
-                <textarea id="clockReason" rows="2" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Reason..."></textarea>
+            <div class="space-y-3">
+                <input type="date" id="clockDate" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select date" />
+                <input type="time" id="clockTime" class="w-full p-3 border rounded-xl dark:bg-slate-700" title="Select time" />
+                <textarea id="clockReason" rows="2" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Reason for request" title="Enter reason"></textarea>
             </div>
-            <div class="flex gap-2 mt-3"><button onclick="submitClockRequest()" class="bg-green-600 text-white px-4 py-2 rounded-lg flex-1 text-sm">Submit</button><button onclick="closeModal('clockRequestModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-lg flex-1 text-sm">Cancel</button></div>
+            <div class="flex gap-3 mt-5"><button onclick="submitClockRequest()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Submit request">Submit Request</button><button onclick="closeModal('clockRequestModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
         </div>
     </div>
 
-    <div id="announcementModal" class="modal-overlay" role="dialog" aria-label="Announcement">
-        <div class="modal-container">
-            <div class="flex justify-between items-center mb-3"><h3 id="announcementModalTitle" class="text-base font-bold">Edit Announcement</h3><button onclick="closeModal('announcementModal')" title="Close modal"><i data-feather="x" class="w-5 h-5"></i></button></div>
+    <div id="announcementModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Announcement">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 id="announcementModalTitle" class="text-xl font-bold">Edit Announcement</h3><button onclick="closeModal('announcementModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="announcementId" />
-            <div class="space-y-2">
-                <input type="text" id="announcementTitle" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Title" />
-                <textarea id="announcementContent" rows="2" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" placeholder="Content"></textarea>
+            <div class="space-y-4">
+                <input type="text" id="announcementTitle" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Title" title="Enter announcement title" />
+                <textarea id="announcementContent" rows="3" class="w-full p-3 border rounded-xl dark:bg-slate-700" placeholder="Content" title="Enter announcement content"></textarea>
             </div>
-            <div class="flex gap-2 mt-3"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-lg flex-1 text-sm">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-lg flex-1 text-sm" id="deleteAnnouncementBtn">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-lg flex-1 text-sm">Cancel</button></div>
+            <div class="flex gap-3 mt-5"><button onclick="saveAnnouncement()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Save announcement">Save</button><button onclick="deleteAnnouncement()" class="bg-red-600 text-white px-4 py-2 rounded-xl flex-1" id="deleteAnnouncementBtn" title="Delete announcement">Delete</button><button onclick="closeModal('announcementModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
         </div>
     </div>
 
-    <div id="editLeaveModal" class="modal-overlay" role="dialog" aria-label="Edit Leave Balance">
-        <div class="modal-container">
-            <div class="flex justify-between items-center mb-3"><h3 class="text-base font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" title="Close modal"><i data-feather="x" class="w-5 h-5"></i></button></div>
+    <div id="editLeaveModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Edit Leave Balance">
+        <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
+            <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="editEmployeeId" />
-            <div class="space-y-2">
-                <input type="text" id="editEmployeeName" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" readonly />
-                <input type="number" id="editLeaveBalanceSimple" class="w-full p-2 border rounded-lg dark:bg-slate-700 text-sm" step="1" />
+            <div class="space-y-4">
+                <input type="text" id="editEmployeeName" class="w-full p-3 border rounded-xl dark:bg-slate-700" readonly title="Employee name" />
+                <input type="number" id="editLeaveBalanceSimple" class="w-full p-3 border rounded-xl dark:bg-slate-700" step="1" title="Enter leave balance" />
             </div>
-            <div class="flex gap-2 mt-3"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-lg flex-1 text-sm">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-lg flex-1 text-sm">Cancel</button></div>
+            <div class="flex gap-3 mt-5"><button onclick="saveLeaveBalance()" class="bg-green-600 text-white px-4 py-2 rounded-xl flex-1" title="Save leave balance">Save</button><button onclick="closeModal('editLeaveModal')" class="bg-gray-200 dark:bg-slate-600 px-4 py-2 rounded-xl flex-1" title="Cancel">Cancel</button></div>
         </div>
     </div>
 
@@ -2963,15 +2916,15 @@
             count.textContent = data.length;
             
             const columns = Object.keys(data[0]);
-            header.innerHTML = columns.map(col => `<th class="p-1 text-left">${escapeHtml(col)}</th>`).join('');
+            header.innerHTML = columns.map(col => `<th class="p-2 text-left">${escapeHtml(col)}</th>`).join('');
             
             const rows = data.slice(0, 10);
             body.innerHTML = rows.map(row => {
-                return `<tr>${columns.map(col => `<td class="p-1 border-b dark:border-slate-600">${escapeHtml(String(row[col] || ''))}</td>`).join('')}</tr>`;
+                return `<tr>${columns.map(col => `<td class="p-2 border-b dark:border-slate-600">${escapeHtml(String(row[col] || ''))}</td>`).join('')}</tr>`;
             }).join('');
             
             if (data.length > 10) {
-                body.innerHTML += `<tr><td colspan="${columns.length}" class="p-1 text-center text-slate-500">... and ${data.length - 10} more rows</td></tr>`;
+                body.innerHTML += `<tr><td colspan="${columns.length}" class="p-2 text-center text-slate-500">... and ${data.length - 10} more rows</td></tr>`;
             }
             
             document.getElementById('importProgress').classList.add('hidden');
@@ -2984,6 +2937,21 @@
             document.getElementById('importPreview').classList.add('hidden');
             document.getElementById('fileInput').value = '';
             document.getElementById('importResults').innerHTML = '';
+        }
+
+        function generateUniquePassword() {
+            const length = 10;
+            const charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%';
+            let password = '';
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * charset.length);
+                password += charset[randomIndex];
+            }
+            return password;
+        }
+
+        function generateUniquePin() {
+            return String(Math.floor(100000 + Math.random() * 900000));
         }
 
         async function confirmImport() {
@@ -3092,8 +3060,8 @@
                         continue;
                     }
                     
-                    const password = employeeNumber || 'password123';
-                    const pin = employeeNumber || '123456';
+                    const password = generateUniquePassword();
+                    const pin = generateUniquePin();
                     
                     const userCred = await auth.createUserWithEmailAndPassword(email, password);
                     const uid = userCred.user.uid;
@@ -3123,14 +3091,20 @@
                         photoURL: '',
                         imported: true,
                         importedAt: new Date().toISOString(),
-                        createdAt: new Date().toISOString()
+                        createdAt: new Date().toISOString(),
+                        generatedPassword: password
                     };
                     
                     await db.collection('employees').doc(uid).set(empData);
                     allEmployees.push({ id: uid, ...empData });
                     
                     success++;
-                    importResults.push({ row: rowNum, name: name, status: 'success', message: 'Imported successfully' });
+                    importResults.push({ 
+                        row: rowNum, 
+                        name: name, 
+                        status: 'success', 
+                        message: `Imported - Password: ${password}` 
+                    });
                     
                     const progress = ((i + 1) / importedData.length) * 100;
                     progressFill.style.width = progress + '%';
@@ -3148,44 +3122,47 @@
             progressText.textContent = 'Import completed!';
             
             resultsDiv.innerHTML = `
-                <div class="grid grid-cols-4 gap-1 mt-2">
-                    <div class="p-1 bg-green-100 dark:bg-green-900/30 rounded text-center">
-                        <div class="text-lg font-bold text-green-600">${success}</div>
+                <div class="grid grid-cols-4 gap-2 mt-2">
+                    <div class="p-2 bg-green-100 dark:bg-green-900/30 rounded text-center">
+                        <div class="text-2xl font-bold text-green-600">${success}</div>
                         <div class="text-xs text-green-600">Imported</div>
                     </div>
-                    <div class="p-1 bg-yellow-100 dark:bg-yellow-900/30 rounded text-center">
-                        <div class="text-lg font-bold text-yellow-600">${skipped}</div>
+                    <div class="p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded text-center">
+                        <div class="text-2xl font-bold text-yellow-600">${skipped}</div>
                         <div class="text-xs text-yellow-600">Skipped</div>
                     </div>
-                    <div class="p-1 bg-red-100 dark:bg-red-900/30 rounded text-center">
-                        <div class="text-lg font-bold text-red-600">${errors}</div>
+                    <div class="p-2 bg-red-100 dark:bg-red-900/30 rounded text-center">
+                        <div class="text-2xl font-bold text-red-600">${errors}</div>
                         <div class="text-xs text-red-600">Errors</div>
                     </div>
-                    <div class="p-1 bg-blue-100 dark:bg-blue-900/30 rounded text-center">
-                        <div class="text-lg font-bold text-blue-600">${importedData.length}</div>
+                    <div class="p-2 bg-blue-100 dark:bg-blue-900/30 rounded text-center">
+                        <div class="text-2xl font-bold text-blue-600">${importedData.length}</div>
                         <div class="text-xs text-blue-600">Total</div>
                     </div>
                 </div>
+                <div class="mt-2 text-xs text-amber-600 dark:text-amber-400">
+                    ⚠️ <strong>Important:</strong> Passwords are auto-generated. Please save them and share with employees.
+                </div>
                 ${importResults.length > 0 ? `
-                    <div class="mt-2 max-h-32 overflow-y-auto">
-                        <table class="w-full text-xs">
+                    <div class="mt-3 max-h-40 overflow-y-auto">
+                        <table class="w-full text-sm">
                             <thead class="bg-slate-100 dark:bg-slate-700">
-                                <tr><th class="p-0.5 text-left">Row</th><th class="p-0.5 text-left">Name</th><th class="p-0.5 text-left">Status</th><th class="p-0.5 text-left">Message</th></tr>
+                                <tr><th class="p-1 text-left">Row</th><th class="p-1 text-left">Name</th><th class="p-1 text-left">Status</th><th class="p-1 text-left">Message</th></tr>
                             </thead>
                             <tbody>
                                 ${importResults.map(r => `
                                     <tr class="border-b dark:border-slate-600">
-                                        <td class="p-0.5">${r.row}</td>
-                                        <td class="p-0.5">${escapeHtml(r.name)}</td>
-                                        <td class="p-0.5"><span class="status-badge-${r.status}">${r.status}</span></td>
-                                        <td class="p-0.5 text-xs">${escapeHtml(r.message)}</td>
+                                        <td class="p-1">${r.row}</td>
+                                        <td class="p-1">${escapeHtml(r.name)}</td>
+                                        <td class="p-1"><span class="status-badge-${r.status}">${r.status}</span></td>
+                                        <td class="p-1 text-xs">${escapeHtml(r.message)}</td>
                                     </tr>
                                 `).join('')}
                             </tbody>
                         </table>
                     </div>
                 ` : ''}
-                <button onclick="cancelImport()" class="mt-2 bg-[#011F7B] text-white px-3 py-1 rounded-lg text-sm">Close</button>
+                <button onclick="cancelImport()" class="mt-3 bg-[#011F7B] text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-800" title="Close import">Close</button>
             `;
             
             refreshDashboard();
@@ -3302,7 +3279,7 @@
                 const d = doc.data();
                 const isCurrent = d.deviceId === currentDeviceId;
                 return `
-                    <div class="flex justify-between items-center p-1 bg-gray-50 dark:bg-slate-700 rounded text-xs">
+                    <div class="flex justify-between items-center p-2 bg-gray-50 dark:bg-slate-700 rounded">
                         <div class="flex-1">
                             <span class="font-medium">${escapeHtml(d.deviceName || 'Unknown Device')}</span>
                             <span class="text-xs text-gray-500 block">Last used: ${new Date(d.lastUsed).toLocaleDateString()}</span>
@@ -3310,7 +3287,7 @@
                             ${d.status === 'blocked' ? '<span class="text-xs text-red-500">(Blocked)</span>' : ''}
                         </div>
                         ${d.status !== 'blocked' ? `<button onclick="removeUserDevice('${doc.id}')" class="text-red-500 text-sm hover:text-red-700" ${isCurrent ? 'disabled style="opacity:0.5"' : ''} title="Remove device">
-                            <i data-feather="x" class="w-3 h-3" aria-hidden="true"></i>
+                            <i data-feather="x" class="w-4 h-4" aria-hidden="true"></i>
                         </button>` : ''}
                     </div>
                 `;
@@ -3352,7 +3329,7 @@
                 filtered = filtered.filter(d => d.status === statusFilter);
             }
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" class="p-3 text-center text-slate-500">No devices found</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-slate-500">No devices found</td></tr>';
                 return;
             }
             tbody.innerHTML = filtered.map(d => {
@@ -3362,12 +3339,15 @@
                 const statusDots = { active: 'active', blocked: 'blocked', inactive: 'inactive' };
                 return `
                     <tr class="border-b dark:border-slate-600">
-                        <td class="p-1"><div class="font-medium">${escapeHtml(employee?.name || 'Unknown')}</div><div class="text-xs text-gray-500">${escapeHtml(d.userEmail || '')}</div></td>
-                        <td class="p-1">${escapeHtml(d.deviceName || 'Unnamed')}</td>
-                        <td class="p-1"><span class="px-1 py-0.5 rounded-full text-xs ${statusColors[d.status] || 'bg-gray-100 text-gray-800'}"><span class="device-status-dot ${statusDots[d.status] || 'inactive'}"></span>${d.status || 'Active'}</span></td>
-                        <td class="p-1">
-                            <button onclick="toggleDeviceStatus('${d.id}', '${d.status}')" class="text-${d.status === 'active' ? 'red' : 'green'}-600 hover:text-${d.status === 'active' ? 'red' : 'green'}-800 text-xs mr-1" title="${d.status === 'active' ? 'Block' : 'Unblock'}">${d.status === 'active' ? 'Block' : 'Unblock'}</button>
-                            <button onclick="deleteDeviceRecord('${d.id}')" class="text-red-600 hover:text-red-800 text-xs" title="Delete device">Del</button>
+                        <td class="p-3"><div class="font-medium">${escapeHtml(employee?.name || 'Unknown')}</div><div class="text-xs text-gray-500">${escapeHtml(d.userEmail || '')}</div></td>
+                        <td class="p-3">${escapeHtml(d.deviceName || 'Unnamed')}</td>
+                        <td class="p-3 text-sm"><div>${escapeHtml(d.deviceDetails?.platform || 'Unknown')}</div><div class="text-xs text-gray-500">${escapeHtml(d.deviceDetails?.screenResolution || '')}</div></td>
+                        <td class="p-3 text-sm">${new Date(d.registeredAt).toLocaleDateString()}</td>
+                        <td class="p-3 text-sm">${new Date(d.lastUsed).toLocaleDateString()}</td>
+                        <td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${statusColors[d.status] || 'bg-gray-100 text-gray-800'}"><span class="device-status-dot ${statusDots[d.status] || 'inactive'}"></span>${d.status || 'Active'}</span></td>
+                        <td class="p-3">
+                            <button onclick="toggleDeviceStatus('${d.id}', '${d.status}')" class="text-${d.status === 'active' ? 'red' : 'green'}-600 hover:text-${d.status === 'active' ? 'red' : 'green'}-800 text-sm mr-2" title="${d.status === 'active' ? 'Block' : 'Unblock'} device">${d.status === 'active' ? 'Block' : 'Unblock'}</button>
+                            <button onclick="deleteDeviceRecord('${d.id}')" class="text-red-600 hover:text-red-800 text-sm" title="Delete device">Delete</button>
                         </td>
                     </tr>
                 `;
@@ -3707,18 +3687,20 @@
             const filtered = regularEmps.filter(emp => emp.name.toLowerCase().includes(searchTerm) || emp.email
                 .toLowerCase().includes(searchTerm) || (emp.dept && emp.dept.toLowerCase().includes(searchTerm)));
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="p-3 text-center text-slate-500">No employees found</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="7" class="p-4 text-center text-slate-500">No employees found</td></tr>';
                 return;
             }
             tbody.innerHTML = filtered.map(emp => `
                 <tr class="border-b dark:border-slate-600">
-                    <td class="p-1">${escapeHtml(emp.name)}</td>
-                    <td class="p-1">${escapeHtml(emp.email)}</td>
-                    <td class="p-1">${escapeHtml(emp.dept)}</td>
-                    <td class="p-1"><span class="px-1 py-0.5 rounded-full text-xs ${emp.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${emp.status}</span></td>
-                    <td class="p-1">
-                        <button onclick='openEditEmployeeModal(${JSON.stringify(emp)})' class="text-blue-600 hover:text-blue-800 text-xs mr-1" title="Edit"><i data-feather="edit-2" class="w-3 h-3 inline"></i></button>
-                        <button onclick="deleteEmployee('${emp.id}')" class="text-red-600 hover:text-red-800 text-xs" title="Delete"><i data-feather="trash-2" class="w-3 h-3 inline"></i></button>
+                    <td class="p-3">${escapeHtml(emp.name)}</td>
+                    <td class="p-3">${escapeHtml(emp.email)}</td>
+                    <td class="p-3">${escapeHtml(emp.employeeNumber || '—')}</td>
+                    <td class="p-3">${escapeHtml(emp.dept)}</td>
+                    <td class="p-3">${escapeHtml(emp.role)}</td>
+                    <td class="p-3"><span class="px-2 py-1 rounded-full text-xs ${emp.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${emp.status}</span></td>
+                    <td class="p-3">
+                        <button onclick='openEditEmployeeModal(${JSON.stringify(emp)})' class="text-blue-600 hover:text-blue-800 mr-2" title="Edit employee"><i data-feather="edit-2" class="w-4 h-4 inline" aria-hidden="true"></i> Edit</button>
+                        <button onclick="deleteEmployee('${emp.id}')" class="text-red-600 hover:text-red-800" title="Delete employee"><i data-feather="trash-2" class="w-4 h-4 inline" aria-hidden="true"></i> Delete</button>
                     </td>
                 </tr>
             `).join('');
@@ -3815,13 +3797,13 @@
             const historyBody = document.getElementById('attendanceHistoryList');
             if (historyBody) {
                 historyBody.innerHTML = userAtt.map(a =>
-                    '<tr><td class="p-1">' + a.date + '</td><td class="p-1">' + (a.timeIn || '--') +
-                    '</td><td class="p-1">' + (a.timeOut || '--') + '</td><td class="p-1">' + (a.hoursWorked ||
+                    '<tr><td class="p-3">' + a.date + '</td><td class="p-3">' + (a.timeIn || '--') +
+                    '</td><td class="p-3">' + (a.timeOut || '--') + '</td><td class="p-3">' + (a.hoursWorked ||
                         '--') +
-                    '</td><td class="p-1"><span class="px-1 py-0.5 rounded-full text-xs ' + (a.timeOut ?
+                    '</td><td class="p-3"><span class="px-2 py-1 rounded-full text-xs ' + (a.timeOut ?
                         'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800') + '">' + (a.timeOut ?
                         'Complete' : 'In Progress') + '</span></td></tr>'
-                ).join('') || '<tr><td colspan="5" class="p-3 text-center">No records</td></tr>';
+                ).join('') || '<tr><td colspan="5" class="p-4 text-center">No records</td></tr>';
             }
         }
 
@@ -3925,35 +3907,35 @@
             if (!container) return;
             const myRequests = allRequests.filter(r => r.userId === currentUser?.uid);
             if (myRequests.length === 0) {
-                container.innerHTML = '<div class="text-center text-slate-500 dark:text-slate-400 py-3 text-sm">No requests</div>';
+                container.innerHTML = '<div class="text-center text-slate-500 dark:text-slate-400 py-4">No requests</div>';
                 return;
             }
             container.innerHTML = myRequests.slice(0, 5).map(r => `
-                <div class="p-2 bg-gray-50 dark:bg-slate-700 rounded-lg text-xs">
+                <div class="p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
                     <div class="flex justify-between items-start">
                         <div>
                             <p class="font-semibold">${escapeHtml(r.type)}</p>
-                            <p class="text-slate-600 dark:text-slate-300 text-xs">${escapeHtml(r.reason || '')}</p>
-                            <p class="text-slate-400 text-xs">${new Date(r.createdAt).toLocaleDateString()}</p>
+                            <p class="text-sm text-slate-600 dark:text-slate-300">${escapeHtml(r.reason || '')}</p>
+                            <p class="text-xs text-slate-400">${new Date(r.createdAt).toLocaleDateString()}</p>
                         </div>
-                        <span class="text-xs px-1.5 py-0.5 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-800' : r.status === 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}">${r.status}</span>
+                        <span class="text-xs px-2 py-1 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-800' : r.status === 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}">${r.status}</span>
                     </div>
                 </div>
             `).join('');
             const allMyContainer = document.getElementById('allMyRequestsList');
             if (allMyContainer) {
                 allMyContainer.innerHTML = myRequests.map(r => `
-                    <div class="p-2 bg-gray-50 dark:bg-slate-700 rounded-lg text-xs">
+                    <div class="p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
                         <div class="flex justify-between items-start">
                             <div>
                                 <p class="font-semibold">${escapeHtml(r.type)}</p>
-                                <p class="text-slate-600 dark:text-slate-300 text-xs">${escapeHtml(r.reason || '')}</p>
-                                <p class="text-slate-400 text-xs">${new Date(r.createdAt).toLocaleDateString()} - ${r.startDate || ''} to ${r.endDate || ''}</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-300">${escapeHtml(r.reason || '')}</p>
+                                <p class="text-xs text-slate-400">${new Date(r.createdAt).toLocaleDateString()} - ${r.startDate || ''} to ${r.endDate || ''}</p>
                             </div>
-                            <span class="text-xs px-1.5 py-0.5 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-800' : r.status === 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}">${r.status}</span>
+                            <span class="text-xs px-2 py-1 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-800' : r.status === 'rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}">${r.status}</span>
                         </div>
                     </div>
-                `).join('') || '<div class="text-center text-slate-500 dark:text-slate-400 py-6 text-sm">No requests found</div>';
+                `).join('') || '<div class="text-center text-slate-500 dark:text-slate-400 py-8">No requests found</div>';
             }
         }
 
@@ -3961,24 +3943,24 @@
             const container = document.getElementById('allRequestsList');
             if (!container) return;
             if (!fullPrivilegedEmails.includes(currentUser?.email) && currentUserRole !== 'admin' && currentUserRole !== 'hr' && currentUserRole !== 'moderator') {
-                container.innerHTML = '<div class="text-center text-slate-500 dark:text-slate-400 py-6 text-sm">Access restricted</div>';
+                container.innerHTML = '<div class="text-center text-slate-500 dark:text-slate-400 py-8">Access restricted</div>';
                 return;
             }
             if (allRequests.length === 0) {
-                container.innerHTML = '<div class="text-center text-slate-500 dark:text-slate-400 py-6 text-sm">No requests found</div>';
+                container.innerHTML = '<div class="text-center text-slate-500 dark:text-slate-400 py-8">No requests found</div>';
                 return;
             }
             container.innerHTML = allRequests.slice().reverse().map(r => `
-                <div class="p-2 bg-gray-50 dark:bg-slate-700 rounded-lg text-xs">
-                    <div class="flex justify-between items-start flex-wrap gap-1">
+                <div class="p-3 bg-gray-50 dark:bg-slate-700 rounded-lg">
+                    <div class="flex justify-between items-start flex-wrap gap-2">
                         <div>
                             <p class="font-semibold">${escapeHtml(r.userName)} - ${escapeHtml(r.type)}</p>
-                            <p class="text-slate-600 dark:text-slate-300 text-xs">${escapeHtml(r.reason || '')}</p>
-                            <p class="text-slate-400 text-xs">${new Date(r.createdAt).toLocaleDateString()} | ${escapeHtml(r.userDepartment || 'N/A')}</p>
+                            <p class="text-sm text-slate-600 dark:text-slate-300">${escapeHtml(r.reason || '')}</p>
+                            <p class="text-xs text-slate-400">${new Date(r.createdAt).toLocaleDateString()} | Dept: ${escapeHtml(r.userDepartment || 'N/A')}</p>
                         </div>
-                        <div class="flex items-center gap-1">
-                            <span class="text-xs px-1.5 py-0.5 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-800' : r.status === 'rejected' ? 'bg-red-100 text-red-800' : r.status === 'pending_final' ? 'bg-purple-100 text-purple-800' : 'bg-yellow-100 text-yellow-800'}">${r.status}</span>
-                            ${r.status === 'pending' || r.status === 'pending_final' ? `<button onclick="approveRequest('${r.id}')" class="text-xs bg-green-500 text-white px-1.5 py-0.5 rounded">Approve</button><button onclick="rejectRequest('${r.id}')" class="text-xs bg-red-500 text-white px-1.5 py-0.5 rounded">Reject</button>` : ''}
+                        <div class="flex items-center gap-2">
+                            <span class="text-xs px-2 py-1 rounded-full ${r.status === 'approved' ? 'bg-green-100 text-green-800' : r.status === 'rejected' ? 'bg-red-100 text-red-800' : r.status === 'pending_final' ? 'bg-purple-100 text-purple-800' : 'bg-yellow-100 text-yellow-800'}">${r.status}</span>
+                            ${r.status === 'pending' || r.status === 'pending_final' ? `<button onclick="approveRequest('${r.id}')" class="text-xs bg-green-500 text-white px-2 py-1 rounded" title="Approve request">Approve</button><button onclick="rejectRequest('${r.id}')" class="text-xs bg-red-500 text-white px-2 py-1 rounded" title="Reject request">Reject</button>` : ''}
                         </div>
                     </div>
                 </div>
@@ -4002,7 +3984,6 @@
                 const idx = allRequests.findIndex(r => r.id === requestId);
                 if (idx !== -1) allRequests[idx].status = 'approved';
                 
-                // Add to attendance for ALL request types
                 await addAttendanceFromRequest(requestData);
                 
                 await auditLog('REQUEST_APPROVED', 'Request ' + requestId + ' approved by ' + currentUser.email, requestId);
@@ -4049,7 +4030,8 @@
                     status = 'Offset';
                     source = 'Offset Request';
                 } else if (requestData.type === 'Sick Leave' || requestData.type === 'Vacation Leave' || 
-                           requestData.type === 'Emergency Leave' || requestData.type === 'Leave') {
+                           requestData.type === 'Emergency Leave' || requestData.type === 'Birthday Leave' ||
+                           requestData.type === 'Leave') {
                     status = 'Leave';
                     source = 'Leave Request';
                     timeIn = '--';
@@ -4136,7 +4118,7 @@
         // ===== CLOCK REQUEST FUNCTIONS =====
         function openClockRequestModal(type) {
             document.getElementById('clockRequestType').value = type;
-            const titleEl = document.querySelector('#clockRequestModal .text-base');
+            const titleEl = document.querySelector('#clockRequestModal .text-xl');
             if (titleEl) titleEl.textContent = type === 'in' ? 'Request Clock In' : 'Request Clock Out';
             document.getElementById('clockDate').value = new Date().toISOString().split('T')[0];
             document.getElementById('clockTime').value = getCurrentTime24();
@@ -4367,20 +4349,20 @@
                 '</option>').join('');
             const hist = document.getElementById('payslipHistory');
             if (hist) hist.innerHTML = allPayslips.slice().reverse().map(p =>
-                '<div class="card-bg p-1.5 rounded mb-1 shadow-sm text-xs"><b>' + escapeHtml(p.employeeName) +
+                '<div class="card-bg p-2 rounded mb-1 shadow-sm text-sm"><b>' + escapeHtml(p.employeeName) +
                 '</b> - ' + escapeHtml(p.month) + ' (' + escapeHtml(p.cutOff) +
                 ')<br><span class="text-green-600 font-bold">Net: ₱' + p.netPay.toFixed(2) + '</span></div>'
-            ).join('') || '<div class="text-sm text-slate-500">No payslips</div>';
+            ).join('') || '<div>No payslips</div>';
         }
 
         function refreshEmployeePayslip() {
             const my = allPayslips.filter(p => p.employeeEmail === currentUser?.email);
             const container = document.getElementById('employeePayslipList');
             if (container) container.innerHTML = my.map(p =>
-                '<div class="card-bg p-2 rounded shadow text-sm">' + escapeHtml(p.month) + ' (' + escapeHtml(p.cutOff) +
+                '<div class="card-bg p-3 rounded shadow">' + escapeHtml(p.month) + ' (' + escapeHtml(p.cutOff) +
                 ')<br><span class="text-green-600 dark:text-green-400 font-bold">Net: ₱' + p.netPay.toFixed(2) +
                 '</span></div>'
-            ).join('') || '<div class="text-center text-slate-500 dark:text-slate-400 py-6 text-sm">No payslips</div>';
+            ).join('') || '<div>No payslips</div>';
         }
 
         function closePayslipPreview() {
@@ -4446,43 +4428,43 @@
             const myContainer = document.getElementById('myHelpdeskRequests');
             if (myContainer) {
                 myContainer.innerHTML = myRequests.map(r =>
-                    '<div class="helpdesk-card card-bg p-2 rounded-lg shadow-sm mb-2 text-xs"><div class="flex justify-between items-start"><div><strong>' +
+                    '<div class="helpdesk-card card-bg p-4 rounded-xl shadow-sm mb-3"><div class="flex justify-between items-start"><div><strong>' +
                     r.type +
-                    '</strong><br><span class="text-slate-500">' + (r.trackingNumber || '') + ' | ' + new Date(
+                    '</strong><br><span class="text-xs text-slate-500">' + (r.trackingNumber || '') + ' | ' + new Date(
                         r.createdAt).toLocaleString() +
                     '</span></div><span class="status-badge-pending">' + (r.status === 'resolved' ? 'Completed' : (r
                         .status === 'under_review' ? 'Under Review' : (r.status === 'approved' ? 'Approved' : (r
                         .status === 'rejected' ? 'Rejected' : 'Pending')))) +
-                    '</span></div><p class="mt-1">' + escapeHtml(r.message) + '</p>' + (r.response ?
-                        '<div class="mt-1 text-xs bg-gray-50 dark:bg-slate-700 p-1 rounded"><strong>Response:</strong> ' +
+                    '</span></div><p class="mt-2">' + escapeHtml(r.message) + '</p>' + (r.response ?
+                        '<div class="mt-2 text-sm bg-gray-50 dark:bg-slate-700 p-2 rounded"><strong>Response:</strong> ' +
                         escapeHtml(r.response) + '</div>' : '') + '</div>'
-                ).join('') || '<div class="text-center text-slate-500 dark:text-slate-400 py-3 text-sm">No requests submitted yet.</div>';
+                ).join('') || '<div class="text-center">No requests submitted yet.</div>';
             }
             if (fullPrivilegedEmails.includes(currentUser.email) || currentUserRole === 'admin' || currentUserRole ===
                 'hr' || currentUserRole === 'moderator') {
                 const adminContainer = document.getElementById('adminHelpdeskList');
                 if (adminContainer) {
                     adminContainer.innerHTML = allHelpdeskRequests.map(r =>
-                        '<div class="helpdesk-card card-bg p-2 rounded-lg shadow-sm mb-2 text-xs"><div class="flex justify-between items-start flex-wrap gap-1"><div><strong>' +
+                        '<div class="helpdesk-card card-bg p-4 rounded-xl shadow-sm mb-3"><div class="flex justify-between items-start flex-wrap gap-2"><div><strong>' +
                         r.userName + '</strong> (' + r.userEmail + ')<br><strong>' + r.type +
-                        '</strong><br><span class="text-slate-500">' + (r.trackingNumber || '') + ' | ' +
+                        '</strong><br><span class="text-xs text-slate-500">' + (r.trackingNumber || '') + ' | ' +
                         new Date(r.createdAt).toLocaleString() +
                         '</span></div><select id="statusSelect_' + r.id +
-                        '" class="p-1 border rounded-lg text-xs dark:bg-slate-700"><option value="pending" ' + (r
+                        '" class="p-2 border rounded-lg text-sm dark:bg-slate-700" title="Update status"><option value="pending" ' + (r
                             .status === 'pending' ? 'selected' : '') + '>Pending</option><option value="under_review" ' +
                         (r.status === 'under_review' ? 'selected' : '') +
-                        '>Review</option><option value="approved" ' + (r.status === 'approved' ? 'selected' :
+                        '>Under Review</option><option value="approved" ' + (r.status === 'approved' ? 'selected' :
                             '') +
                         '>Approved</option><option value="rejected" ' + (r.status === 'rejected' ? 'selected' :
                             '') +
                         '>Rejected</option><option value="resolved" ' + (r.status === 'resolved' ? 'selected' :
                             '') +
-                        '>Completed</option></select></div><p class="mt-1">' + escapeHtml(r.message) +
-                        '</p><div class="mt-1 flex gap-1"><textarea id="response_' + r.id +
-                        '" rows="1" class="flex-1 p-1 border rounded-lg text-xs dark:bg-slate-700" placeholder="Response..."></textarea>' +
+                        '>Completed</option></select></div><p class="mt-2">' + escapeHtml(r.message) +
+                        '</p><div class="mt-3 flex gap-2"><textarea id="response_' + r.id +
+                        '" rows="2" class="flex-1 p-2 border rounded-lg dark:bg-slate-700" placeholder="Response to employee..." title="Enter response"></textarea>' +
                         '<button onclick="updateHelpdeskRequest(\'' + r.id +
-                        '\')" class="bg-blue-600 text-white px-2 py-1 rounded-lg text-xs">Update</button></div></div>'
-                    ).join('') || '<div class="text-center text-slate-500 dark:text-slate-400 py-3 text-sm">No requests.</div>';
+                        '\')" class="bg-blue-600 text-white px-4 py-2 rounded-lg" title="Update request">Update</button></div></div>'
+                    ).join('') || '<div class="text-center">No requests.</div>';
                 }
             }
         }
@@ -4676,12 +4658,12 @@
             if (!container) return;
             const regularEmps = allEmployees.filter(e => !isSystemAdmin(e.email));
             if (regularEmps.length === 0) {
-                container.innerHTML = '<div class="text-center text-slate-500 py-3 text-sm">No employees</div>';
+                container.innerHTML = '<div class="text-center text-slate-500 py-4">No employees</div>';
                 return;
             }
             const sortedEmps = [...regularEmps].sort((a, b) => a.name.localeCompare(b.name));
             container.innerHTML = sortedEmps.map(emp =>
-                '<div class="employee-item cursor-pointer p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-sm" data-id="' +
+                '<div class="employee-item cursor-pointer p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" data-id="' +
                 emp.id + '" data-name="' + emp.name + '" role="button" tabindex="0">' + emp.name + '</div>'
             ).join('');
             document.querySelectorAll('.employee-item').forEach(el => {
@@ -4752,7 +4734,6 @@
             document.getElementById('certCountSummary').textContent = certificate;
             document.getElementById('requestCountSummary').textContent = requests;
             
-            // Build calendar
             const daysInMonth = endDate.getDate();
             const firstDay = startDate.getDay();
             
@@ -4763,7 +4744,7 @@
             });
             
             for (let i = 0; i < firstDay; i++) {
-                calendarHTML += '<div class="day bg-gray-200 dark:bg-gray-700 p-1 rounded text-center"></div>';
+                calendarHTML += '<div class="day bg-gray-200 dark:bg-gray-700 p-2 rounded text-center"></div>';
             }
             
             let currentDate = new Date(startDate);
@@ -4801,9 +4782,9 @@
                     }
                 }
                 
-                calendarHTML += `<div class="day ${statusClass} p-1 rounded text-center text-white">
-                    <div class="font-bold text-xs">${currentDate.getDate()}</div>
-                    <div class="text-[0.5rem] leading-none">${statusText}</div>
+                calendarHTML += `<div class="day ${statusClass} p-2 rounded text-center text-white">
+                    <div class="font-bold">${currentDate.getDate()}</div>
+                    <div class="text-xs">${statusText}</div>
                 </div>`;
                 
                 currentDate.setDate(currentDate.getDate() + 1);
@@ -4811,7 +4792,6 @@
             
             document.getElementById('calendarGrid').innerHTML = calendarHTML;
             
-            // Build details table - show latest first
             const sortedAtt = [...employeeAtt].sort((a, b) => b.date.localeCompare(a.date));
             const detailsBody = document.getElementById('attendanceDetails');
             if (detailsBody) {
@@ -4827,13 +4807,13 @@
                     
                     return `
                     <tr>
-                        <td class="p-1">${a.date}</td>
-                        <td class="p-1">${a.timeIn || '--'}</td>
-                        <td class="p-1">${a.timeOut || '--'}</td>
-                        <td class="p-1"><span class="px-1 py-0.5 rounded-full text-xs ${statusColor}">${a.status || 'Present'}</span></td>
-                        <td class="p-1 text-xs">${a.source || 'Manual'}</td>
+                        <td class="p-2">${a.date}</td>
+                        <td class="p-2">${a.timeIn || '--'}</td>
+                        <td class="p-2">${a.timeOut || '--'}</td>
+                        <td class="p-2"><span class="px-2 py-1 rounded-full text-xs ${statusColor}">${a.status || 'Present'}</span></td>
+                        <td class="p-2 text-sm">${a.source || 'Manual'}</td>
                     </tr>
-                `}).join('') || '<tr><td colspan="5" class="p-3 text-center text-slate-500">No records</td></tr>';
+                `}).join('') || '<tr><td colspan="5" class="p-4 text-center">No records for this period</td></tr>';
             }
         }
 
@@ -4846,12 +4826,12 @@
             const addBtn = document.getElementById('announcementAddButton');
             if (addBtn) {
                 addBtn.innerHTML = canEdit ?
-                    '<button onclick="addNewAnnouncement()" class="bg-green-600 text-white px-2 py-0.5 rounded text-xs" title="Add announcement"><i data-feather="plus" class="w-3 h-3 inline"></i> Add</button>' :
+                    '<button onclick="addNewAnnouncement()" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-1" title="Add announcement"><i data-feather="plus" aria-hidden="true"></i> Add Announcement</button>' :
                     '';
             }
 
             if (allAnnouncements.length === 0) {
-                cont.innerHTML = '<div class="text-center text-slate-500 py-3 text-sm">No announcements</div>';
+                cont.innerHTML = '<div class="text-center text-slate-500 py-4">No announcements</div>';
                 return;
             }
 
@@ -4861,19 +4841,19 @@
                 const safeContent = escapeHtml(a.content || '');
 
                 const editBtnHtml = canEdit ?
-                    `<button onclick="editAnnouncement('${safeId}')" class="text-blue-600 text-xs mr-1" data-title="${encodeURIComponent(a.title || '')}" data-content="${encodeURIComponent(a.content || '')}" title="Edit announcement">Edit</button>` :
+                    `<button onclick="editAnnouncement('${safeId}')" class="text-blue-600 text-sm mr-2" data-title="${encodeURIComponent(a.title || '')}" data-content="${encodeURIComponent(a.content || '')}" title="Edit announcement">Edit</button>` :
                     '';
 
-                return `<div class="announcement-item p-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 border-l-2 border-blue-500 w-full text-xs">
-                    <div class="flex justify-between items-start flex-wrap gap-1">
+                return `<div class="announcement-item p-4 rounded-xl bg-blue-50 dark:bg-blue-900/30 border-l-4 border-blue-500 w-full max-w-full">
+                    <div class="flex justify-between items-start flex-wrap gap-2">
                         <div class="flex-1 min-w-0">
                             <h4 class="font-bold break-words">${safeTitle}</h4>
-                            <p class="break-words">${safeContent}</p>
-                            <p class="text-slate-400 text-xs">Expires: ${a.expiresAt ? new Date(a.expiresAt).toLocaleDateString() : 'N/A'}</p>
+                            <p class="text-sm break-words">${safeContent}</p>
+                            <p class="text-xs text-slate-400">Expires: ${a.expiresAt ? new Date(a.expiresAt).toLocaleDateString() : 'N/A'}</p>
                         </div>
                         <div class="flex items-center flex-shrink-0">
                             ${editBtnHtml}
-                            ${canEdit ? `<button onclick="deleteAnnouncement('${safeId}')" class="text-red-600 text-xs" title="Delete announcement">Delete</button>` : ''}
+                            ${canEdit ? `<button onclick="deleteAnnouncement('${safeId}')" class="text-red-600 text-sm" title="Delete announcement">Delete</button>` : ''}
                         </div>
                     </div>
                 </div>`;
@@ -4990,11 +4970,11 @@
         function renderGuardSchedules() {
             const cont = document.getElementById('guardSchedulesList');
             if (cont) cont.innerHTML = guardWeeklySchedules.map(s =>
-                '<div class="bg-slate-50 dark:bg-slate-700 p-1.5 rounded mb-1 text-xs"><b>' + s.guardName +
-                '</b><br><span>' + Object.entries(s.schedule).map(([d, sh]) => d.slice(0,3) + ': ' + sh).join(' | ') +
+                '<div class="bg-slate-50 dark:bg-slate-700 p-3 rounded mb-2"><b>' + s.guardName +
+                '</b><br><span>' + Object.entries(s.schedule).map(([d, sh]) => d + ': ' + sh).join(' | ') +
                 '</span><br><button onclick="deleteGuardSchedule(\'' + s.id +
-                '\')" class="text-red-500 text-xs" title="Delete schedule">Delete</button></div>'
-            ).join('') || '<div class="text-sm text-slate-500">No schedules</div>';
+                '\')" class="text-red-500 text-sm" title="Delete schedule">Delete</button></div>'
+            ).join('') || '<div>No schedules</div>';
         }
 
         async function deleteGuardSchedule(id) {
@@ -5290,7 +5270,6 @@
                 loadEmployeeListForSummary();
             });
 
-            // Drag and drop for file upload
             const uploadZone = document.getElementById('uploadZone');
             if (uploadZone) {
                 uploadZone.addEventListener('dragover', function(e) {
