@@ -812,7 +812,7 @@
             padding: 0.5rem;
         }
         .modal-overlay.flex {
-            display: flex;
+            display: flex !important;
         }
         .modal-container {
             background: white;
@@ -2041,8 +2041,8 @@
         </div><!-- /main-content -->
     </div><!-- /mainApp -->
 
-    <!-- MODALS -->
-    <div id="addEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Add Employee">
+    <!-- MODALS - ALL CORRECTLY HIDDEN BY DEFAULT -->
+    <div id="addEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 items-center justify-center hidden z-50" role="dialog" aria-label="Add Employee">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Add Employee</h3><button onclick="closeModal('addEmployeeModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <div class="space-y-3">
@@ -2071,7 +2071,7 @@
         </div>
     </div>
 
-    <div id="editEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Edit Employee">
+    <div id="editEmployeeModal" class="modal-overlay fixed inset-0 bg-black/50 items-center justify-center hidden z-50" role="dialog" aria-label="Edit Employee">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Employee</h3><button onclick="closeModal('editEmployeeModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="editEmpId" />
@@ -2103,7 +2103,7 @@
         </div>
     </div>
 
-    <div id="requestModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Submit Request">
+    <div id="requestModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 items-center justify-center hidden z-50" role="dialog" aria-label="Submit Request">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Submit Request</h3><button onclick="closeModal('requestModalOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="requestTypeValue" />
@@ -2116,7 +2116,7 @@
         </div>
     </div>
 
-    <div id="leaveModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Select Leave Type">
+    <div id="leaveModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 items-center justify-center hidden z-50" role="dialog" aria-label="Select Leave Type">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Leave Type</h3><button onclick="closeModal('leaveModalOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <div class="space-y-3">
@@ -2128,7 +2128,7 @@
         </div>
     </div>
 
-    <div id="offsetsModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Request Offsets">
+    <div id="offsetsModalOverlay" class="modal-overlay fixed inset-0 bg-black/50 items-center justify-center hidden z-50" role="dialog" aria-label="Request Offsets">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Offsets</h3><button onclick="closeModal('offsetsModalOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <div class="space-y-3">
@@ -2140,7 +2140,7 @@
         </div>
     </div>
 
-    <div id="newRequestMenuOverlay" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Select Request Type">
+    <div id="newRequestMenuOverlay" class="modal-overlay fixed inset-0 bg-black/50 items-center justify-center hidden z-50" role="dialog" aria-label="Select Request Type">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Select Request Type</h3><button onclick="closeModal('newRequestMenuOverlay')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <div class="space-y-3">
@@ -2153,7 +2153,7 @@
         </div>
     </div>
 
-    <div id="clockRequestModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Request Clock">
+    <div id="clockRequestModal" class="modal-overlay fixed inset-0 bg-black/50 items-center justify-center hidden z-50" role="dialog" aria-label="Request Clock">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Request Clock</h3><button onclick="closeModal('clockRequestModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="clockRequestType" />
@@ -2166,7 +2166,7 @@
         </div>
     </div>
 
-    <div id="announcementModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Announcement">
+    <div id="announcementModal" class="modal-overlay fixed inset-0 bg-black/50 items-center justify-center hidden z-50" role="dialog" aria-label="Announcement">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
             <div class="flex justify-between items-center mb-4"><h3 id="announcementModalTitle" class="text-xl font-bold">Edit Announcement</h3><button onclick="closeModal('announcementModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="announcementId" />
@@ -2178,7 +2178,7 @@
         </div>
     </div>
 
-    <div id="editLeaveModal" class="modal-overlay fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50" role="dialog" aria-label="Edit Leave Balance">
+    <div id="editLeaveModal" class="modal-overlay fixed inset-0 bg-black/50 items-center justify-center hidden z-50" role="dialog" aria-label="Edit Leave Balance">
         <div class="modal-container bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full">
             <div class="flex justify-between items-center mb-4"><h3 class="text-xl font-bold">Edit Leave Balance</h3><button onclick="closeModal('editLeaveModal')" title="Close modal"><i data-feather="x" aria-hidden="true"></i></button></div>
             <input type="hidden" id="editEmployeeId" />
@@ -2687,10 +2687,24 @@
             return d.innerHTML;
         }
 
-        function openModal(id) { const el = document.getElementById(id); if (el) { el.classList.remove('hidden');
-                el.classList.add('flex'); } }
-        function closeModal(id) { const el = document.getElementById(id); if (el) { el.classList.add('hidden');
-                el.classList.remove('flex'); } }
+        // ===== MODAL FUNCTIONS - FIXED =====
+        function openModal(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.remove('hidden');
+                el.classList.add('flex');
+                el.style.display = 'flex';
+            }
+        }
+
+        function closeModal(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.classList.add('hidden');
+                el.classList.remove('flex');
+                el.style.display = 'none';
+            }
+        }
 
         function openNewRequestMenu() { openModal('newRequestMenuOverlay'); }
         function openLeaveModal() { closeModal('newRequestMenuOverlay');
@@ -5271,6 +5285,13 @@
 
             document.getElementById('refreshSummaryBtn').addEventListener('click', function() {
                 loadEmployeeListForSummary();
+            });
+
+            // Ensure all modals are closed on load
+            document.querySelectorAll('.modal-overlay').forEach(function(modal) {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                modal.style.display = 'none';
             });
 
             const uploadZone = document.getElementById('uploadZone');
