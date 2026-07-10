@@ -61,7 +61,7 @@
             background-position: center center;
             background-repeat: no-repeat;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
             padding: 2rem;
             position: relative;
@@ -70,17 +70,17 @@
             flex-shrink: 0;
         }
         .branding-content {
-            position: relative;
-            z-index: 1;
-            background: rgba(0, 0, 0, 0.25);
-            border-radius: 2rem;
-            padding: 2.5rem 3rem;
-            -webkit-backdrop-filter: blur(4px);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            width: 100%;
+        position: relative;
+        z-index: 1;
+        background: transparent;
+        border-radius: 0;
+        padding: 2.5rem 3rem;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        border: none;
+        box-shadow: none;
+        max-width: 600px;
+        width: 100%;
         }
         .branding-content h1 {
             text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
